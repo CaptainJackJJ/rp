@@ -30,6 +30,12 @@ namespace RPlayer
         public MainForm()
         {
             InitializeComponent();
+            try
+            {
+                this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
+            }
+            catch
+            {}
         }
 
         private void panelTop_MouseDown(object sender, MouseEventArgs e)

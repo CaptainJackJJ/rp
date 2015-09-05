@@ -26,12 +26,19 @@ namespace RPlayer
 
         private const int m_nMinSize = 50;
         private const int m_nEdgeMargin = 1;
+        private const int m_nTopBarButtonsMargin = 10;
+        private const int m_nTopBarButtonswidth = 13;
+
+        private bool m_bMaxed = false;
 
         public MainForm()
         {
             InitializeComponent();
             try
-            {
+            {                
+                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
@@ -124,6 +131,7 @@ namespace RPlayer
             pictureBox_RightEdge.Size 
                 = new Size(pictureBox_RightEdge.Width,
                     this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
+            panelTop.Size = new Size(this.Size.Width,panelTop.Size.Height);
 
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
@@ -140,6 +148,16 @@ namespace RPlayer
             pictureBox_RightBottomCorner.Location
                 = new Point(this.Size.Width - pictureBox_RightBottomCorner.Size.Width,
                     this.Size.Height - pictureBox_RightBottomCorner.Size.Height);
+
+            pictureBox_Close.Location =
+                new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
+                    pictureBox_Close.Location.Y);
+            pictureBox_Max.Location =
+                new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonswidth * 2,
+                    pictureBox_Max.Location.Y);
+            pictureBox_Min.Location =
+               new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
+                    pictureBox_Min.Location.Y);
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)
@@ -291,6 +309,83 @@ namespace RPlayer
         private void pictureBox_RightTopCorner_MouseUp(object sender, MouseEventArgs e)
         {
             m_bRightTopCornerMouseDown = false;
+        }
+
+        private void pictureBox_Max_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+            }catch{}
+        }
+
+        private void pictureBox_Max_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+            }
+            catch { }
+        }
+
+        private void pictureBox_Close_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
+            }
+            catch { }
+        }
+
+        private void pictureBox_Close_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+            }
+            catch { }
+        }
+
+        private void pictureBox_Min_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
+            }
+            catch { }
+        }
+
+        private void pictureBox_Min_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+            }
+            catch { }
+        }
+
+        private void pictureBox_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void pictureBox_Max_Click(object sender, EventArgs e)
+        {
+            if (m_bMaxed)
+            {
+                this.WindowState = FormWindowState.Normal;
+                m_bMaxed = false;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+                m_bMaxed = true;
+            }
+        }
+
+        private void pictureBox_Min_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

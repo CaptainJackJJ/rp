@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelTop = new System.Windows.Forms.Panel();
+            this.pictureBox_Close = new System.Windows.Forms.PictureBox();
             this.pictureBox_TopEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_LeftEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_BottomEdge = new System.Windows.Forms.PictureBox();
@@ -37,10 +38,10 @@
             this.pictureBox_LeftBottomCorner = new System.Windows.Forms.PictureBox();
             this.pictureBox_RightBottomCorner = new System.Windows.Forms.PictureBox();
             this.pictureBox_RightTopCorner = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Close = new System.Windows.Forms.PictureBox();
             this.pictureBox_Max = new System.Windows.Forms.PictureBox();
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
             this.panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
@@ -49,7 +50,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftBottomCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightBottomCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).BeginInit();
             this.SuspendLayout();
@@ -60,11 +60,23 @@
             this.panelTop.Controls.Add(this.pictureBox_Close);
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(800, 28);
+            this.panelTop.Size = new System.Drawing.Size(915, 28);
             this.panelTop.TabIndex = 0;
             this.panelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseDown);
             this.panelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseMove);
             this.panelTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseUp);
+            // 
+            // pictureBox_Close
+            // 
+            this.pictureBox_Close.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_Close.Location = new System.Drawing.Point(892, 13);
+            this.pictureBox_Close.Name = "pictureBox_Close";
+            this.pictureBox_Close.Size = new System.Drawing.Size(13, 13);
+            this.pictureBox_Close.TabIndex = 17;
+            this.pictureBox_Close.TabStop = false;
+            this.pictureBox_Close.Click += new System.EventHandler(this.pictureBox_Close_Click);
+            this.pictureBox_Close.MouseEnter += new System.EventHandler(this.pictureBox_Close_MouseEnter);
+            this.pictureBox_Close.MouseLeave += new System.EventHandler(this.pictureBox_Close_MouseLeave);
             // 
             // pictureBox_TopEdge
             // 
@@ -72,7 +84,7 @@
             this.pictureBox_TopEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.pictureBox_TopEdge.Location = new System.Drawing.Point(1, 1);
             this.pictureBox_TopEdge.Name = "pictureBox_TopEdge";
-            this.pictureBox_TopEdge.Size = new System.Drawing.Size(798, 1);
+            this.pictureBox_TopEdge.Size = new System.Drawing.Size(913, 1);
             this.pictureBox_TopEdge.TabIndex = 1;
             this.pictureBox_TopEdge.TabStop = false;
             this.pictureBox_TopEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_TopEdge_MouseDown);
@@ -98,7 +110,7 @@
             this.pictureBox_BottomEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.pictureBox_BottomEdge.Location = new System.Drawing.Point(1, 598);
             this.pictureBox_BottomEdge.Name = "pictureBox_BottomEdge";
-            this.pictureBox_BottomEdge.Size = new System.Drawing.Size(798, 1);
+            this.pictureBox_BottomEdge.Size = new System.Drawing.Size(913, 1);
             this.pictureBox_BottomEdge.TabIndex = 3;
             this.pictureBox_BottomEdge.TabStop = false;
             this.pictureBox_BottomEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_BottomEdge_MouseDown);
@@ -109,9 +121,9 @@
             // 
             this.pictureBox_RightEdge.BackColor = System.Drawing.Color.Gray;
             this.pictureBox_RightEdge.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.pictureBox_RightEdge.Location = new System.Drawing.Point(798, 2);
+            this.pictureBox_RightEdge.Location = new System.Drawing.Point(913, 2);
             this.pictureBox_RightEdge.Name = "pictureBox_RightEdge";
-            this.pictureBox_RightEdge.Size = new System.Drawing.Size(1, 596);
+            this.pictureBox_RightEdge.Size = new System.Drawing.Size(1, 560);
             this.pictureBox_RightEdge.TabIndex = 4;
             this.pictureBox_RightEdge.TabStop = false;
             this.pictureBox_RightEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseDown);
@@ -135,7 +147,7 @@
             // 
             this.pictureBox_LeftBottomCorner.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_LeftBottomCorner.Cursor = System.Windows.Forms.Cursors.SizeNESW;
-            this.pictureBox_LeftBottomCorner.Location = new System.Drawing.Point(0, 595);
+            this.pictureBox_LeftBottomCorner.Location = new System.Drawing.Point(0, 557);
             this.pictureBox_LeftBottomCorner.Name = "pictureBox_LeftBottomCorner";
             this.pictureBox_LeftBottomCorner.Size = new System.Drawing.Size(5, 5);
             this.pictureBox_LeftBottomCorner.TabIndex = 14;
@@ -148,7 +160,7 @@
             // 
             this.pictureBox_RightBottomCorner.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_RightBottomCorner.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.pictureBox_RightBottomCorner.Location = new System.Drawing.Point(795, 595);
+            this.pictureBox_RightBottomCorner.Location = new System.Drawing.Point(910, 557);
             this.pictureBox_RightBottomCorner.Name = "pictureBox_RightBottomCorner";
             this.pictureBox_RightBottomCorner.Size = new System.Drawing.Size(5, 5);
             this.pictureBox_RightBottomCorner.TabIndex = 15;
@@ -161,7 +173,7 @@
             // 
             this.pictureBox_RightTopCorner.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_RightTopCorner.Cursor = System.Windows.Forms.Cursors.SizeNESW;
-            this.pictureBox_RightTopCorner.Location = new System.Drawing.Point(795, 0);
+            this.pictureBox_RightTopCorner.Location = new System.Drawing.Point(910, 0);
             this.pictureBox_RightTopCorner.Name = "pictureBox_RightTopCorner";
             this.pictureBox_RightTopCorner.Size = new System.Drawing.Size(5, 5);
             this.pictureBox_RightTopCorner.TabIndex = 16;
@@ -170,22 +182,10 @@
             this.pictureBox_RightTopCorner.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightTopCorner_MouseMove);
             this.pictureBox_RightTopCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightTopCorner_MouseUp);
             // 
-            // pictureBox_Close
-            // 
-            this.pictureBox_Close.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Close.Location = new System.Drawing.Point(777, 13);
-            this.pictureBox_Close.Name = "pictureBox_Close";
-            this.pictureBox_Close.Size = new System.Drawing.Size(13, 13);
-            this.pictureBox_Close.TabIndex = 17;
-            this.pictureBox_Close.TabStop = false;
-            this.pictureBox_Close.Click += new System.EventHandler(this.pictureBox_Close_Click);
-            this.pictureBox_Close.MouseEnter += new System.EventHandler(this.pictureBox_Close_MouseEnter);
-            this.pictureBox_Close.MouseLeave += new System.EventHandler(this.pictureBox_Close_MouseLeave);
-            // 
             // pictureBox_Max
             // 
             this.pictureBox_Max.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Max.Location = new System.Drawing.Point(753, 13);
+            this.pictureBox_Max.Location = new System.Drawing.Point(869, 13);
             this.pictureBox_Max.Name = "pictureBox_Max";
             this.pictureBox_Max.Size = new System.Drawing.Size(13, 13);
             this.pictureBox_Max.TabIndex = 17;
@@ -197,7 +197,7 @@
             // pictureBox_Min
             // 
             this.pictureBox_Min.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Min.Location = new System.Drawing.Point(730, 13);
+            this.pictureBox_Min.Location = new System.Drawing.Point(846, 13);
             this.pictureBox_Min.Name = "pictureBox_Min";
             this.pictureBox_Min.Size = new System.Drawing.Size(13, 13);
             this.pictureBox_Min.TabIndex = 18;
@@ -212,7 +212,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ClientSize = new System.Drawing.Size(915, 562);
             this.Controls.Add(this.pictureBox_Min);
             this.Controls.Add(this.pictureBox_Max);
             this.Controls.Add(this.pictureBox_TopEdge);
@@ -228,6 +228,7 @@
             this.Name = "MainForm";
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.panelTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).EndInit();
@@ -236,7 +237,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftBottomCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightBottomCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).EndInit();
             this.ResumeLayout(false);

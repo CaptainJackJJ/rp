@@ -26,7 +26,7 @@ namespace RPlayer
 
         private const int m_nMinSize = 50;
         private const int m_nEdgeMargin = 1;
-        private const int m_nTopBarButtonsMargin = 10;
+        private const int m_nTopBarButtonsMargin = 20;
         private const int m_nTopBarButtonswidth = 13;
         private const int m_nRenderToTopBarMargin = 12;
         private const int m_nRenderToBottomBarMargin = 23;

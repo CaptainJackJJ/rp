@@ -72,7 +72,7 @@
             // pictureBox_Close
             // 
             this.pictureBox_Close.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Close.Location = new System.Drawing.Point(892, 13);
+            this.pictureBox_Close.Location = new System.Drawing.Point(882, 13);
             this.pictureBox_Close.Name = "pictureBox_Close";
             this.pictureBox_Close.Size = new System.Drawing.Size(13, 13);
             this.pictureBox_Close.TabIndex = 17;
@@ -188,7 +188,7 @@
             // pictureBox_Max
             // 
             this.pictureBox_Max.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Max.Location = new System.Drawing.Point(869, 13);
+            this.pictureBox_Max.Location = new System.Drawing.Point(859, 13);
             this.pictureBox_Max.Name = "pictureBox_Max";
             this.pictureBox_Max.Size = new System.Drawing.Size(13, 13);
             this.pictureBox_Max.TabIndex = 17;
@@ -200,7 +200,7 @@
             // pictureBox_Min
             // 
             this.pictureBox_Min.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Min.Location = new System.Drawing.Point(846, 13);
+            this.pictureBox_Min.Location = new System.Drawing.Point(836, 13);
             this.pictureBox_Min.Name = "pictureBox_Min";
             this.pictureBox_Min.Size = new System.Drawing.Size(13, 13);
             this.pictureBox_Min.TabIndex = 18;

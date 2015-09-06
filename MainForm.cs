@@ -28,6 +28,8 @@ namespace RPlayer
         private const int m_nEdgeMargin = 1;
         private const int m_nTopBarButtonsMargin = 10;
         private const int m_nTopBarButtonswidth = 13;
+        private const int m_nRenderToTopBarMargin = 12;
+        private const int m_nRenderToBottomBarMargin = 23;
 
         private bool m_bMaxed = false;
 
@@ -132,6 +134,11 @@ namespace RPlayer
                 = new Size(pictureBox_RightEdge.Width,
                     this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
             panelTop.Size = new Size(this.Size.Width,panelTop.Size.Height);
+            pictureBox_Render.Size
+                = new Size(this.Size.Width - m_nEdgeMargin * 2 - pictureBox_LeftEdge.Size.Width * 2 - 1,
+                    this.Size.Height - panel_BottomBar.Size.Height - m_nRenderToBottomBarMargin 
+                    - pictureBox_Render.Location.Y);
+            panel_BottomBar.Size = new Size(this.Size.Width, panel_BottomBar.Size.Height);
 
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
@@ -158,6 +165,13 @@ namespace RPlayer
             pictureBox_Min.Location =
                new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
                     pictureBox_Min.Location.Y);
+
+            pictureBox_Render.Location =
+               new Point(m_nEdgeMargin + pictureBox_LeftEdge.Size.Width + 1,
+                    panelTop.Size.Height + m_nRenderToTopBarMargin);
+
+            panel_BottomBar.Location =
+               new Point(0, this.Size.Height - panel_BottomBar.Size.Height);
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)

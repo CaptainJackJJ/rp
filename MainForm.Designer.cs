@@ -40,6 +40,8 @@
             this.pictureBox_RightTopCorner = new System.Windows.Forms.PictureBox();
             this.pictureBox_Max = new System.Windows.Forms.PictureBox();
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
+            this.pictureBox_Render = new System.Windows.Forms.PictureBox();
+            this.panel_BottomBar = new System.Windows.Forms.Panel();
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
@@ -52,6 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Render)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -206,6 +209,23 @@
             this.pictureBox_Min.MouseEnter += new System.EventHandler(this.pictureBox_Min_MouseEnter);
             this.pictureBox_Min.MouseLeave += new System.EventHandler(this.pictureBox_Min_MouseLeave);
             // 
+            // pictureBox_Render
+            // 
+            this.pictureBox_Render.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_Render.Location = new System.Drawing.Point(3, 40);
+            this.pictureBox_Render.Name = "pictureBox_Render";
+            this.pictureBox_Render.Size = new System.Drawing.Size(910, 447);
+            this.pictureBox_Render.TabIndex = 19;
+            this.pictureBox_Render.TabStop = false;
+            // 
+            // panel_BottomBar
+            // 
+            this.panel_BottomBar.BackColor = System.Drawing.Color.Transparent;
+            this.panel_BottomBar.Location = new System.Drawing.Point(0, 511);
+            this.panel_BottomBar.Name = "panel_BottomBar";
+            this.panel_BottomBar.Size = new System.Drawing.Size(915, 51);
+            this.panel_BottomBar.TabIndex = 20;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -213,15 +233,17 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.pictureBox_RightEdge);
+            this.Controls.Add(this.pictureBox_BottomEdge);
+            this.Controls.Add(this.pictureBox_LeftEdge);
+            this.Controls.Add(this.pictureBox_RightBottomCorner);
+            this.Controls.Add(this.pictureBox_LeftBottomCorner);
+            this.Controls.Add(this.panel_BottomBar);
+            this.Controls.Add(this.pictureBox_Render);
             this.Controls.Add(this.pictureBox_Min);
             this.Controls.Add(this.pictureBox_Max);
             this.Controls.Add(this.pictureBox_TopEdge);
-            this.Controls.Add(this.pictureBox_RightEdge);
-            this.Controls.Add(this.pictureBox_LeftEdge);
-            this.Controls.Add(this.pictureBox_BottomEdge);
             this.Controls.Add(this.pictureBox_RightTopCorner);
-            this.Controls.Add(this.pictureBox_LeftBottomCorner);
-            this.Controls.Add(this.pictureBox_RightBottomCorner);
             this.Controls.Add(this.pictureBox_LeftTopCorner);
             this.Controls.Add(this.panelTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -239,6 +261,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Render)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -257,6 +280,8 @@
         private System.Windows.Forms.PictureBox pictureBox_Close;
         private System.Windows.Forms.PictureBox pictureBox_Max;
         private System.Windows.Forms.PictureBox pictureBox_Min;
+        private System.Windows.Forms.PictureBox pictureBox_Render;
+        private System.Windows.Forms.Panel panel_BottomBar;
     }
 }
 

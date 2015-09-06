@@ -40,7 +40,7 @@
             this.pictureBox_RightTopCorner = new System.Windows.Forms.PictureBox();
             this.pictureBox_Max = new System.Windows.Forms.PictureBox();
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Render = new System.Windows.Forms.PictureBox();
+            this.pictureBox_Background = new System.Windows.Forms.PictureBox();
             this.panel_BottomBar = new System.Windows.Forms.Panel();
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
@@ -54,7 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Render)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -209,14 +209,14 @@
             this.pictureBox_Min.MouseEnter += new System.EventHandler(this.pictureBox_Min_MouseEnter);
             this.pictureBox_Min.MouseLeave += new System.EventHandler(this.pictureBox_Min_MouseLeave);
             // 
-            // pictureBox_Render
+            // pictureBox_Background
             // 
-            this.pictureBox_Render.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Render.Location = new System.Drawing.Point(3, 40);
-            this.pictureBox_Render.Name = "pictureBox_Render";
-            this.pictureBox_Render.Size = new System.Drawing.Size(910, 447);
-            this.pictureBox_Render.TabIndex = 19;
-            this.pictureBox_Render.TabStop = false;
+            this.pictureBox_Background.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_Background.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_Background.Name = "pictureBox_Background";
+            this.pictureBox_Background.Size = new System.Drawing.Size(915, 562);
+            this.pictureBox_Background.TabIndex = 19;
+            this.pictureBox_Background.TabStop = false;
             // 
             // panel_BottomBar
             // 
@@ -233,19 +233,19 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
-            this.Controls.Add(this.pictureBox_RightEdge);
-            this.Controls.Add(this.pictureBox_BottomEdge);
             this.Controls.Add(this.pictureBox_LeftEdge);
-            this.Controls.Add(this.pictureBox_RightBottomCorner);
-            this.Controls.Add(this.pictureBox_LeftBottomCorner);
-            this.Controls.Add(this.panel_BottomBar);
-            this.Controls.Add(this.pictureBox_Render);
-            this.Controls.Add(this.pictureBox_Min);
-            this.Controls.Add(this.pictureBox_Max);
+            this.Controls.Add(this.pictureBox_RightEdge);
             this.Controls.Add(this.pictureBox_TopEdge);
             this.Controls.Add(this.pictureBox_RightTopCorner);
             this.Controls.Add(this.pictureBox_LeftTopCorner);
+            this.Controls.Add(this.pictureBox_Min);
+            this.Controls.Add(this.pictureBox_Max);
             this.Controls.Add(this.panelTop);
+            this.Controls.Add(this.pictureBox_BottomEdge);
+            this.Controls.Add(this.pictureBox_RightBottomCorner);
+            this.Controls.Add(this.pictureBox_LeftBottomCorner);
+            this.Controls.Add(this.panel_BottomBar);
+            this.Controls.Add(this.pictureBox_Background);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -261,7 +261,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Render)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -280,7 +280,7 @@
         private System.Windows.Forms.PictureBox pictureBox_Close;
         private System.Windows.Forms.PictureBox pictureBox_Max;
         private System.Windows.Forms.PictureBox pictureBox_Min;
-        private System.Windows.Forms.PictureBox pictureBox_Render;
+        private System.Windows.Forms.PictureBox pictureBox_Background;
         private System.Windows.Forms.Panel panel_BottomBar;
     }
 }

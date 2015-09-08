@@ -30,8 +30,10 @@ namespace RPlayer
         private const int m_nTopBarButtonswidth = 13;
         private const int m_nRenderToTopBarMargin = 12;
         private const int m_nRenderToBottomBarMargin = 23;
+        private const int m_nCornerSize = 10;
 
         private bool m_bMaxed = false;
+        private bool m_bInCorner = false;
 
         public MainForm()
         {
@@ -119,15 +121,6 @@ namespace RPlayer
             pictureBox_RightEdge.Location
                 = new Point(this.Size.Width - m_nEdgeMargin - pictureBox_RightEdge.Size.Width, 
                     pictureBox_RightEdge.Location.Y);
-            pictureBox_LeftBottomCorner.Location
-                = new Point(pictureBox_LeftBottomCorner.Location.X,
-                this.Size.Height - pictureBox_LeftBottomCorner.Size.Height);
-            pictureBox_RightTopCorner.Location
-                = new Point(this.Size.Width - pictureBox_RightTopCorner.Size.Width,
-                    pictureBox_RightTopCorner.Location.Y);
-            pictureBox_RightBottomCorner.Location
-                = new Point(this.Size.Width - pictureBox_RightBottomCorner.Size.Width,
-                    this.Size.Height - pictureBox_RightBottomCorner.Size.Height);
 
             pictureBox_Close.Location =
                 new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
@@ -182,113 +175,6 @@ namespace RPlayer
         private void pictureBox_RightEdge_MouseUp(object sender, MouseEventArgs e)
         {
             m_bRightEdge_MouseDown = false;
-        }
-
-        private void pictureBox_RightBottomCorner_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_bRightBottomCornerMouseDown = true;
-        }
-
-        private void pictureBox_RightBottomCorner_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_bRightBottomCornerMouseDown)
-            {
-                Control control = (Control)sender;
-                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-                int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
-                int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
-                if (this.Size.Width + xDiff > m_nMinSize &&
-                    this.Size.Height + yDiff > m_nMinSize)
-                {
-                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
-                }
-            }
-        }
-
-        private void pictureBox_RightBottomCorner_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bRightBottomCornerMouseDown = false;
-        }
-
-        private void pictureBox_LeftTopCorner_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_bLeftTopCornerMouseDown = true;
-        }
-
-        private void pictureBox_LeftTopCorner_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_bLeftTopCornerMouseDown)
-            {
-                Control control = (Control)sender;
-                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-                int xDiff = this.Location.X - MouseScreenPoint.X;
-                int yDiff = this.Location.Y - MouseScreenPoint.Y;
-                if (this.Size.Width + xDiff > m_nMinSize &&
-                    this.Size.Height + yDiff > m_nMinSize)
-                {
-                    this.Location = new Point(MouseScreenPoint.X, MouseScreenPoint.Y);
-                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
-                }
-            }
-        }
-
-        private void pictureBox_LeftTopCorner_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bLeftTopCornerMouseDown = false;
-        }
-
-        private void pictureBox_LeftBottomCorner_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_bLeftBottomCornerMouseDown = true;
-        }
-
-        private void pictureBox_LeftBottomCorner_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_bLeftBottomCornerMouseDown)
-            {
-                Control control = (Control)sender;
-                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-                int xDiff = this.Location.X - MouseScreenPoint.X;
-                int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
-                if (this.Size.Width + xDiff > m_nMinSize &&
-                    this.Size.Height + yDiff > m_nMinSize)
-                {
-                    this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
-                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
-                }
-            }
-        }
-
-        private void pictureBox_LeftBottomCorner_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bLeftBottomCornerMouseDown = false;
-        }
-
-        private void pictureBox_RightTopCorner_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_bRightTopCornerMouseDown = true;
-        }
-
-        private void pictureBox_RightTopCorner_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_bRightTopCornerMouseDown)
-            {
-                Control control = (Control)sender;
-                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-                int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width); 
-                int yDiff = this.Location.Y - MouseScreenPoint.Y;
-                if (this.Size.Width + xDiff > m_nMinSize &&
-                    this.Size.Height + yDiff > m_nMinSize)
-                {
-                    this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
-                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
-                }
-            }
-        }
-
-        private void pictureBox_RightTopCorner_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bRightTopCornerMouseDown = false;
         }
 
         private void pictureBox_Max_MouseEnter(object sender, EventArgs e)
@@ -370,7 +256,16 @@ namespace RPlayer
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            m_bMainFormMouseDown = true;
+            if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+                m_bRightBottomCornerMouseDown = true;
+            else if (e.Location.X < m_nCornerSize && e.Location.Y < m_nCornerSize)
+                m_bLeftTopCornerMouseDown = true;
+            else if (e.Location.X < m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+                m_bLeftBottomCornerMouseDown = true;
+            else if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
+                m_bRightTopCornerMouseDown = true;
+            else
+                m_bMainFormMouseDown = true;
             m_MainFormMouseDownPos = e.Location;
         }
 
@@ -382,11 +277,85 @@ namespace RPlayer
                 int yDiff = e.Y - m_MainFormMouseDownPos.Y;
                 this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
             }
+            else if (m_bRightBottomCornerMouseDown)
+            {
+                Control control = (Control)sender;
+                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+                int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
+                int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
+                if (this.Size.Width + xDiff > m_nMinSize &&
+                    this.Size.Height + yDiff > m_nMinSize)
+                {
+                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
+                }
+            }
+            else if (m_bLeftTopCornerMouseDown)
+            {
+                Control control = (Control)sender;
+                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+                int xDiff = this.Location.X - MouseScreenPoint.X;
+                int yDiff = this.Location.Y - MouseScreenPoint.Y;
+                if (this.Size.Width + xDiff > m_nMinSize &&
+                    this.Size.Height + yDiff > m_nMinSize)
+                {
+                    this.Location = new Point(MouseScreenPoint.X, MouseScreenPoint.Y);
+                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
+                }
+            }
+            else if (m_bLeftBottomCornerMouseDown)
+            {
+                Control control = (Control)sender;
+                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+                int xDiff = this.Location.X - MouseScreenPoint.X;
+                int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
+                if (this.Size.Width + xDiff > m_nMinSize &&
+                    this.Size.Height + yDiff > m_nMinSize)
+                {
+                    this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
+                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
+                }
+            }
+            else if (m_bRightTopCornerMouseDown)
+            {
+                Control control = (Control)sender;
+                Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+                int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
+                int yDiff = this.Location.Y - MouseScreenPoint.Y;
+                if (this.Size.Width + xDiff > m_nMinSize &&
+                    this.Size.Height + yDiff > m_nMinSize)
+                {
+                    this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
+                    this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
+                }
+            }
+
+            if ((e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+                ||
+                (e.Location.X < m_nCornerSize && e.Location.Y < m_nCornerSize)
+                )
+            {
+                Cursor = Cursors.SizeNWSE;
+                m_bInCorner = true;
+            }
+            else if ((e.Location.X < m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+                ||
+                (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
+                )
+            {
+                Cursor = Cursors.SizeNESW;
+                m_bInCorner = true;
+            }
+            else if (m_bInCorner)
+            {
+                Cursor = Cursors.Arrow;
+                m_bInCorner = false;
+            }
         }
 
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            m_bMainFormMouseDown = false;
+            m_bMainFormMouseDown = m_bRightBottomCornerMouseDown
+                = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
         }
     }
 }

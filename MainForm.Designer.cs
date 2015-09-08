@@ -32,10 +32,6 @@
             this.pictureBox_LeftEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_BottomEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_RightEdge = new System.Windows.Forms.PictureBox();
-            this.pictureBox_LeftTopCorner = new System.Windows.Forms.PictureBox();
-            this.pictureBox_LeftBottomCorner = new System.Windows.Forms.PictureBox();
-            this.pictureBox_RightBottomCorner = new System.Windows.Forms.PictureBox();
-            this.pictureBox_RightTopCorner = new System.Windows.Forms.PictureBox();
             this.pictureBox_Max = new System.Windows.Forms.PictureBox();
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
             this.pictureBox_Close = new System.Windows.Forms.PictureBox();
@@ -43,10 +39,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightEdge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftTopCorner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftBottomCorner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightBottomCorner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
@@ -104,58 +96,6 @@
             this.pictureBox_RightEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseMove);
             this.pictureBox_RightEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseUp);
             // 
-            // pictureBox_LeftTopCorner
-            // 
-            this.pictureBox_LeftTopCorner.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_LeftTopCorner.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.pictureBox_LeftTopCorner.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_LeftTopCorner.Name = "pictureBox_LeftTopCorner";
-            this.pictureBox_LeftTopCorner.Size = new System.Drawing.Size(5, 5);
-            this.pictureBox_LeftTopCorner.TabIndex = 13;
-            this.pictureBox_LeftTopCorner.TabStop = false;
-            this.pictureBox_LeftTopCorner.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftTopCorner_MouseDown);
-            this.pictureBox_LeftTopCorner.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftTopCorner_MouseMove);
-            this.pictureBox_LeftTopCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftTopCorner_MouseUp);
-            // 
-            // pictureBox_LeftBottomCorner
-            // 
-            this.pictureBox_LeftBottomCorner.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_LeftBottomCorner.Cursor = System.Windows.Forms.Cursors.SizeNESW;
-            this.pictureBox_LeftBottomCorner.Location = new System.Drawing.Point(0, 557);
-            this.pictureBox_LeftBottomCorner.Name = "pictureBox_LeftBottomCorner";
-            this.pictureBox_LeftBottomCorner.Size = new System.Drawing.Size(5, 5);
-            this.pictureBox_LeftBottomCorner.TabIndex = 14;
-            this.pictureBox_LeftBottomCorner.TabStop = false;
-            this.pictureBox_LeftBottomCorner.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftBottomCorner_MouseDown);
-            this.pictureBox_LeftBottomCorner.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftBottomCorner_MouseMove);
-            this.pictureBox_LeftBottomCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_LeftBottomCorner_MouseUp);
-            // 
-            // pictureBox_RightBottomCorner
-            // 
-            this.pictureBox_RightBottomCorner.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_RightBottomCorner.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.pictureBox_RightBottomCorner.Location = new System.Drawing.Point(910, 557);
-            this.pictureBox_RightBottomCorner.Name = "pictureBox_RightBottomCorner";
-            this.pictureBox_RightBottomCorner.Size = new System.Drawing.Size(5, 5);
-            this.pictureBox_RightBottomCorner.TabIndex = 15;
-            this.pictureBox_RightBottomCorner.TabStop = false;
-            this.pictureBox_RightBottomCorner.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightBottomCorner_MouseDown);
-            this.pictureBox_RightBottomCorner.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightBottomCorner_MouseMove);
-            this.pictureBox_RightBottomCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightBottomCorner_MouseUp);
-            // 
-            // pictureBox_RightTopCorner
-            // 
-            this.pictureBox_RightTopCorner.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_RightTopCorner.Cursor = System.Windows.Forms.Cursors.SizeNESW;
-            this.pictureBox_RightTopCorner.Location = new System.Drawing.Point(910, 0);
-            this.pictureBox_RightTopCorner.Name = "pictureBox_RightTopCorner";
-            this.pictureBox_RightTopCorner.Size = new System.Drawing.Size(5, 5);
-            this.pictureBox_RightTopCorner.TabIndex = 16;
-            this.pictureBox_RightTopCorner.TabStop = false;
-            this.pictureBox_RightTopCorner.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightTopCorner_MouseDown);
-            this.pictureBox_RightTopCorner.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightTopCorner_MouseMove);
-            this.pictureBox_RightTopCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightTopCorner_MouseUp);
-            // 
             // pictureBox_Max
             // 
             this.pictureBox_Max.BackColor = System.Drawing.Color.Transparent;
@@ -203,13 +143,9 @@
             this.Controls.Add(this.pictureBox_LeftEdge);
             this.Controls.Add(this.pictureBox_RightEdge);
             this.Controls.Add(this.pictureBox_TopEdge);
-            this.Controls.Add(this.pictureBox_RightTopCorner);
-            this.Controls.Add(this.pictureBox_LeftTopCorner);
             this.Controls.Add(this.pictureBox_Min);
             this.Controls.Add(this.pictureBox_Max);
             this.Controls.Add(this.pictureBox_BottomEdge);
-            this.Controls.Add(this.pictureBox_RightBottomCorner);
-            this.Controls.Add(this.pictureBox_LeftBottomCorner);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
@@ -220,10 +156,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightEdge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftTopCorner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftBottomCorner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightBottomCorner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightTopCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).EndInit();
@@ -237,10 +169,6 @@
         private System.Windows.Forms.PictureBox pictureBox_LeftEdge;
         private System.Windows.Forms.PictureBox pictureBox_BottomEdge;
         private System.Windows.Forms.PictureBox pictureBox_RightEdge;
-        private System.Windows.Forms.PictureBox pictureBox_LeftTopCorner;
-        private System.Windows.Forms.PictureBox pictureBox_LeftBottomCorner;
-        private System.Windows.Forms.PictureBox pictureBox_RightBottomCorner;
-        private System.Windows.Forms.PictureBox pictureBox_RightTopCorner;
         private System.Windows.Forms.PictureBox pictureBox_Max;
         private System.Windows.Forms.PictureBox pictureBox_Min;
         private System.Windows.Forms.PictureBox pictureBox_Close;

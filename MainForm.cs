@@ -11,8 +11,8 @@ namespace RPlayer
 {
     public partial class MainForm : Form
     {
-        private bool m_bPanelTopMouseDown = false;
-        private Point m_PanelTopMouseDownPos;
+        private bool m_bMainFormMouseDown = false;
+        private Point m_MainFormMouseDownPos;
 
         private bool m_bTopEdge_MouseDown = false;
         private bool m_bLeftEdge_MouseDown = false;
@@ -45,27 +45,6 @@ namespace RPlayer
             }
             catch
             {}
-        }
-
-        private void panelTop_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_bPanelTopMouseDown = true;
-            m_PanelTopMouseDownPos = e.Location;
-        }
-
-        private void panelTop_MouseMove(object sender, MouseEventArgs e)
-        {
-            if(m_bPanelTopMouseDown)
-            {
-                int xDiff = e.X - m_PanelTopMouseDownPos.X;
-                int yDiff = e.Y - m_PanelTopMouseDownPos.Y;
-                this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
-            }
-        }
-
-        private void panelTop_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bPanelTopMouseDown = false;
         }
 
         private void pictureBox_TopEdge_MouseDown(object sender, MouseEventArgs e)
@@ -133,7 +112,6 @@ namespace RPlayer
             pictureBox_RightEdge.Size 
                 = new Size(pictureBox_RightEdge.Width,
                     this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
-            panelTop.Size = new Size(this.Size.Width,panelTop.Size.Height);
 
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
@@ -388,6 +366,27 @@ namespace RPlayer
         private void pictureBox_Min_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            m_bMainFormMouseDown = true;
+            m_MainFormMouseDownPos = e.Location;
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (m_bMainFormMouseDown)
+            {
+                int xDiff = e.X - m_MainFormMouseDownPos.X;
+                int yDiff = e.Y - m_MainFormMouseDownPos.Y;
+                this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
+            }
+        }
+
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            m_bMainFormMouseDown = false;
         }
     }
 }

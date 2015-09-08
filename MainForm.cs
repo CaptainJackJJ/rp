@@ -137,7 +137,6 @@ namespace RPlayer
             pictureBox_Background.Size
                 = new Size(this.Size.Width,
                     this.Size.Height);
-            panel_BottomBar.Size = new Size(this.Size.Width, panel_BottomBar.Size.Height);
 
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
@@ -168,9 +167,6 @@ namespace RPlayer
             pictureBox_Background.Location =
                new Point(0,
                     0);
-
-            panel_BottomBar.Location =
-               new Point(0, this.Size.Height - panel_BottomBar.Size.Height);
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)

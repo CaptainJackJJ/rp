@@ -35,6 +35,7 @@
             this.pictureBox_Max = new System.Windows.Forms.PictureBox();
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
             this.pictureBox_Close = new System.Windows.Forms.PictureBox();
+            this.label_Play = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
@@ -132,6 +133,16 @@
             this.pictureBox_Close.MouseEnter += new System.EventHandler(this.pictureBox_Close_MouseEnter);
             this.pictureBox_Close.MouseLeave += new System.EventHandler(this.pictureBox_Close_MouseLeave);
             // 
+            // label_Play
+            // 
+            this.label_Play.BackColor = System.Drawing.Color.Transparent;
+            this.label_Play.Location = new System.Drawing.Point(437, 513);
+            this.label_Play.Name = "label_Play";
+            this.label_Play.Size = new System.Drawing.Size(40, 40);
+            this.label_Play.TabIndex = 19;
+            this.label_Play.MouseEnter += new System.EventHandler(this.label_Play_MouseEnter);
+            this.label_Play.MouseLeave += new System.EventHandler(this.label_Play_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -139,6 +150,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_Play);
             this.Controls.Add(this.pictureBox_Close);
             this.Controls.Add(this.pictureBox_LeftEdge);
             this.Controls.Add(this.pictureBox_RightEdge);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.PictureBox pictureBox_Max;
         private System.Windows.Forms.PictureBox pictureBox_Min;
         private System.Windows.Forms.PictureBox pictureBox_Close;
+        private System.Windows.Forms.Label label_Play;
     }
 }
 

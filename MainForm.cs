@@ -43,6 +43,7 @@ namespace RPlayer
                 pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
                 pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
                 pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+                label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
@@ -115,6 +116,8 @@ namespace RPlayer
                 = new Size(pictureBox_RightEdge.Width,
                     this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
 
+
+
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
                     this.Size.Height - m_nEdgeMargin - pictureBox_BottomEdge.Size.Height);
@@ -131,6 +134,10 @@ namespace RPlayer
             pictureBox_Min.Location =
                new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
                     pictureBox_Min.Location.Y);
+
+            label_Play.Location =
+               new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
+                    this.Size.Height - 50);
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)
@@ -356,6 +363,23 @@ namespace RPlayer
         {
             m_bMainFormMouseDown = m_bRightBottomCornerMouseDown
                 = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
+        }
+
+        private void label_Play_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+            }catch { }
+        }
+
+        private void label_Play_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+            }
+            catch { }
         }
     }
 }

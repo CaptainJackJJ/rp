@@ -37,6 +37,10 @@
             this.pictureBox_Close = new System.Windows.Forms.PictureBox();
             this.label_Play = new System.Windows.Forms.Label();
             this.label_Stop = new System.Windows.Forms.Label();
+            this.label_FF = new System.Windows.Forms.Label();
+            this.label_FB = new System.Windows.Forms.Label();
+            this.label_Next = new System.Windows.Forms.Label();
+            this.label_Pre = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
@@ -154,6 +158,46 @@
             this.label_Stop.MouseEnter += new System.EventHandler(this.label_Stop_MouseEnter);
             this.label_Stop.MouseLeave += new System.EventHandler(this.label_Stop_MouseLeave);
             // 
+            // label_FF
+            // 
+            this.label_FF.BackColor = System.Drawing.Color.Transparent;
+            this.label_FF.Location = new System.Drawing.Point(452, 519);
+            this.label_FF.Name = "label_FF";
+            this.label_FF.Size = new System.Drawing.Size(25, 25);
+            this.label_FF.TabIndex = 21;
+            this.label_FF.MouseEnter += new System.EventHandler(this.label_FF_MouseEnter);
+            this.label_FF.MouseLeave += new System.EventHandler(this.label_FF_MouseLeave);
+            // 
+            // label_FB
+            // 
+            this.label_FB.BackColor = System.Drawing.Color.Transparent;
+            this.label_FB.Location = new System.Drawing.Point(452, 519);
+            this.label_FB.Name = "label_FB";
+            this.label_FB.Size = new System.Drawing.Size(25, 25);
+            this.label_FB.TabIndex = 22;
+            this.label_FB.MouseEnter += new System.EventHandler(this.label_FB_MouseEnter);
+            this.label_FB.MouseLeave += new System.EventHandler(this.label_FB_MouseLeave);
+            // 
+            // label_Next
+            // 
+            this.label_Next.BackColor = System.Drawing.Color.Transparent;
+            this.label_Next.Location = new System.Drawing.Point(532, 519);
+            this.label_Next.Name = "label_Next";
+            this.label_Next.Size = new System.Drawing.Size(25, 25);
+            this.label_Next.TabIndex = 23;
+            this.label_Next.MouseEnter += new System.EventHandler(this.label_Next_MouseEnter);
+            this.label_Next.MouseLeave += new System.EventHandler(this.label_Next_MouseLeave);
+            // 
+            // label_Pre
+            // 
+            this.label_Pre.BackColor = System.Drawing.Color.Transparent;
+            this.label_Pre.Location = new System.Drawing.Point(357, 519);
+            this.label_Pre.Name = "label_Pre";
+            this.label_Pre.Size = new System.Drawing.Size(25, 25);
+            this.label_Pre.TabIndex = 24;
+            this.label_Pre.MouseEnter += new System.EventHandler(this.label_Pre_MouseEnter);
+            this.label_Pre.MouseLeave += new System.EventHandler(this.label_Pre_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -161,6 +205,10 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_Pre);
+            this.Controls.Add(this.label_Next);
+            this.Controls.Add(this.label_FB);
+            this.Controls.Add(this.label_FF);
             this.Controls.Add(this.label_Stop);
             this.Controls.Add(this.label_Play);
             this.Controls.Add(this.pictureBox_Close);
@@ -198,6 +246,10 @@
         private System.Windows.Forms.PictureBox pictureBox_Close;
         private System.Windows.Forms.Label label_Play;
         private System.Windows.Forms.Label label_Stop;
+        private System.Windows.Forms.Label label_FF;
+        private System.Windows.Forms.Label label_FB;
+        private System.Windows.Forms.Label label_Next;
+        private System.Windows.Forms.Label label_Pre;
     }
 }
 

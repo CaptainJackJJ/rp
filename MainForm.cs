@@ -50,9 +50,9 @@ namespace RPlayer
             InitializeComponent();
             try
             {                
-                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
-                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
                 label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
                 label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FF.png");
@@ -132,8 +132,6 @@ namespace RPlayer
                 = new Size(pictureBox_RightEdge.Width,
                     this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
 
-
-
             pictureBox_BottomEdge.Location
                 = new Point(pictureBox_BottomEdge.Location.X,
                     this.Size.Height - m_nEdgeMargin - pictureBox_BottomEdge.Size.Height);
@@ -141,15 +139,15 @@ namespace RPlayer
                 = new Point(this.Size.Width - m_nEdgeMargin - pictureBox_RightEdge.Size.Width, 
                     pictureBox_RightEdge.Location.Y);
 
-            pictureBox_Close.Location =
+            label_Close.Location =
                 new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
-                    pictureBox_Close.Location.Y);
-            pictureBox_Max.Location =
+                    label_Close.Location.Y);
+            label_Max.Location =
                 new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonswidth * 2,
-                    pictureBox_Max.Location.Y);
-            pictureBox_Min.Location =
+                    label_Max.Location.Y);
+            label_Min.Location =
                new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
-                    pictureBox_Min.Location.Y);
+                    label_Min.Location.Y);
 
             label_Play.Location =
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
@@ -216,82 +214,9 @@ namespace RPlayer
             m_bRightEdge_MouseDown = false;
         }
 
-        private void pictureBox_Max_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
-            }catch{}
-        }
 
-        private void pictureBox_Max_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
-            }
-            catch { }
-        }
 
-        private void pictureBox_Close_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
-            }
-            catch { }
-        }
-
-        private void pictureBox_Close_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-            }
-            catch { }
-        }
-
-        private void pictureBox_Min_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
-            }
-            catch { }
-        }
-
-        private void pictureBox_Min_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
-            }
-            catch { }
-        }
-
-        private void pictureBox_Close_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void pictureBox_Max_Click(object sender, EventArgs e)
-        {
-            if (m_bMaxed)
-            {
-                this.WindowState = FormWindowState.Normal;
-                m_bMaxed = false;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Maximized;
-                m_bMaxed = true;
-            }
-        }
-
-        private void pictureBox_Min_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+        
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
@@ -500,6 +425,84 @@ namespace RPlayer
             try
             {
                 label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
+            }
+            catch { }
+        }
+
+        private void label_Min_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_Min_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+            }
+            catch { }
+        }
+
+        private void label_Min_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void label_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void label_Close_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_Close_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+            }
+            catch { }
+        }
+
+        private void label_Max_Click(object sender, EventArgs e)
+        {
+            if (m_bMaxed)
+            {
+                this.WindowState = FormWindowState.Normal;
+                m_bMaxed = false;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+                m_bMaxed = true;
+            }
+        }
+
+        private void label_Max_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_Max_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
             }
             catch { }
         }

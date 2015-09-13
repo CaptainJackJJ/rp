@@ -32,22 +32,19 @@
             this.pictureBox_LeftEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_BottomEdge = new System.Windows.Forms.PictureBox();
             this.pictureBox_RightEdge = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Max = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Min = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Close = new System.Windows.Forms.PictureBox();
             this.label_Play = new System.Windows.Forms.Label();
             this.label_Stop = new System.Windows.Forms.Label();
             this.label_FF = new System.Windows.Forms.Label();
             this.label_FB = new System.Windows.Forms.Label();
             this.label_Next = new System.Windows.Forms.Label();
             this.label_Pre = new System.Windows.Forms.Label();
+            this.label_Min = new System.Windows.Forms.Label();
+            this.label_Close = new System.Windows.Forms.Label();
+            this.label_Max = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightEdge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox_TopEdge
@@ -101,42 +98,6 @@
             this.pictureBox_RightEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseDown);
             this.pictureBox_RightEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseMove);
             this.pictureBox_RightEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_RightEdge_MouseUp);
-            // 
-            // pictureBox_Max
-            // 
-            this.pictureBox_Max.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Max.Location = new System.Drawing.Point(859, 13);
-            this.pictureBox_Max.Name = "pictureBox_Max";
-            this.pictureBox_Max.Size = new System.Drawing.Size(13, 13);
-            this.pictureBox_Max.TabIndex = 17;
-            this.pictureBox_Max.TabStop = false;
-            this.pictureBox_Max.Click += new System.EventHandler(this.pictureBox_Max_Click);
-            this.pictureBox_Max.MouseEnter += new System.EventHandler(this.pictureBox_Max_MouseEnter);
-            this.pictureBox_Max.MouseLeave += new System.EventHandler(this.pictureBox_Max_MouseLeave);
-            // 
-            // pictureBox_Min
-            // 
-            this.pictureBox_Min.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Min.Location = new System.Drawing.Point(836, 13);
-            this.pictureBox_Min.Name = "pictureBox_Min";
-            this.pictureBox_Min.Size = new System.Drawing.Size(13, 13);
-            this.pictureBox_Min.TabIndex = 18;
-            this.pictureBox_Min.TabStop = false;
-            this.pictureBox_Min.Click += new System.EventHandler(this.pictureBox_Min_Click);
-            this.pictureBox_Min.MouseEnter += new System.EventHandler(this.pictureBox_Min_MouseEnter);
-            this.pictureBox_Min.MouseLeave += new System.EventHandler(this.pictureBox_Min_MouseLeave);
-            // 
-            // pictureBox_Close
-            // 
-            this.pictureBox_Close.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Close.Location = new System.Drawing.Point(882, 13);
-            this.pictureBox_Close.Name = "pictureBox_Close";
-            this.pictureBox_Close.Size = new System.Drawing.Size(13, 13);
-            this.pictureBox_Close.TabIndex = 17;
-            this.pictureBox_Close.TabStop = false;
-            this.pictureBox_Close.Click += new System.EventHandler(this.pictureBox_Close_Click);
-            this.pictureBox_Close.MouseEnter += new System.EventHandler(this.pictureBox_Close_MouseEnter);
-            this.pictureBox_Close.MouseLeave += new System.EventHandler(this.pictureBox_Close_MouseLeave);
             // 
             // label_Play
             // 
@@ -198,6 +159,39 @@
             this.label_Pre.MouseEnter += new System.EventHandler(this.label_Pre_MouseEnter);
             this.label_Pre.MouseLeave += new System.EventHandler(this.label_Pre_MouseLeave);
             // 
+            // label_Min
+            // 
+            this.label_Min.BackColor = System.Drawing.Color.Transparent;
+            this.label_Min.Location = new System.Drawing.Point(836, 13);
+            this.label_Min.Name = "label_Min";
+            this.label_Min.Size = new System.Drawing.Size(13, 13);
+            this.label_Min.TabIndex = 25;
+            this.label_Min.Click += new System.EventHandler(this.label_Min_Click);
+            this.label_Min.MouseEnter += new System.EventHandler(this.label_Min_MouseEnter);
+            this.label_Min.MouseLeave += new System.EventHandler(this.label_Min_MouseLeave);
+            // 
+            // label_Close
+            // 
+            this.label_Close.BackColor = System.Drawing.Color.Transparent;
+            this.label_Close.Location = new System.Drawing.Point(882, 13);
+            this.label_Close.Name = "label_Close";
+            this.label_Close.Size = new System.Drawing.Size(13, 13);
+            this.label_Close.TabIndex = 26;
+            this.label_Close.Click += new System.EventHandler(this.label_Close_Click);
+            this.label_Close.MouseEnter += new System.EventHandler(this.label_Close_MouseEnter);
+            this.label_Close.MouseLeave += new System.EventHandler(this.label_Close_MouseLeave);
+            // 
+            // label_Max
+            // 
+            this.label_Max.BackColor = System.Drawing.Color.Transparent;
+            this.label_Max.Location = new System.Drawing.Point(859, 13);
+            this.label_Max.Name = "label_Max";
+            this.label_Max.Size = new System.Drawing.Size(13, 13);
+            this.label_Max.TabIndex = 27;
+            this.label_Max.Click += new System.EventHandler(this.label_Max_Click);
+            this.label_Max.MouseEnter += new System.EventHandler(this.label_Max_MouseEnter);
+            this.label_Max.MouseLeave += new System.EventHandler(this.label_Max_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -205,18 +199,18 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_Max);
+            this.Controls.Add(this.label_Close);
+            this.Controls.Add(this.label_Min);
             this.Controls.Add(this.label_Pre);
             this.Controls.Add(this.label_Next);
             this.Controls.Add(this.label_FB);
             this.Controls.Add(this.label_FF);
             this.Controls.Add(this.label_Stop);
             this.Controls.Add(this.label_Play);
-            this.Controls.Add(this.pictureBox_Close);
             this.Controls.Add(this.pictureBox_LeftEdge);
             this.Controls.Add(this.pictureBox_RightEdge);
             this.Controls.Add(this.pictureBox_TopEdge);
-            this.Controls.Add(this.pictureBox_Min);
-            this.Controls.Add(this.pictureBox_Max);
             this.Controls.Add(this.pictureBox_BottomEdge);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
@@ -228,9 +222,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_RightEdge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Max)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Min)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Close)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -241,15 +232,15 @@
         private System.Windows.Forms.PictureBox pictureBox_LeftEdge;
         private System.Windows.Forms.PictureBox pictureBox_BottomEdge;
         private System.Windows.Forms.PictureBox pictureBox_RightEdge;
-        private System.Windows.Forms.PictureBox pictureBox_Max;
-        private System.Windows.Forms.PictureBox pictureBox_Min;
-        private System.Windows.Forms.PictureBox pictureBox_Close;
         private System.Windows.Forms.Label label_Play;
         private System.Windows.Forms.Label label_Stop;
         private System.Windows.Forms.Label label_FF;
         private System.Windows.Forms.Label label_FB;
         private System.Windows.Forms.Label label_Next;
         private System.Windows.Forms.Label label_Pre;
+        private System.Windows.Forms.Label label_Min;
+        private System.Windows.Forms.Label label_Close;
+        private System.Windows.Forms.Label label_Max;
     }
 }
 

@@ -99,7 +99,8 @@ namespace RPlayer
                new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
                     nBottomButtonsY);
 
-            if(m_bMainFormMouseDown)
+            if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown 
+                || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
             {
                 label_TopEdge.Visible = label_LeftEdge.Visible 
                     = label_BottomEdge.Visible = label_RightEdge.Visible = false;
@@ -454,6 +455,8 @@ namespace RPlayer
         private void label_LeftEdge_MouseUp(object sender, MouseEventArgs e)
         {
             m_bLeftEdge_MouseDown = false;
+            if (!label_TopEdge.Visible)
+                UpdateEdge();
         }
 
         private void label_TopEdge_MouseDown(object sender, MouseEventArgs e)
@@ -479,6 +482,8 @@ namespace RPlayer
         private void label_TopEdge_MouseUp(object sender, MouseEventArgs e)
         {
             m_bTopEdge_MouseDown = false;
+            if (!label_TopEdge.Visible)
+                UpdateEdge();
         }
 
         private void label_RightEdge_MouseDown(object sender, MouseEventArgs e)
@@ -502,6 +507,8 @@ namespace RPlayer
         private void label_RightEdge_MouseUp(object sender, MouseEventArgs e)
         {
             m_bRightEdge_MouseDown = false;
+            if (!label_TopEdge.Visible)
+                UpdateEdge();
         }
 
         private void label_BottomEdge_MouseDown(object sender, MouseEventArgs e)
@@ -523,6 +530,8 @@ namespace RPlayer
         private void label_BottomEdge_MouseUp(object sender, MouseEventArgs e)
         {
             m_bBottomEdge_MouseDown = false;
+            if (!label_TopEdge.Visible)
+                UpdateEdge();
         }
     }
 }

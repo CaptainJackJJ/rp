@@ -31,6 +31,12 @@ namespace RPlayer
         private const int m_nRenderToTopBarMargin = 12;
         private const int m_nRenderToBottomBarMargin = 23;
         private const int m_nCornerSize = 10;
+        private const int m_nPlayButtonSize = 40;
+        private const int m_nBottomButtonsSize = 25;
+        private const int m_nBottomButtonsMargin = 15;
+        private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
+
+        private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
 
         private bool m_bMaxed = false;
         private bool m_bInCorner = false;
@@ -44,6 +50,7 @@ namespace RPlayer
                 pictureBox_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
                 pictureBox_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
@@ -138,6 +145,10 @@ namespace RPlayer
             label_Play.Location =
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
                     this.Size.Height - 50);
+            int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
+            label_Stop.Location =
+               new Point((label_Play.Location.X + m_nStopBtnXMarginToPlay),
+                    nBottomButtonsY);
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)
@@ -378,6 +389,24 @@ namespace RPlayer
             try
             {
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+            }
+            catch { }
+        }
+
+        private void label_Stop_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stopFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_Stop_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
             }
             catch { }
         }

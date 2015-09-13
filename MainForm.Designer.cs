@@ -36,6 +36,7 @@
             this.pictureBox_Min = new System.Windows.Forms.PictureBox();
             this.pictureBox_Close = new System.Windows.Forms.PictureBox();
             this.label_Play = new System.Windows.Forms.Label();
+            this.label_Stop = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_TopEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_LeftEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BottomEdge)).BeginInit();
@@ -143,6 +144,16 @@
             this.label_Play.MouseEnter += new System.EventHandler(this.label_Play_MouseEnter);
             this.label_Play.MouseLeave += new System.EventHandler(this.label_Play_MouseLeave);
             // 
+            // label_Stop
+            // 
+            this.label_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.label_Stop.Location = new System.Drawing.Point(397, 519);
+            this.label_Stop.Name = "label_Stop";
+            this.label_Stop.Size = new System.Drawing.Size(25, 25);
+            this.label_Stop.TabIndex = 20;
+            this.label_Stop.MouseEnter += new System.EventHandler(this.label_Stop_MouseEnter);
+            this.label_Stop.MouseLeave += new System.EventHandler(this.label_Stop_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -150,6 +161,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_Stop);
             this.Controls.Add(this.label_Play);
             this.Controls.Add(this.pictureBox_Close);
             this.Controls.Add(this.pictureBox_LeftEdge);
@@ -185,6 +197,7 @@
         private System.Windows.Forms.PictureBox pictureBox_Min;
         private System.Windows.Forms.PictureBox pictureBox_Close;
         private System.Windows.Forms.Label label_Play;
+        private System.Windows.Forms.Label label_Stop;
     }
 }
 

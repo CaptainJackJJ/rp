@@ -12,6 +12,7 @@ namespace RPlayer
     public partial class MainForm : Form
     {
         private bool m_bMainFormMouseDown = false;
+        private bool m_bMainFormMouseDownNoEdge = false;
         private Point m_MainFormMouseDownPos;
 
         private bool m_bTopEdge_MouseDown = false;
@@ -119,26 +120,6 @@ namespace RPlayer
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            pictureBox_TopEdge.Size
-                = new Size(this.Size.Width - m_nEdgeMargin * 2, 
-                    pictureBox_TopEdge.Size.Height);
-            pictureBox_LeftEdge.Size
-                = new Size(pictureBox_LeftEdge.Width,
-                    this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
-            pictureBox_BottomEdge.Size
-                = new Size(this.Size.Width - m_nEdgeMargin * 2, 
-                    pictureBox_BottomEdge.Size.Height);
-            pictureBox_RightEdge.Size 
-                = new Size(pictureBox_RightEdge.Width,
-                    this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
-
-            pictureBox_BottomEdge.Location
-                = new Point(pictureBox_BottomEdge.Location.X,
-                    this.Size.Height - m_nEdgeMargin - pictureBox_BottomEdge.Size.Height);
-            pictureBox_RightEdge.Location
-                = new Point(this.Size.Width - m_nEdgeMargin - pictureBox_RightEdge.Size.Width, 
-                    pictureBox_RightEdge.Location.Y);
-
             label_Close.Location =
                 new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
                     label_Close.Location.Y);
@@ -168,6 +149,16 @@ namespace RPlayer
             label_Pre.Location =
                new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
                     nBottomButtonsY);
+
+            if(m_bMainFormMouseDown)
+            {
+                pictureBox_TopEdge.Visible = pictureBox_LeftEdge.Visible 
+                    = pictureBox_BottomEdge.Visible = pictureBox_RightEdge.Visible = false;
+            }
+            else
+            {
+                UpdateEdge();
+            }
         }
 
         private void pictureBox_BottomEdge_MouseDown(object sender, MouseEventArgs e)
@@ -229,13 +220,14 @@ namespace RPlayer
             else if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
                 m_bRightTopCornerMouseDown = true;
             else
-                m_bMainFormMouseDown = true;
+                m_bMainFormMouseDownNoEdge = true;
             m_MainFormMouseDownPos = e.Location;
+            m_bMainFormMouseDown = true;
         }
 
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if (m_bMainFormMouseDown)
+            if (m_bMainFormMouseDownNoEdge)
             {
                 int xDiff = e.X - m_MainFormMouseDownPos.X;
                 int yDiff = e.Y - m_MainFormMouseDownPos.Y;
@@ -316,9 +308,39 @@ namespace RPlayer
             }
         }
 
+        private void UpdateEdge()
+        {
+            pictureBox_TopEdge.Visible = pictureBox_LeftEdge.Visible 
+                = pictureBox_BottomEdge.Visible = pictureBox_RightEdge.Visible = true;
+
+            pictureBox_TopEdge.Size
+                = new Size(this.Size.Width - m_nEdgeMargin * 2,
+                    pictureBox_TopEdge.Size.Height);
+            pictureBox_LeftEdge.Size
+                = new Size(pictureBox_LeftEdge.Width,
+                    this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
+            pictureBox_BottomEdge.Size
+                = new Size(this.Size.Width - m_nEdgeMargin * 2,
+                    pictureBox_BottomEdge.Size.Height);
+            pictureBox_RightEdge.Size
+                = new Size(pictureBox_RightEdge.Width,
+                    this.Size.Height - m_nEdgeMargin * 2 - pictureBox_TopEdge.Size.Height * 2);
+
+            pictureBox_BottomEdge.Location
+                = new Point(pictureBox_BottomEdge.Location.X,
+                    this.Size.Height - m_nEdgeMargin - pictureBox_BottomEdge.Size.Height);
+            pictureBox_RightEdge.Location
+                = new Point(this.Size.Width - m_nEdgeMargin - pictureBox_RightEdge.Size.Width,
+                    pictureBox_RightEdge.Location.Y);
+        }
+
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            m_bMainFormMouseDown = m_bRightBottomCornerMouseDown
+            m_bMainFormMouseDown = false;
+            if (!pictureBox_TopEdge.Visible)
+                UpdateEdge();
+
+            m_bMainFormMouseDownNoEdge = m_bRightBottomCornerMouseDown
                 = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
         }
 

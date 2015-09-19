@@ -41,6 +41,7 @@
             this.label_TopEdge = new System.Windows.Forms.Label();
             this.label_RightEdge = new System.Windows.Forms.Label();
             this.label_BottomEdge = new System.Windows.Forms.Label();
+            this.colorSlider_playProcess = new MB.Controls.ColorSlider();
             this.SuspendLayout();
             // 
             // label_Play
@@ -184,6 +185,33 @@
             this.label_BottomEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_BottomEdge_MouseMove);
             this.label_BottomEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label_BottomEdge_MouseUp);
             // 
+            // colorSlider_playProcess
+            // 
+            this.colorSlider_playProcess.BackColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.BarInnerColor = System.Drawing.Color.Gray;
+            this.colorSlider_playProcess.BarOuterColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.BarPenColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.BorderRoundRectSize = new System.Drawing.Size(1, 1);
+            this.colorSlider_playProcess.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.colorSlider_playProcess.DrawFocusRectangle = false;
+            this.colorSlider_playProcess.ElapsedInnerColor = System.Drawing.Color.RoyalBlue;
+            this.colorSlider_playProcess.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
+            this.colorSlider_playProcess.LargeChange = ((uint)(5u));
+            this.colorSlider_playProcess.Location = new System.Drawing.Point(80, 497);
+            this.colorSlider_playProcess.MouseEffects = false;
+            this.colorSlider_playProcess.MouseWheelBarPartitions = 100;
+            this.colorSlider_playProcess.Name = "colorSlider_playProcess";
+            this.colorSlider_playProcess.Size = new System.Drawing.Size(755, 10);
+            this.colorSlider_playProcess.SmallChange = ((uint)(1u));
+            this.colorSlider_playProcess.TabIndex = 32;
+            this.colorSlider_playProcess.ThumbInnerColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.ThumbOuterColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.ThumbPenColor = System.Drawing.Color.Transparent;
+            this.colorSlider_playProcess.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
+            this.colorSlider_playProcess.ThumbSize = 9;
+            this.colorSlider_playProcess.MouseEnter += new System.EventHandler(this.colorSlider_playProcess_MouseEnter);
+            this.colorSlider_playProcess.MouseLeave += new System.EventHandler(this.colorSlider_playProcess_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -191,6 +219,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.colorSlider_playProcess);
             this.Controls.Add(this.label_BottomEdge);
             this.Controls.Add(this.label_RightEdge);
             this.Controls.Add(this.label_TopEdge);
@@ -229,6 +258,7 @@
         private System.Windows.Forms.Label label_TopEdge;
         private System.Windows.Forms.Label label_RightEdge;
         private System.Windows.Forms.Label label_BottomEdge;
+        private MB.Controls.ColorSlider colorSlider_playProcess;
     }
 }
 

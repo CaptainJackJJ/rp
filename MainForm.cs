@@ -36,6 +36,9 @@ namespace RPlayer
         private const int m_nBottomButtonsSize = 25;
         private const int m_nBottomButtonsMargin = 15;
         private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
+        private const int m_nPlayProcessToPlayBtnYMargin = 5;
+        private const int m_nPlayProcessXMargin = 80;
+       
 
         private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
         private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsSize);
@@ -99,6 +102,9 @@ namespace RPlayer
                new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
                     nBottomButtonsY);
 
+            int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
+            colorSlider_playProcess.Location = new Point(m_nPlayProcessXMargin, nPlayProcessY);
+
             if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown 
                 || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
             {
@@ -109,6 +115,9 @@ namespace RPlayer
             {
                 UpdateEdge();
             }
+
+            colorSlider_playProcess.Size
+                = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);
         }      
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -532,6 +541,18 @@ namespace RPlayer
             m_bBottomEdge_MouseDown = false;
             if (!label_TopEdge.Visible)
                 UpdateEdge();
+        }
+
+        private void colorSlider_playProcess_MouseEnter(object sender, EventArgs e)
+        {
+            colorSlider_playProcess.ThumbInnerColor = Color.White;
+            colorSlider_playProcess.ThumbOuterColor = Color.White;
+        }
+
+        private void colorSlider_playProcess_MouseLeave(object sender, EventArgs e)
+        {
+            colorSlider_playProcess.ThumbInnerColor = Color.Transparent;
+            colorSlider_playProcess.ThumbOuterColor = Color.Transparent;
         }
     }
 }

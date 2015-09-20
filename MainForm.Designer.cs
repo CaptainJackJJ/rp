@@ -44,6 +44,7 @@
             this.colorSlider_playProcess = new MB.Controls.ColorSlider();
             this.label_timeCurrent = new System.Windows.Forms.Label();
             this.label_timeLast = new System.Windows.Forms.Label();
+            this.label_fullScreen = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_Play
@@ -240,6 +241,16 @@
             this.label_timeLast.Text = "-01 : 00 : 30";
             this.label_timeLast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label_fullScreen
+            // 
+            this.label_fullScreen.BackColor = System.Drawing.Color.Transparent;
+            this.label_fullScreen.Location = new System.Drawing.Point(878, 528);
+            this.label_fullScreen.Name = "label_fullScreen";
+            this.label_fullScreen.Size = new System.Drawing.Size(25, 25);
+            this.label_fullScreen.TabIndex = 35;
+            this.label_fullScreen.MouseEnter += new System.EventHandler(this.label_fullScreen_MouseEnter);
+            this.label_fullScreen.MouseLeave += new System.EventHandler(this.label_fullScreen_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -247,6 +258,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_fullScreen);
             this.Controls.Add(this.label_timeLast);
             this.Controls.Add(this.label_timeCurrent);
             this.Controls.Add(this.colorSlider_playProcess);
@@ -292,6 +304,7 @@
         private MB.Controls.ColorSlider colorSlider_playProcess;
         private System.Windows.Forms.Label label_timeCurrent;
         private System.Windows.Forms.Label label_timeLast;
+        private System.Windows.Forms.Label label_fullScreen;
     }
 }
 

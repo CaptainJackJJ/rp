@@ -63,6 +63,7 @@ namespace RPlayer
                 label_FB.Image = Image.FromFile(Application.StartupPath + @"\pic\FB.png");
                 label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
                 label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
+                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
                
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
@@ -101,6 +102,8 @@ namespace RPlayer
             label_Pre.Location =
                new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
                     nBottomButtonsY);
+            label_fullScreen.Location =
+              new Point(this.Width - 10 - m_nBottomButtonsSize, nBottomButtonsY);
 
             int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
             colorSlider_playProcess.Location = new Point(m_nPlayProcessXMargin, nPlayProcessY);
@@ -558,6 +561,24 @@ namespace RPlayer
         {
             colorSlider_playProcess.ThumbInnerColor = Color.Transparent;
             colorSlider_playProcess.ThumbOuterColor = Color.Transparent;
+        }
+
+        private void label_fullScreen_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreenFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_fullScreen_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
+            }
+            catch { }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace RPlayer
         private const int m_nBottomButtonsMargin = 15;
         private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
         private const int m_nPlayProcessToPlayBtnYMargin = 5;
-        private const int m_nPlayProcessXMargin = 80;
+        private const int m_nPlayProcessXMargin = 100;
        
 
         private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
@@ -118,6 +118,11 @@ namespace RPlayer
 
             colorSlider_playProcess.Size
                 = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);
+
+            label_timeCurrent.Location =
+                new Point(m_nPlayProcessXMargin - label_timeCurrent.Width, nPlayProcessY - 4);
+            label_timeLast.Location =
+                new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
         }      
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)

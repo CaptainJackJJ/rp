@@ -42,6 +42,8 @@
             this.label_RightEdge = new System.Windows.Forms.Label();
             this.label_BottomEdge = new System.Windows.Forms.Label();
             this.colorSlider_playProcess = new MB.Controls.ColorSlider();
+            this.label_timeCurrent = new System.Windows.Forms.Label();
+            this.label_timeLast = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_Play
@@ -197,11 +199,11 @@
             this.colorSlider_playProcess.ElapsedInnerColor = System.Drawing.Color.RoyalBlue;
             this.colorSlider_playProcess.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
             this.colorSlider_playProcess.LargeChange = ((uint)(5u));
-            this.colorSlider_playProcess.Location = new System.Drawing.Point(80, 497);
+            this.colorSlider_playProcess.Location = new System.Drawing.Point(100, 497);
             this.colorSlider_playProcess.MouseEffects = false;
             this.colorSlider_playProcess.MouseWheelBarPartitions = 100;
             this.colorSlider_playProcess.Name = "colorSlider_playProcess";
-            this.colorSlider_playProcess.Size = new System.Drawing.Size(755, 10);
+            this.colorSlider_playProcess.Size = new System.Drawing.Size(715, 10);
             this.colorSlider_playProcess.SmallChange = ((uint)(1u));
             this.colorSlider_playProcess.TabIndex = 32;
             this.colorSlider_playProcess.ThumbInnerColor = System.Drawing.Color.Transparent;
@@ -212,6 +214,32 @@
             this.colorSlider_playProcess.MouseEnter += new System.EventHandler(this.colorSlider_playProcess_MouseEnter);
             this.colorSlider_playProcess.MouseLeave += new System.EventHandler(this.colorSlider_playProcess_MouseLeave);
             // 
+            // label_timeCurrent
+            // 
+            this.label_timeCurrent.AutoSize = true;
+            this.label_timeCurrent.BackColor = System.Drawing.Color.Transparent;
+            this.label_timeCurrent.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_timeCurrent.ForeColor = System.Drawing.Color.White;
+            this.label_timeCurrent.Location = new System.Drawing.Point(25, 494);
+            this.label_timeCurrent.Name = "label_timeCurrent";
+            this.label_timeCurrent.Size = new System.Drawing.Size(72, 17);
+            this.label_timeCurrent.TabIndex = 33;
+            this.label_timeCurrent.Text = "00 : 00 : 00";
+            this.label_timeCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_timeLast
+            // 
+            this.label_timeLast.AutoSize = true;
+            this.label_timeLast.BackColor = System.Drawing.Color.Transparent;
+            this.label_timeLast.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_timeLast.ForeColor = System.Drawing.Color.White;
+            this.label_timeLast.Location = new System.Drawing.Point(818, 494);
+            this.label_timeLast.Name = "label_timeLast";
+            this.label_timeLast.Size = new System.Drawing.Size(77, 17);
+            this.label_timeLast.TabIndex = 34;
+            this.label_timeLast.Text = "-01 : 00 : 30";
+            this.label_timeLast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -219,6 +247,8 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_timeLast);
+            this.Controls.Add(this.label_timeCurrent);
             this.Controls.Add(this.colorSlider_playProcess);
             this.Controls.Add(this.label_BottomEdge);
             this.Controls.Add(this.label_RightEdge);
@@ -240,6 +270,7 @@
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -259,6 +290,8 @@
         private System.Windows.Forms.Label label_RightEdge;
         private System.Windows.Forms.Label label_BottomEdge;
         private MB.Controls.ColorSlider colorSlider_playProcess;
+        private System.Windows.Forms.Label label_timeCurrent;
+        private System.Windows.Forms.Label label_timeLast;
     }
 }
 

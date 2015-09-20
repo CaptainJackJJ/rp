@@ -47,6 +47,7 @@
             this.label_fullScreen = new System.Windows.Forms.Label();
             this.label_Volume = new System.Windows.Forms.Label();
             this.colorSlider_volume = new MB.Controls.ColorSlider();
+            this.label_settings = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_Play
@@ -290,6 +291,16 @@
             this.colorSlider_volume.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
             this.colorSlider_volume.ThumbSize = 10;
             // 
+            // label_settings
+            // 
+            this.label_settings.BackColor = System.Drawing.Color.Transparent;
+            this.label_settings.Location = new System.Drawing.Point(783, 13);
+            this.label_settings.Name = "label_settings";
+            this.label_settings.Size = new System.Drawing.Size(13, 13);
+            this.label_settings.TabIndex = 38;
+            this.label_settings.MouseEnter += new System.EventHandler(this.label_settings_MouseEnter);
+            this.label_settings.MouseLeave += new System.EventHandler(this.label_settings_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -297,6 +308,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(915, 562);
+            this.Controls.Add(this.label_settings);
             this.Controls.Add(this.colorSlider_volume);
             this.Controls.Add(this.label_Volume);
             this.Controls.Add(this.label_fullScreen);
@@ -348,6 +360,7 @@
         private System.Windows.Forms.Label label_fullScreen;
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
+        private System.Windows.Forms.Label label_settings;
     }
 }
 

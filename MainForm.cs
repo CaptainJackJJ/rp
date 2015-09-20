@@ -65,6 +65,7 @@ namespace RPlayer
                 label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
                 label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+                label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
 
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
@@ -83,6 +84,9 @@ namespace RPlayer
             label_Min.Location =
                new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
                     label_Min.Location.Y);
+            label_settings.Location =
+               new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonswidth * 4,
+                    label_settings.Location.Y);
 
             label_Play.Location =
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
@@ -624,6 +628,24 @@ namespace RPlayer
                 m_bMute = true;
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
             }
+        }
+
+        private void label_settings_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settingsFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_settings_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
+            }
+            catch { }
         }
     }
 }

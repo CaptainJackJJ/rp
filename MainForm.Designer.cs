@@ -298,6 +298,7 @@
             this.label_settings.Name = "label_settings";
             this.label_settings.Size = new System.Drawing.Size(13, 13);
             this.label_settings.TabIndex = 38;
+            this.label_settings.Click += new System.EventHandler(this.label_settings_Click);
             this.label_settings.MouseEnter += new System.EventHandler(this.label_settings_MouseEnter);
             this.label_settings.MouseLeave += new System.EventHandler(this.label_settings_MouseLeave);
             // 
@@ -330,6 +331,7 @@
             this.Controls.Add(this.label_Play);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);

@@ -662,5 +662,11 @@ namespace RPlayer
             }
             catch { }
         }
+
+        private void label_settings_Click(object sender, EventArgs e)
+        {
+            FormSettings fs = new FormSettings();
+            fs.Show();
+        }
     }
 }

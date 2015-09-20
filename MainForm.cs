@@ -54,9 +54,9 @@ namespace RPlayer
             InitializeComponent();
             try
             {                
-                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
-                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+                label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+                label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+                label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
                 label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
                 label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FF.png");
@@ -394,7 +394,7 @@ namespace RPlayer
         {
             try
             {
-                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
+                label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
             }
             catch { }
         }
@@ -403,7 +403,7 @@ namespace RPlayer
         {
             try
             {
-                label_Min.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+                label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
             }
             catch { }
         }
@@ -422,7 +422,7 @@ namespace RPlayer
         {
             try
             {
-                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
+                label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
             }
             catch { }
         }
@@ -431,7 +431,7 @@ namespace RPlayer
         {
             try
             {
-                label_Close.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+                label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
             }
             catch { }
         }
@@ -454,7 +454,7 @@ namespace RPlayer
         {
             try
             {
-                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+                label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
             }
             catch { }
         }
@@ -463,7 +463,7 @@ namespace RPlayer
         {
             try
             {
-                label_Max.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+                label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
             }
             catch { }
         }

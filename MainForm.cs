@@ -70,7 +70,20 @@ namespace RPlayer
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
-            {}
+            {
+                this.BackColor = Color.Gainsboro;
+                label_Play.Text = "play";
+                label_Stop.Text = "stop";
+                label_FF.Text = "ff";
+                label_FB.Text = "fb";
+                label_Next.Text = "next";
+                label_fullScreen.Text = "full";
+                label_settings.Text = "settings";
+                label_Volume.Text = "volume";
+                label_Close.Text = "close";
+                label_Max.Text = "max";
+                label_Min.Text = "min";
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -618,16 +631,20 @@ namespace RPlayer
 
         private void label_Volume_Click(object sender, EventArgs e)
         {
-            if (m_bMute)
+            try
             {
-                m_bMute = false;
-                label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
+                if (m_bMute)
+                {
+                    m_bMute = false;
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
+                }
+                else
+                {
+                    m_bMute = true;
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
+                }
             }
-            else
-            {
-                m_bMute = true;
-                label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
-            }
+            catch { }
         }
 
         private void label_settings_MouseEnter(object sender, EventArgs e)

@@ -64,7 +64,8 @@ namespace RPlayer
                 label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
                 label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
                 label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
-               
+                label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+
                 this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
@@ -104,6 +105,10 @@ namespace RPlayer
                     nBottomButtonsY);
             label_fullScreen.Location =
               new Point(this.Width - 10 - m_nBottomButtonsSize, nBottomButtonsY);
+            colorSlider_volume.Location =
+              new Point(label_fullScreen.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
+            label_Volume.Location =
+              new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
             int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
             colorSlider_playProcess.Location = new Point(m_nPlayProcessXMargin, nPlayProcessY);
@@ -579,6 +584,46 @@ namespace RPlayer
                 label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
             }
             catch { }
+        }
+
+        private void label_Volume_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                if (m_bMute)              
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
+                else
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
+            }
+            catch { }
+        }
+
+        private void label_Volume_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (m_bMute)
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+                else
+                    label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+            }
+            catch { }
+        }
+
+        private bool m_bMute = false;
+
+        private void label_Volume_Click(object sender, EventArgs e)
+        {
+            if (m_bMute)
+            {
+                m_bMute = false;
+                label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
+            }
+            else
+            {
+                m_bMute = true;
+                label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
+            }
         }
     }
 }

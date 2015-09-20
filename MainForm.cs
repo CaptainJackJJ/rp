@@ -665,7 +665,7 @@ namespace RPlayer
 
         private void label_settings_Click(object sender, EventArgs e)
         {
-            FormSettings fs = new FormSettings();
+            FormSettings fs = new FormSettings(FormSettings.enumSettingFormType.regular);
             fs.Show();
         }
     }

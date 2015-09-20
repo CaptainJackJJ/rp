@@ -48,11 +48,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormSettingAv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettingAv.Designer.cs">
+      <DependentUpon>FormSettingAv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettingRegular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettingRegular.Designer.cs">
+      <DependentUpon>FormSettingRegular.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettingSubtitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettingSubtitle.Designer.cs">
+      <DependentUpon>FormSettingSubtitle.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -62,8 +80,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormSettingAv.resx">
+      <DependentUpon>FormSettingAv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettingRegular.resx">
+      <DependentUpon>FormSettingRegular.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettingSubtitle.resx">
+      <DependentUpon>FormSettingSubtitle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

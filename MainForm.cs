@@ -66,8 +66,6 @@ namespace RPlayer
                 label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
                 label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
-
-                this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\MainForm.jpg");
             }
             catch
             {

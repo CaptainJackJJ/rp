@@ -149,6 +149,9 @@ namespace RPlayer
                 new Point(m_nPlayProcessXMargin - label_timeCurrent.Width, nPlayProcessY - 4);
             label_timeLast.Location =
                 new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
+
+            label_playWnd.Size
+                = new Size(this.Width - 4, this.Height - label_timeCurrent.Location.Y - label_playWnd.Location.Y);
         }      
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)

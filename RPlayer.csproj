@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ColorSlider\ColorSlider\bin\Release\ColorSlider.dll</HintPath>
     </Reference>
+    <Reference Include="RpCoreWrapper">
+      <HintPath>..\RpCoreWrapper\Debug\RpCoreWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

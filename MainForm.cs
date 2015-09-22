@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using RpCoreWrapper;
 
 namespace RPlayer
 {
@@ -82,6 +83,8 @@ namespace RPlayer
                 label_Max.Text = "max";
                 label_Min.Text = "min";
             }
+            RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\");
+            RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -415,6 +418,8 @@ namespace RPlayer
 
         private void label_Close_Click(object sender, EventArgs e)
         {
+          RpCore.UninitPlayer();
+          RpCore.UnLoadLib();
             this.Close();
         }
 
@@ -667,6 +672,16 @@ namespace RPlayer
         {
             FormSettings fs = new FormSettings(FormSettings.enumSettingFormType.regular);
             fs.Show();
+        }
+
+        private void label_FB_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void label_Play_Click(object sender, EventArgs e)
+        {
+          RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
         }
     }
 }

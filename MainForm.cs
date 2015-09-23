@@ -151,7 +151,8 @@ namespace RPlayer
                 new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
 
             label_playWnd.Size
-                = new Size(this.Width - 4, this.Height - label_timeCurrent.Location.Y - label_playWnd.Location.Y);
+                = new Size(this.Width - 4, label_timeCurrent.Location.Y - label_playWnd.Location.Y);
+            RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         }      
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)

@@ -44,7 +44,7 @@
       this.colorSlider_playProcess = new MB.Controls.ColorSlider();
       this.label_timeCurrent = new System.Windows.Forms.Label();
       this.label_timeLast = new System.Windows.Forms.Label();
-      this.label_fullScreen = new System.Windows.Forms.Label();
+      this.label_desktop = new System.Windows.Forms.Label();
       this.label_Volume = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_settings = new System.Windows.Forms.Label();
@@ -247,15 +247,16 @@
       this.label_timeLast.Text = "-01 : 00 : 30";
       this.label_timeLast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // label_fullScreen
+      // label_desktop
       // 
-      this.label_fullScreen.BackColor = System.Drawing.Color.Transparent;
-      this.label_fullScreen.Location = new System.Drawing.Point(878, 528);
-      this.label_fullScreen.Name = "label_fullScreen";
-      this.label_fullScreen.Size = new System.Drawing.Size(25, 25);
-      this.label_fullScreen.TabIndex = 35;
-      this.label_fullScreen.MouseEnter += new System.EventHandler(this.label_fullScreen_MouseEnter);
-      this.label_fullScreen.MouseLeave += new System.EventHandler(this.label_fullScreen_MouseLeave);
+      this.label_desktop.BackColor = System.Drawing.Color.Transparent;
+      this.label_desktop.Location = new System.Drawing.Point(878, 528);
+      this.label_desktop.Name = "label_desktop";
+      this.label_desktop.Size = new System.Drawing.Size(25, 25);
+      this.label_desktop.TabIndex = 35;
+      this.label_desktop.Click += new System.EventHandler(this.label_desktop_Click);
+      this.label_desktop.MouseEnter += new System.EventHandler(this.label_desktop_MouseEnter);
+      this.label_desktop.MouseLeave += new System.EventHandler(this.label_desktop_MouseLeave);
       // 
       // label_Volume
       // 
@@ -312,6 +313,7 @@
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(911, 454);
       this.label_playWnd.TabIndex = 39;
+      this.label_playWnd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_playWnd_MouseMove);
       // 
       // MainForm
       // 
@@ -324,7 +326,7 @@
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.colorSlider_volume);
       this.Controls.Add(this.label_Volume);
-      this.Controls.Add(this.label_fullScreen);
+      this.Controls.Add(this.label_desktop);
       this.Controls.Add(this.label_timeLast);
       this.Controls.Add(this.label_timeCurrent);
       this.Controls.Add(this.colorSlider_playProcess);
@@ -371,7 +373,7 @@
         private MB.Controls.ColorSlider colorSlider_playProcess;
         private System.Windows.Forms.Label label_timeCurrent;
         private System.Windows.Forms.Label label_timeLast;
-        private System.Windows.Forms.Label label_fullScreen;
+        private System.Windows.Forms.Label label_desktop;
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
         private System.Windows.Forms.Label label_settings;

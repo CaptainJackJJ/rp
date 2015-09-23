@@ -49,6 +49,7 @@ namespace RPlayer
 
         private bool m_bMaxed = false;
         private bool m_bInCorner = false;
+        private bool m_bDesktop;
 
         public MainForm()
         {
@@ -64,7 +65,7 @@ namespace RPlayer
                 label_FB.Image = Image.FromFile(Application.StartupPath + @"\pic\FB.png");
                 label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
                 label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
-                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
+                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
                 label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
             }
@@ -76,7 +77,7 @@ namespace RPlayer
                 label_FF.Text = "ff";
                 label_FB.Text = "fb";
                 label_Next.Text = "next";
-                label_fullScreen.Text = "full";
+                label_desktop.Text = "desktop";
                 label_settings.Text = "settings";
                 label_Volume.Text = "volume";
                 label_Close.Text = "close";
@@ -121,10 +122,10 @@ namespace RPlayer
             label_Pre.Location =
                new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
                     nBottomButtonsY);
-            label_fullScreen.Location =
+            label_desktop.Location =
               new Point(this.Width - 10 - m_nBottomButtonsSize, nBottomButtonsY);
             colorSlider_volume.Location =
-              new Point(label_fullScreen.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
+              new Point(label_desktop.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
             label_Volume.Location =
               new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
@@ -150,8 +151,8 @@ namespace RPlayer
             label_timeLast.Location =
                 new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
 
-            label_playWnd.Size
-                = new Size(this.Width - 4, label_timeCurrent.Location.Y - label_playWnd.Location.Y);
+            if (!m_bDesktop)
+              label_playWnd.Size = new Size(this.Width - 4, label_timeCurrent.Location.Y - label_Close.Size.Height * 3);
             RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         }      
 
@@ -592,20 +593,20 @@ namespace RPlayer
             colorSlider_playProcess.ThumbOuterColor = Color.Transparent;
         }
 
-        private void label_fullScreen_MouseEnter(object sender, EventArgs e)
+        private void label_desktop_MouseEnter(object sender, EventArgs e)
         {
             try
             {
-                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreenFocus.png");
+                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktopFocus.png");
             }
             catch { }
         }
 
-        private void label_fullScreen_MouseLeave(object sender, EventArgs e)
+        private void label_desktop_MouseLeave(object sender, EventArgs e)
         {
             try
             {
-                label_fullScreen.Image = Image.FromFile(Application.StartupPath + @"\pic\FullScreen.png");
+                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
             }
             catch { }
         }
@@ -686,6 +687,29 @@ namespace RPlayer
         private void label_Play_Click(object sender, EventArgs e)
         {
           RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
+        }
+
+        private void label_desktop_Click(object sender, EventArgs e)
+        {
+          if (m_bDesktop)
+          {
+            m_bDesktop = false;
+            this.WindowState = FormWindowState.Normal;
+            label_playWnd.Location = new Point(0, label_Close.Size.Height * 3);
+          }
+          else
+          {
+            m_bDesktop = true;
+            this.WindowState = FormWindowState.Maximized;            
+            label_playWnd.Location = this.Location;
+            label_playWnd.Size = this.Size;
+          }
+        }
+
+        private void label_playWnd_MouseMove(object sender, MouseEventArgs e)
+        {
+          if (m_bDesktop)
+            label_desktop.BringToFront();
         }
     }
 }

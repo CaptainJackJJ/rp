@@ -711,5 +711,16 @@ namespace RPlayer
           if (m_bDesktop)
             label_desktop.BringToFront();
         }
+
+        private void label_playWnd_DragEnter(object sender, DragEventArgs e)
+        {
+          e.Effect = DragDropEffects.Link;
+        }
+
+        private void label_playWnd_DragDrop(object sender, DragEventArgs e)
+        {
+          string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+          RpCore.Play(FileList[0], 0);
+        }
     }
 }

@@ -308,11 +308,14 @@
       // 
       // label_playWnd
       // 
+      this.label_playWnd.AllowDrop = true;
       this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
       this.label_playWnd.Location = new System.Drawing.Point(2, 39);
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(911, 454);
       this.label_playWnd.TabIndex = 39;
+      this.label_playWnd.DragDrop += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragDrop);
+      this.label_playWnd.DragEnter += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragEnter);
       this.label_playWnd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_playWnd_MouseMove);
       // 
       // MainForm

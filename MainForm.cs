@@ -51,6 +51,8 @@ namespace RPlayer
         private bool m_bInCorner = false;
         private bool m_bDesktop;
 
+        private FormBottomBar m_formBottomBar = new FormBottomBar();
+
         public MainForm()
         {
             InitializeComponent();
@@ -86,10 +88,12 @@ namespace RPlayer
             }
             RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\");
             RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
+            this.AddOwnedForm(m_formBottomBar);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
+            ChangeSubFormsLocAndSize(true, true);
             label_Close.Location =
                 new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
                     label_Close.Location.Y);
@@ -717,10 +721,32 @@ namespace RPlayer
           e.Effect = DragDropEffects.Link;
         }
 
+        private void ChangeSubFormsLocAndSize(bool bLoc, bool bSize)
+        {
+          if (bLoc)
+          {
+            m_formBottomBar.Location
+              = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - 3);
+          }
+          if (bSize)
+          {
+            m_formBottomBar.Size
+              = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
+          }
+        }
+
         private void label_playWnd_DragDrop(object sender, DragEventArgs e)
         {
+          ChangeSubFormsLocAndSize(true,true);
+          m_formBottomBar.Show();
+
           string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
           RpCore.Play(FileList[0], 0);
+        }
+
+        private void MainForm_Move(object sender, EventArgs e)
+        {
+          ChangeSubFormsLocAndSize(true,false);
         }
     }
 }

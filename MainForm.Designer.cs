@@ -352,6 +352,7 @@
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
+      this.Move += new System.EventHandler(this.MainForm_Move);
       this.Resize += new System.EventHandler(this.MainForm_Resize);
       this.ResumeLayout(false);
       this.PerformLayout();

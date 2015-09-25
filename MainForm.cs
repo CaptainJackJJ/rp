@@ -33,20 +33,8 @@ namespace RPlayer
         private const int m_nRenderToTopBarMargin = 12;
         private const int m_nRenderToBottomBarMargin = 23;
         private const int m_nCornerSize = 10;
-        private const int m_nPlayButtonSize = 40;
-        private const int m_nBottomButtonsSize = 25;
-        private const int m_nBottomButtonsMargin = 15;
-        private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
-        private const int m_nPlayProcessToPlayBtnYMargin = 5;
-        private const int m_nPlayProcessXMargin = 100;
-       
 
-        private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
-        private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsSize);
-        private const int m_nPreBtnXMarginToPlay = -(m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize * 2);
-        private const int m_nFFBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin;
-        private const int m_nNextBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize;
-
+        private bool m_bMute = false;
         private bool m_bMaxed = false;
         private bool m_bInCorner = false;
         private bool m_bDesktop;
@@ -62,11 +50,6 @@ namespace RPlayer
                 label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
                 label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
-                label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FF.png");
-                label_FB.Image = Image.FromFile(Application.StartupPath + @"\pic\FB.png");
-                label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
-                label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
                 label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
                 label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
@@ -75,10 +58,6 @@ namespace RPlayer
             {
                 this.BackColor = Color.Gainsboro;
                 label_Play.Text = "play";
-                label_Stop.Text = "stop";
-                label_FF.Text = "ff";
-                label_FB.Text = "fb";
-                label_Next.Text = "next";
                 label_desktop.Text = "desktop";
                 label_settings.Text = "settings";
                 label_Volume.Text = "volume";
@@ -110,31 +89,6 @@ namespace RPlayer
             label_Play.Location =
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
                     this.Size.Height - 50);
-            int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
-            label_Stop.Location =
-               new Point((label_Play.Location.X + m_nStopBtnXMarginToPlay),
-                    nBottomButtonsY);
-            label_FF.Location =
-               new Point((label_Play.Location.X + m_nFFBtnXMarginToPlay),
-                    nBottomButtonsY);
-            label_FB.Location =
-               new Point((label_Play.Location.X + m_nFBBtnXMarginToPlay),
-                    nBottomButtonsY);
-            label_Next.Location =
-               new Point((label_Play.Location.X + m_nNextBtnXMarginToPlay),
-                    nBottomButtonsY);
-            label_Pre.Location =
-               new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
-                    nBottomButtonsY);
-            label_desktop.Location =
-              new Point(this.Width - 10 - m_nBottomButtonsSize, nBottomButtonsY);
-            colorSlider_volume.Location =
-              new Point(label_desktop.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
-            label_Volume.Location =
-              new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
-
-            int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
-            colorSlider_playProcess.Location = new Point(m_nPlayProcessXMargin, nPlayProcessY);
 
             if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown 
                 || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
@@ -147,16 +101,8 @@ namespace RPlayer
                 UpdateEdge();
             }
 
-            colorSlider_playProcess.Size
-                = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);
-
-            label_timeCurrent.Location =
-                new Point(m_nPlayProcessXMargin - label_timeCurrent.Width, nPlayProcessY - 4);
-            label_timeLast.Location =
-                new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
-
             if (!m_bDesktop)
-              label_playWnd.Size = new Size(this.Width - 4, label_timeCurrent.Location.Y - label_Close.Size.Height * 3);
+              label_playWnd.Size = new Size(this.Width - 4, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
             RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         }      
 
@@ -297,109 +243,20 @@ namespace RPlayer
 
         private void label_Play_MouseEnter(object sender, EventArgs e)
         {
-            try
-            {
-                label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
-            }catch { }
+          try
+          {
+            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+          }
+          catch { }
         }
 
         private void label_Play_MouseLeave(object sender, EventArgs e)
         {
-            try
-            {
-                label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-            }
-            catch { }
-        }
-
-        private void label_Stop_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stopFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_Stop_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Stop.Image = Image.FromFile(Application.StartupPath + @"\pic\stop.png");
-            }
-            catch { }
-        }
-
-        private void label_FF_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FFFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_FF_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FF.png");
-            }
-            catch { }
-        }
-
-        private void label_FB_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_FB.Image = Image.FromFile(Application.StartupPath + @"\pic\FBFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_FB_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_FB.Image = Image.FromFile(Application.StartupPath + @"\pic\FB.png");
-            }
-            catch { }
-        }
-
-        private void label_Next_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\NextFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_Next_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
-            }
-            catch { }
-        }
-
-        private void label_Pre_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\preFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_Pre_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
-            }
-            catch { }
+          try
+          {
+            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+          }
+          catch { }
         }
 
         private void label_Min_MouseEnter(object sender, EventArgs e)
@@ -585,18 +442,6 @@ namespace RPlayer
                 UpdateEdge();
         }
 
-        private void colorSlider_playProcess_MouseEnter(object sender, EventArgs e)
-        {
-            colorSlider_playProcess.ThumbInnerColor = Color.White;
-            colorSlider_playProcess.ThumbOuterColor = Color.White;
-        }
-
-        private void colorSlider_playProcess_MouseLeave(object sender, EventArgs e)
-        {
-            colorSlider_playProcess.ThumbInnerColor = Color.Transparent;
-            colorSlider_playProcess.ThumbOuterColor = Color.Transparent;
-        }
-
         private void label_desktop_MouseEnter(object sender, EventArgs e)
         {
             try
@@ -639,8 +484,6 @@ namespace RPlayer
             catch { }
         }
 
-        private bool m_bMute = false;
-
         private void label_Volume_Click(object sender, EventArgs e)
         {
             try
@@ -681,11 +524,6 @@ namespace RPlayer
         {
             FormSettings fs = new FormSettings(FormSettings.enumSettingFormType.regular);
             fs.Show();
-        }
-
-        private void label_FB_Click(object sender, EventArgs e)
-        {
-          
         }
 
         private void label_Play_Click(object sender, EventArgs e)
@@ -748,5 +586,6 @@ namespace RPlayer
         {
           ChangeSubFormsLocAndSize(true,false);
         }
+
     }
 }

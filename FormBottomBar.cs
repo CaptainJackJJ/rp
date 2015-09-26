@@ -27,10 +27,10 @@ namespace RPlayer
     private const int m_nFFBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin;
     private const int m_nNextBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize;
 
-    private bool m_bDesktop;
     private bool m_bMute = false;
+    private MainForm m_mainForm;
 
-    public FormBottomBar()
+    public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
       this.ShowInTaskbar = false;
@@ -55,13 +55,15 @@ namespace RPlayer
         label_Next.Text = "next";
         label_desktop.Text = "desktop";
       }
+      m_mainForm = mainForm;
     }
 
     private void FormBottomBar_Resize(object sender, EventArgs e)
     {
+      // Every control's location is based on label_Play.
       label_Play.Location =
    new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
-        this.Size.Height - 50);
+        this.Size.Height - 50 + 2);
       int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
       label_Stop.Location =
          new Point((label_Play.Location.X + m_nStopBtnXMarginToPlay),
@@ -87,6 +89,8 @@ namespace RPlayer
 
       int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
 
+      colorSlider_playProcess.Size
+          = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);
       colorSlider_playProcess.Location =
           new Point(m_nPlayProcessXMargin, nPlayProcessY);
       label_timeCurrent.Location =
@@ -94,8 +98,6 @@ namespace RPlayer
       label_timeLast.Location =
           new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
 
-      colorSlider_playProcess.Size
-    = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)
@@ -272,19 +274,7 @@ namespace RPlayer
 
     private void label_desktop_Click(object sender, EventArgs e)
     {
-      //if (m_bDesktop)
-      //{
-      //  m_bDesktop = false;
-      //  this.WindowState = FormWindowState.Normal;
-      //  label_playWnd.Location = new Point(0, label_Close.Size.Height * 3);
-      //}
-      //else
-      //{
-      //  m_bDesktop = true;
-      //  this.WindowState = FormWindowState.Maximized;
-      //  label_playWnd.Location = this.Location;
-      //  label_playWnd.Size = this.Size;
-      //}
+      m_mainForm.SwitchDesktopMode();
     }
   }
 }

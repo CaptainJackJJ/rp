@@ -33,13 +33,14 @@ namespace RPlayer
         private const int m_nRenderToTopBarMargin = 12;
         private const int m_nRenderToBottomBarMargin = 23;
         private const int m_nCornerSize = 10;
+        private const int m_nFormBottomBar = 65;
 
         private bool m_bMute = false;
         private bool m_bMaxed = false;
         private bool m_bInCorner = false;
-        private bool m_bDesktop;
+        public bool m_bDesktop;
 
-        private FormBottomBar m_formBottomBar = new FormBottomBar();
+        private FormBottomBar m_formBottomBar;
 
         public MainForm()
         {
@@ -67,6 +68,8 @@ namespace RPlayer
             }
             RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\");
             RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
+
+            m_formBottomBar = new FormBottomBar(this);
             this.AddOwnedForm(m_formBottomBar);
         }
 
@@ -102,7 +105,9 @@ namespace RPlayer
             }
 
             if (!m_bDesktop)
+            {              
               label_playWnd.Size = new Size(this.Width - 4, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
+            }
             RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         }      
 
@@ -536,46 +541,54 @@ namespace RPlayer
           RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
         }
 
-        private void label_desktop_Click(object sender, EventArgs e)
+        public void SwitchDesktopMode()
         {
           if (m_bDesktop)
           {
             m_bDesktop = false;
             this.WindowState = FormWindowState.Normal;
-            label_playWnd.Location = new Point(0, label_Close.Size.Height * 3);
+            label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
+            m_formBottomBar.Opacity = 1;
+            m_formBottomBar.Show();
           }
           else
           {
             m_bDesktop = true;
-            this.WindowState = FormWindowState.Maximized;            
+            this.WindowState = FormWindowState.Maximized;
             label_playWnd.Location = this.Location;
             label_playWnd.Size = this.Size;
+            m_formBottomBar.Hide();
+          }
+        }
+
+        private void label_desktop_Click(object sender, EventArgs e)
+        {
+          SwitchDesktopMode();
+        }
+
+        private void label_playWnd_MouseEnter(object sender, EventArgs e)
+        {
+          if (m_bDesktop)
+          {
+            m_formBottomBar.Hide();
           }
         }
 
         private void label_playWnd_MouseMove(object sender, MouseEventArgs e)
         {
           if (m_bDesktop)
-            label_desktop.BringToFront();
+          {
+            if (e.Location.Y >= label_playWnd.Height - m_nFormBottomBar || e.Location.Y <= m_nFormBottomBar)
+            {
+              m_formBottomBar.Opacity = 0.3;
+              m_formBottomBar.Show();
+            }
+          }
         }
 
         private void label_playWnd_DragEnter(object sender, DragEventArgs e)
         {
           e.Effect = DragDropEffects.Link;
-        }
-
-        private void ChangeSubFormsLocAndSize(bool bLoc, bool bSize)
-        {
-          if (bLoc)
-          {
-            m_formBottomBar.Location
-              = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - 3);
-          }
-          if (bSize)
-          {
-            m_formBottomBar.Size
-              = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
-          }
         }
 
         private void label_playWnd_DragDrop(object sender, DragEventArgs e)
@@ -586,6 +599,22 @@ namespace RPlayer
           string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
           RpCore.Play(FileList[0], 0);
         }
+
+        private void ChangeSubFormsLocAndSize(bool bLoc, bool bSize)
+        {
+          if (bLoc)
+          {
+            m_formBottomBar.Location
+              = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_nFormBottomBar - 3);
+          }
+          if (bSize)
+          {
+            m_formBottomBar.Size
+              = new Size(this.Width - m_nCornerSize * 2, m_nFormBottomBar);
+          }
+        }
+
+
 
     }
 }

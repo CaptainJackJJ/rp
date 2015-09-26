@@ -122,6 +122,16 @@ namespace RPlayer
             m_bMainFormMouseDown = true;
         }
 
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+          m_bMainFormMouseDown = false;
+          if (!label_TopEdge.Visible)
+            UpdateEdge();
+
+          m_bMainFormMouseDownNoEdge = m_bRightBottomCornerMouseDown
+              = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
+        }
+
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (m_bMainFormMouseDownNoEdge)
@@ -205,6 +215,11 @@ namespace RPlayer
             }
         }
 
+        private void MainForm_Move(object sender, EventArgs e)
+        {
+          ChangeSubFormsLocAndSize(true, false);
+        }
+
         private void UpdateEdge()
         {
             label_TopEdge.Visible = label_LeftEdge.Visible 
@@ -229,34 +244,6 @@ namespace RPlayer
             label_RightEdge.Location
                 = new Point(this.Size.Width - m_nEdgeMargin - label_RightEdge.Size.Width,
                     label_RightEdge.Location.Y);
-        }
-
-        private void MainForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_bMainFormMouseDown = false;
-            if (!label_TopEdge.Visible)
-                UpdateEdge();
-
-            m_bMainFormMouseDownNoEdge = m_bRightBottomCornerMouseDown
-                = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
-        }
-
-        private void label_Play_MouseEnter(object sender, EventArgs e)
-        {
-          try
-          {
-            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
-          }
-          catch { }
-        }
-
-        private void label_Play_MouseLeave(object sender, EventArgs e)
-        {
-          try
-          {
-            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-          }
-          catch { }
         }
 
         private void label_Min_MouseEnter(object sender, EventArgs e)
@@ -526,6 +513,24 @@ namespace RPlayer
             fs.Show();
         }
 
+        private void label_Play_MouseEnter(object sender, EventArgs e)
+        {
+          try
+          {
+            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+          }
+          catch { }
+        }
+
+        private void label_Play_MouseLeave(object sender, EventArgs e)
+        {
+          try
+          {
+            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+          }
+          catch { }
+        }
+
         private void label_Play_Click(object sender, EventArgs e)
         {
           RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
@@ -580,11 +585,6 @@ namespace RPlayer
 
           string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
           RpCore.Play(FileList[0], 0);
-        }
-
-        private void MainForm_Move(object sender, EventArgs e)
-        {
-          ChangeSubFormsLocAndSize(true,false);
         }
 
     }

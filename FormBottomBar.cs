@@ -33,7 +33,7 @@ namespace RPlayer
     public FormBottomBar()
     {
       InitializeComponent();
-
+      this.ShowInTaskbar = false;
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
@@ -87,8 +87,10 @@ namespace RPlayer
 
       int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
 
+      colorSlider_playProcess.Location =
+          new Point(m_nPlayProcessXMargin, nPlayProcessY);
       label_timeCurrent.Location =
-    new Point(m_nPlayProcessXMargin - label_timeCurrent.Width, nPlayProcessY - 4);
+          new Point(m_nPlayProcessXMargin - label_timeCurrent.Width, nPlayProcessY - 4);
       label_timeLast.Location =
           new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
 

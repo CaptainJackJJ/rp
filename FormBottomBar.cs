@@ -88,6 +88,16 @@ namespace RPlayer
       label_timeLast.Text = "-00 : 00 : 00";
     }
 
+    public void PauseThreadUpdate()
+    {
+      m_threadUpdate.Suspend();
+    }
+
+    public void ResumeThreadUpdate()
+    {
+      m_threadUpdate.Resume();
+    }
+
     delegate void ChangeTextDelegate(Control ctrl, string text);
     public static void ChangeTextFromThread(Control ctrl, string text)
     {
@@ -302,6 +312,12 @@ namespace RPlayer
         label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
       }
       catch { }
+    }
+
+    private void colorSlider_playProcess_Click(object sender, EventArgs e)
+    {
+      PauseThreadUpdate();
+      RpCore.Seek(colorSlider_playProcess.Value, false);
     }
 
     private void colorSlider_playProcess_MouseEnter(object sender, EventArgs e)

@@ -34,6 +34,7 @@ namespace RPlayer
     Thread m_threadUpdate;
     private volatile bool m_stopThreadUpdate = false;
     private double m_nTotalTime = 0;
+    private bool m_bPaused = false;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -65,6 +66,15 @@ namespace RPlayer
 
     public void StartThreadUpdate()
     {
+      try
+      {
+        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
+      }
+      catch
+      {
+        label_Play.Text = "pause";
+      }
+
       m_nTotalTime = (int)RpCore.GetTotalTime();
       colorSlider_playProcess.Maximum = (int)m_nTotalTime;
       TimeSpan t = TimeSpan.FromSeconds(m_nTotalTime);
@@ -193,25 +203,83 @@ namespace RPlayer
 
     private void label_Play_Click(object sender, EventArgs e)
     {
-      RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
+      RpCore.Pause();
+      if (m_bPaused)
+      {
+        m_bPaused = false;
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
+        }
+        catch
+        {
+          label_Play.Text = "play";
+        }
+      }
+      else
+      {
+        m_bPaused = true;
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+        }
+        catch
+        {
+          label_Play.Text = "pause";
+        }
+      }
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)
     {
-      try
+      if (m_bPaused)
       {
-        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+        }
+        catch
+        {
+          label_Play.Text = "playFocus";
+        }
       }
-      catch { }
+      else
+      {
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pauseFocus.png");
+        }
+        catch
+        {
+          label_Play.Text = "pauseFocus";
+        }
+      }
     }
 
     private void label_Play_MouseLeave(object sender, EventArgs e)
     {
-      try
+      if (m_bPaused)
       {
-        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+        }
+        catch
+        {
+          label_Play.Text = "play";
+        }
       }
-      catch { }
+      else
+      {
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
+        }
+        catch
+        {
+          label_Play.Text = "pause";
+        }
+      }
     }
 
     private void label_Stop_Click(object sender, EventArgs e)

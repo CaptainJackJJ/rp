@@ -10,6 +10,16 @@ using RpCoreWrapper;
 
 namespace RPlayer
 {
+  public class RpCallback : IRpCallback
+  {
+    public override void OnEnded(){}
+    public override void OnStopped() { }
+    public override void OnSeekStarted() { }
+    public override void OnSeekEnded() { }
+    public override void OnHwDecodeFailed() { }
+    public override void OnDecodeModeNotify(bool Hw) { }
+  }
+
     public partial class MainForm : Form
     {
         private bool m_bMainFormMouseDown = false;
@@ -41,6 +51,7 @@ namespace RPlayer
         public bool m_bDesktop;
 
         private FormBottomBar m_formBottomBar;
+        private RpCallback m_rpCallback;
 
         public MainForm()
         {
@@ -66,7 +77,8 @@ namespace RPlayer
                 label_Max.Text = "max";
                 label_Min.Text = "min";
             }
-            RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\");
+            m_rpCallback = new RpCallback();
+            RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
             RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
 
             m_formBottomBar = new FormBottomBar(this);

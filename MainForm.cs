@@ -276,9 +276,11 @@ namespace RPlayer
 
         private void label_Close_Click(object sender, EventArgs e)
         {
+          if (RpCore.IsPlaying())
+            StopPlay(false);
           RpCore.UninitPlayer();
           RpCore.UnLoadLib();
-            this.Close();
+          this.Close();
         }
 
         private void label_Close_MouseEnter(object sender, EventArgs e)
@@ -538,7 +540,6 @@ namespace RPlayer
 
         private void label_Play_Click(object sender, EventArgs e)
         {
-          RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
         }
 
         public void SwitchDesktopMode()
@@ -593,11 +594,16 @@ namespace RPlayer
 
         private void label_playWnd_DragDrop(object sender, DragEventArgs e)
         {
-          ChangeSubFormsLocAndSize(true,true);
-          m_formBottomBar.Show();
-
           string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-          RpCore.Play(FileList[0], 0);
+          if(RpCore.IsPlaying())
+          {
+            StopPlay(false);
+            StartPlay(FileList[0], 0,false);
+          }
+          else
+          {
+            StartPlay(FileList[0], 0, true);
+          }          
         }
 
         private void ChangeSubFormsLocAndSize(bool bLoc, bool bSize)
@@ -614,7 +620,38 @@ namespace RPlayer
           }
         }
 
+        private void StartPlay(string url,double nStartTime,bool bSwitchToSubForms)
+        {
+          if (bSwitchToSubForms)
+          {
+            label_desktop.Hide();
+            label_Play.Hide();
+            label_Volume.Hide();
+            colorSlider_volume.Hide();
 
+            ChangeSubFormsLocAndSize(true, true);
+            m_formBottomBar.Show();
+          }
+
+          RpCore.Play(url, nStartTime);
+          m_formBottomBar.StartThreadUpdate();
+        }
+
+        public void StopPlay(bool bSwitchToMainForm)
+        {
+          m_formBottomBar.EndThreadUpdate();
+          RpCore.Stop();
+
+          if (bSwitchToMainForm)
+          {
+            m_formBottomBar.Hide();
+
+            label_desktop.Show();
+            label_Play.Show();
+            label_Volume.Show();
+            colorSlider_volume.Show();
+          }
+        }
 
     }
 }

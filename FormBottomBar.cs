@@ -6,8 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 using RpCoreWrapper;
+using MB.Controls;
 
 namespace RPlayer
 {
@@ -29,6 +31,9 @@ namespace RPlayer
 
     private bool m_bMute = false;
     private MainForm m_mainForm;
+    Thread m_threadUpdate;
+    private volatile bool m_stopThreadUpdate = false;
+    private double m_nTotalTime = 0;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -55,7 +60,83 @@ namespace RPlayer
         label_Next.Text = "next";
         label_desktop.Text = "desktop";
       }
-      m_mainForm = mainForm;
+      m_mainForm = mainForm;      
+    }
+
+    public void StartThreadUpdate()
+    {
+      m_nTotalTime = (int)RpCore.GetTotalTime();
+      colorSlider_playProcess.Maximum = (int)m_nTotalTime;
+      TimeSpan t = TimeSpan.FromSeconds(m_nTotalTime);
+      label_timeLast.Text = string.Format("-{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+
+      m_stopThreadUpdate = false;
+      m_threadUpdate = new Thread(DoThreadUpdate);
+      m_threadUpdate.Start();
+      while (!m_threadUpdate.IsAlive) ;
+    }
+
+    public void EndThreadUpdate()
+    {
+      m_stopThreadUpdate = true;
+      m_threadUpdate.Join();
+      colorSlider_playProcess.Value = 0;
+      label_timeCurrent.Text = "00 : 00 : 00";
+      label_timeLast.Text = "-00 : 00 : 00";
+    }
+
+    delegate void ChangeTextDelegate(Control ctrl, string text);
+    public static void ChangeTextFromThread(Control ctrl, string text)
+    {
+      if (ctrl.InvokeRequired)
+      {
+        ChangeTextDelegate del = new ChangeTextDelegate(ChangeTextFromThread);
+        ctrl.Invoke(del, ctrl, text);
+      }
+      else
+        ctrl.Text = text;
+    }
+
+    delegate void ChangeValueDelegate(ColorSlider ctrl, int value);
+    public static void ChangeValueFromThread(ColorSlider ctrl, int value)
+    {
+      if (ctrl.InvokeRequired)
+      {
+        ChangeValueDelegate del = new ChangeValueDelegate(ChangeValueFromThread);
+        ctrl.Invoke(del, ctrl, value);
+      }
+      else
+      {
+        ctrl.Value = value;
+      }
+    }
+
+    private void DoThreadUpdate()
+    {
+      while (!m_stopThreadUpdate)
+      {
+        double nCurTime = RpCore.GetCurTime();
+        ChangeValueFromThread(colorSlider_playProcess, (int)nCurTime);
+
+        TimeSpan t = TimeSpan.FromSeconds(nCurTime);
+        string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds);
+        ChangeTextFromThread(label_timeCurrent, strText);
+
+        t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
+        strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds);
+        ChangeTextFromThread(label_timeLast, strText);
+
+        Thread.Sleep(1000);
+      }
     }
 
     private void FormBottomBar_Resize(object sender, EventArgs e)
@@ -100,6 +181,11 @@ namespace RPlayer
 
     }
 
+    private void label_Play_Click(object sender, EventArgs e)
+    {
+      RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
+    }
+
     private void label_Play_MouseEnter(object sender, EventArgs e)
     {
       try
@@ -116,6 +202,11 @@ namespace RPlayer
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
       }
       catch { }
+    }
+
+    private void label_Stop_Click(object sender, EventArgs e)
+    {
+      m_mainForm.StopPlay(true);
     }
 
     private void label_Stop_MouseEnter(object sender, EventArgs e)
@@ -152,6 +243,11 @@ namespace RPlayer
         label_FF.Image = Image.FromFile(Application.StartupPath + @"\pic\FF.png");
       }
       catch { }
+    }
+
+    private void label_FB_Click(object sender, EventArgs e)
+    {
+
     }
 
     private void label_FB_MouseEnter(object sender, EventArgs e)
@@ -220,6 +316,11 @@ namespace RPlayer
       colorSlider_playProcess.ThumbOuterColor = Color.Transparent;
     }
 
+    private void label_desktop_Click(object sender, EventArgs e)
+    {
+      m_mainForm.SwitchDesktopMode();
+    }
+
     private void label_desktop_MouseEnter(object sender, EventArgs e)
     {
       try
@@ -260,21 +361,6 @@ namespace RPlayer
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
       }
       catch { }
-    }
-
-    private void label_FB_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void label_Play_Click(object sender, EventArgs e)
-    {
-      RpCore.Play("F:\\av\\FileSource\\AVATAR.Title1.mp4", 0);
-    }
-
-    private void label_desktop_Click(object sender, EventArgs e)
-    {
-      m_mainForm.SwitchDesktopMode();
     }
   }
 }

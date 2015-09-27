@@ -131,6 +131,7 @@
       this.colorSlider_playProcess.ThumbPenColor = System.Drawing.Color.Transparent;
       this.colorSlider_playProcess.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
       this.colorSlider_playProcess.ThumbSize = 9;
+      this.colorSlider_playProcess.Value = 0;
       this.colorSlider_playProcess.MouseEnter += new System.EventHandler(this.colorSlider_playProcess_MouseEnter);
       this.colorSlider_playProcess.MouseLeave += new System.EventHandler(this.colorSlider_playProcess_MouseLeave);
       // 
@@ -171,6 +172,7 @@
       this.label_Stop.Name = "label_Stop";
       this.label_Stop.Size = new System.Drawing.Size(25, 25);
       this.label_Stop.TabIndex = 44;
+      this.label_Stop.Click += new System.EventHandler(this.label_Stop_Click);
       this.label_Stop.MouseEnter += new System.EventHandler(this.label_Stop_MouseEnter);
       this.label_Stop.MouseLeave += new System.EventHandler(this.label_Stop_MouseLeave);
       // 

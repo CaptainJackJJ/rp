@@ -132,9 +132,12 @@
       this.colorSlider_playProcess.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
       this.colorSlider_playProcess.ThumbSize = 9;
       this.colorSlider_playProcess.Value = 0;
+      this.colorSlider_playProcess.ValueChanged += new System.EventHandler(this.colorSlider_playProcess_ValueChanged);
       this.colorSlider_playProcess.Click += new System.EventHandler(this.colorSlider_playProcess_Click);
+      this.colorSlider_playProcess.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorSlider_playProcess_MouseDown);
       this.colorSlider_playProcess.MouseEnter += new System.EventHandler(this.colorSlider_playProcess_MouseEnter);
       this.colorSlider_playProcess.MouseLeave += new System.EventHandler(this.colorSlider_playProcess_MouseLeave);
+      this.colorSlider_playProcess.MouseUp += new System.Windows.Forms.MouseEventHandler(this.colorSlider_playProcess_MouseUp);
       // 
       // label_Volume
       // 

@@ -35,6 +35,10 @@ namespace RPlayer
     private volatile bool m_stopThreadUpdate = false;
     private double m_nTotalTime = 0;
     private bool m_bPaused = false;
+    private Object m_TimeMoniter = new Object();
+    public bool m_bProcessBarMouseUp = true;
+    public bool m_bSeekDone = true;
+    private bool m_bDragSeeking = false;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -98,14 +102,21 @@ namespace RPlayer
       label_timeLast.Text = "-00 : 00 : 00";
     }
 
-    public void PauseThreadUpdate()
+    private void PauseTimeUpdate()
     {
-      m_threadUpdate.Suspend();
+      Monitor.Enter(m_TimeMoniter);
     }
 
-    public void ResumeThreadUpdate()
+    delegate void ResumeTimeUpdateDelegate(bool bInvoke);
+    public void ResumeTimeUpdate(bool bInvoke)
     {
-      m_threadUpdate.Resume();
+      if (bInvoke)
+      {
+        ResumeTimeUpdateDelegate del = new ResumeTimeUpdateDelegate(ResumeTimeUpdate);
+        colorSlider_playProcess.Invoke(del,false);
+      }
+      else
+        Monitor.Exit(m_TimeMoniter);
     }
 
     delegate void ChangeTextDelegate(Control ctrl, string text);
@@ -138,22 +149,30 @@ namespace RPlayer
     {
       while (!m_stopThreadUpdate)
       {
-        double nCurTime = RpCore.GetCurTime();
-        ChangeValueFromThread(colorSlider_playProcess, (int)nCurTime);
+        Monitor.Enter(m_TimeMoniter);
+        try
+        {
+          double nCurTime = RpCore.GetCurTime();
+          ChangeValueFromThread(colorSlider_playProcess, (int)nCurTime);
 
-        TimeSpan t = TimeSpan.FromSeconds(nCurTime);
-        string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                        t.Hours,
-                        t.Minutes,
-                        t.Seconds);
-        ChangeTextFromThread(label_timeCurrent, strText);
+          TimeSpan t = TimeSpan.FromSeconds(nCurTime);
+          string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                          t.Hours,
+                          t.Minutes,
+                          t.Seconds);
+          ChangeTextFromThread(label_timeCurrent, strText);
 
-        t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
-        strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
-                        t.Hours,
-                        t.Minutes,
-                        t.Seconds);
-        ChangeTextFromThread(label_timeLast, strText);
+          t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
+          strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
+                          t.Hours,
+                          t.Minutes,
+                          t.Seconds);
+          ChangeTextFromThread(label_timeLast, strText);
+        }
+        finally
+        {
+          Monitor.Exit(m_TimeMoniter);
+        }
 
         Thread.Sleep(1000);
       }
@@ -382,10 +401,50 @@ namespace RPlayer
       catch { }
     }
 
+    private void colorSlider_playProcess_MouseDown(object sender, MouseEventArgs e)
+    {      
+      PauseTimeUpdate();      
+      double time =  colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
+      colorSlider_playProcess.Value = (int)time;
+      m_bSeekDone = false;      
+      RpCore.Seek(time, false);
+      m_bProcessBarMouseUp = false;
+    }
+
+    private void colorSlider_playProcess_MouseUp(object sender, MouseEventArgs e)
+    {
+      if (m_bDragSeeking) // Make sure last seek get performed when drag seek done
+      {
+        m_bDragSeeking = false;
+        while (!m_bSeekDone)
+        {
+          Thread.Sleep(10);
+        }
+        m_bProcessBarMouseUp = true;
+        RpCore.Seek(colorSlider_playProcess.Value, false);
+      }
+      else
+      {
+        if (m_bSeekDone)
+          ResumeTimeUpdate(false);
+        m_bProcessBarMouseUp = true;
+      }
+    }
+
+    private void colorSlider_playProcess_ValueChanged(object sender, EventArgs e)
+    {
+      if(!m_bProcessBarMouseUp && m_bSeekDone)// drag seek
+      {
+        m_bDragSeeking = true;
+        m_bSeekDone = false;
+        RpCore.Seek(colorSlider_playProcess.Value, false);
+      }
+    }
+
     private void colorSlider_playProcess_Click(object sender, EventArgs e)
     {
-      PauseThreadUpdate();
-      RpCore.Seek(colorSlider_playProcess.Value, false);
+      //PauseTimeUpdate();
+      //RpCore.Seek(colorSlider_playProcess.Value, false);
     }
 
     private void colorSlider_playProcess_MouseEnter(object sender, EventArgs e)
@@ -446,5 +505,6 @@ namespace RPlayer
       }
       catch { }
     }
+
   }
 }

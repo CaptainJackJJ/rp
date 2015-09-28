@@ -37,8 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ColorSlider\ColorSlider\bin\Release\ColorSlider.dll</HintPath>
     </Reference>
-    <Reference Include="RpCoreWrapper">
-      <HintPath>..\RpCoreWrapper\Debug\RpCoreWrapper.dll</HintPath>
+    <Reference Include="RpCoreWrapper, Version=1.0.5749.37792, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RpCoreWrapper\Release\RpCoreWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

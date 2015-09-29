@@ -113,10 +113,20 @@ namespace RPlayer
       if (bInvoke)
       {
         ResumeTimeUpdateDelegate del = new ResumeTimeUpdateDelegate(ResumeTimeUpdate);
-        colorSlider_playProcess.Invoke(del,false);
+        colorSlider_playProcess.Invoke(del, false);
       }
       else
-        Monitor.Exit(m_TimeMoniter);
+      {
+        while (true)
+        {
+          try
+          {
+            Monitor.Exit(m_TimeMoniter);
+          }
+          catch (SynchronizationLockException)
+          { break; }
+        }
+      }
     }
 
     delegate void ChangeTextDelegate(Control ctrl, string text);
@@ -145,13 +155,36 @@ namespace RPlayer
       }
     }
 
+    delegate void AskReleaseLockDelegate(ColorSlider ctrl);
+    public void AskReleaseLockFromThread(ColorSlider ctrl)
+    {
+      if (ctrl.InvokeRequired)
+      {
+        AskReleaseLockDelegate del = new AskReleaseLockDelegate(AskReleaseLockFromThread);
+        ctrl.Invoke(del, ctrl);
+      }
+      else
+      {
+        while (true)
+        {
+          try
+          {
+            Monitor.Exit(m_TimeMoniter);
+          }
+          catch(SynchronizationLockException)
+          { break; }
+        }
+      }
+    }
+
     private void DoThreadUpdate()
     {
       while (!m_stopThreadUpdate)
       {
-        Monitor.Enter(m_TimeMoniter);
+        bool bOwnLock = false;
         try
         {
+          bOwnLock = Monitor.TryEnter(m_TimeMoniter, 1000 * 10);
           double nCurTime = RpCore.GetCurTime();
           ChangeValueFromThread(colorSlider_playProcess, (int)nCurTime);
 
@@ -171,7 +204,10 @@ namespace RPlayer
         }
         finally
         {
-          Monitor.Exit(m_TimeMoniter);
+          if (bOwnLock)
+            Monitor.Exit(m_TimeMoniter);
+          else
+            AskReleaseLockFromThread(colorSlider_playProcess);
         }
 
         Thread.Sleep(1000);
@@ -406,6 +442,21 @@ namespace RPlayer
       PauseTimeUpdate();      
       double time =  colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
       colorSlider_playProcess.Value = (int)time;
+
+      TimeSpan t = TimeSpan.FromSeconds(time);
+      string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+     label_timeCurrent.Text = strText;
+
+      t = TimeSpan.FromSeconds(m_nTotalTime - time);
+      strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+      label_timeLast.Text = strText;
+
       m_bSeekDone = false;      
       RpCore.Seek(time, false);
       m_bProcessBarMouseUp = false;

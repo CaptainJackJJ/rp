@@ -17,6 +17,12 @@ namespace RPlayer
     public override void OnEnded() {  }
     public override void OnStopped() {  }
     public override void OnSeekStarted() { }
+    public override void OnSeekFailed()
+    {
+      if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
+        m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
+      m_mainForm.m_formBottomBar.m_bSeekDone = true;
+    }
     public override void OnSeekEnded()
     {
       if(m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)

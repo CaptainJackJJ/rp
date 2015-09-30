@@ -39,7 +39,6 @@
       this.label_settings = new System.Windows.Forms.Label();
       this.label_playWnd = new System.Windows.Forms.Label();
       this.label_Volume = new System.Windows.Forms.Label();
-      this.label_desktop = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.SuspendLayout();
       // 
@@ -170,14 +169,6 @@
       this.label_Volume.MouseEnter += new System.EventHandler(this.label_Volume_MouseEnter);
       this.label_Volume.MouseLeave += new System.EventHandler(this.label_Volume_MouseLeave);
       // 
-      // label_desktop
-      // 
-      this.label_desktop.BackColor = System.Drawing.Color.Transparent;
-      this.label_desktop.Location = new System.Drawing.Point(878, 528);
-      this.label_desktop.Name = "label_desktop";
-      this.label_desktop.Size = new System.Drawing.Size(25, 25);
-      this.label_desktop.TabIndex = 35;
-      // 
       // colorSlider_volume
       // 
       this.colorSlider_volume.BackColor = System.Drawing.Color.Transparent;
@@ -217,7 +208,6 @@
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.colorSlider_volume);
       this.Controls.Add(this.label_Volume);
-      this.Controls.Add(this.label_desktop);
       this.Controls.Add(this.label_BottomEdge);
       this.Controls.Add(this.label_RightEdge);
       this.Controls.Add(this.label_TopEdge);
@@ -251,7 +241,6 @@
         private System.Windows.Forms.Label label_settings;
         private System.Windows.Forms.Label label_playWnd;
         private System.Windows.Forms.Label label_Volume;
-        private System.Windows.Forms.Label label_desktop;
         private MB.Controls.ColorSlider colorSlider_volume;
     }
 }

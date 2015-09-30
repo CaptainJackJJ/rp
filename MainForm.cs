@@ -58,7 +58,6 @@ namespace RPlayer
                 label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
                 label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
                 label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
                 label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
                 label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
             }
@@ -66,7 +65,6 @@ namespace RPlayer
             {
                 this.BackColor = Color.Gainsboro;
                 label_Play.Text = "play";
-                label_desktop.Text = "desktop";
                 label_settings.Text = "settings";
                 label_Volume.Text = "volume";
                 label_Close.Text = "close";
@@ -101,10 +99,9 @@ namespace RPlayer
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
                     this.Size.Height - 50);
             int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
-            label_desktop.Location =
-              new Point(this.Width - m_nBottomButtonsSize - m_nCornerSize, nBottomButtonsY);
             colorSlider_volume.Location =
-              new Point(label_desktop.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
+              new Point(this.Width - m_nBottomButtonsSize - m_nCornerSize - 10 - colorSlider_volume.Width,
+                nBottomButtonsY + 7);
             label_Volume.Location =
               new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
@@ -451,24 +448,6 @@ namespace RPlayer
                 UpdateEdge();
         }
 
-        private void label_desktop_MouseEnter(object sender, EventArgs e)
-        {
-            try
-            {
-                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktopFocus.png");
-            }
-            catch { }
-        }
-
-        private void label_desktop_MouseLeave(object sender, EventArgs e)
-        {
-            try
-            {
-                label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
-            }
-            catch { }
-        }
-
         private void label_Volume_MouseEnter(object sender, EventArgs e)
         {
             try
@@ -578,11 +557,6 @@ namespace RPlayer
           }
         }
 
-        private void label_desktop_Click(object sender, EventArgs e)
-        {
-          SwitchDesktopMode();
-        }
-
         private void label_playWnd_MouseEnter(object sender, EventArgs e)
         {
           if (m_bDesktop)
@@ -640,7 +614,6 @@ namespace RPlayer
         {
           if (bSwitchToSubForms)
           {
-            label_desktop.Hide();
             label_Play.Hide();
             label_Volume.Hide();
             colorSlider_volume.Hide();
@@ -669,7 +642,6 @@ namespace RPlayer
               label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
             colorSlider_volume.Value = m_formBottomBar.GetVolume();
 
-            label_desktop.Show();
             label_Play.Show();
             label_Volume.Show();
             colorSlider_volume.Show();

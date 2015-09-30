@@ -535,6 +535,16 @@ namespace RPlayer
 
         private void label_Play_Click(object sender, EventArgs e)
         {
+          OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+          openFileDialog1.Filter = "All files (*.*)|*.*";
+          openFileDialog1.FilterIndex = 1;
+          openFileDialog1.RestoreDirectory = true;
+
+          if (openFileDialog1.ShowDialog() == DialogResult.OK)
+          {
+            StartPlay(openFileDialog1.FileName, 0,true);
+          }
         }
 
         public void SwitchDesktopMode()

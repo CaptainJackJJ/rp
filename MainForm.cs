@@ -10,28 +10,7 @@ using RpCoreWrapper;
 
 namespace RPlayer
 {
-  public class RpCallback : IRpCallback
-  {
-    private MainForm m_mainForm;
-    public RpCallback(MainForm mainForm) { m_mainForm = mainForm; }
-    public override void OnEnded() {  }
-    public override void OnStopped() {  }
-    public override void OnSeekStarted() { }
-    public override void OnSeekFailed()
-    {
-      if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
-        m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
-      m_mainForm.m_formBottomBar.m_bSeekDone = true;
-    }
-    public override void OnSeekEnded()
-    {
-      if(m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
-        m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
-      m_mainForm.m_formBottomBar.m_bSeekDone = true;
-    }
-    public override void OnHwDecodeFailed() { }
-    public override void OnDecodeModeNotify(bool Hw) { }
-  }
+
 
     public partial class MainForm : Form
     {
@@ -58,7 +37,11 @@ namespace RPlayer
         private const int m_nCornerSize = 10;
         private const int m_nFormBottomBar = 65;
 
-        private bool m_bMute = false;
+        private const int m_nPlayButtonSize = 40;
+        private const int m_nBottomButtonsSize = 25;
+        private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
+
+        public bool m_bMute = false;
         private bool m_bMaxed = false;
         private bool m_bInCorner = false;
         public bool m_bDesktop;
@@ -117,6 +100,13 @@ namespace RPlayer
             label_Play.Location =
                new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
                     this.Size.Height - 50);
+            int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
+            label_desktop.Location =
+              new Point(this.Width - m_nBottomButtonsSize - m_nCornerSize, nBottomButtonsY);
+            colorSlider_volume.Location =
+              new Point(label_desktop.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
+            label_Volume.Location =
+              new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
             if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown 
                 || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
@@ -519,6 +509,7 @@ namespace RPlayer
                 }
             }
             catch { }
+            RpCore.SetMute(m_bMute);
         }
 
         private void label_settings_MouseEnter(object sender, EventArgs e)
@@ -671,6 +662,13 @@ namespace RPlayer
           {
             m_formBottomBar.Hide();
 
+            m_bMute = m_formBottomBar.m_bMute;
+            if (m_bMute)
+              label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+            else
+              label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+            colorSlider_volume.Value = m_formBottomBar.GetVolume();
+
             label_desktop.Show();
             label_Play.Show();
             label_Volume.Show();
@@ -678,5 +676,37 @@ namespace RPlayer
           }
         }
 
+        private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
+        {
+          RpCore.SetVolume((float)(colorSlider_volume.Value * 0.01));
+        }
+        
+        public int GetVolume()
+        { 
+          return colorSlider_volume.Value; 
+        }
+    }
+
+    public class RpCallback : IRpCallback
+    {
+      private MainForm m_mainForm;
+      public RpCallback(MainForm mainForm) { m_mainForm = mainForm; }
+      public override void OnEnded() { }
+      public override void OnStopped() { }
+      public override void OnSeekStarted() { }
+      public override void OnSeekFailed()
+      {
+        if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
+          m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
+        m_mainForm.m_formBottomBar.m_bSeekDone = true;
+      }
+      public override void OnSeekEnded()
+      {
+        if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
+          m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
+        m_mainForm.m_formBottomBar.m_bSeekDone = true;
+      }
+      public override void OnHwDecodeFailed() { }
+      public override void OnDecodeModeNotify(bool Hw) { }
     }
 }

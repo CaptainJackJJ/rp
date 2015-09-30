@@ -67,8 +67,8 @@
       this.colorSlider_volume.ThumbPenColor = System.Drawing.Color.Transparent;
       this.colorSlider_volume.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
       this.colorSlider_volume.ThumbSize = 10;
-      this.colorSlider_volume.MouseEnter += new System.EventHandler(this.label_Volume_MouseEnter);
-      this.colorSlider_volume.MouseLeave += new System.EventHandler(this.label_Volume_MouseLeave);
+      this.colorSlider_volume.Value = 100;
+      this.colorSlider_volume.ValueChanged += new System.EventHandler(this.colorSlider_volume_ValueChanged);
       // 
       // label_desktop
       // 
@@ -145,6 +145,7 @@
       this.label_Volume.Name = "label_Volume";
       this.label_Volume.Size = new System.Drawing.Size(25, 25);
       this.label_Volume.TabIndex = 47;
+      this.label_Volume.Click += new System.EventHandler(this.label_Volume_Click);
       this.label_Volume.MouseEnter += new System.EventHandler(this.label_Volume_MouseEnter);
       this.label_Volume.MouseLeave += new System.EventHandler(this.label_Volume_MouseLeave);
       // 

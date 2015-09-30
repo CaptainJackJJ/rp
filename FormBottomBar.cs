@@ -29,7 +29,7 @@ namespace RPlayer
     private const int m_nFFBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin;
     private const int m_nNextBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize;
 
-    private bool m_bMute = false;
+    public bool m_bMute = false;
     private MainForm m_mainForm;
     Thread m_threadUpdate;
     private volatile bool m_stopThreadUpdate = false;
@@ -43,7 +43,7 @@ namespace RPlayer
     public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
-      this.ShowInTaskbar = false;
+      this.ShowInTaskbar = false;       
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
@@ -53,7 +53,7 @@ namespace RPlayer
         label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
         label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
         label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
-        label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+        label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");        
       }
       catch
       {
@@ -65,7 +65,7 @@ namespace RPlayer
         label_Next.Text = "next";
         label_desktop.Text = "desktop";
       }
-      m_mainForm = mainForm;      
+      m_mainForm = mainForm;  
     }
 
     public void StartThreadUpdate()
@@ -73,11 +73,21 @@ namespace RPlayer
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
+        m_bMute = m_mainForm.m_bMute;
+        if (m_bMute)
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+        else
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
       }
       catch
       {
         label_Play.Text = "pause";
+        if (m_mainForm.m_bMute)
+          label_Volume.Text = "mute";
+        else
+          label_Volume.Text = "volume";
       }
+      colorSlider_volume.Value = m_mainForm.GetVolume();
 
       m_nTotalTime = (int)RpCore.GetTotalTime();
       colorSlider_playProcess.Maximum = (int)m_nTotalTime;
@@ -218,8 +228,8 @@ namespace RPlayer
     {
       // Every control's location is based on label_Play.
       label_Play.Location =
-   new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
-        this.Size.Height - 50 + 2);
+        new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
+              this.Size.Height - 50 + 2);
       int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
       label_Stop.Location =
          new Point((label_Play.Location.X + m_nStopBtnXMarginToPlay),
@@ -550,6 +560,36 @@ namespace RPlayer
       }
       catch { }
     }
+
+    private void label_Volume_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        if (m_bMute)
+        {
+          m_bMute = false;
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
+        }
+        else
+        {
+          m_bMute = true;
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
+        }
+      }
+      catch { }
+      RpCore.SetMute(m_bMute);
+    }
+
+    private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
+    {
+      RpCore.SetVolume((float)(colorSlider_volume.Value * 0.01));
+    }
+
+    public int GetVolume()
+    {
+      return colorSlider_volume.Value;
+    }
+
 
   }
 }

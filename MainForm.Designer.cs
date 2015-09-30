@@ -203,6 +203,8 @@
       this.colorSlider_volume.ThumbPenColor = System.Drawing.Color.Transparent;
       this.colorSlider_volume.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
       this.colorSlider_volume.ThumbSize = 10;
+      this.colorSlider_volume.Value = 100;
+      this.colorSlider_volume.ValueChanged += new System.EventHandler(this.colorSlider_volume_ValueChanged);
       // 
       // MainForm
       // 

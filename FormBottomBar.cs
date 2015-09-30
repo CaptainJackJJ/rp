@@ -492,12 +492,6 @@ namespace RPlayer
       }
     }
 
-    private void colorSlider_playProcess_Click(object sender, EventArgs e)
-    {
-      //PauseTimeUpdate();
-      //RpCore.Seek(colorSlider_playProcess.Value, false);
-    }
-
     private void colorSlider_playProcess_MouseEnter(object sender, EventArgs e)
     {
       colorSlider_playProcess.ThumbInnerColor = Color.White;

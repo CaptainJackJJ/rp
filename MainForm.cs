@@ -85,7 +85,11 @@ namespace RPlayer
       {
         case Keys.Space:
           m_formBottomBar.Pause();
-          break;
+          return true;
+        case Keys.Escape:
+          if (m_bDesktop)
+            SwitchDesktopMode();
+          return true;
       }
       return base.ProcessCmdKey(ref msg, keyData);
     }
@@ -578,6 +582,12 @@ namespace RPlayer
       }
     }
 
+    private void label_playWnd_DoubleClick(object sender, EventArgs e)
+    {
+      if(RpCore.IsPlaying())
+        SwitchDesktopMode();
+    }
+
     private void label_playWnd_MouseEnter(object sender, EventArgs e)
     {
       if (m_bDesktop)
@@ -678,6 +688,7 @@ namespace RPlayer
     {
       return colorSlider_volume.Value;
     }
+
   }
 
   public class RpCallback : IRpCallback

@@ -68,6 +68,20 @@ namespace RPlayer
       m_mainForm = mainForm;
     }
 
+    public void UpDownVolume(bool bUp)
+    {
+      if (bUp)
+      {
+        if (colorSlider_volume.Value < colorSlider_volume.Maximum)
+          colorSlider_volume.Value++;
+      }
+      else
+      {
+        if (colorSlider_volume.Value > colorSlider_volume.Minimum)
+          colorSlider_volume.Value--;
+      }
+    }
+
     public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
     {
       colorSlider_volume.TriggerOnMouseWheel(e);

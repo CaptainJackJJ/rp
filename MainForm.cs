@@ -98,6 +98,27 @@ namespace RPlayer
       TriggerVolumeOnMouseWheel(e);
     }
 
+    public void UpDownVolume(bool bUp)
+    {
+      if (RpCore.IsPlaying())
+      {
+        m_formBottomBar.UpDownVolume(bUp);
+      }
+      else
+      {
+        if (bUp)
+        {
+          if (colorSlider_volume.Value < colorSlider_volume.Maximum)
+            colorSlider_volume.Value++;
+        }
+        else
+        {
+          if (colorSlider_volume.Value > colorSlider_volume.Minimum)
+            colorSlider_volume.Value--;
+        }
+      }
+    }
+
     // return false means this method do not handle that key.
     public bool HandleCmdKey(Keys keyData)
     {
@@ -109,6 +130,12 @@ namespace RPlayer
         case Keys.Escape:
           if (m_bDesktop)
             SwitchDesktopMode();
+          break;
+        case Keys.Up:
+          UpDownVolume(true);
+          break;
+        case Keys.Down:
+          UpDownVolume(false);
           break;
         default:
           return false;

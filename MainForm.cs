@@ -79,6 +79,17 @@ namespace RPlayer
       this.AddOwnedForm(m_formBottomBar);
     }
 
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      switch(keyData)
+      {
+        case Keys.Space:
+          m_formBottomBar.Pause();
+          break;
+      }
+      return base.ProcessCmdKey(ref msg, keyData);
+    }
+
     private void MainForm_Resize(object sender, EventArgs e)
     {
       ChangeSubFormsLocAndSize(true, true);

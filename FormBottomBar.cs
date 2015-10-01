@@ -68,6 +68,17 @@ namespace RPlayer
       m_mainForm = mainForm;
     }
 
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      switch (keyData)
+      {
+        case Keys.Space:
+          Pause();
+          break;
+      }
+      return base.ProcessCmdKey(ref msg, keyData);
+    }
+
     public void StartThreadUpdate()
     {
       try
@@ -266,7 +277,7 @@ namespace RPlayer
 
     }
 
-    private void label_Play_Click(object sender, EventArgs e)
+    public void Pause()
     {
       RpCore.Pause();
       if (m_bPaused)
@@ -293,6 +304,11 @@ namespace RPlayer
           label_Play.Text = "pause";
         }
       }
+    }
+
+    private void label_Play_Click(object sender, EventArgs e)
+    {
+      Pause();
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)

@@ -85,6 +85,19 @@ namespace RPlayer
       this.AddOwnedForm(m_formSettings);
     }
 
+    public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
+    {
+      if (RpCore.IsPlaying())
+        m_formBottomBar.TriggerVolumeOnMouseWheel(e);
+      else
+        colorSlider_volume.TriggerOnMouseWheel(e);
+    }
+
+    protected override void OnMouseWheel(MouseEventArgs e)
+    {
+      TriggerVolumeOnMouseWheel(e);
+    }
+
     // return false means this method do not handle that key.
     public bool HandleCmdKey(Keys keyData)
     {

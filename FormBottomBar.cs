@@ -68,6 +68,16 @@ namespace RPlayer
       m_mainForm = mainForm;
     }
 
+    public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
+    {
+      colorSlider_volume.TriggerOnMouseWheel(e);
+    }
+
+    protected override void OnMouseWheel(MouseEventArgs e)
+    {
+      colorSlider_volume.TriggerOnMouseWheel(e);
+    }
+
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
       if (m_mainForm.HandleCmdKey(keyData))

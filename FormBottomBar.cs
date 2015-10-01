@@ -365,7 +365,8 @@ namespace RPlayer
 
     private void label_Stop_Click(object sender, EventArgs e)
     {
-      m_mainForm.StopPlay(true);
+      m_mainForm.StopPlay();
+      m_mainForm.SwitchFormMode(false);
     }
 
     private void label_Stop_MouseEnter(object sender, EventArgs e)

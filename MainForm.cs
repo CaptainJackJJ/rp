@@ -15,8 +15,8 @@ namespace RPlayer
   public partial class MainForm : Form
   {
     private bool m_bMainFormMouseDown = false;
-    private bool m_bMainFormMouseDownNoEdge = false;
-    private Point m_MainFormMouseDownPos;
+    private bool m_bTopBarAreaMouseDown = false;
+    private Point m_TopBarAreaMouseDownPos;
 
     private bool m_bTopEdge_MouseDown = false;
     private bool m_bLeftEdge_MouseDown = false;
@@ -31,11 +31,10 @@ namespace RPlayer
     private const int m_nMinSize = 50;
     private const int m_nEdgeMargin = 1;
     private const int m_nTopBarButtonsMargin = 20;
-    private const int m_nTopBarButtonswidth = 13;
+    private const int m_nTopBarButtonsWidth = 13;
     private const int m_nRenderToTopBarMargin = 12;
     private const int m_nRenderToBottomBarMargin = 23;
     private const int m_nCornerSize = 10;
-    private const int m_nFormBottomBar = 65;
 
     private const int m_nPlayButtonSize = 40;
     private const int m_nBottomButtonsSize = 25;
@@ -47,6 +46,9 @@ namespace RPlayer
     public bool m_bDesktop;
 
     public FormBottomBar m_formBottomBar;
+    private FormTopBar m_formTopBar;
+    private FormSettings m_formSettings;
+
     private RpCallback m_rpCallback;
 
     public MainForm()
@@ -76,7 +78,11 @@ namespace RPlayer
       RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
 
       m_formBottomBar = new FormBottomBar(this);
+      m_formTopBar = new FormTopBar(this);
+      m_formSettings = new FormSettings(this);
       this.AddOwnedForm(m_formBottomBar);
+      this.AddOwnedForm(m_formTopBar);
+      this.AddOwnedForm(m_formSettings);
     }
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -96,18 +102,18 @@ namespace RPlayer
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
-      ChangeSubFormsLocAndSize(true, true);
+      ChangeSubFormsLocAndSize();
       label_Close.Location =
-          new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonswidth,
+          new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
       label_Max.Location =
-          new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonswidth * 2,
+          new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonsWidth * 2,
               label_Max.Location.Y);
       label_Min.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonswidth * 3,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
               label_Min.Location.Y);
       label_settings.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonswidth * 4,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4,
               label_settings.Location.Y);
 
       label_Play.Location =
@@ -148,9 +154,9 @@ namespace RPlayer
         m_bLeftBottomCornerMouseDown = true;
       else if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
         m_bRightTopCornerMouseDown = true;
-      else
-        m_bMainFormMouseDownNoEdge = true;
-      m_MainFormMouseDownPos = e.Location;
+      else if (e.Location.Y < label_playWnd.Location.Y)
+        m_bTopBarAreaMouseDown = true;
+      m_TopBarAreaMouseDownPos = e.Location;
       m_bMainFormMouseDown = true;
     }
 
@@ -160,16 +166,16 @@ namespace RPlayer
       if (!label_TopEdge.Visible)
         UpdateEdge();
 
-      m_bMainFormMouseDownNoEdge = m_bRightBottomCornerMouseDown
+      m_bTopBarAreaMouseDown = m_bRightBottomCornerMouseDown
           = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
     }
 
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
     {
-      if (m_bMainFormMouseDownNoEdge)
+      if (m_bTopBarAreaMouseDown)
       {
-        int xDiff = e.X - m_MainFormMouseDownPos.X;
-        int yDiff = e.Y - m_MainFormMouseDownPos.Y;
+        int xDiff = e.X - m_TopBarAreaMouseDownPos.X;
+        int yDiff = e.Y - m_TopBarAreaMouseDownPos.Y;
         this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
       }
       else if (m_bRightBottomCornerMouseDown)
@@ -249,7 +255,7 @@ namespace RPlayer
 
     private void MainForm_Move(object sender, EventArgs e)
     {
-      ChangeSubFormsLocAndSize(true, false);
+      ChangeSubFormsLocAndSize();
     }
 
     private void UpdateEdge()
@@ -301,13 +307,18 @@ namespace RPlayer
       this.WindowState = FormWindowState.Minimized;
     }
 
-    private void label_Close_Click(object sender, EventArgs e)
+    public void ClickClose()
     {
       if (RpCore.IsPlaying())
-        StopPlay(false);
+        StopPlay();
       RpCore.UninitPlayer();
       RpCore.UnLoadLib();
       this.Close();
+    }
+
+    private void label_Close_Click(object sender, EventArgs e)
+    {
+      ClickClose();
     }
 
     private void label_Close_MouseEnter(object sender, EventArgs e)
@@ -328,18 +339,30 @@ namespace RPlayer
       catch { }
     }
 
-    private void label_Max_Click(object sender, EventArgs e)
+    public void ClickMax()
     {
-      if (m_bMaxed)
+      if(m_bDesktop)
       {
-        this.WindowState = FormWindowState.Normal;
-        m_bMaxed = false;
+        SwitchDesktopMode();
       }
       else
       {
-        this.WindowState = FormWindowState.Maximized;
-        m_bMaxed = true;
+        if (m_bMaxed)
+        {
+          this.WindowState = FormWindowState.Normal;
+          m_bMaxed = false;
+        }
+        else
+        {
+          this.WindowState = FormWindowState.Maximized;
+          m_bMaxed = true;
+        }
       }
+    }
+
+    private void label_Max_Click(object sender, EventArgs e)
+    {
+      ClickMax();
     }
 
     private void label_Max_MouseEnter(object sender, EventArgs e)
@@ -526,8 +549,12 @@ namespace RPlayer
 
     private void label_settings_Click(object sender, EventArgs e)
     {
-      FormSettings fs = new FormSettings(FormSettings.enumSettingFormType.regular);
-      fs.Show();
+      ShowFormSettings(FormSettings.enumSettingFormType.regular);
+    }
+
+    public void ShowFormSettings(FormSettings.enumSettingFormType settingType)
+    {
+      m_formSettings.ShowForm(settingType);
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)
@@ -558,7 +585,8 @@ namespace RPlayer
 
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
-        StartPlay(openFileDialog1.FileName, 0, true);
+        SwitchFormMode(true);
+        StartPlay(openFileDialog1.FileName, 0);
       }
     }
 
@@ -571,6 +599,8 @@ namespace RPlayer
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
         m_formBottomBar.Opacity = 1;
         m_formBottomBar.Show();
+        m_formTopBar.Opacity = 1;
+        m_formTopBar.Show();
       }
       else
       {
@@ -579,6 +609,7 @@ namespace RPlayer
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
         m_formBottomBar.Hide();
+        m_formTopBar.Hide();
       }
     }
 
@@ -592,7 +623,9 @@ namespace RPlayer
     {
       if (m_bDesktop)
       {
+        m_formTopBar.Hide();
         m_formBottomBar.Hide();
+        this.BringToFront();
       }
     }
 
@@ -600,10 +633,13 @@ namespace RPlayer
     {
       if (m_bDesktop)
       {
-        if (e.Location.Y >= label_playWnd.Height - m_nFormBottomBar || e.Location.Y <= m_nFormBottomBar)
+        if (e.Location.Y >= label_playWnd.Height - m_formBottomBar.Height 
+          || e.Location.Y <= m_formTopBar.Height)
         {
-          m_formBottomBar.Opacity = 0.3;
+          m_formBottomBar.Opacity = 0.4;
           m_formBottomBar.Show();
+          m_formTopBar.Opacity = 0.4;
+          m_formTopBar.Show();
         }
       }
     }
@@ -618,52 +654,51 @@ namespace RPlayer
       string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
       if (RpCore.IsPlaying())
       {
-        StopPlay(false);
-        StartPlay(FileList[0], 0, false);
+        StopPlay();
+        StartPlay(FileList[0], 0);
       }
       else
       {
-        StartPlay(FileList[0], 0, true);
+        SwitchFormMode(true);
+        StartPlay(FileList[0], 0);
       }
     }
 
-    private void ChangeSubFormsLocAndSize(bool bLoc, bool bSize)
+    private void ChangeSubFormsLocAndSize()
     {
-      if (bLoc)
-      {
-        m_formBottomBar.Location
-          = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_nFormBottomBar - 3);
-      }
-      if (bSize)
-      {
-        m_formBottomBar.Size
-          = new Size(this.Width - m_nCornerSize * 2, m_nFormBottomBar);
-      }
+      int nMarginBarToEdge;
+      if (m_bDesktop)
+        nMarginBarToEdge = 0;
+      else
+        nMarginBarToEdge = 2;
+
+      m_formBottomBar.Location
+        = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - nMarginBarToEdge);
+
+      m_formBottomBar.Size
+        = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
+
+      m_formTopBar.Location
+        = new Point(this.Location.X + m_nCornerSize, this.Location.Y + nMarginBarToEdge);
+
+      m_formTopBar.Size
+        = new Size(this.Width - m_nCornerSize * 2, m_formTopBar.Height);
     }
 
-    private void StartPlay(string url, double nStartTime, bool bSwitchToSubForms)
+    public void SwitchFormMode(bool bPlayingMode)
     {
-      if (bSwitchToSubForms)
+      if (bPlayingMode)
       {
         label_Play.Hide();
         label_Volume.Hide();
         colorSlider_volume.Hide();
 
-        ChangeSubFormsLocAndSize(true, true);
+        m_formTopBar.Show();
         m_formBottomBar.Show();
       }
-
-      RpCore.Play(url, nStartTime);
-      m_formBottomBar.StartThreadUpdate();
-    }
-
-    public void StopPlay(bool bSwitchToMainForm)
-    {
-      m_formBottomBar.EndThreadUpdate();
-      RpCore.Stop();
-
-      if (bSwitchToMainForm)
+      else
       {
+        m_formTopBar.Hide();
         m_formBottomBar.Hide();
 
         m_bMute = m_formBottomBar.m_bMute;
@@ -677,6 +712,18 @@ namespace RPlayer
         label_Volume.Show();
         colorSlider_volume.Show();
       }
+    }
+
+    private void StartPlay(string url, double nStartTime)
+    {
+      RpCore.Play(url, nStartTime);
+      m_formBottomBar.StartThreadUpdate();
+    }
+
+    public void StopPlay()
+    {
+      m_formBottomBar.EndThreadUpdate();
+      RpCore.Stop();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)

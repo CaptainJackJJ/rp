@@ -82,6 +82,12 @@
     <Compile Include="FormSettingSubtitle.Designer.cs">
       <DependentUpon>FormSettingSubtitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTopBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTopBar.Designer.cs">
+      <DependentUpon>FormTopBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettingSubtitle.resx">
       <DependentUpon>FormSettingSubtitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTopBar.resx">
+      <DependentUpon>FormTopBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

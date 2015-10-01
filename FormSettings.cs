@@ -12,16 +12,18 @@ namespace RPlayer
     public partial class FormSettings : Form
     {
         public enum enumSettingFormType { regular,subtitle,av}
-        private enumSettingFormType m_enumSettingFormDefaultType;
 
         private bool m_bTopBarMouseDown = false;
         private Point m_TopBarMouseDownPos;
         FormSettingRegular m_FormSettingRegular = new FormSettingRegular();
         FormSettingSubtitle m_FormSettingSubtitle = new FormSettingSubtitle();
         FormSettingAv m_FormSettingAv = new FormSettingAv();
+        private bool m_bShowing = false;
+        private MainForm m_mainForm;
 
-        public FormSettings(enumSettingFormType defaultType)
+        public FormSettings(MainForm mainForm)
         {
+          m_mainForm = mainForm;
             InitializeComponent();
             try
             {
@@ -31,34 +33,45 @@ namespace RPlayer
             {
                 label_settingsClose.Text = "close";
             }
-            m_enumSettingFormDefaultType = defaultType;
+            
             this.AddOwnedForm(m_FormSettingRegular);
             this.AddOwnedForm(m_FormSettingSubtitle);
             this.AddOwnedForm(m_FormSettingAv);
         }
 
-        private void FormSettings_Shown(object sender, EventArgs e)
+        public void ShowForm(enumSettingFormType SettingType)
         {
-            switch (m_enumSettingFormDefaultType)
-            {
-                case enumSettingFormType.regular:
-                    showRegularForm();
-                    break;
-                case enumSettingFormType.subtitle:
-                    showSubtitleForm();
-                    break;
-                case enumSettingFormType.av:
-                    showAvForm();
-                    break;
-            }
+          if (m_bShowing)
+            return;
+          m_bShowing = true;
+          this.Show();
+          switch (SettingType)
+          {
+            case enumSettingFormType.regular:
+              showRegularForm();
+              break;
+            case enumSettingFormType.subtitle:
+              showSubtitleForm();
+              break;
+            case enumSettingFormType.av:
+              showAvForm();
+              break;
+          }
+        }
+
+        private void HideForm()
+        {
+          m_FormSettingAv.Hide();
+          m_FormSettingSubtitle.Hide();
+          m_FormSettingRegular.Hide();
+          this.Hide();
+          m_bShowing = false;
+          m_mainForm.BringToFront();
         }
 
         private void label_settingsClose_Click(object sender, EventArgs e)
         {
-            m_FormSettingRegular.Close();
-            m_FormSettingSubtitle.Close();
-            m_FormSettingAv.Close();
-            this.Close();
+          HideForm();
         }
 
         private void FormSettings_MouseDown(object sender, MouseEventArgs e)
@@ -220,12 +233,12 @@ namespace RPlayer
 
         private void button_ok_Click(object sender, EventArgs e)
         {
-
+          HideForm();
         }
 
         private void button_cancel_Click(object sender, EventArgs e)
         {
-
+          HideForm();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace RPlayer
     public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
-      this.ShowInTaskbar = false;       
+      this.ShowInTaskbar = false;
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
@@ -53,7 +53,7 @@ namespace RPlayer
         label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
         label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
         label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
-        label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");        
+        label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
       }
       catch
       {
@@ -65,7 +65,7 @@ namespace RPlayer
         label_Next.Text = "next";
         label_desktop.Text = "desktop";
       }
-      m_mainForm = mainForm;  
+      m_mainForm = mainForm;
     }
 
     public void StartThreadUpdate()
@@ -181,7 +181,7 @@ namespace RPlayer
           {
             Monitor.Exit(m_TimeMoniter);
           }
-          catch(SynchronizationLockException)
+          catch (SynchronizationLockException)
           { break; }
         }
       }
@@ -448,9 +448,9 @@ namespace RPlayer
     }
 
     private void colorSlider_playProcess_MouseDown(object sender, MouseEventArgs e)
-    {      
-      PauseTimeUpdate();      
-      double time =  colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
+    {
+      PauseTimeUpdate();
+      double time = colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
       colorSlider_playProcess.Value = (int)time;
 
       TimeSpan t = TimeSpan.FromSeconds(time);
@@ -458,7 +458,7 @@ namespace RPlayer
                       t.Hours,
                       t.Minutes,
                       t.Seconds);
-     label_timeCurrent.Text = strText;
+      label_timeCurrent.Text = strText;
 
       t = TimeSpan.FromSeconds(m_nTotalTime - time);
       strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
@@ -467,7 +467,7 @@ namespace RPlayer
                       t.Seconds);
       label_timeLast.Text = strText;
 
-      m_bSeekDone = false;      
+      m_bSeekDone = false;
       RpCore.Seek(time, false);
       m_bProcessBarMouseUp = false;
     }
@@ -494,7 +494,7 @@ namespace RPlayer
 
     private void colorSlider_playProcess_ValueChanged(object sender, EventArgs e)
     {
-      if(!m_bProcessBarMouseUp && m_bSeekDone)// drag seek
+      if (!m_bProcessBarMouseUp && m_bSeekDone)// drag seek
       {
         m_bDragSeeking = true;
         m_bSeekDone = false;

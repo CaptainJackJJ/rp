@@ -153,6 +153,7 @@
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(911, 454);
       this.label_playWnd.TabIndex = 39;
+      this.label_playWnd.Click += new System.EventHandler(this.label_playWnd_Click);
       this.label_playWnd.DragDrop += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragDrop);
       this.label_playWnd.DragEnter += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragEnter);
       this.label_playWnd.DoubleClick += new System.EventHandler(this.label_playWnd_DoubleClick);

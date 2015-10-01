@@ -194,7 +194,6 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormSettings";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.TopMost = true;
       this.panel_topBar.ResumeLayout(false);
       this.panel_topBar.PerformLayout();
       this.ResumeLayout(false);

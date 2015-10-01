@@ -605,11 +605,23 @@ namespace RPlayer
       else
       {
         m_bDesktop = true;
+        if (this.WindowState == FormWindowState.Maximized)
+          ChangeSubFormsLocAndSize(); // Manually call it, because main form will not resize, it was max.
         this.WindowState = FormWindowState.Maximized;
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
         m_formBottomBar.Hide();
         m_formTopBar.Hide();
+      }
+    }
+
+    private void label_playWnd_Click(object sender, EventArgs e)
+    {
+      if (m_bDesktop)
+      {
+        m_formTopBar.Hide();
+        m_formBottomBar.Hide();
+        this.BringToFront();
       }
     }
 
@@ -735,7 +747,6 @@ namespace RPlayer
     {
       return colorSlider_volume.Value;
     }
-
   }
 
   public class RpCallback : IRpCallback

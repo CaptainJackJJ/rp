@@ -57,6 +57,7 @@ namespace RPlayer
               showAvForm();
               break;
           }
+          this.TopMost = true;
         }
 
         private void HideForm()
@@ -66,6 +67,7 @@ namespace RPlayer
           m_FormSettingRegular.Hide();
           this.Hide();
           m_bShowing = false;
+          this.TopMost = false;
           m_mainForm.BringToFront();
         }
 

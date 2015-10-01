@@ -39,6 +39,13 @@ namespace RPlayer
       m_mainForm = mainForm;
     }
 
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      if (m_mainForm.HandleCmdKey(keyData))
+        return true;
+      return base.ProcessCmdKey(ref msg, keyData);
+    }
+
     private void FormTopBar_Resize(object sender, EventArgs e)
     {
       label_Close.Location =

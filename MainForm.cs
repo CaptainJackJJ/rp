@@ -85,18 +85,28 @@ namespace RPlayer
       this.AddOwnedForm(m_formSettings);
     }
 
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    // return false means this method do not handle that key.
+    public bool HandleCmdKey(Keys keyData)
     {
-      switch(keyData)
+      switch (keyData)
       {
         case Keys.Space:
           m_formBottomBar.Pause();
-          return true;
+          break;
         case Keys.Escape:
           if (m_bDesktop)
             SwitchDesktopMode();
-          return true;
+          break;
+        default:
+          return false;
       }
+      return true;
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      if (HandleCmdKey(keyData))
+        return true;
       return base.ProcessCmdKey(ref msg, keyData);
     }
 

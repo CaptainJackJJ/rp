@@ -70,12 +70,8 @@ namespace RPlayer
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
-      switch (keyData)
-      {
-        case Keys.Space:
-          Pause();
-          break;
-      }
+      if (m_mainForm.HandleCmdKey(keyData))
+        return true;
       return base.ProcessCmdKey(ref msg, keyData);
     }
 

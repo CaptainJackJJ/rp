@@ -156,6 +156,7 @@
       this.label_Pre.Name = "label_Pre";
       this.label_Pre.Size = new System.Drawing.Size(25, 25);
       this.label_Pre.TabIndex = 46;
+      this.label_Pre.Click += new System.EventHandler(this.label_Pre_Click);
       this.label_Pre.MouseEnter += new System.EventHandler(this.label_Pre_MouseEnter);
       this.label_Pre.MouseLeave += new System.EventHandler(this.label_Pre_MouseLeave);
       // 
@@ -166,6 +167,7 @@
       this.label_Next.Name = "label_Next";
       this.label_Next.Size = new System.Drawing.Size(25, 25);
       this.label_Next.TabIndex = 45;
+      this.label_Next.Click += new System.EventHandler(this.label_Next_Click);
       this.label_Next.MouseEnter += new System.EventHandler(this.label_Next_MouseEnter);
       this.label_Next.MouseLeave += new System.EventHandler(this.label_Next_MouseLeave);
       // 

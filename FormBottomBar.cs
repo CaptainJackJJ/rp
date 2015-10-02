@@ -501,6 +501,11 @@ namespace RPlayer
       catch { }
     }
 
+    private void label_Next_Click(object sender, EventArgs e)
+    {
+      m_mainForm.PlayPreNext(false);
+    }
+
     private void label_Next_MouseEnter(object sender, EventArgs e)
     {
       try
@@ -517,6 +522,11 @@ namespace RPlayer
         label_Next.Image = Image.FromFile(Application.StartupPath + @"\pic\Next.png");
       }
       catch { }
+    }
+
+    private void label_Pre_Click(object sender, EventArgs e)
+    {
+      m_mainForm.PlayPreNext(true);
     }
 
     private void label_Pre_MouseEnter(object sender, EventArgs e)

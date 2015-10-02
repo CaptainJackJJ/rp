@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using RpCoreWrapper;
+using System.IO;
 
 namespace RPlayer
 {
@@ -51,6 +52,10 @@ namespace RPlayer
     private FormSpeedDisplay m_formSpeedDisplay;
 
     private RpCallback m_rpCallback;
+
+    private string m_strCurrentFileName;
+    private string m_strCurrentDirectory;
+    private string[] m_strFilesInCurrentDirectory;
 
     public MainForm()
     {
@@ -654,8 +659,7 @@ namespace RPlayer
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
         SwitchFormMode(true);
-        if (!StartPlay(openFileDialog1.FileName, 0))
-          SwitchFormMode(false);
+        StartPlay(openFileDialog1.FileName, 0);
       }
     }
 
@@ -736,14 +740,12 @@ namespace RPlayer
       if (RpCore.IsPlaying())
       {
         StopPlay();
-        if(!StartPlay(FileList[0], 0))
-          SwitchFormMode(false);
+        StartPlay(FileList[0], 0);
       }
       else
       {
         SwitchFormMode(true);
-        if(!StartPlay(FileList[0], 0))
-          SwitchFormMode(false);
+        StartPlay(FileList[0], 0);
       }
     }
 
@@ -801,11 +803,53 @@ namespace RPlayer
       }
     }
 
+    public bool PlayPreNext(bool bPre)
+    {
+      StopPlay();
+
+      string url = m_strCurrentDirectory + "\\" + m_strCurrentFileName;
+      int nCurrentPos = Array.IndexOf(m_strFilesInCurrentDirectory,
+        url);
+
+      int count = m_strFilesInCurrentDirectory.Length;
+      int nNewPos;
+      if(bPre)
+      {        
+        nNewPos = nCurrentPos - 1;
+        if (nNewPos < 0)
+          nNewPos = count - 1;
+      }
+      else
+      {
+        nNewPos = nCurrentPos + 1;
+        if (count == 1 || nNewPos == count)
+          nNewPos = 0;
+      }
+
+      url = m_strFilesInCurrentDirectory[nNewPos];
+      return StartPlay(url, 0);
+    }
+
     private bool StartPlay(string url, double nStartTime)
     {
       if (!RpCore.Play(url, nStartTime))
+      {
+        SwitchFormMode(false);
         return false;
+      }
       m_formBottomBar.StartThreadUpdate();
+
+      Uri uri = new Uri(url);
+      m_strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
+      m_strCurrentDirectory = System.IO.Path.GetDirectoryName(uri.LocalPath);
+
+      string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
+
+      m_strFilesInCurrentDirectory
+        = strFilters.Split('|').SelectMany(filter =>
+          Directory.GetFiles(m_strCurrentDirectory, filter, SearchOption.TopDirectoryOnly)
+          ).ToArray();
+
       return true;
     }
 

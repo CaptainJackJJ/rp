@@ -209,6 +209,7 @@
       this.label_FF.Name = "label_FF";
       this.label_FF.Size = new System.Drawing.Size(25, 25);
       this.label_FF.TabIndex = 49;
+      this.label_FF.Click += new System.EventHandler(this.label_FF_Click);
       this.label_FF.MouseEnter += new System.EventHandler(this.label_FF_MouseEnter);
       this.label_FF.MouseLeave += new System.EventHandler(this.label_FF_MouseLeave);
       // 

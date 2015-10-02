@@ -39,6 +39,7 @@ namespace RPlayer
     public bool m_bProcessBarMouseUp = true;
     public bool m_bSeekDone = true;
     private bool m_bDragSeeking = false;
+    private float m_fSpeed = 1f;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -425,9 +426,48 @@ namespace RPlayer
       catch { }
     }
 
+    public void ChangeSpeed(bool bForward)
+    {
+      int nSpeed = (int)(m_fSpeed * 1000);
+      if(bForward)
+      {
+        if(nSpeed >= 1000)
+        {
+          m_fSpeed *= 2;
+        }
+        else
+        {
+          m_fSpeed /= 2;
+        }
+      }
+      else
+      {
+        if (nSpeed > 1000)
+        {
+          m_fSpeed /= 2;
+        }
+        else if (nSpeed == 1000)
+        {
+          m_fSpeed *= -2;
+        }
+        else
+        {
+          m_fSpeed *= 2;
+        }
+      }
+      nSpeed = (int)(m_fSpeed * 1000);
+      if (nSpeed == -1000)
+        m_fSpeed = 1;
+      RpCore.ToFFRW(m_fSpeed);
+    }
+
+    private void label_FF_Click(object sender, EventArgs e)
+    {
+      ChangeSpeed(true);
+    }
     private void label_FB_Click(object sender, EventArgs e)
     {
-
+      ChangeSpeed(false);
     }
 
     private void label_FB_MouseEnter(object sender, EventArgs e)
@@ -626,7 +666,6 @@ namespace RPlayer
     {
       return colorSlider_volume.Value;
     }
-
 
   }
 }

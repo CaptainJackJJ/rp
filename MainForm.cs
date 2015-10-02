@@ -48,6 +48,7 @@ namespace RPlayer
     public FormBottomBar m_formBottomBar;
     private FormTopBar m_formTopBar;
     private FormSettings m_formSettings;
+    private FormSpeedDisplay m_formSpeedDisplay;
 
     private RpCallback m_rpCallback;
 
@@ -80,9 +81,26 @@ namespace RPlayer
       m_formBottomBar = new FormBottomBar(this);
       m_formTopBar = new FormTopBar(this);
       m_formSettings = new FormSettings(this);
+      m_formSpeedDisplay = new FormSpeedDisplay();
       this.AddOwnedForm(m_formBottomBar);
       this.AddOwnedForm(m_formTopBar);
       this.AddOwnedForm(m_formSettings);
+      this.AddOwnedForm(m_formSpeedDisplay);
+    }
+
+    public void SetFormSpeedDisplayString(string str)
+    {
+      m_formSpeedDisplay.SetString(str);
+    }
+
+    public void ShowFormSpeedDisplay()
+    {
+      m_formSpeedDisplay.Show();
+    }
+
+    public void HideFormSpeedDisplay()
+    {
+      m_formSpeedDisplay.Hide();
     }
 
     public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
@@ -745,6 +763,10 @@ namespace RPlayer
 
       m_formTopBar.Size
         = new Size(this.Width - m_nCornerSize * 2, m_formTopBar.Height);
+
+      m_formSpeedDisplay.Location
+        = new Point(this.Location.X + (this.Width - m_formSpeedDisplay.Width) / 2, this.Location.Y + label_playWnd.Location.Y);
+
     }
 
     public void SwitchFormMode(bool bPlayingMode)

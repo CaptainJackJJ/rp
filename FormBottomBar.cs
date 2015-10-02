@@ -101,7 +101,7 @@ namespace RPlayer
     }
 
     public void StartThreadUpdate()
-    {
+    {     
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
@@ -142,6 +142,8 @@ namespace RPlayer
       colorSlider_playProcess.Value = 0;
       label_timeCurrent.Text = "00 : 00 : 00";
       label_timeLast.Text = "-00 : 00 : 00";
+      m_fSpeed = 1.0f;
+      m_mainForm.HideFormSpeedDisplay();
     }
 
     private void PauseTimeUpdate()
@@ -329,6 +331,9 @@ namespace RPlayer
 
     private void label_Play_Click(object sender, EventArgs e)
     {
+      m_fSpeed = 1.0f;
+      m_mainForm.HideFormSpeedDisplay();
+
       Pause();
     }
 
@@ -459,6 +464,14 @@ namespace RPlayer
       if (nSpeed == -1000)
         m_fSpeed = 1;
       RpCore.ToFFRW(m_fSpeed);
+
+      if (nSpeed != 1000 && nSpeed != -1000)
+      {
+        m_mainForm.SetFormSpeedDisplayString("Speed: X" + m_fSpeed.ToString());
+        m_mainForm.ShowFormSpeedDisplay();
+      }
+      else
+        m_mainForm.HideFormSpeedDisplay();      
     }
 
     private void label_FF_Click(object sender, EventArgs e)

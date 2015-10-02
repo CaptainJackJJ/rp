@@ -654,7 +654,8 @@ namespace RPlayer
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
         SwitchFormMode(true);
-        StartPlay(openFileDialog1.FileName, 0);
+        if (!StartPlay(openFileDialog1.FileName, 0))
+          SwitchFormMode(false);
       }
     }
 
@@ -735,12 +736,14 @@ namespace RPlayer
       if (RpCore.IsPlaying())
       {
         StopPlay();
-        StartPlay(FileList[0], 0);
+        if(!StartPlay(FileList[0], 0))
+          SwitchFormMode(false);
       }
       else
       {
         SwitchFormMode(true);
-        StartPlay(FileList[0], 0);
+        if(!StartPlay(FileList[0], 0))
+          SwitchFormMode(false);
       }
     }
 
@@ -798,10 +801,12 @@ namespace RPlayer
       }
     }
 
-    private void StartPlay(string url, double nStartTime)
+    private bool StartPlay(string url, double nStartTime)
     {
-      RpCore.Play(url, nStartTime);
+      if (!RpCore.Play(url, nStartTime))
+        return false;
       m_formBottomBar.StartThreadUpdate();
+      return true;
     }
 
     public void StopPlay()

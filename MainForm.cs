@@ -831,7 +831,7 @@ namespace RPlayer
     }
 
     private bool StartPlay(string url, double nStartTime)
-    {
+    {      
       if (!RpCore.Play(url, nStartTime))
       {
         SwitchFormMode(false);
@@ -842,6 +842,8 @@ namespace RPlayer
       Uri uri = new Uri(url);
       m_strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
       m_strCurrentDirectory = System.IO.Path.GetDirectoryName(uri.LocalPath);
+
+      m_formTopBar.setFileName(m_strCurrentFileName);
 
       string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
 

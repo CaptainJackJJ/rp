@@ -51,6 +51,11 @@ namespace RPlayer
       return base.ProcessCmdKey(ref msg, keyData);
     }
 
+    public void setFileName(string str)
+    {
+      label_fileName.Text = str;
+    }
+
     private void FormTopBar_Resize(object sender, EventArgs e)
     {
       label_Close.Location =
@@ -65,6 +70,8 @@ namespace RPlayer
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4 + 10,
               label_settings.Location.Y);
+      label_fileName.Size =
+        new Size(this.Width - (this.Width - label_settings.Location.X + 5) * 2, label_fileName.Height);
     }
 
     private void label_Min_MouseEnter(object sender, EventArgs e)

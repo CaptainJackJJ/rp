@@ -32,6 +32,7 @@
       this.label_Max = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
+      this.label_fileName = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_settings
@@ -78,12 +79,26 @@
       this.label_Min.MouseEnter += new System.EventHandler(this.label_Min_MouseEnter);
       this.label_Min.MouseLeave += new System.EventHandler(this.label_Min_MouseLeave);
       // 
+      // label_fileName
+      // 
+      this.label_fileName.BackColor = System.Drawing.Color.Transparent;
+      this.label_fileName.ForeColor = System.Drawing.Color.White;
+      this.label_fileName.Location = new System.Drawing.Point(130, 7);
+      this.label_fileName.Name = "label_fileName";
+      this.label_fileName.Size = new System.Drawing.Size(650, 23);
+      this.label_fileName.TabIndex = 43;
+      this.label_fileName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label_fileName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseDown);
+      this.label_fileName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseMove);
+      this.label_fileName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseUp);
+      // 
       // FormTopBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 37);
+      this.Controls.Add(this.label_fileName);
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.label_Max);
       this.Controls.Add(this.label_Close);
@@ -105,5 +120,6 @@
     private System.Windows.Forms.Label label_Max;
     private System.Windows.Forms.Label label_Close;
     private System.Windows.Forms.Label label_Min;
+    private System.Windows.Forms.Label label_fileName;
   }
 }

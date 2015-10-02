@@ -122,6 +122,8 @@ namespace RPlayer
       colorSlider_volume.Value = m_mainForm.GetVolume();
 
       m_nTotalTime = (int)RpCore.GetTotalTime();
+      if (m_nTotalTime == 0)
+        m_nTotalTime = 1;
       colorSlider_playProcess.Maximum = (int)m_nTotalTime;
       TimeSpan t = TimeSpan.FromSeconds(m_nTotalTime);
       label_timeLast.Text = string.Format("-{0:D2} : {1:D2} : {2:D2}",

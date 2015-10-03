@@ -11,8 +11,6 @@ using System.IO;
 
 namespace RPlayer
 {
-
-
   public partial class MainForm : Form
   {
     private bool m_bMainFormMouseDown = false;
@@ -57,6 +55,13 @@ namespace RPlayer
     private string m_strCurrentDirectory;
     private string[] m_strFilesInCurrentDirectory;
 
+    private ContextMenuStrip m_contextMenuStrip_playWnd;
+    private ToolStripMenuItem m_toolStripMenuItem_subtitles;
+    private ToolStripMenuItem m_toolStripMenuItem_audios;
+    private Color m_ColorContextMenu = Color.FromArgb(255, 25, 25, 25);
+    private int m_nSubtitleHideItemIndex;
+    private bool m_bSubtitleVisible = true;
+
     public MainForm()
     {
       InitializeComponent();
@@ -91,6 +96,84 @@ namespace RPlayer
       this.AddOwnedForm(m_formTopBar);
       this.AddOwnedForm(m_formSettings);
       this.AddOwnedForm(m_formSpeedDisplay);
+
+      InitContextMenuStrip();
+    }
+
+    private void InitContextMenuStrip()
+    {
+      m_contextMenuStrip_playWnd = new ContextMenuStrip();
+      m_contextMenuStrip_playWnd.BackColor = m_ColorContextMenu;
+      m_contextMenuStrip_playWnd.ForeColor = Color.White;
+      m_contextMenuStrip_playWnd.ShowImageMargin = false;
+      m_contextMenuStrip_playWnd.Renderer = new CustomToolStripProfessionalRenderer();
+      label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
+
+      m_toolStripMenuItem_subtitles = new ToolStripMenuItem();
+      m_toolStripMenuItem_audios = new ToolStripMenuItem();
+
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_subtitles);
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_audios);
+
+      m_toolStripMenuItem_subtitles.Text = "Subtitles";
+      m_toolStripMenuItem_audios.Text = "Audios";
+
+      m_toolStripMenuItem_subtitles.MouseEnter += toolStripMenuItem_subtitles_MouseEnter;
+      m_toolStripMenuItem_audios.MouseEnter += toolStripMenuItem_audios_MouseEnter;
+    }
+
+    private class CustomToolStripProfessionalRenderer : ToolStripProfessionalRenderer
+    {
+      public CustomToolStripProfessionalRenderer() : base(new CustomProfessionalColorTable()) { }
+    }
+
+    private class CustomProfessionalColorTable : ProfessionalColorTable
+    {
+      public override Color MenuItemSelected
+      {
+        get { return Color.FromArgb(255,70,70,70); }
+      }
+      public override Color MenuItemBorder
+      {
+        get { return Color.FromArgb(255, 70, 70, 70); }
+      }
+    }
+
+    private void toolStripMenuItem_audios_MouseEnter(object sender, EventArgs e)
+    {
+      int index = RpCore.GetCurrentAudio();
+      if (index < 0)
+        return;
+
+      foreach (ToolStripMenuItem item in m_toolStripMenuItem_audios.DropDownItems)
+      {
+        if (index == (int)item.Tag)
+          item.Checked = true;
+        else
+          item.Checked = false;
+      }
+    }
+
+    private void toolStripMenuItem_subtitles_MouseEnter(object sender, EventArgs e)
+    {
+      int index = RpCore.GetCurrentSubtitle();
+
+      ToolStripMenuItem subtitleHideItem = (ToolStripMenuItem)m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleHideItemIndex];
+      if (RpCore.GetSubtitleVisible())
+        subtitleHideItem.Checked = false;
+      else
+        subtitleHideItem.Checked = true;
+
+      foreach(ToolStripMenuItem item in m_toolStripMenuItem_subtitles.DropDownItems)
+      {
+        if (item.Tag != null)
+        {
+          if (index == (int)item.Tag)
+            item.Checked = true;
+          else
+            item.Checked = false;
+        }
+      }
     }
 
     public void SetFormSpeedDisplayString(string str)
@@ -830,6 +913,107 @@ namespace RPlayer
       return StartPlay(url, 0);
     }
 
+    private void SubtitleItemClick(object sender, EventArgs e)
+    {
+      ToolStripMenuItem item = sender as ToolStripMenuItem;
+      RpCore.SwitchSubtitle((int)item.Tag);
+    }
+
+    private void AudioItemClick(object sender, EventArgs e)
+    {
+      ToolStripMenuItem item = sender as ToolStripMenuItem;
+      RpCore.SwitchAudio((int)item.Tag);
+    }
+
+    private void AddSubtitleItemClick(object sender, EventArgs e)
+    {
+      OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+      openFileDialog1.Filter = "All files (*.*)|*.*";
+      openFileDialog1.FilterIndex = 1;
+      openFileDialog1.RestoreDirectory = true;
+
+      if (openFileDialog1.ShowDialog() == DialogResult.OK)
+      {
+        int index = RpCore.AddSubtitle(openFileDialog1.FileName);
+        if (index >= 0)
+        {
+          RpCore.SwitchSubtitle(index);
+
+          ToolStripMenuItem item = new ToolStripMenuItem();
+          Uri uri = new Uri(openFileDialog1.FileName);
+          item.Text = System.IO.Path.GetFileName(uri.LocalPath);
+          item.Tag = index;
+          item.Click += SubtitleItemClick;
+          item.BackColor = m_ColorContextMenu;
+          item.ForeColor = Color.White;
+          m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+        }
+      }
+    }
+
+    private void OffSubtitleItemClick(object sender, EventArgs e)
+    {
+      if (m_bSubtitleVisible)
+        m_bSubtitleVisible = false;
+      else
+        m_bSubtitleVisible = true;
+      RpCore.SetSubtitleVisible(m_bSubtitleVisible);
+    }
+
+    private void FillContextMenu()
+    {
+      m_toolStripMenuItem_subtitles.DropDownItems.Clear();
+
+      ToolStripMenuItem item = new ToolStripMenuItem();
+      item.Text = "Add Subtitle";
+      item.Click += AddSubtitleItemClick;
+      item.BackColor = m_ColorContextMenu;
+      item.ForeColor = Color.White;
+      m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+
+      item = new ToolStripMenuItem();
+      item.Text = "Hide Subtitle";
+      item.Click += OffSubtitleItemClick;
+      item.BackColor = m_ColorContextMenu;
+      item.ForeColor = Color.White;
+      m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+      m_nSubtitleHideItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.IndexOf(item);
+
+      int amount = RpCore.GetSubtitleCount();
+      for(int i = 0; i < amount;i++)
+      {
+        item = new ToolStripMenuItem();
+        SubtitleStreamInfo info = RpCore.GetSubtitleStreamInfo(i);
+        if (info.bExternalSub)
+        {
+          Uri uri = new Uri(info.filename);
+          item.Text = System.IO.Path.GetFileName(uri.LocalPath);
+        }
+        else
+          item.Text = info.language;
+        item.Tag = i;
+        item.Click += SubtitleItemClick;
+        item.BackColor = m_ColorContextMenu;
+        item.ForeColor = Color.White;
+        m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+      }
+
+      m_toolStripMenuItem_audios.DropDownItems.Clear();
+      amount = RpCore.GetAudioCount();
+      for (int i = 0; i < amount; i++)
+      {
+        item = new ToolStripMenuItem();
+        AudioStreamInfo info = RpCore.GetAudioStreamInfo(i);
+        item.Text = info.language;
+        item.Tag = i;
+        item.Click += AudioItemClick;
+        item.BackColor = m_ColorContextMenu;
+        item.ForeColor = Color.White;
+        m_toolStripMenuItem_audios.DropDownItems.Add(item);
+      }
+    }
+
     private bool StartPlay(string url, double nStartTime)
     {      
       if (!RpCore.Play(url, nStartTime))
@@ -851,6 +1035,8 @@ namespace RPlayer
         = strFilters.Split('|').SelectMany(filter =>
           Directory.GetFiles(m_strCurrentDirectory, filter, SearchOption.TopDirectoryOnly)
           ).ToArray();
+
+      FillContextMenu();
 
       return true;
     }

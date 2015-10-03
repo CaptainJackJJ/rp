@@ -60,6 +60,7 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_audios;
     private Color m_ColorContextMenu = Color.FromArgb(255, 25, 25, 25);
     private int m_nSubtitleHideItemIndex;
+    private int m_nSubtitleSeperatorItemIndex;
     private bool m_bSubtitleVisible = true;
 
     public MainForm()
@@ -105,7 +106,6 @@ namespace RPlayer
       m_contextMenuStrip_playWnd = new ContextMenuStrip();
       m_contextMenuStrip_playWnd.BackColor = m_ColorContextMenu;
       m_contextMenuStrip_playWnd.ForeColor = Color.White;
-      m_contextMenuStrip_playWnd.ShowImageMargin = false;
       m_contextMenuStrip_playWnd.Renderer = new CustomToolStripProfessionalRenderer();
       label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
 
@@ -129,49 +129,97 @@ namespace RPlayer
 
     private class CustomProfessionalColorTable : ProfessionalColorTable
     {
+      private Color m_color = Color.FromArgb(255, 70, 70, 70);
+      private Color m_backColor = Color.FromArgb(255, 25, 25, 25);
       public override Color MenuItemSelected
       {
-        get { return Color.FromArgb(255,70,70,70); }
+        get { return m_color; }
       }
       public override Color MenuItemBorder
       {
-        get { return Color.FromArgb(255, 70, 70, 70); }
+        get { return m_color; }
+      }
+      public override Color MenuBorder
+      {
+        get { return m_color; }
+      }
+      public override Color ToolStripDropDownBackground
+      {
+        get { return m_backColor; }
+      }
+      public override Color ButtonSelectedBorder
+      {
+        get { return m_color; }
+      }
+      public override Color CheckBackground
+      {
+        get { return m_color; }
+      }
+      public override Color CheckSelectedBackground
+      {
+        get { return m_color; }
+      }
+      public override Color ImageMarginGradientBegin
+      {
+        get { return m_backColor; }
+      }
+      public override Color ImageMarginGradientMiddle
+      {
+        get { return m_backColor; }
+      }
+      public override Color ImageMarginGradientEnd
+      {
+        get { return m_backColor; }
+      }
+      public override Color SeparatorDark
+      {
+        get { return m_color; }
       }
     }
 
+    // To mark selected items
     private void toolStripMenuItem_audios_MouseEnter(object sender, EventArgs e)
     {
-      int index = RpCore.GetCurrentAudio();
-      if (index < 0)
-        return;
-
-      foreach (ToolStripMenuItem item in m_toolStripMenuItem_audios.DropDownItems)
+      if (m_toolStripMenuItem_audios.DropDownItems.Count > 0)
       {
-        if (index == (int)item.Tag)
-          item.Checked = true;
-        else
-          item.Checked = false;
-      }
-    }
+        int index = RpCore.GetCurrentAudio();
+        if (index < 0)
+          return;
 
-    private void toolStripMenuItem_subtitles_MouseEnter(object sender, EventArgs e)
-    {
-      int index = RpCore.GetCurrentSubtitle();
-
-      ToolStripMenuItem subtitleHideItem = (ToolStripMenuItem)m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleHideItemIndex];
-      if (RpCore.GetSubtitleVisible())
-        subtitleHideItem.Checked = false;
-      else
-        subtitleHideItem.Checked = true;
-
-      foreach(ToolStripMenuItem item in m_toolStripMenuItem_subtitles.DropDownItems)
-      {
-        if (item.Tag != null)
+        foreach (ToolStripMenuItem item in m_toolStripMenuItem_audios.DropDownItems)
         {
           if (index == (int)item.Tag)
             item.Checked = true;
           else
             item.Checked = false;
+        }
+      }
+    }
+
+    // To mark selected items
+    private void toolStripMenuItem_subtitles_MouseEnter(object sender, EventArgs e)
+    {
+      int count = m_toolStripMenuItem_subtitles.DropDownItems.Count;
+      if (count > 0)
+      {
+        int index = RpCore.GetCurrentSubtitle();
+
+        ToolStripMenuItem subtitleItem = (ToolStripMenuItem)m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleHideItemIndex];
+        if (RpCore.GetSubtitleVisible())
+          subtitleItem.Checked = false;
+        else
+          subtitleItem.Checked = true;
+
+        for (int i = m_nSubtitleSeperatorItemIndex + 1; i < count; i++ )
+        {
+          subtitleItem = (ToolStripMenuItem)m_toolStripMenuItem_subtitles.DropDownItems[i];
+          if (subtitleItem.Tag != null)
+          {
+            if (index == (int)subtitleItem.Tag)
+              subtitleItem.Checked = true;
+            else
+              subtitleItem.Checked = false;
+          }
         }
       }
     }
@@ -961,10 +1009,14 @@ namespace RPlayer
       RpCore.SetSubtitleVisible(m_bSubtitleVisible);
     }
 
-    private void FillContextMenu()
+    private void ClearContextMenu()
     {
       m_toolStripMenuItem_subtitles.DropDownItems.Clear();
+      m_toolStripMenuItem_audios.DropDownItems.Clear();
+    }
 
+    private void FillContextMenu()
+    {
       ToolStripMenuItem item = new ToolStripMenuItem();
       item.Text = "Add Subtitle";
       item.Click += AddSubtitleItemClick;
@@ -977,8 +1029,12 @@ namespace RPlayer
       item.Click += OffSubtitleItemClick;
       item.BackColor = m_ColorContextMenu;
       item.ForeColor = Color.White;
-      m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
-      m_nSubtitleHideItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.IndexOf(item);
+      m_nSubtitleHideItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+
+      ToolStripSeparator separator = new ToolStripSeparator();
+      separator.ForeColor = Color.Red;
+      separator.Height = 1;
+      m_nSubtitleSeperatorItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(separator);      
 
       int amount = RpCore.GetSubtitleCount();
       for(int i = 0; i < amount;i++)
@@ -998,8 +1054,7 @@ namespace RPlayer
         item.ForeColor = Color.White;
         m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
       }
-
-      m_toolStripMenuItem_audios.DropDownItems.Clear();
+      
       amount = RpCore.GetAudioCount();
       for (int i = 0; i < amount; i++)
       {
@@ -1045,6 +1100,7 @@ namespace RPlayer
     {
       m_formBottomBar.EndThreadUpdate();
       RpCore.Stop();
+      ClearContextMenu();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)

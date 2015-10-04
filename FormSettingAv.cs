@@ -11,10 +11,23 @@ namespace RPlayer
 {
     public partial class FormSettingAv : Form
     {
-        public FormSettingAv()
+      private FormSettings m_formSettings;
+      public FormSettingAv(FormSettings formSettings)
         {
+          m_formSettings = formSettings;
             InitializeComponent();
+            SetUiLange();
             this.ShowInTaskbar = false;
+        }
+
+        public void SetAllUiLange()
+        {
+          SetUiLange();
+        }
+
+        private void SetUiLange()
+        {
+
         }
     }
 }

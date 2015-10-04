@@ -44,6 +44,7 @@ namespace RPlayer
     public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
+      SetUiLange();
       this.ShowInTaskbar = false;
       try
       {
@@ -67,6 +68,15 @@ namespace RPlayer
         label_desktop.Text = "desktop";
       }
       m_mainForm = mainForm;
+    }
+
+    public void SetAllUiLange()
+    {
+      SetUiLange();
+    }
+
+    private void SetUiLange()
+    {
     }
 
     public void UpDownVolume(bool bUp)
@@ -474,7 +484,7 @@ namespace RPlayer
 
       if (nSpeed != 1000 && nSpeed != -1000)
       {
-        m_mainForm.SetFormSpeedDisplayString("Speed: X" + m_fSpeed.ToString());
+        m_mainForm.SetFormSpeedDisplayString(UiLang.speedDisplay + m_fSpeed.ToString());
         m_mainForm.ShowFormSpeedDisplay();
       }
       else

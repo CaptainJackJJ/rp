@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UiLang.cs" />
     <EmbeddedResource Include="FormBottomBar.resx">
       <DependentUpon>FormBottomBar.cs</DependentUpon>
     </EmbeddedResource>

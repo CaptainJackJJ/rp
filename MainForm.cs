@@ -60,6 +60,7 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_audios;
     private ToolStripMenuItem m_toolStripMenuItem_chapters;
     private Color m_ColorContextMenu = Color.FromArgb(255, 25, 25, 25);
+    private int m_nSubtitleAddItemIndex;
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
     private bool m_bSubtitleVisible = true;
@@ -69,6 +70,9 @@ namespace RPlayer
     public MainForm()
     {
       InitializeComponent();
+
+      UiLang.SetLang(UiLang.enumUiLang.english);
+
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
@@ -102,6 +106,43 @@ namespace RPlayer
       this.AddOwnedForm(m_formSpeedDisplay);
 
       InitContextMenuStrip();
+
+      SetUiLange();
+    }
+
+    public void SetAllUiLange()
+    {
+      SetUiLange();
+      m_formBottomBar.SetAllUiLange();
+      m_formTopBar.SetAllUiLange();
+      m_formSettings.SetAllUiLange();
+    }
+
+    private void SetUiLange()
+    {
+      m_toolStripMenuItem_subtitles.Text = UiLang.contextMenuSubtitles;
+      m_toolStripMenuItem_audios.Text = UiLang.contextMenuAudios;
+      m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
+      ToolStripMenuItem item;
+      if (m_nSubtitleAddItemIndex != -1)
+      {
+        item = m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleAddItemIndex] as ToolStripMenuItem;
+        item.Text = UiLang.contextMenuAddSubtitle;
+      }
+      if (m_nSubtitleHideItemIndex != -1)
+      {
+        item = m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleHideItemIndex] as ToolStripMenuItem;
+        item.Text = UiLang.contextMenuAddSubtitle;
+      }
+
+      int count = m_toolStripMenuItem_chapters.DropDownItems.Count;
+      int number;
+      for (int i = 0; i < count; i++)
+      {
+        item = m_toolStripMenuItem_chapters.DropDownItems[i] as ToolStripMenuItem;
+        number = i + 1;
+        item.Text = UiLang.contextMenuChapter + number.ToString();
+      }
     }
 
     private void InitContextMenuStrip()
@@ -113,19 +154,20 @@ namespace RPlayer
       label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
 
       m_toolStripMenuItem_subtitles = new ToolStripMenuItem();
-      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_subtitles);
-      m_toolStripMenuItem_subtitles.Text = "Subtitles";
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_subtitles);    
       m_toolStripMenuItem_subtitles.MouseEnter += toolStripMenuItem_subtitles_MouseEnter;
+
+      m_nSubtitleAddItemIndex = -1;
+      m_nSubtitleHideItemIndex = -1;
+      m_nSubtitleSeperatorItemIndex = -1;
 
       m_toolStripMenuItem_audios = new ToolStripMenuItem();
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_audios);
-      m_toolStripMenuItem_audios.Text = "Audios";
       m_toolStripMenuItem_audios.MouseEnter += toolStripMenuItem_audios_MouseEnter;
 
       m_toolStripMenuItem_chapters = new ToolStripMenuItem(); 
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_chapters);
-      m_toolStripMenuItem_chapters.Text = "Chapters";
-      m_toolStripMenuItem_chapters.MouseEnter += toolStripMenuItem_chapters_MouseEnter;     
+      m_toolStripMenuItem_chapters.MouseEnter += toolStripMenuItem_chapters_MouseEnter;
     }
 
     private class CustomToolStripProfessionalRenderer : ToolStripProfessionalRenderer
@@ -1042,20 +1084,23 @@ namespace RPlayer
       m_toolStripMenuItem_subtitles.DropDownItems.Clear();
       m_toolStripMenuItem_audios.DropDownItems.Clear();
       m_toolStripMenuItem_chapters.DropDownItems.Clear();
+      m_nSubtitleAddItemIndex = -1;
+      m_nSubtitleHideItemIndex = -1;
+      m_nSubtitleSeperatorItemIndex = -1;
     }
 
     private void FillContextMenuDynamically()
     {
       // subtitles
       ToolStripMenuItem item = new ToolStripMenuItem();
-      item.Text = "Add Subtitle";
+      item.Text = UiLang.contextMenuAddSubtitle;
       item.Click += AddSubtitleItemClick;
       item.BackColor = m_ColorContextMenu;
       item.ForeColor = Color.White;
-      m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
+      m_nSubtitleAddItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
 
       item = new ToolStripMenuItem();
-      item.Text = "Hide Subtitle";
+      item.Text = UiLang.contextMenuHideSubtitle;
       item.Click += HideSubtitleItemClick;
       item.BackColor = m_ColorContextMenu;
       item.ForeColor = Color.White;
@@ -1104,7 +1149,7 @@ namespace RPlayer
       for (int i = 1; i < amount+1; i++)
       {
         item = new ToolStripMenuItem();
-        item.Text = "Chapter" + i.ToString();
+        item.Text = UiLang.contextMenuChapter + i.ToString();
         item.Tag = i;
         item.Click += ChapterItemClick;
         item.BackColor = m_ColorContextMenu;

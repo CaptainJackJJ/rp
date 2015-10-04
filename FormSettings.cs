@@ -15,16 +15,17 @@ namespace RPlayer
 
         private bool m_bTopBarMouseDown = false;
         private Point m_TopBarMouseDownPos;
-        FormSettingRegular m_FormSettingRegular = new FormSettingRegular();
-        FormSettingSubtitle m_FormSettingSubtitle = new FormSettingSubtitle();
-        FormSettingAv m_FormSettingAv = new FormSettingAv();
+        FormSettingRegular m_FormSettingRegular;
+        FormSettingSubtitle m_FormSettingSubtitle;
+        FormSettingAv m_FormSettingAv;
         private bool m_bShowing = false;
-        private MainForm m_mainForm;
+        public MainForm m_mainForm;
 
         public FormSettings(MainForm mainForm)
         {
           m_mainForm = mainForm;
             InitializeComponent();
+            SetUiLange();
             try
             {
                 label_settingsClose.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
@@ -33,10 +34,29 @@ namespace RPlayer
             {
                 label_settingsClose.Text = "close";
             }
-            
+
+            m_FormSettingRegular = new FormSettingRegular(this);
+            m_FormSettingSubtitle = new FormSettingSubtitle(this);
+            m_FormSettingAv = new FormSettingAv(this);
             this.AddOwnedForm(m_FormSettingRegular);
             this.AddOwnedForm(m_FormSettingSubtitle);
             this.AddOwnedForm(m_FormSettingAv);
+        }
+
+        public void SetAllUiLange()
+        {
+          SetUiLange();
+          m_FormSettingRegular.SetAllUiLange();
+          m_FormSettingSubtitle.SetAllUiLange();
+          m_FormSettingAv.SetAllUiLange();
+        }
+
+        private void SetUiLange()
+        {
+          label_settings.Text = UiLang.labelSettings;
+          label_regular.Text = UiLang.labelGeneral;
+          label_subtitle.Text = UiLang.labelSubtitle;
+          label_AV.Text = UiLang.labelAV;
         }
 
         public void ShowForm(enumSettingFormType SettingType)

@@ -11,10 +11,23 @@ namespace RPlayer
 {
     public partial class FormSettingSubtitle : Form
     {
-        public FormSettingSubtitle()
+      private FormSettings m_formSettings;
+      public FormSettingSubtitle(FormSettings formSettings)
         {
+          m_formSettings = formSettings;
             InitializeComponent();
+            SetUiLange();
             this.ShowInTaskbar = false;
+        }
+
+        public void SetAllUiLange()
+        {
+          SetUiLange();
+        }
+
+        private void SetUiLange()
+        {
+
         }
     }
 }

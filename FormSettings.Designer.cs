@@ -50,9 +50,9 @@
       this.label_settings.ForeColor = System.Drawing.Color.White;
       this.label_settings.Location = new System.Drawing.Point(6, 13);
       this.label_settings.Name = "label_settings";
-      this.label_settings.Size = new System.Drawing.Size(35, 14);
+      this.label_settings.Size = new System.Drawing.Size(63, 14);
       this.label_settings.TabIndex = 0;
-      this.label_settings.Text = "设置";
+      this.label_settings.Text = "Settings";
       // 
       // label_settingsClose
       // 
@@ -107,7 +107,7 @@
       this.button_ok.Name = "button_ok";
       this.button_ok.Size = new System.Drawing.Size(75, 23);
       this.button_ok.TabIndex = 7;
-      this.button_ok.Text = "确认";
+      this.button_ok.Text = "OK";
       this.button_ok.UseVisualStyleBackColor = false;
       this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
       // 
@@ -122,7 +122,7 @@
       this.button_cancel.Name = "button_cancel";
       this.button_cancel.Size = new System.Drawing.Size(75, 23);
       this.button_cancel.TabIndex = 8;
-      this.button_cancel.Text = "取消";
+      this.button_cancel.Text = "Cancel";
       this.button_cancel.UseVisualStyleBackColor = false;
       this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
       // 
@@ -142,7 +142,7 @@
       this.label_regular.Name = "label_regular";
       this.label_regular.Size = new System.Drawing.Size(98, 30);
       this.label_regular.TabIndex = 11;
-      this.label_regular.Text = "常规";
+      this.label_regular.Text = "General";
       this.label_regular.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.label_regular.Click += new System.EventHandler(this.label_regular_Click);
       this.label_regular.MouseEnter += new System.EventHandler(this.label_regular_MouseEnter);
@@ -156,7 +156,7 @@
       this.label_subtitle.Name = "label_subtitle";
       this.label_subtitle.Size = new System.Drawing.Size(98, 30);
       this.label_subtitle.TabIndex = 12;
-      this.label_subtitle.Text = "字幕";
+      this.label_subtitle.Text = "Subtitle";
       this.label_subtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.label_subtitle.Click += new System.EventHandler(this.label_subtitle_Click);
       this.label_subtitle.MouseEnter += new System.EventHandler(this.label_subtitle_MouseEnter);
@@ -170,7 +170,7 @@
       this.label_AV.Name = "label_AV";
       this.label_AV.Size = new System.Drawing.Size(98, 30);
       this.label_AV.TabIndex = 13;
-      this.label_AV.Text = "音视频";
+      this.label_AV.Text = "AudioVideo";
       this.label_AV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.label_AV.Click += new System.EventHandler(this.label_AV_Click);
       this.label_AV.MouseEnter += new System.EventHandler(this.label_AV_MouseEnter);

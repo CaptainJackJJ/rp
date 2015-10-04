@@ -1089,7 +1089,7 @@ namespace RPlayer
       {
         item = new ToolStripMenuItem();
         AudioStreamInfo info = RpCore.GetAudioStreamInfo(i);
-        item.Text = info.language;
+        item.Text = info.language + " " + info.name;
         item.Tag = i;
         item.Click += AudioItemClick;
         item.BackColor = m_ColorContextMenu;

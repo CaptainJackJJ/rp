@@ -589,6 +589,7 @@ namespace RPlayer
           Thread.Sleep(10);
         }
         m_bProcessBarMouseUp = true;
+        m_bSeekDone = false;
         RpCore.Seek(colorSlider_playProcess.Value, false);
       }
       else

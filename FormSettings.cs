@@ -82,6 +82,9 @@ namespace RPlayer
 
         private void HideForm()
         {
+          label_regular.BackColor = Color.Transparent;
+          label_subtitle.BackColor = Color.Transparent;
+          label_AV.BackColor = Color.Transparent;
           m_FormSettingAv.Hide();
           m_FormSettingSubtitle.Hide();
           m_FormSettingRegular.Hide();

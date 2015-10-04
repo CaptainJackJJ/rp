@@ -1190,9 +1190,11 @@ namespace RPlayer
     }
 
     public void StopPlay()
-    {
+    {   
       if (m_bStopPlayCalled)
         return;
+      if (m_bDesktop)
+        SwitchDesktopMode();
       m_bStopPlayCalled = true;
       m_formBottomBar.EndThreadUpdate();
       if(RpCore.IsPlaying())

@@ -64,6 +64,8 @@ namespace RPlayer
     private int m_nSubtitleSeperatorItemIndex;
     private bool m_bSubtitleVisible = true;
 
+    private bool m_bStopPlayCalled = true;
+
     public MainForm()
     {
       InitializeComponent();
@@ -1112,7 +1114,8 @@ namespace RPlayer
     }
 
     private bool StartPlay(string url, double nStartTime)
-    {      
+    {
+      m_bStopPlayCalled = false;
       if (!RpCore.Play(url, nStartTime))
       {
         SwitchFormMode(false);
@@ -1140,8 +1143,12 @@ namespace RPlayer
 
     public void StopPlay()
     {
+      if (m_bStopPlayCalled)
+        return;
+      m_bStopPlayCalled = true;
       m_formBottomBar.EndThreadUpdate();
-      RpCore.Stop();
+      if(RpCore.IsPlaying())
+        RpCore.Stop();
       ClearContextMenuDynamically();
     }
 
@@ -1154,14 +1161,37 @@ namespace RPlayer
     {
       return colorSlider_volume.Value;
     }
+
+    delegate void ResponseOnEndedStoppedDelegate(bool bInvoke);
+    public void ResponseOnEndedStopped(bool bInvoke)
+    {
+      if (m_bStopPlayCalled)
+        return;
+      if (bInvoke)
+      {
+        ResponseOnEndedStoppedDelegate del = new ResponseOnEndedStoppedDelegate(ResponseOnEndedStopped);
+        this.Invoke(del, false);
+      }
+      else
+      {
+        StopPlay();
+        SwitchFormMode(false);
+      }
+    }
   }
 
   public class RpCallback : IRpCallback
   {
     private MainForm m_mainForm;
     public RpCallback(MainForm mainForm) { m_mainForm = mainForm; }
-    public override void OnEnded() { }
-    public override void OnStopped() { }
+    public override void OnEnded() 
+    {
+      m_mainForm.ResponseOnEndedStopped(true);
+    }
+    public override void OnStopped()
+    {
+      m_mainForm.ResponseOnEndedStopped(true);
+    }
     public override void OnSeekStarted() { }
     public override void OnSeekFailed()
     {

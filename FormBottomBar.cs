@@ -139,12 +139,15 @@ namespace RPlayer
 
     public void EndThreadUpdate()
     {
+      if (m_stopThreadUpdate)
+        return;
       m_stopThreadUpdate = true;
       m_threadUpdate.Join();
       colorSlider_playProcess.Value = 0;
       label_timeCurrent.Text = "00 : 00 : 00";
       label_timeLast.Text = "-00 : 00 : 00";
-      m_fSpeed = 1.0f;
+      m_fSpeed = 1.0f;      
+
       m_mainForm.HideFormSpeedDisplay();
     }
 
@@ -176,7 +179,7 @@ namespace RPlayer
     }
 
     delegate void ChangeTextDelegate(Control ctrl, string text);
-    public static void ChangeTextFromThread(Control ctrl, string text)
+    public void ChangeTextFromThread(Control ctrl, string text)
     {
       if (ctrl.InvokeRequired)
       {
@@ -188,7 +191,7 @@ namespace RPlayer
     }
 
     delegate void ChangeValueDelegate(ColorSlider ctrl, int value);
-    public static void ChangeValueFromThread(ColorSlider ctrl, int value)
+    public void ChangeValueFromThread(ColorSlider ctrl, int value)
     {
       if (ctrl.InvokeRequired)
       {
@@ -197,6 +200,8 @@ namespace RPlayer
       }
       else
       {
+        if (value > ctrl.Maximum)
+          return;
         ctrl.Value = value;
       }
     }

@@ -58,6 +58,7 @@ namespace RPlayer
     private ContextMenuStrip m_contextMenuStrip_playWnd;
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
     private ToolStripMenuItem m_toolStripMenuItem_audios;
+    private ToolStripMenuItem m_toolStripMenuItem_chapters;
     private Color m_ColorContextMenu = Color.FromArgb(255, 25, 25, 25);
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
@@ -110,16 +111,19 @@ namespace RPlayer
       label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
 
       m_toolStripMenuItem_subtitles = new ToolStripMenuItem();
-      m_toolStripMenuItem_audios = new ToolStripMenuItem();
-
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_subtitles);
-      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_audios);
-
       m_toolStripMenuItem_subtitles.Text = "Subtitles";
-      m_toolStripMenuItem_audios.Text = "Audios";
-
       m_toolStripMenuItem_subtitles.MouseEnter += toolStripMenuItem_subtitles_MouseEnter;
+
+      m_toolStripMenuItem_audios = new ToolStripMenuItem();
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_audios);
+      m_toolStripMenuItem_audios.Text = "Audios";
       m_toolStripMenuItem_audios.MouseEnter += toolStripMenuItem_audios_MouseEnter;
+
+      m_toolStripMenuItem_chapters = new ToolStripMenuItem(); 
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_chapters);
+      m_toolStripMenuItem_chapters.Text = "Chapters";
+      m_toolStripMenuItem_chapters.MouseEnter += toolStripMenuItem_chapters_MouseEnter;     
     }
 
     private class CustomToolStripProfessionalRenderer : ToolStripProfessionalRenderer
@@ -220,6 +224,22 @@ namespace RPlayer
             else
               subtitleItem.Checked = false;
           }
+        }
+      }
+    }
+
+    private void toolStripMenuItem_chapters_MouseEnter(object sender, EventArgs e)
+    {
+      if (m_toolStripMenuItem_chapters.DropDownItems.Count > 0)
+      {
+        int number = RpCore.GetCurrentChapter();
+
+        foreach (ToolStripMenuItem item in m_toolStripMenuItem_chapters.DropDownItems)
+        {
+          if (number == (int)item.Tag)
+            item.Checked = true;
+          else
+            item.Checked = false;
         }
       }
     }
@@ -973,6 +993,12 @@ namespace RPlayer
       RpCore.SwitchAudio((int)item.Tag);
     }
 
+    private void ChapterItemClick(object sender, EventArgs e)
+    {
+      ToolStripMenuItem item = sender as ToolStripMenuItem;
+      RpCore.SwitchChapter((int)item.Tag);
+    }
+
     private void AddSubtitleItemClick(object sender, EventArgs e)
     {
       OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -1000,7 +1026,7 @@ namespace RPlayer
       }
     }
 
-    private void OffSubtitleItemClick(object sender, EventArgs e)
+    private void HideSubtitleItemClick(object sender, EventArgs e)
     {
       if (m_bSubtitleVisible)
         m_bSubtitleVisible = false;
@@ -1009,14 +1035,16 @@ namespace RPlayer
       RpCore.SetSubtitleVisible(m_bSubtitleVisible);
     }
 
-    private void ClearContextMenu()
+    private void ClearContextMenuDynamically()
     {
       m_toolStripMenuItem_subtitles.DropDownItems.Clear();
       m_toolStripMenuItem_audios.DropDownItems.Clear();
+      m_toolStripMenuItem_chapters.DropDownItems.Clear();
     }
 
-    private void FillContextMenu()
+    private void FillContextMenuDynamically()
     {
+      // subtitles
       ToolStripMenuItem item = new ToolStripMenuItem();
       item.Text = "Add Subtitle";
       item.Click += AddSubtitleItemClick;
@@ -1026,7 +1054,7 @@ namespace RPlayer
 
       item = new ToolStripMenuItem();
       item.Text = "Hide Subtitle";
-      item.Click += OffSubtitleItemClick;
+      item.Click += HideSubtitleItemClick;
       item.BackColor = m_ColorContextMenu;
       item.ForeColor = Color.White;
       m_nSubtitleHideItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
@@ -1055,6 +1083,7 @@ namespace RPlayer
         m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
       }
       
+      // audios
       amount = RpCore.GetAudioCount();
       for (int i = 0; i < amount; i++)
       {
@@ -1066,6 +1095,19 @@ namespace RPlayer
         item.BackColor = m_ColorContextMenu;
         item.ForeColor = Color.White;
         m_toolStripMenuItem_audios.DropDownItems.Add(item);
+      }
+
+      // chapters
+      amount = RpCore.GetChapterCount();
+      for (int i = 1; i < amount+1; i++)
+      {
+        item = new ToolStripMenuItem();
+        item.Text = "Chapter" + i.ToString();
+        item.Tag = i;
+        item.Click += ChapterItemClick;
+        item.BackColor = m_ColorContextMenu;
+        item.ForeColor = Color.White;
+        m_toolStripMenuItem_chapters.DropDownItems.Add(item);
       }
     }
 
@@ -1091,7 +1133,7 @@ namespace RPlayer
           Directory.GetFiles(m_strCurrentDirectory, filter, SearchOption.TopDirectoryOnly)
           ).ToArray();
 
-      FillContextMenu();
+      FillContextMenuDynamically();
 
       return true;
     }
@@ -1100,7 +1142,7 @@ namespace RPlayer
     {
       m_formBottomBar.EndThreadUpdate();
       RpCore.Stop();
-      ClearContextMenu();
+      ClearContextMenuDynamically();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)

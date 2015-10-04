@@ -987,13 +987,11 @@ namespace RPlayer
       {
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
-
-        m_bMute = m_formBottomBar.m_bMute;
+        
         if (m_bMute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-        colorSlider_volume.Value = m_formBottomBar.GetVolume();
 
         label_Play.Show();
         label_Volume.Show();
@@ -1200,6 +1198,9 @@ namespace RPlayer
       if(RpCore.IsPlaying())
         RpCore.Stop();
       ClearContextMenuDynamically();
+
+      m_bMute = m_formBottomBar.m_bMute;
+      colorSlider_volume.Value = m_formBottomBar.GetVolume();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)

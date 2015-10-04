@@ -409,6 +409,11 @@ namespace RPlayer
       {
         label_playWnd.Size = new Size(this.Width - 4, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
       }
+      else
+      {
+        label_playWnd.Location = this.Location;
+        label_playWnd.Size = this.Size;
+      }
       RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
     }
 
@@ -876,8 +881,6 @@ namespace RPlayer
         if (this.WindowState == FormWindowState.Maximized)
           ChangeSubFormsLocAndSize(); // Manually call it, because main form will not resize, it was max.
         this.WindowState = FormWindowState.Maximized;
-        label_playWnd.Location = this.Location;
-        label_playWnd.Size = this.Size;
         m_formBottomBar.Hide();
         m_formTopBar.Hide();
       }

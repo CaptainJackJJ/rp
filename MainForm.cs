@@ -96,7 +96,7 @@ namespace RPlayer
 
       Settings.Load();
       ConfigWithSettings();
-      UiLang.SetLang(UiLang.enumUiLang.english);
+      UiLang.SetLang(UiLang.langEnglish);
 
       m_formBottomBar = new FormBottomBar(this);
       m_formTopBar = new FormTopBar(this);

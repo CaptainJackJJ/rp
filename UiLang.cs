@@ -7,10 +7,8 @@ namespace RPlayer
 {
   class UiLang
   {
-    public enum enumUiLang { none, english, chinese }
-
-    public static string comboBoxLangEnglish = "English";
-    public static string comboBoxLangChinese = "中文";
+    public static string langEnglish = "English";
+    public static string langChinese = "中文";
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -32,22 +30,22 @@ namespace RPlayer
     // FormBottomBar
     public static string speedDisplay;
 
-    private static enumUiLang m_uiLang = enumUiLang.none;
-    public static enumUiLang GetLang()
+    private static string m_uiLang;
+    public static string GetLang()
     {
       return m_uiLang;
     }
-    public static void SetLang(enumUiLang uiLang)
+    public static void SetLang(string uiLang)
     {
-      if(m_uiLang == uiLang)
+      if (m_uiLang == uiLang)
         return;
       m_uiLang = uiLang;
       switch(uiLang)
       {
-        case enumUiLang.english:
+        case "English":
           SetEnglish();
           break;
-        case enumUiLang.chinese:
+        case "中文":
           SetChinese();
           break;
       }

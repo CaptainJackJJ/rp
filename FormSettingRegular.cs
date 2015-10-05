@@ -23,25 +23,16 @@ namespace RPlayer
 
         private void InitComboBoxUiLang()
         {
-          int index = comboBox_uiLang.Items.Add(UiLang.comboBoxLangEnglish);
-          if (UiLang.GetLang() == UiLang.enumUiLang.english)
-            comboBox_uiLang.SelectedIndex = index;
-          index = comboBox_uiLang.Items.Add(UiLang.comboBoxLangChinese);
-          if (UiLang.GetLang() == UiLang.enumUiLang.chinese)
-            comboBox_uiLang.SelectedIndex = index;
+          comboBox_uiLang.Items.Add(UiLang.langEnglish);
+          comboBox_uiLang.Items.Add(UiLang.langChinese);
+          comboBox_uiLang.SelectedItem = UiLang.GetLang();
           comboBox_uiLang.SelectedIndexChanged += comboBox_uiLang_SelectedIndexChanged;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-          if (comboBox_uiLang.SelectedItem as string == UiLang.comboBoxLangEnglish)
-          {
-            UiLang.SetLang(UiLang.enumUiLang.english);
-          }
-          else if (comboBox_uiLang.SelectedItem as string == UiLang.comboBoxLangChinese)
-          {
-            UiLang.SetLang(UiLang.enumUiLang.chinese);
-          }
+          UiLang.SetLang(comboBox_uiLang.SelectedItem as string);
+
           m_formSettings.m_mainForm.SetAllUiLange();
         }
 

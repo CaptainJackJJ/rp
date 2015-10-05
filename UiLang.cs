@@ -26,6 +26,10 @@ namespace RPlayer
 
     // FormRegular
     public static string uiLangLabel;
+    public static string labelRepeatPlayback;
+    public static string ComboBoxRepeatNone;
+    public static string ComboBoxRepeatOne;
+    public static string ComboBoxRepeatAll;
 
     // FormBottomBar
     public static string speedDisplay;
@@ -59,6 +63,10 @@ namespace RPlayer
       labelAV = "AudioVideo";
 
       uiLangLabel = "UI Language";
+      labelRepeatPlayback = "Repeat Playback";
+      ComboBoxRepeatNone = "No Repeat";
+      ComboBoxRepeatOne = "Repeat One";
+      ComboBoxRepeatAll = "Repeat All";
 
       speedDisplay = "Speed: X";
     }
@@ -78,6 +86,11 @@ namespace RPlayer
       labelAV = "音视频";
 
       uiLangLabel = "界面语言";
+      labelRepeatPlayback = "循环播放";
+      ComboBoxRepeatNone = "不循环";
+      ComboBoxRepeatOne = "单个循环";
+      ComboBoxRepeatAll = "列表循环";
+
       speedDisplay = "速度: X";
     }
   }

@@ -1215,8 +1215,7 @@ namespace RPlayer
         SwitchDesktopMode();
       m_bStopPlayCalled = true;
       m_formBottomBar.StopPlay();
-      if(RpCore.IsPlaying())
-        RpCore.Stop();
+      RpCore.Stop();
       ClearContextMenuDynamically();
 
       colorSlider_volume.Value = Archive.volume;
@@ -1230,8 +1229,8 @@ namespace RPlayer
 
     delegate void ResponseOnEndedStoppedDelegate(bool bInvoke);
     public void ResponseOnEndedStopped(bool bInvoke)
-    {
-      if (m_bStopPlayCalled)
+    {      
+      if (m_bStopPlayCalled)// ui stop button clicked
         return;
       if (bInvoke)
       {
@@ -1240,9 +1239,28 @@ namespace RPlayer
       }
       else
       {
-        StopPlay();
-        SwitchFormMode(false);
+        // Invoke still is a sync operate, so dead lock will happen if we call rpcore's Stop method in here directly.
+        // So we need timer, timer is a async operate.
+        timer_handleRpCallback.Enabled = true; 
       }
+    }
+
+    private void timer_handleRpCallback_Tick(object sender, EventArgs e)
+    {
+      StopPlay();
+      switch (Archive.repeatPlayback)
+      {
+        case Archive.enumRepeatPlayback.none:
+          SwitchFormMode(false);
+          break;
+        case Archive.enumRepeatPlayback.one:
+          StartPlay(m_strCurrentDirectory + "\\" + m_strCurrentFileName, 0);
+          break;
+        case Archive.enumRepeatPlayback.all:
+          PlayPreNext(false);
+          break;
+      }
+      timer_handleRpCallback.Enabled = false;
     }
   }
 

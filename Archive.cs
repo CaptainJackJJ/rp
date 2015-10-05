@@ -16,6 +16,8 @@ namespace RPlayer
     static public int volume;
     static public bool mute;
     static public string lang;
+    public enum enumRepeatPlayback { none,one,all}
+    static public enumRepeatPlayback repeatPlayback;
 
     static public bool Load()
     {
@@ -37,6 +39,8 @@ namespace RPlayer
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");
       lang = node.InnerText;
+      node = xml.SelectSingleNode(sectionGeneral + "repeat");
+      repeatPlayback = (enumRepeatPlayback)Convert.ToInt32(node.InnerText);
 
       return true;
     }
@@ -52,6 +56,8 @@ namespace RPlayer
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");
       node.InnerText = lang;
+      node = xml.SelectSingleNode(sectionGeneral + "repeat");
+      node.InnerText = ((int)repeatPlayback).ToString();
 
       xml.Save(xmlFileName);
     }

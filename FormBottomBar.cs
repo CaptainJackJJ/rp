@@ -471,10 +471,6 @@ namespace RPlayer
       if (m_bDragSeeking) // Make sure last seek get performed when drag seek done
       {
         m_bDragSeeking = false;
-        while (!m_bSeekDone)
-        {
-          Thread.Sleep(10);
-        }
         m_bProcessBarMouseUp = true;
         m_bSeekDone = false;
         RpCore.Seek(colorSlider_playProcess.Value, false);

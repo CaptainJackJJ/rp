@@ -39,7 +39,6 @@ namespace RPlayer
     private const int m_nBottomButtonsSize = 25;
     private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
 
-    public bool m_bMute = false;
     private bool m_bMaxed = false;
     private bool m_bInCorner = false;
     public bool m_bDesktop;
@@ -77,15 +76,13 @@ namespace RPlayer
         label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
         label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-        label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       }
       catch
       {
         this.BackColor = Color.Gainsboro;
         label_Play.Text = "play";
-        label_settings.Text = "settings";
-        label_Volume.Text = "volume";
+        label_settings.Text = "settings";        
         label_Close.Text = "close";
         label_Max.Text = "max";
         label_Min.Text = "min";
@@ -94,9 +91,9 @@ namespace RPlayer
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
       RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
 
-      Settings.Load();
-      ConfigWithSettings();
-      UiLang.SetLang(UiLang.langEnglish);
+      Archive.Load();
+      ConfigByArchive();
+      UiLang.SetLang(Archive.lang);
 
       m_formBottomBar = new FormBottomBar(this);
       m_formTopBar = new FormTopBar(this);
@@ -112,9 +109,24 @@ namespace RPlayer
       SetUiLange();
     }
 
-    private void ConfigWithSettings()
+    private void ConfigByArchive()
     {
-      colorSlider_volume.Value = Settings.volume;
+      colorSlider_volume.Value = Archive.volume;
+      try
+      {
+        RpCore.SetMute(Archive.mute);
+        if (Archive.mute)
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+        else
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+      }
+      catch 
+      {
+        if (Archive.mute)
+          label_Volume.Text = "mute";
+        else
+          label_Volume.Text = "volume";        
+      }
     }
 
     public void SetAllUiLange()
@@ -593,7 +605,7 @@ namespace RPlayer
         StopPlay();
       RpCore.UninitPlayer();
       RpCore.UnLoadLib();
-      Settings.Save();
+      Archive.Save();
       this.Close();
     }
 
@@ -771,7 +783,7 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
@@ -783,7 +795,7 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
@@ -795,19 +807,19 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
         {
-          m_bMute = false;
+          Archive.mute = false;
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
         }
         else
         {
-          m_bMute = true;
+          Archive.mute = true;
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
         }
       }
       catch { }
-      RpCore.SetMute(m_bMute);
+      RpCore.SetMute(Archive.mute);
     }
 
     private void label_settings_MouseEnter(object sender, EventArgs e)
@@ -995,8 +1007,8 @@ namespace RPlayer
       {
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
-        
-        if (m_bMute)
+
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
@@ -1207,19 +1219,13 @@ namespace RPlayer
         RpCore.Stop();
       ClearContextMenuDynamically();
 
-      m_bMute = m_formBottomBar.m_bMute;
-      colorSlider_volume.Value = m_formBottomBar.GetVolume();
+      colorSlider_volume.Value = Archive.volume;
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
     {
-      Settings.volume = colorSlider_volume.Value;
-      RpCore.SetVolume((float)(Settings.volume * 0.01));
-    }
-
-    public int GetVolume()
-    {
-      return colorSlider_volume.Value;
+      Archive.volume = colorSlider_volume.Value;
+      RpCore.SetVolume((float)(Archive.volume * 0.01));
     }
 
     delegate void ResponseOnEndedStoppedDelegate(bool bInvoke);

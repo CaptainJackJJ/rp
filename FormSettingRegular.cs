@@ -25,7 +25,7 @@ namespace RPlayer
         {
           comboBox_uiLang.Items.Add(UiLang.langEnglish);
           comboBox_uiLang.Items.Add(UiLang.langChinese);
-          comboBox_uiLang.SelectedItem = UiLang.GetLang();
+          comboBox_uiLang.SelectedItem = Archive.lang;
           comboBox_uiLang.SelectedIndexChanged += comboBox_uiLang_SelectedIndexChanged;
         }
 

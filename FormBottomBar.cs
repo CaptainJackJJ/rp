@@ -28,7 +28,6 @@ namespace RPlayer
     private const int m_nFFBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin;
     private const int m_nNextBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize;
 
-    public bool m_bMute = false;
     private MainForm m_mainForm;
     private double m_nTotalTime = 0;
     private bool m_bPaused = false;
@@ -111,8 +110,7 @@ namespace RPlayer
       try
       {
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
-        m_bMute = m_mainForm.m_bMute;
-        if (m_bMute)
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
@@ -120,12 +118,12 @@ namespace RPlayer
       catch
       {
         label_Play.Text = "pause";
-        if (m_mainForm.m_bMute)
+        if (Archive.mute)
           label_Volume.Text = "mute";
         else
           label_Volume.Text = "volume";
       }
-      colorSlider_volume.Value = m_mainForm.GetVolume();
+      colorSlider_volume.Value = Archive.volume;
 
       m_nTotalTime = (int)RpCore.GetTotalTime();
       if (m_nTotalTime == 0)
@@ -547,7 +545,7 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
@@ -559,7 +557,7 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
@@ -571,30 +569,25 @@ namespace RPlayer
     {
       try
       {
-        if (m_bMute)
+        if (Archive.mute)
         {
-          m_bMute = false;
+          Archive.mute = false;
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
         }
         else
         {
-          m_bMute = true;
+          Archive.mute = true;
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
         }
       }
       catch { }
-      RpCore.SetMute(m_bMute);
+      RpCore.SetMute(Archive.mute);
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
     {
-      RpCore.SetVolume((float)(colorSlider_volume.Value * 0.01));
+      Archive.volume = colorSlider_volume.Value;
+      RpCore.SetVolume((float)(Archive.volume * 0.01));
     }
-
-    public int GetVolume()
-    {
-      return colorSlider_volume.Value;
-    }
-
   }
 }

@@ -6,13 +6,16 @@ using System.Xml;
 
 namespace RPlayer
 {
-  class Settings
+  class Archive
   {
     static private XmlDocument xml = new XmlDocument();
-    static private string xmlFileName = "settings.xml";
-    static private string sectionOthers = "/others/";
+    static private string xmlFileName = "archive.xml";
+    static private string sectionOthers = "/archive/others/";
+    static private string sectionGeneral = "/archive/general/";
 
     static public int volume;
+    static public bool mute;
+    static public string lang;
 
     static public bool Load()
     {
@@ -25,17 +28,30 @@ namespace RPlayer
         return false;
       }
 
+      // others
       XmlNode node = xml.SelectSingleNode(sectionOthers +"volume");
       volume = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "mute");
+      mute = Convert.ToBoolean(node.InnerText);
 
+      // general
+      node = xml.SelectSingleNode(sectionGeneral + "lang");
+      lang = node.InnerText;
 
       return true;
     }
 
     static public void Save()
     {
+      // others
       XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
       node.InnerText = volume.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "mute");
+      node.InnerText = mute.ToString();
+
+      // general
+      node = xml.SelectSingleNode(sectionGeneral + "lang");
+      node.InnerText = lang;
 
       xml.Save(xmlFileName);
     }

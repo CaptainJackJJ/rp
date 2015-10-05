@@ -30,16 +30,9 @@ namespace RPlayer
     // FormBottomBar
     public static string speedDisplay;
 
-    private static string m_uiLang;
-    public static string GetLang()
-    {
-      return m_uiLang;
-    }
     public static void SetLang(string uiLang)
     {
-      if (m_uiLang == uiLang)
-        return;
-      m_uiLang = uiLang;
+      Archive.lang = uiLang;
       switch(uiLang)
       {
         case "English":

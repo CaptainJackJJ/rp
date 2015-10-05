@@ -131,11 +131,6 @@ namespace RPlayer
       if (m_nTotalTime == 0)
         m_nTotalTime = 1;
       colorSlider_playProcess.Maximum = (int)m_nTotalTime;
-      TimeSpan t = TimeSpan.FromSeconds(m_nTotalTime);
-      label_timeLast.Text = string.Format("-{0:D2} : {1:D2} : {2:D2}",
-                      t.Hours,
-                      t.Minutes,
-                      t.Seconds);
 
       timer_updateProcessBar.Enabled = true;
     }
@@ -169,20 +164,6 @@ namespace RPlayer
     {
       double nCurTime = RpCore.GetCurTime();
       colorSlider_playProcess.Value = (int)nCurTime;
-
-      TimeSpan t = TimeSpan.FromSeconds(nCurTime);
-      string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                      t.Hours,
-                      t.Minutes,
-                      t.Seconds);
-      label_timeCurrent.Text = strText;
-
-      t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
-      strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
-                      t.Hours,
-                      t.Minutes,
-                      t.Seconds);
-      label_timeLast.Text = strText;
     }
 
     private void FormBottomBar_Resize(object sender, EventArgs e)
@@ -479,20 +460,6 @@ namespace RPlayer
       double time = colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
       colorSlider_playProcess.Value = (int)time;
 
-      TimeSpan t = TimeSpan.FromSeconds(time);
-      string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                      t.Hours,
-                      t.Minutes,
-                      t.Seconds);
-      label_timeCurrent.Text = strText;
-
-      t = TimeSpan.FromSeconds(m_nTotalTime - time);
-      strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
-                      t.Hours,
-                      t.Minutes,
-                      t.Seconds);
-      label_timeLast.Text = strText;
-
       timer_updateProcessBar.Enabled = false;
       m_bSeekDone = false;
       RpCore.Seek(time, false);
@@ -522,11 +489,26 @@ namespace RPlayer
 
     private void colorSlider_playProcess_ValueChanged(object sender, EventArgs e)
     {
+      double nCurTime = colorSlider_playProcess.Value;
+      TimeSpan t = TimeSpan.FromSeconds(nCurTime);
+      string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+      label_timeCurrent.Text = strText;
+
+      t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
+      strText = string.Format("-{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+      label_timeLast.Text = strText;
+
       if (!m_bProcessBarMouseUp && m_bSeekDone)// drag seek
       {
         m_bDragSeeking = true;
         m_bSeekDone = false;
-        RpCore.Seek(colorSlider_playProcess.Value, false);
+        RpCore.Seek(nCurTime, false);
       }
     }
 

@@ -22,7 +22,6 @@ namespace RPlayer
     private const int m_nPlayProcessToPlayBtnYMargin = 5;
     private const int m_nPlayProcessXMargin = 90;
 
-
     private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
     private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsSize);
     private const int m_nPreBtnXMarginToPlay = -(m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize * 2);
@@ -31,11 +30,8 @@ namespace RPlayer
 
     public bool m_bMute = false;
     private MainForm m_mainForm;
-    Thread m_threadUpdate;
-    private volatile bool m_stopThreadUpdate = false;
     private double m_nTotalTime = 0;
     private bool m_bPaused = false;
-    private Object m_TimeMoniter = new Object();
     public bool m_bProcessBarMouseUp = true;
     public bool m_bSeekDone = true;
     private bool m_bDragSeeking = false;
@@ -110,7 +106,7 @@ namespace RPlayer
       return base.ProcessCmdKey(ref msg, keyData);
     }
 
-    public void StartThreadUpdate()
+    public void StartPlay()
     {     
       try
       {
@@ -141,18 +137,12 @@ namespace RPlayer
                       t.Minutes,
                       t.Seconds);
 
-      m_stopThreadUpdate = false;
-      m_threadUpdate = new Thread(DoThreadUpdate);
-      m_threadUpdate.Start();
-      while (!m_threadUpdate.IsAlive) ;
+      timer_updateProcessBar.Enabled = true;
     }
 
-    public void EndThreadUpdate()
+    public void StopPlay()
     {
-      if (m_stopThreadUpdate)
-        return;
-      m_stopThreadUpdate = true;
-      m_threadUpdate.Join();
+      timer_updateProcessBar.Enabled = false;
       colorSlider_playProcess.Value = 0;
       label_timeCurrent.Text = "00 : 00 : 00";
       label_timeLast.Text = "-00 : 00 : 00";
@@ -161,118 +151,38 @@ namespace RPlayer
       m_mainForm.HideFormSpeedDisplay();
     }
 
-    private void PauseTimeUpdate()
-    {
-      Monitor.Enter(m_TimeMoniter);
-    }
-
-    delegate void ResumeTimeUpdateDelegate(bool bInvoke);
-    public void ResumeTimeUpdate(bool bInvoke)
+    delegate void EnableUpdateTimerDelegate(bool bInvoke);
+    public void EnableUpdateTimer(bool bInvoke)
     {
       if (bInvoke)
       {
-        ResumeTimeUpdateDelegate del = new ResumeTimeUpdateDelegate(ResumeTimeUpdate);
-        colorSlider_playProcess.Invoke(del, false);
+        EnableUpdateTimerDelegate del = new EnableUpdateTimerDelegate(EnableUpdateTimer);
+        this.Invoke(del, false);
       }
       else
       {
-        while (true)
-        {
-          try
-          {
-            Monitor.Exit(m_TimeMoniter);
-          }
-          catch (SynchronizationLockException)
-          { break; }
-        }
+        timer_updateProcessBar.Enabled = true;
       }
     }
 
-    delegate void ChangeTextDelegate(Control ctrl, string text);
-    public void ChangeTextFromThread(Control ctrl, string text)
+    private void timer_updateProcessBar_Tick(object sender, EventArgs e)
     {
-      if (ctrl.InvokeRequired)
-      {
-        ChangeTextDelegate del = new ChangeTextDelegate(ChangeTextFromThread);
-        ctrl.Invoke(del, ctrl, text);
-      }
-      else
-        ctrl.Text = text;
-    }
+      double nCurTime = RpCore.GetCurTime();
+      colorSlider_playProcess.Value = (int)nCurTime;
 
-    delegate void ChangeValueDelegate(ColorSlider ctrl, int value);
-    public void ChangeValueFromThread(ColorSlider ctrl, int value)
-    {
-      if (ctrl.InvokeRequired)
-      {
-        ChangeValueDelegate del = new ChangeValueDelegate(ChangeValueFromThread);
-        ctrl.Invoke(del, ctrl, value);
-      }
-      else
-      {
-        if (value > ctrl.Maximum)
-          return;
-        ctrl.Value = value;
-      }
-    }
+      TimeSpan t = TimeSpan.FromSeconds(nCurTime);
+      string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+      label_timeCurrent.Text = strText;
 
-    delegate void AskReleaseLockDelegate(ColorSlider ctrl);
-    public void AskReleaseLockFromThread(ColorSlider ctrl)
-    {
-      if (ctrl.InvokeRequired)
-      {
-        AskReleaseLockDelegate del = new AskReleaseLockDelegate(AskReleaseLockFromThread);
-        ctrl.Invoke(del, ctrl);
-      }
-      else
-      {
-        while (true)
-        {
-          try
-          {
-            Monitor.Exit(m_TimeMoniter);
-          }
-          catch (SynchronizationLockException)
-          { break; }
-        }
-      }
-    }
-
-    private void DoThreadUpdate()
-    {
-      while (!m_stopThreadUpdate)
-      {
-        bool bOwnLock = false;
-        try
-        {
-          bOwnLock = Monitor.TryEnter(m_TimeMoniter, 1000 * 10);
-          double nCurTime = RpCore.GetCurTime();
-          ChangeValueFromThread(colorSlider_playProcess, (int)nCurTime);
-
-          TimeSpan t = TimeSpan.FromSeconds(nCurTime);
-          string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                          t.Hours,
-                          t.Minutes,
-                          t.Seconds);
-          ChangeTextFromThread(label_timeCurrent, strText);
-
-          t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
-          strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
-                          t.Hours,
-                          t.Minutes,
-                          t.Seconds);
-          ChangeTextFromThread(label_timeLast, strText);
-        }
-        finally
-        {
-          if (bOwnLock)
-            Monitor.Exit(m_TimeMoniter);
-          else
-            AskReleaseLockFromThread(colorSlider_playProcess);
-        }
-
-        Thread.Sleep(1000);
-      }
+      t = TimeSpan.FromSeconds(m_nTotalTime - nCurTime);
+      strText = string.Format("- {0:D2} : {1:D2} : {2:D2}",
+                      t.Hours,
+                      t.Minutes,
+                      t.Seconds);
+      label_timeLast.Text = strText;
     }
 
     private void FormBottomBar_Resize(object sender, EventArgs e)
@@ -566,7 +476,6 @@ namespace RPlayer
 
     private void colorSlider_playProcess_MouseDown(object sender, MouseEventArgs e)
     {
-      PauseTimeUpdate();
       double time = colorSlider_playProcess.Maximum * ((double)e.X / (double)colorSlider_playProcess.Width);
       colorSlider_playProcess.Value = (int)time;
 
@@ -584,6 +493,7 @@ namespace RPlayer
                       t.Seconds);
       label_timeLast.Text = strText;
 
+      timer_updateProcessBar.Enabled = false;
       m_bSeekDone = false;
       RpCore.Seek(time, false);
       m_bProcessBarMouseUp = false;
@@ -605,7 +515,7 @@ namespace RPlayer
       else
       {
         if (m_bSeekDone)
-          ResumeTimeUpdate(false);
+          timer_updateProcessBar.Enabled = true;
         m_bProcessBarMouseUp = true;
       }
     }

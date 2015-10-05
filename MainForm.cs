@@ -1167,7 +1167,7 @@ namespace RPlayer
         SwitchFormMode(false);
         return false;
       }
-      m_formBottomBar.StartThreadUpdate();
+      m_formBottomBar.StartPlay();
 
       Uri uri = new Uri(url);
       m_strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
@@ -1194,7 +1194,7 @@ namespace RPlayer
       if (m_bDesktop)
         SwitchDesktopMode();
       m_bStopPlayCalled = true;
-      m_formBottomBar.EndThreadUpdate();
+      m_formBottomBar.StopPlay();
       if(RpCore.IsPlaying())
         RpCore.Stop();
       ClearContextMenuDynamically();
@@ -1249,7 +1249,7 @@ namespace RPlayer
       if (!m_mainForm.m_formBottomBar.m_bSeekDone)
       {
         if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
-          m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
+          m_mainForm.m_formBottomBar.EnableUpdateTimer(true);
         m_mainForm.m_formBottomBar.m_bSeekDone = true;
       }
     }
@@ -1258,7 +1258,7 @@ namespace RPlayer
       if (!m_mainForm.m_formBottomBar.m_bSeekDone)
       {
         if (m_mainForm.m_formBottomBar.m_bProcessBarMouseUp)
-          m_mainForm.m_formBottomBar.ResumeTimeUpdate(true);
+          m_mainForm.m_formBottomBar.EnableUpdateTimer(true);
         m_mainForm.m_formBottomBar.m_bSeekDone = true;
       }
     }

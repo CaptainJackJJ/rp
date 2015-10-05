@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_desktop = new System.Windows.Forms.Label();
       this.label_timeLast = new System.Windows.Forms.Label();
@@ -40,6 +41,7 @@
       this.label_Play = new System.Windows.Forms.Label();
       this.label_FB = new System.Windows.Forms.Label();
       this.label_FF = new System.Windows.Forms.Label();
+      this.timer_updateProcessBar = new System.Windows.Forms.Timer(this.components);
       this.SuspendLayout();
       // 
       // colorSlider_volume
@@ -215,6 +217,11 @@
       this.label_FF.MouseEnter += new System.EventHandler(this.label_FF_MouseEnter);
       this.label_FF.MouseLeave += new System.EventHandler(this.label_FF_MouseLeave);
       // 
+      // timer_updateProcessBar
+      // 
+      this.timer_updateProcessBar.Interval = 1000;
+      this.timer_updateProcessBar.Tick += new System.EventHandler(this.timer_updateProcessBar_Tick);
+      // 
       // FormBottomBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -256,5 +263,6 @@
     private System.Windows.Forms.Label label_Play;
     private System.Windows.Forms.Label label_FB;
     private System.Windows.Forms.Label label_FF;
+    private System.Windows.Forms.Timer timer_updateProcessBar;
   }
 }

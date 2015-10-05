@@ -71,8 +71,6 @@ namespace RPlayer
     {
       InitializeComponent();
 
-      UiLang.SetLang(UiLang.enumUiLang.english);
-
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
@@ -96,6 +94,10 @@ namespace RPlayer
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
       RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
 
+      Settings.Load();
+      ConfigWithSettings();
+      UiLang.SetLang(UiLang.enumUiLang.english);
+
       m_formBottomBar = new FormBottomBar(this);
       m_formTopBar = new FormTopBar(this);
       m_formSettings = new FormSettings(this);
@@ -108,6 +110,11 @@ namespace RPlayer
       InitContextMenuStrip();
 
       SetUiLange();
+    }
+
+    private void ConfigWithSettings()
+    {
+      colorSlider_volume.Value = Settings.volume;
     }
 
     public void SetAllUiLange()
@@ -586,6 +593,7 @@ namespace RPlayer
         StopPlay();
       RpCore.UninitPlayer();
       RpCore.UnLoadLib();
+      Settings.Save();
       this.Close();
     }
 
@@ -1205,7 +1213,8 @@ namespace RPlayer
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
     {
-      RpCore.SetVolume((float)(colorSlider_volume.Value * 0.01));
+      Settings.volume = colorSlider_volume.Value;
+      RpCore.SetVolume((float)(Settings.volume * 0.01));
     }
 
     public int GetVolume()

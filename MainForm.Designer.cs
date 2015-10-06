@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-      this.components = new System.ComponentModel.Container();
       this.label_Play = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
@@ -41,7 +40,6 @@
       this.label_playWnd = new System.Windows.Forms.Label();
       this.label_Volume = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
-      this.timer_handleRpCallback = new System.Windows.Forms.Timer(this.components);
       this.SuspendLayout();
       // 
       // label_Play
@@ -201,11 +199,6 @@
       this.colorSlider_volume.Value = 100;
       this.colorSlider_volume.ValueChanged += new System.EventHandler(this.colorSlider_volume_ValueChanged);
       // 
-      // timer_handleRpCallback
-      // 
-      this.timer_handleRpCallback.Interval = 1;
-      this.timer_handleRpCallback.Tick += new System.EventHandler(this.timer_handleRpCallback_Tick);
-      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -251,7 +244,6 @@
         private System.Windows.Forms.Label label_playWnd;
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
-        private System.Windows.Forms.Timer timer_handleRpCallback;
     }
 }
 

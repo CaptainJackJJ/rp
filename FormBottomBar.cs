@@ -568,7 +568,12 @@ namespace RPlayer
 
     private void label_playlist_Click(object sender, EventArgs e)
     {
+      m_mainForm.ShowHidePlayListFormInNoneDesktop();
+    }
 
+    public void ShowHidePlaylistLabel(bool bShow)
+    {
+      label_playlist.Visible = bShow;
     }
 
     private void label_Volume_MouseEnter(object sender, EventArgs e)

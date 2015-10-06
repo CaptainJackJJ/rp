@@ -15,6 +15,7 @@ namespace RPlayer
 
     static public int volume;
     static public bool mute;
+    static public bool plistShowingInNoneDesktop;
     static public string lang;
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
@@ -35,6 +36,8 @@ namespace RPlayer
       volume = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionOthers + "mute");
       mute = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
+      plistShowingInNoneDesktop = Convert.ToBoolean(node.InnerText);
 
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");
@@ -52,6 +55,8 @@ namespace RPlayer
       node.InnerText = volume.ToString();
       node = xml.SelectSingleNode(sectionOthers + "mute");
       node.InnerText = mute.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
+      node.InnerText = plistShowingInNoneDesktop.ToString();
 
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");

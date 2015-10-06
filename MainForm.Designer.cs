@@ -40,6 +40,7 @@
       this.label_playWnd = new System.Windows.Forms.Label();
       this.label_Volume = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
+      this.label_playlist = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Play
@@ -163,7 +164,7 @@
       // label_Volume
       // 
       this.label_Volume.BackColor = System.Drawing.Color.Transparent;
-      this.label_Volume.Location = new System.Drawing.Point(745, 519);
+      this.label_Volume.Location = new System.Drawing.Point(703, 519);
       this.label_Volume.Name = "label_Volume";
       this.label_Volume.Size = new System.Drawing.Size(25, 25);
       this.label_Volume.TabIndex = 36;
@@ -184,7 +185,7 @@
       this.colorSlider_volume.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
       this.colorSlider_volume.KeyPressRespond = true;
       this.colorSlider_volume.LargeChange = ((uint)(5u));
-      this.colorSlider_volume.Location = new System.Drawing.Point(770, 526);
+      this.colorSlider_volume.Location = new System.Drawing.Point(728, 526);
       this.colorSlider_volume.MouseEffects = false;
       this.colorSlider_volume.MouseWheelBarPartitions = 100;
       this.colorSlider_volume.MouseWheelRespond = true;
@@ -199,6 +200,17 @@
       this.colorSlider_volume.Value = 100;
       this.colorSlider_volume.ValueChanged += new System.EventHandler(this.colorSlider_volume_ValueChanged);
       // 
+      // label_playlist
+      // 
+      this.label_playlist.BackColor = System.Drawing.Color.Transparent;
+      this.label_playlist.Location = new System.Drawing.Point(878, 519);
+      this.label_playlist.Name = "label_playlist";
+      this.label_playlist.Size = new System.Drawing.Size(25, 25);
+      this.label_playlist.TabIndex = 36;
+      this.label_playlist.Click += new System.EventHandler(this.label_playlist_Click);
+      this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
+      this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -209,6 +221,7 @@
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.colorSlider_volume);
+      this.Controls.Add(this.label_playlist);
       this.Controls.Add(this.label_Volume);
       this.Controls.Add(this.label_BottomEdge);
       this.Controls.Add(this.label_RightEdge);
@@ -244,6 +257,7 @@
         private System.Windows.Forms.Label label_playWnd;
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
+        private System.Windows.Forms.Label label_playlist;
     }
 }
 

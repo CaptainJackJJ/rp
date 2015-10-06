@@ -42,6 +42,7 @@
       this.label_FB = new System.Windows.Forms.Label();
       this.label_FF = new System.Windows.Forms.Label();
       this.timer_updateProcessBar = new System.Windows.Forms.Timer(this.components);
+      this.label_playlist = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // colorSlider_volume
@@ -57,7 +58,7 @@
       this.colorSlider_volume.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
       this.colorSlider_volume.KeyPressRespond = true;
       this.colorSlider_volume.LargeChange = ((uint)(5u));
-      this.colorSlider_volume.Location = new System.Drawing.Point(763, 35);
+      this.colorSlider_volume.Location = new System.Drawing.Point(739, 35);
       this.colorSlider_volume.MouseEffects = false;
       this.colorSlider_volume.MouseWheelBarPartitions = 100;
       this.colorSlider_volume.MouseWheelRespond = true;
@@ -75,7 +76,7 @@
       // label_desktop
       // 
       this.label_desktop.BackColor = System.Drawing.Color.Transparent;
-      this.label_desktop.Location = new System.Drawing.Point(871, 37);
+      this.label_desktop.Location = new System.Drawing.Point(847, 37);
       this.label_desktop.Name = "label_desktop";
       this.label_desktop.Size = new System.Drawing.Size(25, 25);
       this.label_desktop.TabIndex = 41;
@@ -143,7 +144,7 @@
       // label_Volume
       // 
       this.label_Volume.BackColor = System.Drawing.Color.Transparent;
-      this.label_Volume.Location = new System.Drawing.Point(734, 28);
+      this.label_Volume.Location = new System.Drawing.Point(710, 28);
       this.label_Volume.Name = "label_Volume";
       this.label_Volume.Size = new System.Drawing.Size(25, 25);
       this.label_Volume.TabIndex = 47;
@@ -222,12 +223,24 @@
       this.timer_updateProcessBar.Interval = 1000;
       this.timer_updateProcessBar.Tick += new System.EventHandler(this.timer_updateProcessBar_Tick);
       // 
+      // label_playlist
+      // 
+      this.label_playlist.BackColor = System.Drawing.Color.Transparent;
+      this.label_playlist.Location = new System.Drawing.Point(883, 31);
+      this.label_playlist.Name = "label_playlist";
+      this.label_playlist.Size = new System.Drawing.Size(25, 25);
+      this.label_playlist.TabIndex = 50;
+      this.label_playlist.Click += new System.EventHandler(this.label_playlist_Click);
+      this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
+      this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);
+      // 
       // FormBottomBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 65);
+      this.Controls.Add(this.label_playlist);
       this.Controls.Add(this.label_FF);
       this.Controls.Add(this.label_FB);
       this.Controls.Add(this.label_Volume);
@@ -264,5 +277,6 @@
     private System.Windows.Forms.Label label_FB;
     private System.Windows.Forms.Label label_FF;
     private System.Windows.Forms.Timer timer_updateProcessBar;
+    private System.Windows.Forms.Label label_playlist;
   }
 }

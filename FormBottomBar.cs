@@ -15,18 +15,18 @@ namespace RPlayer
 {
   public partial class FormBottomBar : Form
   {
-    private const int m_nPlayButtonSize = 40;
-    private const int m_nBottomButtonsSize = 25;
+    private const int m_nPlayButtonWidth = 40;
+    private const int m_nBottomButtonsWidth = 25;
     private const int m_nBottomButtonsMargin = 15;
-    private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
+    private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
     private const int m_nPlayProcessToPlayBtnYMargin = 5;
     private const int m_nPlayProcessXMargin = 90;
 
-    private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsSize * 3);
-    private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsSize);
-    private const int m_nPreBtnXMarginToPlay = -(m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize * 2);
-    private const int m_nFFBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin;
-    private const int m_nNextBtnXMarginToPlay = m_nPlayButtonSize + m_nBottomButtonsMargin * 2 + m_nBottomButtonsSize;
+    private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsWidth * 3);
+    private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsWidth);
+    private const int m_nPreBtnXMarginToPlay = -(m_nBottomButtonsMargin * 2 + m_nBottomButtonsWidth * 2);
+    private const int m_nFFBtnXMarginToPlay = m_nPlayButtonWidth + m_nBottomButtonsMargin;
+    private const int m_nNextBtnXMarginToPlay = m_nPlayButtonWidth + m_nBottomButtonsMargin * 2 + m_nBottomButtonsWidth;
 
     private MainForm m_mainForm;
     private double m_nTotalTime = 0;
@@ -51,6 +51,7 @@ namespace RPlayer
         label_Pre.Image = Image.FromFile(Application.StartupPath + @"\pic\pre.png");
         label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
         label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       }
       catch
       {
@@ -61,6 +62,7 @@ namespace RPlayer
         label_FB.Text = "fb";
         label_Next.Text = "next";
         label_desktop.Text = "desktop";
+        label_playlist.Text = "plist";
       }
       m_mainForm = mainForm;
     }
@@ -187,12 +189,16 @@ namespace RPlayer
       label_Pre.Location =
          new Point((label_Play.Location.X + m_nPreBtnXMarginToPlay),
               nBottomButtonsY);
-      label_desktop.Location =
-        new Point(this.Width - m_nBottomButtonsSize, nBottomButtonsY);
-      colorSlider_volume.Location =
-        new Point(label_desktop.Location.X - 10 - colorSlider_volume.Width, nBottomButtonsY + 7);
-      label_Volume.Location =
-        new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
+
+      const int nLeftBottomBtnsMargin = 10;
+      int nPlaylistBtnX = this.Width - m_nBottomButtonsWidth;
+      int nDesktopBtnX = this.Width - nLeftBottomBtnsMargin - m_nBottomButtonsWidth * 2;
+      int nVolumeSliderX
+        = this.Width - nLeftBottomBtnsMargin * 2 - m_nBottomButtonsWidth * 2 - colorSlider_volume.Width;
+      label_playlist.Location = new Point(nPlaylistBtnX, nBottomButtonsY);
+      label_desktop.Location = new Point(nDesktopBtnX, nBottomButtonsY);
+      colorSlider_volume.Location = new Point(nVolumeSliderX, nBottomButtonsY + 7);
+      label_Volume.Location = new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
       int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
 
@@ -540,6 +546,29 @@ namespace RPlayer
         label_desktop.Image = Image.FromFile(Application.StartupPath + @"\pic\desktop.png");
       }
       catch { }
+    }
+
+    private void label_playlist_MouseEnter(object sender, EventArgs e)
+    {
+      try
+      {
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlistFocus.png");
+      }
+      catch { }
+    }
+
+    private void label_playlist_MouseLeave(object sender, EventArgs e)
+    {
+      try
+      {
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
+      }
+      catch { }
+    }
+
+    private void label_playlist_Click(object sender, EventArgs e)
+    {
+
     }
 
     private void label_Volume_MouseEnter(object sender, EventArgs e)

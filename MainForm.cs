@@ -35,9 +35,9 @@ namespace RPlayer
     private const int m_nRenderToBottomBarMargin = 23;
     private const int m_nCornerSize = 10;
 
-    private const int m_nPlayButtonSize = 40;
-    private const int m_nBottomButtonsSize = 25;
-    private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonSize - m_nBottomButtonsSize) * 0.5);
+    private const int m_nPlayButtonWidth = 40;
+    private const int m_nBottomButtonsWidth = 25;
+    private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
 
     private bool m_bMaxed = false;
     private bool m_bInCorner = false;
@@ -77,6 +77,7 @@ namespace RPlayer
         label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       }
       catch
       {
@@ -86,6 +87,7 @@ namespace RPlayer
         label_Close.Text = "close";
         label_Max.Text = "max";
         label_Min.Text = "min";
+        label_playlist.Text = "Plist";
       }
       m_rpCallback = new RpCallback(this);
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
@@ -407,11 +409,14 @@ namespace RPlayer
          new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
               this.Size.Height - 50);
       int nBottomButtonsY = label_Play.Location.Y + m_nBottomBtnsToPlayBtnYMargin;
-      colorSlider_volume.Location =
-        new Point(this.Width - m_nBottomButtonsSize - m_nCornerSize - 10 - colorSlider_volume.Width,
-          nBottomButtonsY + 7);
-      label_Volume.Location =
-        new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
+
+      const int nLeftBottomBtnsMargin = 10;
+      int nPlaylistBtnX = this.Width - nLeftBottomBtnsMargin - m_nBottomButtonsWidth;
+      int nVolumeSliderX 
+        = this.Width - nLeftBottomBtnsMargin * 3 - m_nBottomButtonsWidth * 2 - colorSlider_volume.Width;
+      label_playlist.Location = new Point(nPlaylistBtnX, nBottomButtonsY);
+      colorSlider_volume.Location = new Point(nVolumeSliderX,nBottomButtonsY + 7);
+      label_Volume.Location = new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
       if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown
           || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
@@ -820,6 +825,29 @@ namespace RPlayer
       }
       catch { }
       RpCore.SetMute(Archive.mute);
+    }
+
+    private void label_playlist_MouseEnter(object sender, EventArgs e)
+    {
+      try
+      {
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlistFocus.png");
+      }
+      catch { }
+    }
+
+    private void label_playlist_MouseLeave(object sender, EventArgs e)
+    {
+      try
+      {
+        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
+      }
+      catch { }
+    }
+
+    private void label_playlist_Click(object sender, EventArgs e)
+    {
+
     }
 
     private void label_settings_MouseEnter(object sender, EventArgs e)

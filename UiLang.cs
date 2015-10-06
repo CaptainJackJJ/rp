@@ -26,13 +26,23 @@ namespace RPlayer
 
     // FormRegular
     public static string uiLangLabel;
+
+
+    // FormBottomBar
+    public static string speedDisplay;
+
+    // FormPlaylist    
+    public static string btnPlaylist;
+    public static string btnHistory;
     public static string labelRepeatPlayback;
     public static string ComboBoxRepeatNone;
     public static string ComboBoxRepeatOne;
     public static string ComboBoxRepeatAll;
-
-    // FormBottomBar
-    public static string speedDisplay;
+    public static string labelSortBy;
+    public static string ComboBoxSortByAddedTime;
+    public static string ComboBoxSortByCreatedTime;
+    public static string ComboBoxSortByFileName;
+    public static string ComboBoxSortByFileSize;
 
     public static void SetLang(string uiLang)
     {
@@ -63,10 +73,18 @@ namespace RPlayer
       labelAV = "AudioVideo";
 
       uiLangLabel = "UI Language";
-      labelRepeatPlayback = "Repeat Playback";
+
+      btnPlaylist = "Playlist";
+      btnHistory = "Histroy";
+      labelRepeatPlayback = "Repeat";
       ComboBoxRepeatNone = "No Repeat";
       ComboBoxRepeatOne = "Repeat One";
       ComboBoxRepeatAll = "Repeat All";
+      labelSortBy = "Sort By";
+      ComboBoxSortByAddedTime = "Added Time";
+      ComboBoxSortByCreatedTime = "Created Time";
+      ComboBoxSortByFileName = "File Name";
+      ComboBoxSortByFileSize = "File Size";
 
       speedDisplay = "Speed: X";
     }
@@ -86,10 +104,18 @@ namespace RPlayer
       labelAV = "音视频";
 
       uiLangLabel = "界面语言";
+
+      btnPlaylist = "播放列表";
+      btnHistory = "播放历史";
       labelRepeatPlayback = "循环播放";
       ComboBoxRepeatNone = "不循环";
       ComboBoxRepeatOne = "单个循环";
       ComboBoxRepeatAll = "列表循环";
+      labelSortBy = "排序按";
+      ComboBoxSortByAddedTime = "添加时间";
+      ComboBoxSortByCreatedTime = "创建时间";
+      ComboBoxSortByFileName = "文件名称";
+      ComboBoxSortByFileSize = "文件大小";
 
       speedDisplay = "速度: X";
     }

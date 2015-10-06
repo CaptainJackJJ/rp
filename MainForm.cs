@@ -442,14 +442,17 @@ namespace RPlayer
       ChangeSubFormsLocAndSize();
     }
 
-    private void ChangePlayWndSizeInNonDesktop()
+    public void ChangePlayWndSizeInNonDesktop()
     {
-      int width = this.Width - 4;
-      int height = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
-      if (Archive.plistShowingInNoneDesktop)
-        width -= m_formPlaylist.Width;
-      label_playWnd.Size = new Size(width, height);
-      RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
+      if (!m_bDesktop)
+      {
+        int width = this.Width - 4;
+        int height = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
+        if (Archive.plistShowingInNoneDesktop)
+          width -= (m_formPlaylist.Width + 5);
+        label_playWnd.Size = new Size(width, height);
+        RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
+      }
     }
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -951,7 +954,6 @@ namespace RPlayer
         m_formTopBar.Show();
         if(Archive.plistShowingInNoneDesktop)
         {
-          m_formPlaylist.Opacity = 1;
           m_formPlaylist.Show();
         }
       }
@@ -1013,7 +1015,6 @@ namespace RPlayer
         }
         else if (e.Location.X >= label_playWnd.Width - m_formPlaylist.Width)
         {
-          m_formPlaylist.Opacity = 0.4;
           m_formPlaylist.Show();
         }
       }
@@ -1066,7 +1067,7 @@ namespace RPlayer
        = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge, 
          this.Location.Y + label_playWnd.Location.Y + 1);
       m_formPlaylist.Size
-        = new Size(m_formPlaylist.Width, label_playWnd.Height - 1);
+        = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
     }
 
     public void SwitchFormMode(bool bPlayingMode)

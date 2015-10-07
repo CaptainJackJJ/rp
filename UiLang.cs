@@ -10,6 +10,9 @@ namespace RPlayer
     public static string langEnglish = "English";
     public static string langChinese = "中文";
 
+    // Common
+    public static string delete;
+
     // MainForm
     public static string contextMenuSubtitles;
     public static string contextMenuAudios;
@@ -43,6 +46,13 @@ namespace RPlayer
     public static string ComboBoxSortByCreatedTime;
     public static string ComboBoxSortByFileName;
     public static string ComboBoxSortByFileSize;
+    public static string messageToSelectItem;
+
+    // FormPlaylistDetails
+    public static string labelHistroyDetailsTimeWatched;
+    public static string labelHistroyDetailsDuration;
+    public static string labelHistroyDetailsUrl;
+    public static string labelHistroyDetailsFinished;
 
     public static void SetLang(string uiLang)
     {
@@ -59,7 +69,9 @@ namespace RPlayer
     }
 
     private static void SetEnglish()
-    {      
+    {
+      delete = "delete";
+
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
       contextMenuChapters = "Chapters";
@@ -85,12 +97,20 @@ namespace RPlayer
       ComboBoxSortByCreatedTime = "Created Time";
       ComboBoxSortByFileName = "File Name";
       ComboBoxSortByFileSize = "File Size";
+      messageToSelectItem = "Please select the item that you want to delete first";
+
+      labelHistroyDetailsTimeWatched = "Time Watched:";
+      labelHistroyDetailsDuration = "Duration:";
+      labelHistroyDetailsUrl = "Url:";
+      labelHistroyDetailsFinished = "Finished";
 
       speedDisplay = "Speed: X";
     }
 
     private static void SetChinese()
-    {      
+    {
+      delete = "删除";
+
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";
       contextMenuChapters = "章节";
@@ -116,6 +136,12 @@ namespace RPlayer
       ComboBoxSortByCreatedTime = "创建时间";
       ComboBoxSortByFileName = "文件名称";
       ComboBoxSortByFileSize = "文件大小";
+      messageToSelectItem = "请先选择要删除的项";
+
+      labelHistroyDetailsTimeWatched = "上次看到:";
+      labelHistroyDetailsDuration = "总时长:";
+      labelHistroyDetailsUrl = "全路径:";
+      labelHistroyDetailsFinished = "已看完";
 
       speedDisplay = "速度: X";
     }

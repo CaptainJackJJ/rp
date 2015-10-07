@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Drawing;
 
 namespace RPlayer
 {
+  public class HistroyItem
+  {
+    public string url;
+    public double timeWatched;
+    public double duration;
+  }
+
   class Archive
   {
     static private XmlDocument xml = new XmlDocument();
     static private string xmlFileName = "archive.xml";
     static private string sectionOthers = "/archive/others/";
-    static private string sectionFormPList = "/archive/formPList/";
+    static private string sectionFormPList = "/archive/formPList/";    
     static private string sectionGeneral = "/archive/general/";
 
     static public int volume;
@@ -27,13 +35,17 @@ namespace RPlayer
     static public int formPlistWidth;
     static public int formPlistHeight;
 
+    static public List<HistroyItem> histroy;
+
+    static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
+
     static public bool Load()
     {
       try
       {
         xml.Load(xmlFileName);
       }
-      catch(System.IO.FileNotFoundException)
+      catch (System.IO.FileNotFoundException)
       {
         return false;
       }
@@ -56,11 +68,27 @@ namespace RPlayer
       node = xml.SelectSingleNode(sectionFormPList + "width");
       formPlistWidth = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionFormPList + "height");
-      formPlistHeight = Convert.ToInt32(node.InnerText);
+      formPlistHeight = Convert.ToInt32(node.InnerText); 
 
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");
       lang = node.InnerText;
+
+      // histroy
+      histroy = new List<HistroyItem>();
+      node = xml.SelectSingleNode("/archive/histroy");
+      if(node != null)
+      {
+        for (int i = node.ChildNodes.Count - 1; i >= 0; i--)
+        {
+          XmlNode childNode = node.ChildNodes[i];
+          HistroyItem item = new HistroyItem();
+          item.url = childNode.InnerText;
+          item.timeWatched = Convert.ToDouble(childNode.Attributes["timeWatched"].InnerText);
+          item.duration = Convert.ToDouble(childNode.Attributes["duration"].InnerText);
+          histroy.Add(item);
+        }
+      }
       
 
       return true;
@@ -90,7 +118,30 @@ namespace RPlayer
 
       // general
       node = xml.SelectSingleNode(sectionGeneral + "lang");
-      node.InnerText = lang;      
+      node.InnerText = lang;
+
+      // histroy
+      node = xml.SelectSingleNode("/archive/histroy");
+      if(node != null)
+        xml.DocumentElement.RemoveChild(node);
+
+      XmlElement histroyElement = xml.CreateElement("histroy");
+      xml.DocumentElement.AppendChild(histroyElement);
+      for (int i = Archive.histroy.Count - 1; i >= 0; i--)
+      {
+        HistroyItem item = Archive.histroy[i];
+
+        XmlElement itemElement = xml.CreateElement("item");
+        itemElement.InnerText = item.url;
+        histroyElement.AppendChild(itemElement);
+
+        XmlAttribute attribute = xml.CreateAttribute("timeWatched");
+        attribute.Value = item.timeWatched.ToString();
+        itemElement.Attributes.Append(attribute);
+        attribute = xml.CreateAttribute("duration");
+        attribute.Value = item.duration.ToString();
+        itemElement.Attributes.Append(attribute);
+      }
 
       xml.Save(xmlFileName);
     }

@@ -28,16 +28,16 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("av1.avi");
-      System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("av1.avi");
+      System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -163,9 +163,9 @@
       this.listView_playlist.BackColor = System.Drawing.Color.DimGray;
       this.listView_playlist.ForeColor = System.Drawing.Color.White;
       this.listView_playlist.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem21,
-            listViewItem22,
-            listViewItem23});
+            listViewItem11,
+            listViewItem12,
+            listViewItem13});
       this.listView_playlist.Location = new System.Drawing.Point(10, 33);
       this.listView_playlist.Name = "listView_playlist";
       this.listView_playlist.Size = new System.Drawing.Size(149, 362);
@@ -178,14 +178,17 @@
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem24,
-            listViewItem25});
+            listViewItem14,
+            listViewItem15});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
       this.listView_histroy.TabIndex = 37;
       this.listView_histroy.UseCompatibleStateImageBehavior = false;
       this.listView_histroy.View = System.Windows.Forms.View.List;
+      this.listView_histroy.DoubleClick += new System.EventHandler(this.listView_histroy_DoubleClick);
+      this.listView_histroy.MouseLeave += new System.EventHandler(this.listView_histroy_MouseLeave);
+      this.listView_histroy.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listView_histroy_MouseMove);
       // 
       // FormPlaylist
       // 
@@ -207,11 +210,12 @@
       this.ForeColor = System.Drawing.Color.White;
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormPlaylist";
-      this.Opacity = 0.75D;
+      this.Opacity = 0.8D;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "FormPlaylist";
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormPlaylist_MouseDown);
+      this.MouseLeave += new System.EventHandler(this.FormPlaylist_MouseLeave);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormPlaylist_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormPlaylist_MouseUp);
       this.Resize += new System.EventHandler(this.FormPlaylist_Resize);

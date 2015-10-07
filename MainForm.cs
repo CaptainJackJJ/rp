@@ -51,6 +51,7 @@ namespace RPlayer
 
     private RpCallback m_rpCallback;
 
+    private double m_nFileDuration;
     private string m_strCurrentFileName;
     private string m_strCurrentDirectory;
     private string[] m_strFilesInCurrentDirectory;
@@ -58,8 +59,7 @@ namespace RPlayer
     private ContextMenuStrip m_contextMenuStrip_playWnd;
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
     private ToolStripMenuItem m_toolStripMenuItem_audios;
-    private ToolStripMenuItem m_toolStripMenuItem_chapters;
-    private Color m_ColorContextMenu = Color.FromArgb(255, 25, 25, 25);
+    private ToolStripMenuItem m_toolStripMenuItem_chapters;    
     private int m_nSubtitleAddItemIndex;
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
@@ -178,7 +178,7 @@ namespace RPlayer
     private void InitContextMenuStrip()
     {
       m_contextMenuStrip_playWnd = new ContextMenuStrip();
-      m_contextMenuStrip_playWnd.BackColor = m_ColorContextMenu;
+      m_contextMenuStrip_playWnd.BackColor = Archive.colorContextMenu;
       m_contextMenuStrip_playWnd.ForeColor = Color.White;
       m_contextMenuStrip_playWnd.Renderer = new CustomToolStripProfessionalRenderer();
       label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
@@ -198,61 +198,6 @@ namespace RPlayer
       m_toolStripMenuItem_chapters = new ToolStripMenuItem(); 
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_chapters);
       m_toolStripMenuItem_chapters.MouseEnter += toolStripMenuItem_chapters_MouseEnter;
-    }
-
-    private class CustomToolStripProfessionalRenderer : ToolStripProfessionalRenderer
-    {
-      public CustomToolStripProfessionalRenderer() : base(new CustomProfessionalColorTable()) { }
-    }
-
-    private class CustomProfessionalColorTable : ProfessionalColorTable
-    {
-      private Color m_color = Color.FromArgb(255, 70, 70, 70);
-      private Color m_backColor = Color.FromArgb(255, 25, 25, 25);
-      public override Color MenuItemSelected
-      {
-        get { return m_color; }
-      }
-      public override Color MenuItemBorder
-      {
-        get { return m_color; }
-      }
-      public override Color MenuBorder
-      {
-        get { return m_color; }
-      }
-      public override Color ToolStripDropDownBackground
-      {
-        get { return m_backColor; }
-      }
-      public override Color ButtonSelectedBorder
-      {
-        get { return m_color; }
-      }
-      public override Color CheckBackground
-      {
-        get { return m_color; }
-      }
-      public override Color CheckSelectedBackground
-      {
-        get { return m_color; }
-      }
-      public override Color ImageMarginGradientBegin
-      {
-        get { return m_backColor; }
-      }
-      public override Color ImageMarginGradientMiddle
-      {
-        get { return m_backColor; }
-      }
-      public override Color ImageMarginGradientEnd
-      {
-        get { return m_backColor; }
-      }
-      public override Color SeparatorDark
-      {
-        get { return m_color; }
-      }
     }
 
     // To mark selected items
@@ -936,7 +881,7 @@ namespace RPlayer
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
         SwitchFormMode(true);
-        StartPlay(openFileDialog1.FileName, 0);
+        StartPlay(openFileDialog1.FileName);
       }
     }
 
@@ -1031,12 +976,12 @@ namespace RPlayer
       if (RpCore.IsPlaying())
       {
         StopPlay();
-        StartPlay(FileList[0], 0);
+        StartPlay(FileList[0]);
       }
       else
       {
         SwitchFormMode(true);
-        StartPlay(FileList[0], 0);
+        StartPlay(FileList[0]);
       }
     }
 
@@ -1121,7 +1066,7 @@ namespace RPlayer
       }
 
       url = m_strFilesInCurrentDirectory[nNewPos];
-      return StartPlay(url, 0);
+      return StartPlay(url);
     }
 
     private void SubtitleItemClick(object sender, EventArgs e)
@@ -1162,7 +1107,7 @@ namespace RPlayer
           item.Text = System.IO.Path.GetFileName(uri.LocalPath);
           item.Tag = index;
           item.Click += SubtitleItemClick;
-          item.BackColor = m_ColorContextMenu;
+          item.BackColor = Archive.colorContextMenu;
           item.ForeColor = Color.White;
           m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
         }
@@ -1194,14 +1139,14 @@ namespace RPlayer
       ToolStripMenuItem item = new ToolStripMenuItem();
       item.Text = UiLang.contextMenuAddSubtitle;
       item.Click += AddSubtitleItemClick;
-      item.BackColor = m_ColorContextMenu;
+      item.BackColor = Archive.colorContextMenu;
       item.ForeColor = Color.White;
       m_nSubtitleAddItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
 
       item = new ToolStripMenuItem();
       item.Text = UiLang.contextMenuHideSubtitle;
       item.Click += HideSubtitleItemClick;
-      item.BackColor = m_ColorContextMenu;
+      item.BackColor = Archive.colorContextMenu;
       item.ForeColor = Color.White;
       m_nSubtitleHideItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
 
@@ -1224,7 +1169,7 @@ namespace RPlayer
           item.Text = info.language;
         item.Tag = i;
         item.Click += SubtitleItemClick;
-        item.BackColor = m_ColorContextMenu;
+        item.BackColor = Archive.colorContextMenu;
         item.ForeColor = Color.White;
         m_toolStripMenuItem_subtitles.DropDownItems.Add(item);
       }
@@ -1238,7 +1183,7 @@ namespace RPlayer
         item.Text = info.language + " " + info.name;
         item.Tag = i;
         item.Click += AudioItemClick;
-        item.BackColor = m_ColorContextMenu;
+        item.BackColor = Archive.colorContextMenu;
         item.ForeColor = Color.White;
         m_toolStripMenuItem_audios.DropDownItems.Add(item);
       }
@@ -1251,21 +1196,39 @@ namespace RPlayer
         item.Text = UiLang.contextMenuChapter + i.ToString();
         item.Tag = i;
         item.Click += ChapterItemClick;
-        item.BackColor = m_ColorContextMenu;
+        item.BackColor = Archive.colorContextMenu;
         item.ForeColor = Color.White;
         m_toolStripMenuItem_chapters.DropDownItems.Add(item);
       }
     }
 
-    private bool StartPlay(string url, double nStartTime)
+    public bool StartPlay(string url)
     {
+      if (RpCore.IsPlaying())
+        StopPlay();
+
       m_bStopPlayCalled = false;
+
+      
+      double nStartTime = 0;
+      for (int i = Archive.histroy.Count - 1; i >= 0; i--)
+      {
+        HistroyItem item = Archive.histroy[i];
+        if (item.url == url)
+        { 
+          nStartTime = item.timeWatched;
+          break;
+        }
+      }
+
       if (!RpCore.Play(url, nStartTime))
       {
         SwitchFormMode(false);
         return false;
       }
       m_formBottomBar.StartPlay();
+
+      m_nFileDuration = RpCore.GetTotalTime();
 
       Uri uri = new Uri(url);
       m_strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
@@ -1289,6 +1252,47 @@ namespace RPlayer
     {   
       if (m_bStopPlayCalled)
         return;
+
+      int index = -1;
+      string url = m_strCurrentDirectory + "\\" + m_strCurrentFileName;
+      HistroyItem item = new HistroyItem();
+      for (int i = Archive.histroy.Count - 1; i >= 0; i--)
+      {
+        item = Archive.histroy[i];
+        if (item.url == url)
+        {
+          index = i;
+          break;
+        }
+      }
+      double curTime;
+      if (!RpCore.IsPlaying()) // play ended not be stoped from ui.
+        curTime = 0;
+      else
+      {
+        curTime = RpCore.GetCurTime();
+        if (m_nFileDuration - curTime < 60) // Just left 1 minute, so still is finished playback
+          curTime = 0;
+      }
+      
+      if (index == -1) // url is not in histroy
+      {
+        HistroyItem newItem = new HistroyItem();
+        newItem.url = url;
+        newItem.timeWatched = curTime;
+        newItem.duration = m_nFileDuration;
+        Archive.histroy.Add(newItem);
+      }
+      else
+      {
+        item.timeWatched = curTime;
+        if (index != Archive.histroy.Count - 1) // url is in histroy, but not the last one
+        {
+          Archive.histroy.Remove(item);
+          Archive.histroy.Add(item);
+        }
+      }
+      
       if (m_bDesktop)
         SwitchDesktopMode();
       m_bStopPlayCalled = true;
@@ -1297,6 +1301,8 @@ namespace RPlayer
       ClearContextMenuDynamically();
 
       colorSlider_volume.Value = Archive.volume;
+
+      m_formPlaylist.UpdateListView();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
@@ -1324,7 +1330,7 @@ namespace RPlayer
             SwitchFormMode(false);
             break;
           case Archive.enumRepeatPlayback.one:
-            StartPlay(m_strCurrentDirectory + "\\" + m_strCurrentFileName, 0);
+            StartPlay(m_strCurrentDirectory + "\\" + m_strCurrentFileName);
             break;
           case Archive.enumRepeatPlayback.all:
             PlayPreNext(false);
@@ -1367,5 +1373,60 @@ namespace RPlayer
     }
     public override void OnHwDecodeFailed() { }
     public override void OnDecodeModeNotify(bool Hw) { }
+  }
+
+  public class CustomToolStripProfessionalRenderer : ToolStripProfessionalRenderer
+  {
+    public CustomToolStripProfessionalRenderer() : base(new CustomProfessionalColorTable()) { }
+  }
+
+  public class CustomProfessionalColorTable : ProfessionalColorTable
+  {
+    private Color m_color = Color.FromArgb(255, 70, 70, 70);
+    private Color m_backColor = Color.FromArgb(255, 25, 25, 25);
+    public override Color MenuItemSelected
+    {
+      get { return m_color; }
+    }
+    public override Color MenuItemBorder
+    {
+      get { return m_color; }
+    }
+    public override Color MenuBorder
+    {
+      get { return m_color; }
+    }
+    public override Color ToolStripDropDownBackground
+    {
+      get { return m_backColor; }
+    }
+    public override Color ButtonSelectedBorder
+    {
+      get { return m_color; }
+    }
+    public override Color CheckBackground
+    {
+      get { return m_color; }
+    }
+    public override Color CheckSelectedBackground
+    {
+      get { return m_color; }
+    }
+    public override Color ImageMarginGradientBegin
+    {
+      get { return m_backColor; }
+    }
+    public override Color ImageMarginGradientMiddle
+    {
+      get { return m_backColor; }
+    }
+    public override Color ImageMarginGradientEnd
+    {
+      get { return m_backColor; }
+    }
+    public override Color SeparatorDark
+    {
+      get { return m_color; }
+    }
   }
 }

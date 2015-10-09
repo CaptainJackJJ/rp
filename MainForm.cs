@@ -1031,10 +1031,14 @@ namespace RPlayer
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
 
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+        try
+        {
+          if (Archive.mute)
+            label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+          else
+            label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+        }
+        catch { }
 
         label_Play.Show();
         label_Volume.Show();

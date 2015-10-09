@@ -25,6 +25,7 @@ namespace RPlayer
     static public int volume;
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
+    static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
     static public string lang;
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
@@ -57,6 +58,15 @@ namespace RPlayer
       mute = Convert.ToBoolean(node.InnerText);
       node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
       plistShowingInNoneDesktop = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "mainFormLocX");
+      mainFormLocX = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "mainFormLocY");
+      mainFormLocY = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
+      mainFormWidth = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
+      mainFormHeight = Convert.ToInt32(node.InnerText);
+
 
       // formPList
       node = xml.SelectSingleNode(sectionFormPList + "repeat");
@@ -103,6 +113,14 @@ namespace RPlayer
       node.InnerText = mute.ToString();
       node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
       node.InnerText = plistShowingInNoneDesktop.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "mainFormLocX");
+      node.InnerText = mainFormLocX.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "mainFormLocY");
+      node.InnerText = mainFormLocY.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
+      node.InnerText = mainFormWidth.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
+      node.InnerText = mainFormHeight.ToString();
 
       // formPList
       node = xml.SelectSingleNode(sectionFormPList + "repeat");

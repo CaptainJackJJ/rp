@@ -69,6 +69,7 @@ namespace RPlayer
 
     public MainForm()
     {
+      Archive.Load(); 
       InitializeComponent();
 
       try
@@ -94,7 +95,6 @@ namespace RPlayer
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
       RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
 
-      Archive.Load();      
       UiLang.SetLang(Archive.lang);
 
       m_formBottomBar = new FormBottomBar(this);
@@ -137,6 +137,9 @@ namespace RPlayer
         m_formPlaylist.Show();
         ChangePlayWndSizeInNonDesktop();
       }
+
+      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
     }
 
     public void SetAllUiLange()
@@ -569,6 +572,12 @@ namespace RPlayer
         StopPlay();
       RpCore.UninitPlayer();
       RpCore.UnLoadLib();
+
+      Archive.mainFormLocX = this.Location.X;
+      Archive.mainFormLocY = this.Location.Y;
+      Archive.mainFormWidth = this.Width;
+      Archive.mainFormHeight = this.Height;
+
       Archive.Save();
       this.Close();
     }

@@ -1222,6 +1222,12 @@ namespace RPlayer
 
       m_bStopPlayCalled = false;
 
+      if (!File.Exists(url))
+      {
+        MessageBox.Show(UiLang.pathNotFound + url);
+        SwitchFormMode(false);
+        return false;
+      }
       
       double nStartTime = 0;
       for (int i = Archive.histroy.Count - 1; i >= 0; i--)

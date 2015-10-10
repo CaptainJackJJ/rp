@@ -12,6 +12,7 @@ namespace RPlayer
 
     // Common
     public static string delete;
+    public static string pathNotFound;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -71,6 +72,7 @@ namespace RPlayer
     private static void SetEnglish()
     {
       delete = "delete";
+      pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -110,6 +112,7 @@ namespace RPlayer
     private static void SetChinese()
     {
       delete = "删除";
+      pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";

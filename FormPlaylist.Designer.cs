@@ -28,16 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("av1.avi");
-      System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
-            "av2.mkv                                                                          " +
-                "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
       System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -48,8 +42,8 @@
       this.label_repeat = new System.Windows.Forms.Label();
       this.label_sortBy = new System.Windows.Forms.Label();
       this.comboBox_sort = new System.Windows.Forms.ComboBox();
-      this.listView_playlist = new System.Windows.Forms.ListView();
       this.listView_histroy = new System.Windows.Forms.ListView();
+      this.treeView_playlist = new System.Windows.Forms.TreeView();
       this.SuspendLayout();
       // 
       // label_TopEdge
@@ -158,28 +152,13 @@
       this.comboBox_sort.Size = new System.Drawing.Size(96, 20);
       this.comboBox_sort.TabIndex = 35;
       // 
-      // listView_playlist
-      // 
-      this.listView_playlist.BackColor = System.Drawing.Color.DimGray;
-      this.listView_playlist.ForeColor = System.Drawing.Color.White;
-      this.listView_playlist.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11,
-            listViewItem12,
-            listViewItem13});
-      this.listView_playlist.Location = new System.Drawing.Point(10, 33);
-      this.listView_playlist.Name = "listView_playlist";
-      this.listView_playlist.Size = new System.Drawing.Size(149, 362);
-      this.listView_playlist.TabIndex = 37;
-      this.listView_playlist.UseCompatibleStateImageBehavior = false;
-      this.listView_playlist.View = System.Windows.Forms.View.List;
-      // 
       // listView_histroy
       // 
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem14,
-            listViewItem15});
+            listViewItem13,
+            listViewItem14});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
@@ -190,14 +169,29 @@
       this.listView_histroy.MouseLeave += new System.EventHandler(this.listView_histroy_MouseLeave);
       this.listView_histroy.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listView_histroy_MouseMove);
       // 
+      // treeView_playlist
+      // 
+      this.treeView_playlist.BackColor = System.Drawing.Color.DimGray;
+      this.treeView_playlist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.treeView_playlist.ForeColor = System.Drawing.Color.White;
+      this.treeView_playlist.LineColor = System.Drawing.Color.White;
+      this.treeView_playlist.Location = new System.Drawing.Point(10, 33);
+      this.treeView_playlist.Name = "treeView_playlist";
+      this.treeView_playlist.ShowLines = false;
+      this.treeView_playlist.Size = new System.Drawing.Size(149, 362);
+      this.treeView_playlist.TabIndex = 0;
+      this.treeView_playlist.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterCollapse);
+      this.treeView_playlist.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterExpand);
+      this.treeView_playlist.DoubleClick += new System.EventHandler(this.treeView_playlist_DoubleClick);
+      // 
       // FormPlaylist
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.DimGray;
       this.ClientSize = new System.Drawing.Size(173, 454);
+      this.Controls.Add(this.treeView_playlist);
       this.Controls.Add(this.listView_histroy);
-      this.Controls.Add(this.listView_playlist);
       this.Controls.Add(this.comboBox_sort);
       this.Controls.Add(this.label_sortBy);
       this.Controls.Add(this.comboBox_repeat);
@@ -235,7 +229,7 @@
     private System.Windows.Forms.Label label_repeat;
     private System.Windows.Forms.Label label_sortBy;
     private System.Windows.Forms.ComboBox comboBox_sort;
-    private System.Windows.Forms.ListView listView_playlist;
     private System.Windows.Forms.ListView listView_histroy;
+    private System.Windows.Forms.TreeView treeView_playlist;
   }
 }

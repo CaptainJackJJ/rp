@@ -14,6 +14,26 @@ namespace RPlayer
     public double duration;
   }
 
+  public class PlaylistFile
+  {
+    public enum enumPlayState { notPlayed, played,finished}
+    public string url;
+    public string fileName;
+    public double timeWatched;
+    public enumPlayState playState;
+    public double duration;
+    public string createdDate;
+  }
+
+  public class PlaylistFolder
+  {    
+    public string url;
+    public string folderName;
+    public bool expand;
+    public string createdDate;
+    public List<PlaylistFile> playlistFiles;
+  }
+
   class Archive
   {
     static private XmlDocument xml = new XmlDocument();
@@ -26,10 +46,13 @@ namespace RPlayer
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
     static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
+    static public bool updatePlistAfterLaunch;
+    static public bool autoAddFolderToPlist;
+
     static public string lang;
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
-    public enum enumSortBy { addedTime, createdTime, fileName, fileSize}
+    public enum enumSortBy { createdDate, name, duration }
     static public enumSortBy sortBy;
     public enum enumSelectedPListBtn { playlist, histroy}
     static public enumSelectedPListBtn selectedPListBtn;
@@ -37,6 +60,8 @@ namespace RPlayer
     static public int formPlistHeight;
 
     static public List<HistroyItem> histroy;
+    static public List<PlaylistFolder> playlist;
+
 
     static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
 
@@ -66,6 +91,10 @@ namespace RPlayer
       mainFormWidth = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
       mainFormHeight = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "updatePlistAfterLaunch");
+      updatePlistAfterLaunch = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionOthers + "autoAddFolderToPlist");
+      autoAddFolderToPlist = Convert.ToBoolean(node.InnerText);
 
 
       // formPList
@@ -89,7 +118,8 @@ namespace RPlayer
       node = xml.SelectSingleNode("/archive/histroy");
       if(node != null)
       {
-        for (int i = node.ChildNodes.Count - 1; i >= 0; i--)
+        int count = node.ChildNodes.Count;
+        for (int i = count - 1; i >= 0; i--)
         {
           XmlNode childNode = node.ChildNodes[i];
           HistroyItem item = new HistroyItem();
@@ -99,7 +129,43 @@ namespace RPlayer
           histroy.Add(item);
         }
       }
-      
+
+      // playlist
+      playlist = new List<PlaylistFolder>();
+      node = xml.SelectSingleNode("/archive/playlist");
+      if (node != null)
+      {
+        int countFolders = node.ChildNodes.Count;
+        for (int i = 0; i < countFolders; i++)
+        {
+          XmlNode childFolderNode = node.ChildNodes[i];
+          PlaylistFolder folder = new PlaylistFolder();
+          folder.url = childFolderNode.Attributes["url"].InnerText;                
+          folder.folderName = childFolderNode.Attributes["folderName"].InnerText;
+          folder.expand = Convert.ToBoolean(childFolderNode.Attributes["expand"].InnerText); 
+          folder.createdDate = childFolderNode.Attributes["createdDate"].InnerText;
+
+          folder.playlistFiles = new List<PlaylistFile>();
+          int countFiles = childFolderNode.ChildNodes.Count;
+          
+          for (int j = 0; j < countFiles; j++)
+          {
+            XmlNode childFileNode = childFolderNode.ChildNodes[j];
+            PlaylistFile file = new PlaylistFile();
+            file.url = childFileNode.InnerText;
+            file.fileName = childFileNode.Attributes["fileName"].InnerText;
+            file.timeWatched = Convert.ToDouble(childFileNode.Attributes["timeWatched"].InnerText);
+            file.playState
+              = (PlaylistFile.enumPlayState)(Convert.ToInt32(childFileNode.Attributes["playState"].InnerText));
+            file.duration = Convert.ToDouble(childFileNode.Attributes["duration"].InnerText);
+            file.createdDate = childFileNode.Attributes["createdDate"].InnerText;
+
+            folder.playlistFiles.Add(file);
+          }
+
+          playlist.Add(folder);
+        }
+      }
 
       return true;
     }
@@ -121,6 +187,10 @@ namespace RPlayer
       node.InnerText = mainFormWidth.ToString();
       node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
       node.InnerText = mainFormHeight.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "updatePlistAfterLaunch");
+      node.InnerText = updatePlistAfterLaunch.ToString();
+      node = xml.SelectSingleNode(sectionOthers + "autoAddFolderToPlist");
+      node.InnerText = autoAddFolderToPlist.ToString();
 
       // formPList
       node = xml.SelectSingleNode(sectionFormPList + "repeat");
@@ -149,7 +219,7 @@ namespace RPlayer
       {
         HistroyItem item = Archive.histroy[i];
 
-        XmlElement itemElement = xml.CreateElement("item");
+        XmlElement itemElement = xml.CreateElement("file");
         itemElement.InnerText = item.url;
         histroyElement.AppendChild(itemElement);
 
@@ -159,6 +229,70 @@ namespace RPlayer
         attribute = xml.CreateAttribute("duration");
         attribute.Value = item.duration.ToString();
         itemElement.Attributes.Append(attribute);
+      }
+
+      // playlist
+      node = xml.SelectSingleNode("/archive/playlist");
+      if (node != null)
+        xml.DocumentElement.RemoveChild(node);
+
+      XmlElement playlistElement = xml.CreateElement("playlist");
+      xml.DocumentElement.AppendChild(playlistElement);
+      int countFolder = playlist.Count;
+      for (int i = 0; i < countFolder; i++)
+      {
+        PlaylistFolder folder = playlist[i];
+
+        XmlElement folderElement = xml.CreateElement("folder");
+
+        XmlAttribute attributeFolder = xml.CreateAttribute("url");
+        attributeFolder.Value = folder.url;
+        folderElement.Attributes.Append(attributeFolder);
+
+        attributeFolder = xml.CreateAttribute("expand");
+        attributeFolder.Value = folder.expand.ToString();
+        folderElement.Attributes.Append(attributeFolder);
+
+        attributeFolder = xml.CreateAttribute("folderName");
+        attributeFolder.Value = folder.folderName;
+        folderElement.Attributes.Append(attributeFolder);
+
+        attributeFolder = xml.CreateAttribute("createdDate");
+        attributeFolder.Value = folder.createdDate;
+        folderElement.Attributes.Append(attributeFolder);
+
+        playlistElement.AppendChild(folderElement);
+
+        int countFile = folder.playlistFiles.Count;
+        for (int j = 0; j < countFile; j++)
+        {
+          PlaylistFile file = folder.playlistFiles[j];
+
+          XmlElement fileElement = xml.CreateElement("file");
+          fileElement.InnerText = file.url;
+
+          XmlAttribute attributeFile = xml.CreateAttribute("fileName");
+          attributeFile.Value = file.fileName;
+          fileElement.Attributes.Append(attributeFile);
+
+          attributeFile = xml.CreateAttribute("timeWatched");
+          attributeFile.Value = file.timeWatched.ToString();
+          fileElement.Attributes.Append(attributeFile);
+
+          attributeFile = xml.CreateAttribute("playState");
+          attributeFile.Value = ((int)(file.playState)).ToString();
+          fileElement.Attributes.Append(attributeFile);
+
+          attributeFile = xml.CreateAttribute("duration");
+          attributeFile.Value = file.duration.ToString();
+          fileElement.Attributes.Append(attributeFile);
+
+          attributeFile = xml.CreateAttribute("createdDate");
+          attributeFile.Value = file.createdDate;
+          fileElement.Attributes.Append(attributeFile);
+
+          folderElement.AppendChild(fileElement);
+        }
       }
 
       xml.Save(xmlFileName);

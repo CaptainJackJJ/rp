@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using WMPLib;
 
 namespace RPlayer
 {
@@ -20,6 +22,8 @@ namespace RPlayer
     private ListViewItem m_viewItemFocusingHistroy;
     private ContextMenuStrip m_contextMenuStrip_histroy;
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
+    private bool m_bFirstShowHistroy = true;
+    private bool m_bFirstShowPlaylist = true;
     
     public FormPlaylist(MainForm mainForm)
     {
@@ -71,7 +75,7 @@ namespace RPlayer
       Size listViewSize = 
         new Size(this.Width - nEdgeMargin * 2, 
           this.Height - nEdgeMargin * 4 - nBtnHeight - nComboBoxHeight * 2);
-      listView_playlist.Size = listViewSize;
+      treeView_playlist.Size = listViewSize;
       listView_histroy.Size = listViewSize;
       int nRepeatY = this.Height - nEdgeMargin * 2 - nComboBoxHeight * 2;
       label_repeat.Location = new Point(label_repeat.Location.X, nRepeatY + 3);
@@ -85,8 +89,207 @@ namespace RPlayer
     {
       this.Size = new Size(Archive.formPlistWidth, Archive.formPlistHeight);
       SwitchListView(Archive.selectedPListBtn);
+    }
 
-      UpdateListView();
+    private void UpdatePlayList(bool bAllFloder, string folderUrl)
+    {
+      List<PlaylistFolder> deleteFolders = new List<PlaylistFolder>();
+      foreach(PlaylistFolder folder in Archive.playlist)
+      {
+        if(!bAllFloder)
+        {
+          if (folder.url != folderUrl)
+            continue;
+        }
+
+        if (!Directory.Exists(folder.url))
+        {
+          if(bAllFloder)
+          {
+            deleteFolders.Add(folder);
+            continue;
+          }
+          else
+          {
+            MessageBox.Show(UiLang.pathNotFound + folder.url);
+            return;
+          }
+        }
+         
+        string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
+        string[] strFilesInCurrentDirectory
+          = strFilters.Split('|').SelectMany(filter =>
+            Directory.GetFiles(folder.url, filter, SearchOption.TopDirectoryOnly)
+            ).ToArray();
+
+        List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
+        List<string> addFiles = strFilesInCurrentDirectory.ToList();
+
+        foreach (PlaylistFile file in folder.playlistFiles)
+        {
+          int index = addFiles.IndexOf(file.url);
+          if(index != -1)
+          {
+            addFiles.RemoveAt(index);
+          }
+          else
+          {
+            deleteFiles.Add(file);
+          }
+        }
+
+        foreach(PlaylistFile file in deleteFiles)
+        {
+          folder.playlistFiles.Remove(file);
+        }
+
+        if (addFiles.Count > 0)
+          AddPlaylist(folder.url, addFiles);
+
+        if (!bAllFloder)
+        {
+          UpdatePlayListView(false, folderUrl);
+          break;
+        }
+      }
+      if (bAllFloder)
+      {
+        foreach (PlaylistFolder folder in deleteFolders)
+        {
+          Archive.playlist.Remove(folder);
+        }
+
+        UpdatePlayListView(true, "");
+      }
+    }
+
+    public PlaylistFolder AddPlaylist(string folderUrl,List<string> addFiles)
+    {
+      PlaylistFolder folder = null;
+      foreach (PlaylistFolder folderItem in Archive.playlist)
+      {
+        if (folderItem.url == folderUrl) 
+        {
+          folder = folderItem;
+          break;
+        }
+      }
+
+      if (folder == null)
+      {
+        folder = new PlaylistFolder();
+        folder.url = folderUrl;        
+        DirectoryInfo dir = new DirectoryInfo(folderUrl);
+        folder.folderName = dir.Name;
+        folder.expand = true;
+        folder.createdDate = dir.CreationTime.ToString();
+        folder.playlistFiles = new List<PlaylistFile>();
+        Archive.playlist.Add(folder);
+
+        Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
+        {
+          switch (Archive.sortBy)
+          {
+            case Archive.enumSortBy.createdDate:
+              return folder1.createdDate.CompareTo(folder2.createdDate);
+            case Archive.enumSortBy.name:
+              return folder1.folderName.CompareTo(folder2.folderName);
+            default:
+              return 0;
+          }
+        });
+      }
+
+      foreach (string fileUrl in addFiles)
+      {
+        PlaylistFile file = new PlaylistFile();
+        file.url = fileUrl;
+        Uri uri = new Uri(fileUrl);
+        file.fileName = System.IO.Path.GetFileName(uri.LocalPath);
+        file.timeWatched = 0;
+        file.playState = PlaylistFile.enumPlayState.notPlayed;
+        //var player = new WindowsMediaPlayer();
+        //var clip = player.newMedia(fileUrl);
+        //file.duration = clip.duration;
+        file.duration = 2000;
+        file.createdDate = File.GetCreationTime(fileUrl).ToString();
+        folder.playlistFiles.Add(file);
+      }
+      folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
+      {
+        switch (Archive.sortBy)
+        {
+          case Archive.enumSortBy.createdDate:
+            return file1.createdDate.CompareTo(file2.createdDate);
+          case Archive.enumSortBy.name:
+            return file1.fileName.CompareTo(file2.fileName);
+          default:
+            return 0;
+        }
+      });
+      return folder;
+    }
+
+    public void UpdatePlayListView(bool bAllFloder, string folderUrl)
+    {
+      Cursor.Current = Cursors.WaitCursor;
+      treeView_playlist.BeginUpdate();
+
+      if (bAllFloder)
+        treeView_playlist.Nodes.Clear();
+
+      foreach(PlaylistFolder folder in Archive.playlist)
+      {
+        TreeNode folderNode = null;
+        if (!bAllFloder)
+        {
+          if(folder.url != folderUrl)
+            continue;
+          foreach(TreeNode node in treeView_playlist.Nodes)
+          {
+            if (((PlaylistFolder)(node.Tag)).url == folderUrl)
+            {
+              folderNode = node;
+              folderNode.Nodes.Clear();
+              break;
+            }
+          }
+        }
+
+        if (folderNode == null)
+        {
+          folderNode = new TreeNode();
+          folderNode.Text = folder.folderName;
+          folderNode.Tag = folder;
+          treeView_playlist.Nodes.Add(folderNode);
+        }
+
+        foreach(PlaylistFile file in folder.playlistFiles)
+        {
+          TreeNode fileNode = new TreeNode();
+          fileNode.Text = file.fileName;
+          fileNode.Tag = file;
+          switch(file.playState)
+          {
+            case PlaylistFile.enumPlayState.finished:
+              fileNode.ForeColor = Color.RosyBrown;
+              break;
+            case PlaylistFile.enumPlayState.played:
+              fileNode.ForeColor = Color.DodgerBlue;
+              break;
+          }
+          folderNode.Nodes.Add(fileNode);
+        }
+
+        if (folder.expand)
+          folderNode.Expand();
+
+        if (!bAllFloder)
+          break;
+      }
+
+      Cursor.Current = Cursors.Arrow;
+      treeView_playlist.EndUpdate();
     }
 
     public void  UpdateListViewHistroy()
@@ -101,13 +304,10 @@ namespace RPlayer
         listItem.Tag = item;
         if ((int)item.timeWatched != 0)
           listItem.ForeColor = Color.DodgerBlue;
+        else
+          listItem.ForeColor = Color.RosyBrown;
         listView_histroy.Items.Add(listItem);
       }
-    }
-
-    public void UpdateListView()
-    {
-      UpdateListViewHistroy();
     }
 
     private void SwitchListView(Archive.enumSelectedPListBtn selectedBtn)
@@ -118,15 +318,28 @@ namespace RPlayer
           button_histroy.BackColor = Color.DimGray;
           button_playlist.BackColor = Color.DodgerBlue;
           listView_histroy.Hide();
-          listView_playlist.Show();
+          treeView_playlist.Show();
           Archive.selectedPListBtn = Archive.enumSelectedPListBtn.playlist;
+          if (m_bFirstShowPlaylist)
+          {
+            if (Archive.updatePlistAfterLaunch)
+              UpdatePlayList(true, "");
+            else
+              UpdatePlayListView(true, "");
+            m_bFirstShowPlaylist = false;
+          }
           break;
         case Archive.enumSelectedPListBtn.histroy:
           button_histroy.BackColor = Color.DodgerBlue;
           button_playlist.BackColor = Color.DimGray;
           listView_histroy.Show();
-          listView_playlist.Hide();
+          treeView_playlist.Hide();
           Archive.selectedPListBtn = Archive.enumSelectedPListBtn.histroy;
+          if (m_bFirstShowHistroy)
+          {
+            UpdateListViewHistroy();
+            m_bFirstShowHistroy = false;
+          }
           break;
       }
     }
@@ -152,10 +365,9 @@ namespace RPlayer
 
       label_sortBy.Text = UiLang.labelSortBy;
       comboBox_sort.Items.Clear();
-      comboBox_sort.Items.Add(UiLang.ComboBoxSortByAddedTime);
       comboBox_sort.Items.Add(UiLang.ComboBoxSortByCreatedTime);
       comboBox_sort.Items.Add(UiLang.ComboBoxSortByFileName);
-      comboBox_sort.Items.Add(UiLang.ComboBoxSortByFileSize);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByDuration);
       comboBox_sort.SelectedIndex = (int)Archive.sortBy;
       comboBox_sort.SelectedIndexChanged += comboBox_comboBox_sort_SelectedIndexChanged;
     }
@@ -265,10 +477,28 @@ namespace RPlayer
       if(viewItems.Count != 0)
       {
         HistroyItem item = viewItems[0].Tag as HistroyItem;
-        m_mainForm.SwitchFormMode(true);
         m_mainForm.StartPlay(item.url);
       }
 
+    }
+
+    private void treeView_playlist_AfterExpand(object sender, TreeViewEventArgs e)
+    {
+      ((PlaylistFolder)(e.Node.Tag)).expand = e.Node.IsExpanded;
+    }
+
+    private void treeView_playlist_AfterCollapse(object sender, TreeViewEventArgs e)
+    {
+      ((PlaylistFolder)(e.Node.Tag)).expand = e.Node.IsExpanded;
+    }
+
+    private void treeView_playlist_DoubleClick(object sender, EventArgs e)
+    {
+      TreeNode node = treeView_playlist.SelectedNode;
+      if (node.Parent == null)
+        return;
+      PlaylistFile file = (PlaylistFile)node.Tag;
+      m_mainForm.StartPlay(file.url);
     }
   }
 }

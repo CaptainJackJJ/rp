@@ -24,6 +24,8 @@ namespace RPlayer
         private void ConfigByArchive()
         {
           ConfigComboBoxUiLang();
+          checkBox_updatePlistAfterLaunch.Checked = Archive.updatePlistAfterLaunch;
+          checkBox_addPlayingFolderToPlist.Checked = Archive.autoAddFolderToPlist;
         }
 
         private void ConfigComboBoxUiLang()
@@ -48,7 +50,19 @@ namespace RPlayer
 
         private void SetUiLange()
         {
-          label_uiLang.Text = UiLang.uiLangLabel;          
+          label_uiLang.Text = UiLang.uiLangLabel;
+          checkBox_updatePlistAfterLaunch.Text = UiLang.checkBoxUpdatePlistAfterLaunch;
+          checkBox_addPlayingFolderToPlist.Text = UiLang.checkBoxAutoAddFolderToPlist;
+        }
+
+        private void checkBox_updatePlistAfterLaunch_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.updatePlistAfterLaunch = checkBox_updatePlistAfterLaunch.Checked;
+        }
+
+        private void checkBox_addPlayingFolderToPlist_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.autoAddFolderToPlist = checkBox_addPlayingFolderToPlist.Checked;
         }
 
 

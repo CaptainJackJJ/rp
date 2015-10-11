@@ -52,9 +52,9 @@ namespace RPlayer
     private RpCallback m_rpCallback;
 
     private double m_nFileDuration;
-    private string m_strCurrentFileName;
-    private string m_strCurrentDirectory;
-    private string[] m_strFilesInCurrentDirectory;
+    private PlaylistFolder m_curPlistFolder;
+    private PlaylistFile m_curPlistFile;
+    private string m_strCurPlayingUrl;
 
     private ContextMenuStrip m_contextMenuStrip_playWnd;
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
@@ -66,6 +66,7 @@ namespace RPlayer
     private bool m_bSubtitleVisible = true;
 
     private bool m_bStopPlayCalled = true;
+    private bool m_bPlayingForm = false;
 
     public MainForm()
     {
@@ -889,7 +890,6 @@ namespace RPlayer
 
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
-        SwitchFormMode(true);
         StartPlay(openFileDialog1.FileName);
       }
     }
@@ -989,7 +989,6 @@ namespace RPlayer
       }
       else
       {
-        SwitchFormMode(true);
         StartPlay(FileList[0]);
       }
     }
@@ -1024,9 +1023,12 @@ namespace RPlayer
         = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
     }
 
-    public void SwitchFormMode(bool bPlayingMode)
+    public void SwitchPlayingForm(bool bPlaying)
     {
-      if (bPlayingMode)
+      if(bPlaying == m_bPlayingForm)
+        return;
+      m_bPlayingForm = bPlaying;
+      if (m_bPlayingForm)
       {
         label_Play.Hide();
         label_Volume.Hide();
@@ -1059,27 +1061,28 @@ namespace RPlayer
     {
       StopPlay();
 
-      string url = m_strCurrentDirectory + "\\" + m_strCurrentFileName;
-      int nCurrentPos = Array.IndexOf(m_strFilesInCurrentDirectory,
-        url);
-
-      int count = m_strFilesInCurrentDirectory.Length;
-      int nNewPos;
-      if(bPre)
-      {        
-        nNewPos = nCurrentPos - 1;
-        if (nNewPos < 0)
-          nNewPos = count - 1;
-      }
-      else
+      if (m_curPlistFolder != null)
       {
-        nNewPos = nCurrentPos + 1;
-        if (count == 1 || nNewPos == count)
-          nNewPos = 0;
+        int index = m_curPlistFolder.playlistFiles.IndexOf(m_curPlistFile);
+        if(index != -1 )
+        {
+          if (bPre)
+            index--;
+          else
+            index++;
+          if(index < m_curPlistFolder.playlistFiles.Count && index > -1)
+          {
+            return StartPlay(m_curPlistFolder.playlistFiles[index].url);
+          }
+        }
       }
 
-      url = m_strFilesInCurrentDirectory[nNewPos];
-      return StartPlay(url);
+      SwitchPlayingForm(false);
+      if (bPre)
+        MessageBox.Show(UiLang.noPreFileInPlist);
+      else
+        MessageBox.Show(UiLang.noNextFileInPlist);
+      return false;
     }
 
     private void SubtitleItemClick(object sender, EventArgs e)
@@ -1217,15 +1220,20 @@ namespace RPlayer
 
     public bool StartPlay(string url)
     {
+      SwitchPlayingForm(true);
+
       if (RpCore.IsPlaying())
         StopPlay();
+
+      m_curPlistFolder = null;
+      m_curPlistFile = null;
 
       m_bStopPlayCalled = false;
 
       if (!File.Exists(url))
       {
         MessageBox.Show(UiLang.pathNotFound + url);
-        SwitchFormMode(false);
+        SwitchPlayingForm(false);
         return false;
       }
       
@@ -1242,25 +1250,60 @@ namespace RPlayer
 
       if (!RpCore.Play(url, nStartTime))
       {
-        SwitchFormMode(false);
+        SwitchPlayingForm(false);
         return false;
       }
+      m_strCurPlayingUrl = url;
       m_formBottomBar.StartPlay();
 
       m_nFileDuration = RpCore.GetTotalTime();
 
       Uri uri = new Uri(url);
-      m_strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
-      m_strCurrentDirectory = System.IO.Path.GetDirectoryName(uri.LocalPath);
+      string strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
+      string strCurrentFolder = System.IO.Path.GetDirectoryName(uri.LocalPath);
 
-      m_formTopBar.setFileName(m_strCurrentFileName);
+      m_formTopBar.setFileName(strCurrentFileName);
 
       string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
 
-      m_strFilesInCurrentDirectory
+      string[] strFilesInCurrentDirectory
         = strFilters.Split('|').SelectMany(filter =>
-          Directory.GetFiles(m_strCurrentDirectory, filter, SearchOption.TopDirectoryOnly)
+          Directory.GetFiles(strCurrentFolder, filter, SearchOption.TopDirectoryOnly)
           ).ToArray();
+
+      if (Archive.autoAddFolderToPlist)
+      {
+        foreach (PlaylistFolder folder in Archive.playlist)
+        {
+          if (folder.url == strCurrentFolder)
+          {
+            m_curPlistFolder = folder;
+            foreach(PlaylistFile file in folder.playlistFiles)
+            {
+              if(file.url == url)
+              {
+                m_curPlistFile = file;
+                break;
+              }
+            }
+          }
+        }
+
+        if (m_curPlistFile == null)
+        {
+          m_curPlistFolder = m_formPlaylist.AddPlaylist(strCurrentFolder, strFilesInCurrentDirectory.ToList());
+          foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
+          {
+            if (file.url == url)
+            {
+              m_curPlistFile = file;
+              break;
+            }
+          }
+
+          m_formPlaylist.UpdatePlayListView(false, strCurrentFolder);
+        }
+      }
 
       FillContextMenuDynamically();
 
@@ -1273,45 +1316,55 @@ namespace RPlayer
         return;
 
       int index = -1;
-      string url = m_strCurrentDirectory + "\\" + m_strCurrentFileName;
       HistroyItem item = new HistroyItem();
       for (int i = Archive.histroy.Count - 1; i >= 0; i--)
       {
         item = Archive.histroy[i];
-        if (item.url == url)
+        if (item.url == m_strCurPlayingUrl)
         {
           index = i;
           break;
         }
       }
-      double curTime;
+      double curPlayingTime;
       if (!RpCore.IsPlaying()) // play ended not be stoped from ui.
-        curTime = 0;
+        curPlayingTime = 0;
       else
       {
-        curTime = RpCore.GetCurTime();
-        if (m_nFileDuration - curTime < 60) // Just left 1 minute, so still is finished playback
-          curTime = 0;
+        curPlayingTime = RpCore.GetCurTime();
+        if (m_nFileDuration - curPlayingTime < 60) // Just left 1 minute, so still is finished playback
+          curPlayingTime = 0;
       }
       
       if (index == -1) // url is not in histroy
       {
         HistroyItem newItem = new HistroyItem();
-        newItem.url = url;
-        newItem.timeWatched = curTime;
+        newItem.url = m_strCurPlayingUrl;
+        newItem.timeWatched = curPlayingTime;
         newItem.duration = m_nFileDuration;
         Archive.histroy.Add(newItem);
       }
       else
       {
-        item.timeWatched = curTime;
+        item.timeWatched = curPlayingTime;
         if (index != Archive.histroy.Count - 1) // url is in histroy, but not the last one
         {
           Archive.histroy.Remove(item);
           Archive.histroy.Add(item);
         }
       }
-      
+
+      PlaylistFile.enumPlayState playState;
+      if (curPlayingTime == 0)
+        playState = PlaylistFile.enumPlayState.finished;
+      else
+        playState = PlaylistFile.enumPlayState.played;
+      if(playState != m_curPlistFile.playState)
+      {
+        m_curPlistFile.playState = playState;
+        m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
+      }
+
       if (m_bDesktop)
         SwitchDesktopMode();
       m_bStopPlayCalled = true;
@@ -1321,7 +1374,7 @@ namespace RPlayer
 
       colorSlider_volume.Value = Archive.volume;
 
-      m_formPlaylist.UpdateListView();
+      m_formPlaylist.UpdateListViewHistroy();
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
@@ -1346,10 +1399,10 @@ namespace RPlayer
         switch (Archive.repeatPlayback)
         {
           case Archive.enumRepeatPlayback.none:
-            SwitchFormMode(false);
+            SwitchPlayingForm(false);
             break;
           case Archive.enumRepeatPlayback.one:
-            StartPlay(m_strCurrentDirectory + "\\" + m_strCurrentFileName);
+            StartPlay(m_strCurPlayingUrl);
             break;
           case Archive.enumRepeatPlayback.all:
             PlayPreNext(false);

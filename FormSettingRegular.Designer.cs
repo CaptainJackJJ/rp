@@ -30,6 +30,8 @@
         {
       this.label_uiLang = new System.Windows.Forms.Label();
       this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
+      this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
+      this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // label_uiLang
@@ -55,12 +57,42 @@
       this.comboBox_uiLang.Size = new System.Drawing.Size(130, 20);
       this.comboBox_uiLang.TabIndex = 1;
       // 
+      // checkBox_updatePlistAfterLaunch
+      // 
+      this.checkBox_updatePlistAfterLaunch.AutoSize = true;
+      this.checkBox_updatePlistAfterLaunch.Checked = true;
+      this.checkBox_updatePlistAfterLaunch.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_updatePlistAfterLaunch.ForeColor = System.Drawing.Color.White;
+      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(32, 64);
+      this.checkBox_updatePlistAfterLaunch.Name = "checkBox_updatePlistAfterLaunch";
+      this.checkBox_updatePlistAfterLaunch.Size = new System.Drawing.Size(264, 16);
+      this.checkBox_updatePlistAfterLaunch.TabIndex = 2;
+      this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
+      this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
+      this.checkBox_updatePlistAfterLaunch.CheckedChanged += new System.EventHandler(this.checkBox_updatePlistAfterLaunch_CheckedChanged);
+      // 
+      // checkBox_addPlayingFolderToPlist
+      // 
+      this.checkBox_addPlayingFolderToPlist.AutoSize = true;
+      this.checkBox_addPlayingFolderToPlist.Checked = true;
+      this.checkBox_addPlayingFolderToPlist.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_addPlayingFolderToPlist.ForeColor = System.Drawing.Color.White;
+      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(32, 98);
+      this.checkBox_addPlayingFolderToPlist.Name = "checkBox_addPlayingFolderToPlist";
+      this.checkBox_addPlayingFolderToPlist.Size = new System.Drawing.Size(234, 16);
+      this.checkBox_addPlayingFolderToPlist.TabIndex = 2;
+      this.checkBox_addPlayingFolderToPlist.Text = "Auto add playing folder to playlist";
+      this.checkBox_addPlayingFolderToPlist.UseVisualStyleBackColor = true;
+      this.checkBox_addPlayingFolderToPlist.CheckedChanged += new System.EventHandler(this.checkBox_addPlayingFolderToPlist_CheckedChanged);
+      // 
       // FormSettingRegular
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(425, 467);
+      this.Controls.Add(this.checkBox_addPlayingFolderToPlist);
+      this.Controls.Add(this.checkBox_updatePlistAfterLaunch);
       this.Controls.Add(this.comboBox_uiLang);
       this.Controls.Add(this.label_uiLang);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -75,5 +107,7 @@
 
         private System.Windows.Forms.Label label_uiLang;
         private System.Windows.Forms.ComboBox comboBox_uiLang;
+        private System.Windows.Forms.CheckBox checkBox_updatePlistAfterLaunch;
+        private System.Windows.Forms.CheckBox checkBox_addPlayingFolderToPlist;
     }
 }

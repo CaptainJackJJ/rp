@@ -13,6 +13,8 @@ namespace RPlayer
     // Common
     public static string delete;
     public static string pathNotFound;
+    public static string noPreFileInPlist;
+    public static string noNextFileInPlist;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -30,6 +32,8 @@ namespace RPlayer
 
     // FormRegular
     public static string uiLangLabel;
+    public static string checkBoxUpdatePlistAfterLaunch;
+    public static string checkBoxAutoAddFolderToPlist;
 
 
     // FormBottomBar
@@ -43,10 +47,9 @@ namespace RPlayer
     public static string ComboBoxRepeatOne;
     public static string ComboBoxRepeatAll;
     public static string labelSortBy;
-    public static string ComboBoxSortByAddedTime;
     public static string ComboBoxSortByCreatedTime;
     public static string ComboBoxSortByFileName;
-    public static string ComboBoxSortByFileSize;
+    public static string ComboBoxSortByDuration;
     public static string messageToSelectItem;
 
     // FormPlaylistDetails
@@ -73,6 +76,8 @@ namespace RPlayer
     {
       delete = "delete";
       pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
+      noPreFileInPlist = "No previous file in playlist";
+      noNextFileInPlist = "No next file in playlist";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -87,6 +92,8 @@ namespace RPlayer
       labelAV = "AudioVideo";
 
       uiLangLabel = "UI Language";
+      checkBoxUpdatePlistAfterLaunch = "Auto update playlist after player launch";
+      checkBoxAutoAddFolderToPlist = "Auto add playing folder to playlist";
 
       btnPlaylist = "Playlist";
       btnHistory = "Histroy";
@@ -95,10 +102,9 @@ namespace RPlayer
       ComboBoxRepeatOne = "Repeat One";
       ComboBoxRepeatAll = "Repeat All";
       labelSortBy = "Sort By";
-      ComboBoxSortByAddedTime = "Added Time";
       ComboBoxSortByCreatedTime = "Created Time";
       ComboBoxSortByFileName = "File Name";
-      ComboBoxSortByFileSize = "File Size";
+      ComboBoxSortByDuration = "Duration";
       messageToSelectItem = "Please select the item that you want to delete first";
 
       labelHistroyDetailsTimeWatched = "Time Watched:";
@@ -113,6 +119,8 @@ namespace RPlayer
     {
       delete = "删除";
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
+      noPreFileInPlist = "播放列表中没有上一个文件";
+      noNextFileInPlist = "播放列表中没有下一个文件";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";
@@ -127,6 +135,8 @@ namespace RPlayer
       labelAV = "音视频";
 
       uiLangLabel = "界面语言";
+      checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
+      checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";
 
       btnPlaylist = "播放列表";
       btnHistory = "播放历史";
@@ -135,10 +145,9 @@ namespace RPlayer
       ComboBoxRepeatOne = "单个循环";
       ComboBoxRepeatAll = "列表循环";
       labelSortBy = "排序按";
-      ComboBoxSortByAddedTime = "添加时间";
       ComboBoxSortByCreatedTime = "创建时间";
       ComboBoxSortByFileName = "文件名称";
-      ComboBoxSortByFileSize = "文件大小";
+      ComboBoxSortByDuration = "时长";
       messageToSelectItem = "请先选择要删除的项";
 
       labelHistroyDetailsTimeWatched = "上次看到:";

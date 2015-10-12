@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using WMPLib;
+using RpCoreWrapper;
 
 namespace RPlayer
 {
@@ -208,10 +208,9 @@ namespace RPlayer
         file.fileName = System.IO.Path.GetFileName(uri.LocalPath);
         file.timeWatched = 0;
         file.playState = PlaylistFile.enumPlayState.notPlayed;
-        //var player = new WindowsMediaPlayer();
-        //var clip = player.newMedia(fileUrl);
-        //file.duration = clip.duration;
-        file.duration = 2000;
+        MediaInfo info = new MediaInfo();
+        info = RpCore.GetMediaInfo(fileUrl);
+        file.duration = info.nDuration;
         file.createdDate = File.GetCreationTime(fileUrl).ToString();
         folder.playlistFiles.Add(file);
       }

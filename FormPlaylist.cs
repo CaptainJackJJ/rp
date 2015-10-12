@@ -19,6 +19,7 @@ namespace RPlayer
     private const int nEdgeMargin = 10;
     private const int m_nMinWidth = 170;
     private FormHistroyDetails m_formHistroyDetails;
+    private FormPlistFileDetails m_formPlistFileDetails;
     private ListViewItem m_viewItemFocusingHistroy;
     private ContextMenuStrip m_contextMenuStrip_histroy;
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
@@ -33,6 +34,8 @@ namespace RPlayer
       SetUiLange();
       m_formHistroyDetails = new FormHistroyDetails();
       this.AddOwnedForm(m_formHistroyDetails);
+      m_formPlistFileDetails = new FormPlistFileDetails();
+      this.AddOwnedForm(m_formPlistFileDetails);
       InitContextMenuStrip();
     }
 
@@ -182,7 +185,7 @@ namespace RPlayer
         DirectoryInfo dir = new DirectoryInfo(folderUrl);
         folder.folderName = dir.Name;
         folder.expand = true;
-        folder.createdDate = dir.CreationTime.ToString();
+        folder.creationTime = dir.CreationTime.ToString();
         folder.playlistFiles = new List<PlaylistFile>();
         Archive.playlist.Add(folder);
 
@@ -190,8 +193,8 @@ namespace RPlayer
         {
           switch (Archive.sortBy)
           {
-            case Archive.enumSortBy.createdDate:
-              return folder1.createdDate.CompareTo(folder2.createdDate);
+            case Archive.enumSortBy.creationTime:
+              return folder1.creationTime.CompareTo(folder2.creationTime);
             case Archive.enumSortBy.name:
               return folder1.folderName.CompareTo(folder2.folderName);
             default:
@@ -211,15 +214,15 @@ namespace RPlayer
         MediaInfo info = new MediaInfo();
         info = RpCore.GetMediaInfo(fileUrl);
         file.duration = info.nDuration;
-        file.createdDate = File.GetCreationTime(fileUrl).ToString();
+        file.creationTime = File.GetCreationTime(fileUrl).ToString();
         folder.playlistFiles.Add(file);
       }
       folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
       {
         switch (Archive.sortBy)
         {
-          case Archive.enumSortBy.createdDate:
-            return file1.createdDate.CompareTo(file2.createdDate);
+          case Archive.enumSortBy.creationTime:
+            return file1.creationTime.CompareTo(file2.creationTime);
           case Archive.enumSortBy.name:
             return file1.fileName.CompareTo(file2.fileName);
           default:
@@ -347,6 +350,7 @@ namespace RPlayer
     {
       SetUiLange();
       m_formHistroyDetails.SetAllUiLange();
+      m_formPlistFileDetails.SetAllUiLange();
     }
 
     private void SetUiLange()
@@ -447,7 +451,7 @@ namespace RPlayer
         TimeSpan t = TimeSpan.FromSeconds(item.duration);
         string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
                       t.Hours, t.Minutes, t.Seconds);
-        string strTimeWatched = UiLang.labelHistroyDetailsFinished;
+        string strTimeWatched = UiLang.labelDetailsFinished;
         if ((int)item.timeWatched != 0)
         {
           t = TimeSpan.FromSeconds(item.timeWatched);
@@ -498,6 +502,54 @@ namespace RPlayer
         return;
       PlaylistFile file = (PlaylistFile)node.Tag;
       m_mainForm.StartPlay(file.url);
+    }
+
+    private void treeView_playlist_MouseMove(object sender, MouseEventArgs e)
+    {
+      TreeView view = sender as TreeView;
+      TreeNode node = view.GetNodeAt(e.X, e.Y);
+      if (node == null)
+      {
+        m_formPlistFileDetails.Hide();
+      }
+    }
+
+    private void treeView_playlist_NodeMouseHover(object sender, TreeNodeMouseHoverEventArgs e)
+    {
+      TreeNode node = e.Node;
+      if(node.Parent == null) // folder node
+      {
+        m_formPlistFileDetails.Hide();
+      }
+      else
+      {
+        PlaylistFile file = node.Tag as PlaylistFile;
+
+        m_formPlistFileDetails.Location = new Point(Control.MousePosition.X + 3, Control.MousePosition.Y + 3);
+        TimeSpan t = TimeSpan.FromSeconds(file.duration);
+        string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours, t.Minutes, t.Seconds);
+        string strTimeWatched = UiLang.labelDetailsFinished;
+        switch(file.playState)
+        {
+          case PlaylistFile.enumPlayState.notPlayed:
+            strTimeWatched = "00 : 00 : 00";
+            break;
+          case PlaylistFile.enumPlayState.played:
+            t = TimeSpan.FromSeconds(file.timeWatched);
+            strTimeWatched = string.Format("{0:D2} : {1:D2} : {2:D2}",t.Hours, t.Minutes, t.Seconds);
+            break;
+        }
+
+        string strCreationTime = file.creationTime;
+
+        m_formPlistFileDetails.ShowForm(strTimeWatched, strDuration, strCreationTime,file.url);
+      }
+    }
+
+    private void treeView_playlist_MouseLeave(object sender, EventArgs e)
+    {
+      m_formPlistFileDetails.Hide();
     }
   }
 }

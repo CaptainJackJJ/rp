@@ -52,11 +52,12 @@ namespace RPlayer
     public static string ComboBoxSortByDuration;
     public static string messageToSelectItem;
 
-    // FormPlaylistDetails
-    public static string labelHistroyDetailsTimeWatched;
-    public static string labelHistroyDetailsDuration;
-    public static string labelHistroyDetailsUrl;
-    public static string labelHistroyDetailsFinished;
+    // FormDetails
+    public static string labelDetailsTimeWatched;
+    public static string labelDetailsDuration;
+    public static string labelDetailsCreationTime;
+    public static string labelDetailsUrl;
+    public static string labelDetailsFinished;
 
     public static void SetLang(string uiLang)
     {
@@ -107,10 +108,11 @@ namespace RPlayer
       ComboBoxSortByDuration = "Duration";
       messageToSelectItem = "Please select the item that you want to delete first";
 
-      labelHistroyDetailsTimeWatched = "Time Watched:";
-      labelHistroyDetailsDuration = "Duration:";
-      labelHistroyDetailsUrl = "Url:";
-      labelHistroyDetailsFinished = "Finished";
+      labelDetailsTimeWatched = "Time Watched:";
+      labelDetailsDuration = "Duration:";
+      labelDetailsCreationTime = "CreationTime:";
+      labelDetailsUrl = "Url:";
+      labelDetailsFinished = "Finished";
 
       speedDisplay = "Speed: X";
     }
@@ -150,10 +152,11 @@ namespace RPlayer
       ComboBoxSortByDuration = "时长";
       messageToSelectItem = "请先选择要删除的项";
 
-      labelHistroyDetailsTimeWatched = "上次看到:";
-      labelHistroyDetailsDuration = "总时长:";
-      labelHistroyDetailsUrl = "全路径:";
-      labelHistroyDetailsFinished = "已看完";
+      labelDetailsTimeWatched = "上次看到:";
+      labelDetailsDuration = "总时长:";
+      labelDetailsCreationTime = "创建时间:";
+      labelDetailsUrl = "全路径:";
+      labelDetailsFinished = "已看完";
 
       speedDisplay = "速度: X";
     }

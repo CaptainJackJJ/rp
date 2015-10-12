@@ -1356,9 +1356,15 @@ namespace RPlayer
 
       PlaylistFile.enumPlayState playState;
       if (curPlayingTime == 0)
+      {
         playState = PlaylistFile.enumPlayState.finished;
+        m_curPlistFile.timeWatched = 0;
+      }
       else
+      {
         playState = PlaylistFile.enumPlayState.played;
+        m_curPlistFile.timeWatched = curPlayingTime;
+      }
       if(playState != m_curPlistFile.playState)
       {
         m_curPlistFile.playState = playState;

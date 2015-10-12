@@ -22,7 +22,7 @@ namespace RPlayer
     public double timeWatched;
     public enumPlayState playState;
     public double duration;
-    public string createdDate;
+    public string creationTime;
   }
 
   public class PlaylistFolder
@@ -30,7 +30,7 @@ namespace RPlayer
     public string url;
     public string folderName;
     public bool expand;
-    public string createdDate;
+    public string creationTime;
     public List<PlaylistFile> playlistFiles;
   }
 
@@ -52,7 +52,7 @@ namespace RPlayer
     static public string lang;
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
-    public enum enumSortBy { createdDate, name, duration }
+    public enum enumSortBy { creationTime, name, duration }
     static public enumSortBy sortBy;
     public enum enumSelectedPListBtn { playlist, histroy}
     static public enumSelectedPListBtn selectedPListBtn;
@@ -143,7 +143,7 @@ namespace RPlayer
           folder.url = childFolderNode.Attributes["url"].InnerText;                
           folder.folderName = childFolderNode.Attributes["folderName"].InnerText;
           folder.expand = Convert.ToBoolean(childFolderNode.Attributes["expand"].InnerText); 
-          folder.createdDate = childFolderNode.Attributes["createdDate"].InnerText;
+          folder.creationTime = childFolderNode.Attributes["creationTime"].InnerText;
 
           folder.playlistFiles = new List<PlaylistFile>();
           int countFiles = childFolderNode.ChildNodes.Count;
@@ -158,7 +158,7 @@ namespace RPlayer
             file.playState
               = (PlaylistFile.enumPlayState)(Convert.ToInt32(childFileNode.Attributes["playState"].InnerText));
             file.duration = Convert.ToDouble(childFileNode.Attributes["duration"].InnerText);
-            file.createdDate = childFileNode.Attributes["createdDate"].InnerText;
+            file.creationTime = childFileNode.Attributes["creationTime"].InnerText;
 
             folder.playlistFiles.Add(file);
           }
@@ -257,8 +257,8 @@ namespace RPlayer
         attributeFolder.Value = folder.folderName;
         folderElement.Attributes.Append(attributeFolder);
 
-        attributeFolder = xml.CreateAttribute("createdDate");
-        attributeFolder.Value = folder.createdDate;
+        attributeFolder = xml.CreateAttribute("creationTime");
+        attributeFolder.Value = folder.creationTime;
         folderElement.Attributes.Append(attributeFolder);
 
         playlistElement.AppendChild(folderElement);
@@ -287,8 +287,8 @@ namespace RPlayer
           attributeFile.Value = file.duration.ToString();
           fileElement.Attributes.Append(attributeFile);
 
-          attributeFile = xml.CreateAttribute("createdDate");
-          attributeFile.Value = file.createdDate;
+          attributeFile = xml.CreateAttribute("creationTime");
+          attributeFile.Value = file.creationTime;
           fileElement.Attributes.Append(attributeFile);
 
           folderElement.AppendChild(fileElement);

@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -157,8 +157,8 @@
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14});
+            listViewItem5,
+            listViewItem6});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
@@ -182,7 +182,10 @@
       this.treeView_playlist.TabIndex = 0;
       this.treeView_playlist.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterCollapse);
       this.treeView_playlist.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterExpand);
+      this.treeView_playlist.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.treeView_playlist_NodeMouseHover);
       this.treeView_playlist.DoubleClick += new System.EventHandler(this.treeView_playlist_DoubleClick);
+      this.treeView_playlist.MouseLeave += new System.EventHandler(this.treeView_playlist_MouseLeave);
+      this.treeView_playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView_playlist_MouseMove);
       // 
       // FormPlaylist
       // 

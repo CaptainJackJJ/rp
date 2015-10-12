@@ -58,6 +58,12 @@
     <Compile Include="FormBottomBar.Designer.cs">
       <DependentUpon>FormBottomBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPlistFileDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPlistFileDetails.Designer.cs">
+      <DependentUpon>FormPlistFileDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormHistroyDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     <Compile Include="UiLang.cs" />
     <EmbeddedResource Include="FormBottomBar.resx">
       <DependentUpon>FormBottomBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPlistFileDetails.resx">
+      <DependentUpon>FormPlistFileDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormHistroyDetails.resx">
       <DependentUpon>FormHistroyDetails.cs</DependentUpon>

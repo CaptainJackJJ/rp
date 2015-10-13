@@ -325,8 +325,7 @@ namespace RPlayer
           m_formBottomBar.Pause();
           break;
         case Keys.Escape:
-          if (m_bDesktop)
-            SwitchDesktopMode();
+          SwitchDesktopMode(false,false);
           break;
         case Keys.Up:
           UpDownVolume(true);
@@ -610,7 +609,7 @@ namespace RPlayer
     {
       if(m_bDesktop)
       {
-        SwitchDesktopMode();
+        SwitchDesktopMode(false,false);
       }
       else
       {
@@ -894,24 +893,22 @@ namespace RPlayer
       }
     }
 
-    public void SwitchDesktopMode()
+    public void SwitchDesktopMode(bool bAuto, bool bDesktop)
     {
-      if (m_bDesktop)
+      if (bAuto)
       {
-        m_bDesktop = false;
-        label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
-        this.WindowState = FormWindowState.Normal;        
-        m_formBottomBar.Opacity = 1;
-        m_formBottomBar.Show();
-        m_formBottomBar.ShowHidePlaylistLabel(true);
-        m_formTopBar.Opacity = 1;
-        m_formTopBar.Show();
-        if(Archive.plistShowingInNoneDesktop)
-        {
-          m_formPlaylist.Show();
-        }
+        if (m_bDesktop)
+          m_bDesktop = false;
+        else
+          m_bDesktop = true;
       }
       else
+      {
+        if (m_bDesktop == bDesktop)
+          return;
+        m_bDesktop = bDesktop;
+      }
+      if (m_bDesktop)
       {
         m_bDesktop = true;
         if (this.WindowState == FormWindowState.Maximized)
@@ -924,6 +921,21 @@ namespace RPlayer
         m_formBottomBar.ShowHidePlaylistLabel(false);
         m_formTopBar.Hide();
         m_formPlaylist.Hide();
+      }
+      else
+      {
+        m_bDesktop = false;
+        label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
+        this.WindowState = FormWindowState.Normal;
+        m_formBottomBar.Opacity = 1;
+        m_formBottomBar.Show();
+        m_formBottomBar.ShowHidePlaylistLabel(true);
+        m_formTopBar.Opacity = 1;
+        m_formTopBar.Show();
+        if (Archive.plistShowingInNoneDesktop)
+        {
+          m_formPlaylist.Show();
+        }
       }
     }
 
@@ -941,7 +953,7 @@ namespace RPlayer
     private void label_playWnd_DoubleClick(object sender, EventArgs e)
     {
       if(RpCore.IsPlaying())
-        SwitchDesktopMode();
+        SwitchDesktopMode(true,false);
     }
 
     private void label_playWnd_MouseEnter(object sender, EventArgs e)
@@ -1054,6 +1066,7 @@ namespace RPlayer
         label_Play.Show();
         label_Volume.Show();
         colorSlider_volume.Show();
+        SwitchDesktopMode(false,false);
       }
     }
 
@@ -1371,8 +1384,6 @@ namespace RPlayer
         m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
       }
 
-      if (m_bDesktop)
-        SwitchDesktopMode();
       m_bStopPlayCalled = true;
       m_formBottomBar.StopPlay();
       RpCore.Stop();

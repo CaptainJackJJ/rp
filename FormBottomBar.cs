@@ -527,7 +527,7 @@ namespace RPlayer
 
     private void label_desktop_Click(object sender, EventArgs e)
     {
-      m_mainForm.SwitchDesktopMode();
+      m_mainForm.SwitchDesktopMode(true,true);
     }
 
     private void label_desktop_MouseEnter(object sender, EventArgs e)

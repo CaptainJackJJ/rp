@@ -117,6 +117,9 @@ namespace RPlayer
 
     private void ConfigByArchive()
     {
+      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+
       colorSlider_volume.Value = Archive.volume;
       try
       {
@@ -138,9 +141,6 @@ namespace RPlayer
         m_formPlaylist.Show();
         ChangePlayWndSizeInNonDesktop();
       }
-
-      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
     }
 
     public void SetAllUiLange()

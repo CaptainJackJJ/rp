@@ -20,6 +20,7 @@ namespace RPlayer
     private const int m_nMinWidth = 170;
     private FormHistroyDetails m_formHistroyDetails;
     private FormPlistFileDetails m_formPlistFileDetails;
+    private FormPlistFolderDetails m_formPlistFolderDetails;
     private ListViewItem m_viewItemFocusingHistroy;
     private ContextMenuStrip m_contextMenuStrip_histroy;
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
@@ -36,6 +37,8 @@ namespace RPlayer
       this.AddOwnedForm(m_formHistroyDetails);
       m_formPlistFileDetails = new FormPlistFileDetails();
       this.AddOwnedForm(m_formPlistFileDetails);
+      m_formPlistFolderDetails = new FormPlistFolderDetails();
+      this.AddOwnedForm(m_formPlistFolderDetails);
       InitContextMenuStrip();
     }
 
@@ -351,6 +354,7 @@ namespace RPlayer
       SetUiLange();
       m_formHistroyDetails.SetAllUiLange();
       m_formPlistFileDetails.SetAllUiLange();
+      m_formPlistFolderDetails.SetAllUiLange();
     }
 
     private void SetUiLange()
@@ -511,6 +515,7 @@ namespace RPlayer
       if (node == null)
       {
         m_formPlistFileDetails.Hide();
+        m_formPlistFolderDetails.Hide();
       }
     }
 
@@ -520,9 +525,19 @@ namespace RPlayer
       if(node.Parent == null) // folder node
       {
         m_formPlistFileDetails.Hide();
+
+        PlaylistFolder folder = node.Tag as PlaylistFolder;
+
+        m_formPlistFolderDetails.Location = new Point(Control.MousePosition.X + 3, Control.MousePosition.Y + 3);
+
+        string strCreationTime = folder.creationTime;
+
+        m_formPlistFolderDetails.ShowForm(strCreationTime, folder.url);
       }
       else
       {
+        m_formPlistFolderDetails.Hide();
+
         PlaylistFile file = node.Tag as PlaylistFile;
 
         m_formPlistFileDetails.Location = new Point(Control.MousePosition.X + 3, Control.MousePosition.Y + 3);
@@ -550,6 +565,7 @@ namespace RPlayer
     private void treeView_playlist_MouseLeave(object sender, EventArgs e)
     {
       m_formPlistFileDetails.Hide();
+      m_formPlistFolderDetails.Hide();
     }
   }
 }

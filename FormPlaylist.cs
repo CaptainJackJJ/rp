@@ -544,7 +544,7 @@ namespace RPlayer
 
         PlaylistFolder folder = node.Tag as PlaylistFolder;
 
-        m_formPlistFolderDetails.Location = new Point(Control.MousePosition.X + 3, Control.MousePosition.Y + 3);
+        m_formPlistFolderDetails.Location = new Point(Control.MousePosition.X + 20, Control.MousePosition.Y + 3);
 
         string strCreationTime = folder.creationTime;
 
@@ -556,7 +556,7 @@ namespace RPlayer
 
         PlaylistFile file = node.Tag as PlaylistFile;
 
-        m_formPlistFileDetails.Location = new Point(Control.MousePosition.X + 3, Control.MousePosition.Y + 3);
+        m_formPlistFileDetails.Location = new Point(Control.MousePosition.X + 20, Control.MousePosition.Y + 3);
         TimeSpan t = TimeSpan.FromSeconds(file.duration);
         string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
                       t.Hours, t.Minutes, t.Seconds);

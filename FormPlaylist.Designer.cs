@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -157,8 +157,8 @@
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
@@ -179,6 +179,7 @@
       this.treeView_playlist.Location = new System.Drawing.Point(10, 33);
       this.treeView_playlist.Name = "treeView_playlist";
       this.treeView_playlist.ShowLines = false;
+      this.treeView_playlist.ShowPlusMinus = false;
       this.treeView_playlist.Size = new System.Drawing.Size(149, 362);
       this.treeView_playlist.TabIndex = 0;
       this.treeView_playlist.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterCollapse);

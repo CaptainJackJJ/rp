@@ -97,44 +97,82 @@ namespace RPlayer
       SwitchListView(Archive.selectedPListBtn);
     }
 
-    private void UpdatePlayList(bool bAllFloder, string folderUrl)
+    // Update whole plist
+    private void UpdatePlayList()
     {
       List<PlaylistFolder> deleteFolders = new List<PlaylistFolder>();
       foreach(PlaylistFolder folder in Archive.playlist)
       {
-        if(!bAllFloder)
-        {
-          if (folder.url != folderUrl)
-            continue;
-        }
-
         if (!Directory.Exists(folder.url))
         {
-          if(bAllFloder)
-          {
             deleteFolders.Add(folder);
             continue;
-          }
-          else
+        }
+        AddOrUpdatePlaylist(folder.url);
+      }
+
+      foreach (PlaylistFolder folder in deleteFolders)
+      {
+        Archive.playlist.Remove(folder);
+      }
+
+      if (deleteFolders.Count > 0)
+        UpdatePlayListView(true, "");
+    }
+
+    // Url: file path or folder path
+    public PlaylistFolder AddOrUpdatePlaylist(string Url)
+    {
+      if(File.Exists(Url))
+      {
+        Uri uri = new Uri(Url);
+        string strCurrentFolder = System.IO.Path.GetDirectoryName(uri.LocalPath);
+
+        foreach (PlaylistFolder folder in Archive.playlist)// Check if file is already in plist, if so, just return.
+        {
+          if (folder.url == strCurrentFolder)
           {
-            MessageBox.Show(UiLang.pathNotFound + folder.url);
-            return;
+            foreach (PlaylistFile file in folder.playlistFiles)
+            {
+              if (file.url == Url)
+              {
+                return null;
+              }
+            }
           }
         }
-         
-        string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
-        string[] strFilesInCurrentDirectory
-          = strFilters.Split('|').SelectMany(filter =>
-            Directory.GetFiles(folder.url, filter, SearchOption.TopDirectoryOnly)
-            ).ToArray();
+
+        Url = strCurrentFolder;
+      }
+
+      if (!Directory.Exists(Url))
+      {
+        MessageBox.Show(UiLang.pathNotFound + Url);
+        return null;
+      }
+
+      string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
+      string[] strFilesInCurrentDirectory
+        = strFilters.Split('|').SelectMany(filter =>
+          Directory.GetFiles(Url, filter, SearchOption.TopDirectoryOnly)
+          ).ToArray();
+
+      List<string> addFiles = strFilesInCurrentDirectory.ToList();
+      PlaylistFolder curPlistFolder = null;
+
+      // Check if folder is already in plist. If so, check which files need be added or deleted
+      foreach (PlaylistFolder folder in Archive.playlist) 
+      {
+        if (folder.url != Url)
+          continue;
+
+        curPlistFolder = folder;
 
         List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
-        List<string> addFiles = strFilesInCurrentDirectory.ToList();
-
         foreach (PlaylistFile file in folder.playlistFiles)
         {
           int index = addFiles.IndexOf(file.url);
-          if(index != -1)
+          if (index != -1)
           {
             addFiles.RemoveAt(index);
           }
@@ -144,53 +182,25 @@ namespace RPlayer
           }
         }
 
-        foreach(PlaylistFile file in deleteFiles)
+        foreach (PlaylistFile file in deleteFiles)
         {
           folder.playlistFiles.Remove(file);
         }
-
-        if (addFiles.Count > 0)
-          AddPlaylist(folder.url, addFiles);
-
-        if (!bAllFloder)
-        {
-          UpdatePlayListView(false, folderUrl);
-          break;
-        }
-      }
-      if (bAllFloder)
-      {
-        foreach (PlaylistFolder folder in deleteFolders)
-        {
-          Archive.playlist.Remove(folder);
-        }
-
-        UpdatePlayListView(true, "");
-      }
-    }
-
-    public PlaylistFolder AddPlaylist(string folderUrl,List<string> addFiles)
-    {
-      PlaylistFolder folder = null;
-      foreach (PlaylistFolder folderItem in Archive.playlist)
-      {
-        if (folderItem.url == folderUrl) 
-        {
-          folder = folderItem;
-          break;
-        }
       }
 
-      if (folder == null)
+      if (addFiles.Count == 0)
+        return null;
+
+      if (curPlistFolder == null)
       {
-        folder = new PlaylistFolder();
-        folder.url = folderUrl;        
-        DirectoryInfo dir = new DirectoryInfo(folderUrl);
-        folder.folderName = dir.Name;
-        folder.expand = true;
-        folder.creationTime = dir.CreationTime.ToString();
-        folder.playlistFiles = new List<PlaylistFile>();
-        Archive.playlist.Add(folder);
+        curPlistFolder = new PlaylistFolder();
+        curPlistFolder.url = Url;
+        DirectoryInfo dir = new DirectoryInfo(Url);
+        curPlistFolder.folderName = dir.Name;
+        curPlistFolder.expand = true;
+        curPlistFolder.creationTime = dir.CreationTime.ToString();
+        curPlistFolder.playlistFiles = new List<PlaylistFile>();
+        Archive.playlist.Add(curPlistFolder);
 
         Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
         {
@@ -204,6 +214,8 @@ namespace RPlayer
               return 0;
           }
         });
+
+        UpdatePlayListView(true, "");
       }
 
       foreach (string fileUrl in addFiles)
@@ -218,9 +230,9 @@ namespace RPlayer
         info = RpCore.GetMediaInfo(fileUrl);
         file.duration = info.nDuration;
         file.creationTime = File.GetCreationTime(fileUrl).ToString();
-        folder.playlistFiles.Add(file);
+        curPlistFolder.playlistFiles.Add(file);
       }
-      folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
+      curPlistFolder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
       {
         switch (Archive.sortBy)
         {
@@ -232,7 +244,10 @@ namespace RPlayer
             return 0;
         }
       });
-      return folder;
+
+      UpdatePlayListView(false, Url);
+
+      return curPlistFolder;
     }
 
     public void UpdatePlayListView(bool bAllFloder, string folderUrl)
@@ -328,9 +343,8 @@ namespace RPlayer
           if (m_bFirstShowPlaylist)
           {
             if (Archive.updatePlistAfterLaunch)
-              UpdatePlayList(true, "");
-            else
-              UpdatePlayListView(true, "");
+              UpdatePlayList();
+            UpdatePlayListView(true, "");
             m_bFirstShowPlaylist = false;
           }
           break;

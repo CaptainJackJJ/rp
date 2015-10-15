@@ -1277,44 +1277,16 @@ namespace RPlayer
 
       m_formTopBar.setFileName(strCurrentFileName);
 
-      string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.img|*.iso|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.bin|*.dat|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.rar|*.001|*.wpl|*.zip|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.url|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv";
-
-      string[] strFilesInCurrentDirectory
-        = strFilters.Split('|').SelectMany(filter =>
-          Directory.GetFiles(strCurrentFolder, filter, SearchOption.TopDirectoryOnly)
-          ).ToArray();
-
       if (Archive.autoAddFolderToPlist)
       {
-        foreach (PlaylistFolder folder in Archive.playlist)
+        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url);
+        foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
         {
-          if (folder.url == strCurrentFolder)
+          if (file.url == url)
           {
-            m_curPlistFolder = folder;
-            foreach(PlaylistFile file in folder.playlistFiles)
-            {
-              if(file.url == url)
-              {
-                m_curPlistFile = file;
-                break;
-              }
-            }
+            m_curPlistFile = file;
+            break;
           }
-        }
-
-        if (m_curPlistFile == null)
-        {
-          m_curPlistFolder = m_formPlaylist.AddPlaylist(strCurrentFolder, strFilesInCurrentDirectory.ToList());
-          foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
-          {
-            if (file.url == url)
-            {
-              m_curPlistFile = file;
-              break;
-            }
-          }
-
-          m_formPlaylist.UpdatePlayListView(false, strCurrentFolder);
         }
       }
 

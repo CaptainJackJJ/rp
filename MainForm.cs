@@ -988,7 +988,9 @@ namespace RPlayer
 
     private void label_playWnd_DragEnter(object sender, DragEventArgs e)
     {
-      e.Effect = DragDropEffects.Link;
+      string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+      if(File.Exists(FileList[0]))
+        e.Effect = DragDropEffects.Link;
     }
 
     private void label_playWnd_DragDrop(object sender, DragEventArgs e)
@@ -1279,7 +1281,7 @@ namespace RPlayer
 
       if (Archive.autoAddFolderToPlist)
       {
-        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url);
+        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url,true);
         foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
         {
           if (file.url == url)

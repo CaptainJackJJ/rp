@@ -171,6 +171,7 @@
       // 
       // treeView_playlist
       // 
+      this.treeView_playlist.AllowDrop = true;
       this.treeView_playlist.BackColor = System.Drawing.Color.DimGray;
       this.treeView_playlist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.treeView_playlist.ForeColor = System.Drawing.Color.White;
@@ -183,6 +184,8 @@
       this.treeView_playlist.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterCollapse);
       this.treeView_playlist.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterExpand);
       this.treeView_playlist.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.treeView_playlist_NodeMouseHover);
+      this.treeView_playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_playlist_DragDrop);
+      this.treeView_playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_playlist_DragEnter);
       this.treeView_playlist.DoubleClick += new System.EventHandler(this.treeView_playlist_DoubleClick);
       this.treeView_playlist.MouseLeave += new System.EventHandler(this.treeView_playlist_MouseLeave);
       this.treeView_playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView_playlist_MouseMove);

@@ -98,7 +98,7 @@ namespace RPlayer
     }
 
     // Update whole plist
-    private void UpdatePlayList()
+    private void UpdatePlayList(bool bAutoUpdateView)
     {
       List<PlaylistFolder> deleteFolders = new List<PlaylistFolder>();
       foreach(PlaylistFolder folder in Archive.playlist)
@@ -108,7 +108,7 @@ namespace RPlayer
             deleteFolders.Add(folder);
             continue;
         }
-        AddOrUpdatePlaylist(folder.url);
+        AddOrUpdatePlaylist(folder.url, bAutoUpdateView);
       }
 
       foreach (PlaylistFolder folder in deleteFolders)
@@ -116,12 +116,12 @@ namespace RPlayer
         Archive.playlist.Remove(folder);
       }
 
-      if (deleteFolders.Count > 0)
+      if (deleteFolders.Count > 0 && bAutoUpdateView)
         UpdatePlayListView(true, "");
     }
 
     // Url: file path or folder path
-    public PlaylistFolder AddOrUpdatePlaylist(string Url)
+    public PlaylistFolder AddOrUpdatePlaylist(string Url,bool bAutoUpdateView)
     {
       if(File.Exists(Url))
       {
@@ -215,7 +215,8 @@ namespace RPlayer
           }
         });
 
-        UpdatePlayListView(true, "");
+        if (bAutoUpdateView)
+          UpdatePlayListView(true, "");
       }
 
       foreach (string fileUrl in addFiles)
@@ -245,7 +246,8 @@ namespace RPlayer
         }
       });
 
-      UpdatePlayListView(false, Url);
+      if (bAutoUpdateView)
+        UpdatePlayListView(false, Url);
 
       return curPlistFolder;
     }
@@ -343,7 +345,7 @@ namespace RPlayer
           if (m_bFirstShowPlaylist)
           {
             if (Archive.updatePlistAfterLaunch)
-              UpdatePlayList();
+              UpdatePlayList(false);
             UpdatePlayListView(true, "");
             m_bFirstShowPlaylist = false;
           }
@@ -580,6 +582,27 @@ namespace RPlayer
     {
       m_formPlistFileDetails.Hide();
       m_formPlistFolderDetails.Hide();
+    }
+
+    private void treeView_playlist_DragEnter(object sender, DragEventArgs e)
+    {
+      e.Effect = DragDropEffects.Link;
+    }
+
+    private void treeView_playlist_DragDrop(object sender, DragEventArgs e)
+    {
+      string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+      if(File.Exists(FileList[0]))// If it is file
+      {
+        AddOrUpdatePlaylist(FileList[0],true);
+        return;
+      }
+      // folder
+      foreach(string url in FileList)
+      {
+        AddOrUpdatePlaylist(url,false);
+      }
+      UpdatePlayListView(true, "");
     }
   }
 }

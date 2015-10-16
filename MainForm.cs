@@ -1240,9 +1240,6 @@ namespace RPlayer
       if (RpCore.IsPlaying())
         StopPlay();
 
-      m_curPlistFolder = null;
-      m_curPlistFile = null;
-
       m_bStopPlayCalled = false;
 
       if (!File.Exists(url))
@@ -1281,7 +1278,8 @@ namespace RPlayer
 
       if (Archive.autoAddFolderToPlist)
       {
-        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url,true);
+        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url, true);
+
         foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
         {
           if (file.url == url)

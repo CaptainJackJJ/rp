@@ -148,7 +148,7 @@ namespace RPlayer
             {
               if (file.url == Url)
               {
-                return null;
+                return folder;
               }
             }
           }
@@ -201,7 +201,7 @@ namespace RPlayer
       }
 
       if (addFiles.Count == 0)
-        return null;
+        return curPlistFolder;
 
       if (curPlistFolder == null)
       {

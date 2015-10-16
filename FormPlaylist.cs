@@ -26,6 +26,12 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
     private bool m_bFirstShowHistroy = true;
     private bool m_bFirstShowPlaylist = true;
+
+    private ContextMenuStrip m_contextMenuStrip_plist;
+    private ToolStripMenuItem m_toolStripMenuItem_markPlistAsFinished;
+
+    private Color m_colorFinished = Color.RosyBrown;
+    private Color m_colorPlayed = Color.DodgerBlue;
     
     public FormPlaylist(MainForm mainForm)
     {
@@ -55,6 +61,12 @@ namespace RPlayer
       m_toolStripMenuItem_histroyDelete.Text = UiLang.delete;
       m_toolStripMenuItem_histroyDelete.ForeColor = Color.White;
       m_toolStripMenuItem_histroyDelete.Click += toolStripMenuItem_histroyDelete_click;
+
+      m_contextMenuStrip_plist = new ContextMenuStrip();
+      m_contextMenuStrip_plist.BackColor = Archive.colorContextMenu;
+      m_contextMenuStrip_plist.ForeColor = Color.White;
+      m_contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRenderer();
+      treeView_playlist.ContextMenuStrip = m_contextMenuStrip_plist;
     }
 
     private void toolStripMenuItem_histroyDelete_click(object sender, EventArgs e)
@@ -294,10 +306,10 @@ namespace RPlayer
           switch(file.playState)
           {
             case PlaylistFile.enumPlayState.finished:
-              fileNode.ForeColor = Color.RosyBrown;
+              fileNode.ForeColor = m_colorFinished;
               break;
             case PlaylistFile.enumPlayState.played:
-              fileNode.ForeColor = Color.DodgerBlue;
+              fileNode.ForeColor = m_colorPlayed;
               break;
           }
           folderNode.Nodes.Add(fileNode);
@@ -325,9 +337,9 @@ namespace RPlayer
         listItem.Text = System.IO.Path.GetFileName(uri.LocalPath);
         listItem.Tag = item;
         if ((int)item.timeWatched != 0)
-          listItem.ForeColor = Color.DodgerBlue;
+          listItem.ForeColor = m_colorFinished;
         else
-          listItem.ForeColor = Color.RosyBrown;
+          listItem.ForeColor = m_colorPlayed;
         listView_histroy.Items.Add(listItem);
       }
     }
@@ -604,5 +616,34 @@ namespace RPlayer
       }
       UpdatePlayListView(true, "");
     }
+
+    private void treeView_playlist_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+    {
+      TreeView view = sender as TreeView;
+      view.SelectedNode = e.Node;
+      if (view.SelectedNode.Parent != null)// selected plist file node
+      {
+        m_contextMenuStrip_plist.Items.Clear();
+        m_toolStripMenuItem_markPlistAsFinished = new ToolStripMenuItem();
+        m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_markPlistAsFinished);
+        m_toolStripMenuItem_markPlistAsFinished.Text = UiLang.markAsFinished;
+        m_toolStripMenuItem_markPlistAsFinished.ForeColor = Color.White;
+        m_toolStripMenuItem_markPlistAsFinished.Click += toolStripMenuItem_markPlistAsFinished_click;
+      }
+      else // folder node
+      {
+        m_contextMenuStrip_plist.Items.Clear();
+      }
+    }
+
+    private void toolStripMenuItem_markPlistAsFinished_click(object sender, EventArgs e)
+    {
+      TreeNode node = treeView_playlist.SelectedNode;
+      node.ForeColor = m_colorFinished;
+      PlaylistFile file = node.Tag as PlaylistFile;
+      file.timeWatched = 0;
+      file.playState = PlaylistFile.enumPlayState.finished;
+    }
+
   }
 }

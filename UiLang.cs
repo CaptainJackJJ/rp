@@ -15,6 +15,7 @@ namespace RPlayer
     public static string pathNotFound;
     public static string noPreFileInPlist;
     public static string noNextFileInPlist;
+    public static string markAsFinished;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -79,6 +80,7 @@ namespace RPlayer
       pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
       noPreFileInPlist = "No previous file in playlist";
       noNextFileInPlist = "No next file in playlist";
+      markAsFinished = "Mark as finished";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -123,6 +125,7 @@ namespace RPlayer
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
       noPreFileInPlist = "播放列表中没有上一个文件";
       noNextFileInPlist = "播放列表中没有下一个文件";
+      markAsFinished = "标记为已看完";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";

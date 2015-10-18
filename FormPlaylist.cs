@@ -17,7 +17,7 @@ namespace RPlayer
     private bool m_bLeftEdgeMouseDown = false;
     private Point m_leftEdgeMouseDownLoc;
     private const int nEdgeMargin = 10;
-    private const int m_nMinWidth = 170;
+    private const int m_nMinWidth = 194;
     private FormHistroyDetails m_formHistroyDetails;
     private FormPlistFileDetails m_formPlistFileDetails;
     private FormPlistFolderDetails m_formPlistFolderDetails;
@@ -216,18 +216,7 @@ namespace RPlayer
         curPlistFolder.playlistFiles = new List<PlaylistFile>();
         Archive.playlist.Add(curPlistFolder);
 
-        Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
-        {
-          switch (Archive.sortBy)
-          {
-            case Archive.enumSortBy.creationTime:
-              return folder1.creationTime.CompareTo(folder2.creationTime);
-            case Archive.enumSortBy.name:
-              return folder1.folderName.CompareTo(folder2.folderName);
-            default:
-              return 0;
-          }
-        });
+        SortPlistFolder();
 
         if (bAutoUpdateView)
           UpdatePlayListView(true, "");
@@ -247,23 +236,67 @@ namespace RPlayer
         file.creationTime = File.GetCreationTime(fileUrl).ToString();
         curPlistFolder.playlistFiles.Add(file);
       }
-      curPlistFolder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
-      {
-        switch (Archive.sortBy)
-        {
-          case Archive.enumSortBy.creationTime:
-            return file1.creationTime.CompareTo(file2.creationTime);
-          case Archive.enumSortBy.name:
-            return file1.fileName.CompareTo(file2.fileName);
-          default:
-            return 0;
-        }
-      });
+
+      SortPlistFile(curPlistFolder);
 
       if (bAutoUpdateView)
         UpdatePlayListView(false, Url);
 
       return curPlistFolder;
+    }
+
+    private void SortPlistFolder()
+    {
+      Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
+      {
+        switch (Archive.sortBy)
+        {
+          case Archive.enumSortBy.creationTimeUp:
+            return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime));
+          case Archive.enumSortBy.creationTimeDown:
+            return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime)) > 0 ? -1 : 1;
+          case Archive.enumSortBy.nameUp:
+            return folder1.folderName.CompareTo(folder2.folderName);
+          case Archive.enumSortBy.nameDown:
+            return folder1.folderName.CompareTo(folder2.folderName) > 0 ? -1 : 1;
+          default:
+            return 0;
+        }
+      });
+    }
+
+    private void SortPlistFile(PlaylistFolder folder)
+    {
+      folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
+      {
+        switch (Archive.sortBy)
+        {
+          case Archive.enumSortBy.creationTimeUp:
+            return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime));
+          case Archive.enumSortBy.creationTimeDown:
+            return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime)) > 0 ? -1 : 1;
+          case Archive.enumSortBy.nameUp:
+            return file1.fileName.CompareTo(file2.fileName);
+          case Archive.enumSortBy.nameDown:
+            return file1.fileName.CompareTo(file2.fileName) > 0 ? -1 : 1;;
+          case Archive.enumSortBy.durationUp:
+            return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration));
+          case Archive.enumSortBy.durationDown:
+            return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration)) > 0 ? -1 : 1;
+          default:
+            return 0;
+        }
+      });
+    }
+
+    private void SortPlist()
+    {
+      foreach(PlaylistFolder folder in Archive.playlist)
+      {
+        SortPlistFile(folder);
+      }
+      SortPlistFolder();
+      UpdatePlayListView(true, "");
     }
 
     public void GetPlistFolderAndFile(string fileUrl, ref PlaylistFile Plistfile, ref PlaylistFolder Plistfolder)
@@ -420,9 +453,12 @@ namespace RPlayer
 
       label_sortBy.Text = UiLang.labelSortBy;
       comboBox_sort.Items.Clear();
-      comboBox_sort.Items.Add(UiLang.ComboBoxSortByCreatedTime);
-      comboBox_sort.Items.Add(UiLang.ComboBoxSortByFileName);
-      comboBox_sort.Items.Add(UiLang.ComboBoxSortByDuration);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByCreatedTimeUp);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByCreatedTimeDown);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByFileNameUp);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByFileNameDown);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByDurationUp);
+      comboBox_sort.Items.Add(UiLang.ComboBoxSortByDurationDown);
       comboBox_sort.SelectedIndex = (int)Archive.sortBy;
       comboBox_sort.SelectedIndexChanged += comboBox_comboBox_sort_SelectedIndexChanged;
     }
@@ -723,6 +759,17 @@ namespace RPlayer
       m_mainForm.deletePlayingPlistFolder(folder);
       Archive.playlist.Remove(folder);
       treeView_playlist.Nodes.Remove(node);
+    }
+
+    private void comboBox_repeat_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      Archive.repeatPlayback = (Archive.enumRepeatPlayback)comboBox_repeat.SelectedIndex;
+    }
+
+    private void comboBox_sort_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      Archive.sortBy = (Archive.enumSortBy)comboBox_sort.SelectedIndex;
+      SortPlist();
     }
   }
 }

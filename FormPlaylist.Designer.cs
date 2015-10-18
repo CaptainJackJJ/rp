@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -53,7 +53,7 @@
       this.label_TopEdge.Dock = System.Windows.Forms.DockStyle.Top;
       this.label_TopEdge.Location = new System.Drawing.Point(0, 0);
       this.label_TopEdge.Name = "label_TopEdge";
-      this.label_TopEdge.Size = new System.Drawing.Size(173, 1);
+      this.label_TopEdge.Size = new System.Drawing.Size(193, 1);
       this.label_TopEdge.TabIndex = 30;
       // 
       // label_LeftEdge
@@ -73,7 +73,7 @@
       this.label_BottomEdge.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.label_BottomEdge.Location = new System.Drawing.Point(1, 453);
       this.label_BottomEdge.Name = "label_BottomEdge";
-      this.label_BottomEdge.Size = new System.Drawing.Size(172, 1);
+      this.label_BottomEdge.Size = new System.Drawing.Size(192, 1);
       this.label_BottomEdge.TabIndex = 32;
       // 
       // button_playlist
@@ -113,10 +113,11 @@
       this.comboBox_repeat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboBox_repeat.ForeColor = System.Drawing.Color.White;
       this.comboBox_repeat.FormattingEnabled = true;
-      this.comboBox_repeat.Location = new System.Drawing.Point(63, 403);
+      this.comboBox_repeat.Location = new System.Drawing.Point(61, 403);
       this.comboBox_repeat.Name = "comboBox_repeat";
-      this.comboBox_repeat.Size = new System.Drawing.Size(96, 20);
+      this.comboBox_repeat.Size = new System.Drawing.Size(126, 20);
       this.comboBox_repeat.TabIndex = 35;
+      this.comboBox_repeat.SelectedIndexChanged += new System.EventHandler(this.comboBox_repeat_SelectedIndexChanged);
       // 
       // label_repeat
       // 
@@ -147,18 +148,19 @@
       this.comboBox_sort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboBox_sort.ForeColor = System.Drawing.Color.White;
       this.comboBox_sort.FormattingEnabled = true;
-      this.comboBox_sort.Location = new System.Drawing.Point(63, 429);
+      this.comboBox_sort.Location = new System.Drawing.Point(61, 429);
       this.comboBox_sort.Name = "comboBox_sort";
-      this.comboBox_sort.Size = new System.Drawing.Size(96, 20);
+      this.comboBox_sort.Size = new System.Drawing.Size(126, 20);
       this.comboBox_sort.TabIndex = 35;
+      this.comboBox_sort.SelectedIndexChanged += new System.EventHandler(this.comboBox_sort_SelectedIndexChanged);
       // 
       // listView_histroy
       // 
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem25,
-            listViewItem26});
+            listViewItem5,
+            listViewItem6});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
@@ -181,7 +183,7 @@
       this.treeView_playlist.Name = "treeView_playlist";
       this.treeView_playlist.ShowLines = false;
       this.treeView_playlist.ShowPlusMinus = false;
-      this.treeView_playlist.Size = new System.Drawing.Size(149, 362);
+      this.treeView_playlist.Size = new System.Drawing.Size(177, 362);
       this.treeView_playlist.TabIndex = 0;
       this.treeView_playlist.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterCollapse);
       this.treeView_playlist.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView_playlist_AfterExpand);
@@ -198,7 +200,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.DimGray;
-      this.ClientSize = new System.Drawing.Size(173, 454);
+      this.ClientSize = new System.Drawing.Size(193, 454);
       this.Controls.Add(this.treeView_playlist);
       this.Controls.Add(this.listView_histroy);
       this.Controls.Add(this.comboBox_sort);

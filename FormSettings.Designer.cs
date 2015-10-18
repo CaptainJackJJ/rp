@@ -45,9 +45,9 @@
       this.label_volumeAmp = new System.Windows.Forms.Label();
       this.label_plist = new System.Windows.Forms.Label();
       this.panel_plist = new System.Windows.Forms.Panel();
-      this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
+      this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -245,20 +245,6 @@
       this.panel_plist.Size = new System.Drawing.Size(422, 495);
       this.panel_plist.TabIndex = 7;
       // 
-      // checkBox_deleteFileDirectly
-      // 
-      this.checkBox_deleteFileDirectly.AutoSize = true;
-      this.checkBox_deleteFileDirectly.Checked = true;
-      this.checkBox_deleteFileDirectly.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox_deleteFileDirectly.ForeColor = System.Drawing.Color.White;
-      this.checkBox_deleteFileDirectly.Location = new System.Drawing.Point(14, 25);
-      this.checkBox_deleteFileDirectly.Name = "checkBox_deleteFileDirectly";
-      this.checkBox_deleteFileDirectly.Size = new System.Drawing.Size(264, 16);
-      this.checkBox_deleteFileDirectly.TabIndex = 7;
-      this.checkBox_deleteFileDirectly.Text = "just delete playlist file without asking";
-      this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
-      this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
-      // 
       // checkBox_addPlayingFolderToPlist
       // 
       this.checkBox_addPlayingFolderToPlist.AutoSize = true;
@@ -271,6 +257,7 @@
       this.checkBox_addPlayingFolderToPlist.TabIndex = 8;
       this.checkBox_addPlayingFolderToPlist.Text = "Auto add playing folder to playlist";
       this.checkBox_addPlayingFolderToPlist.UseVisualStyleBackColor = true;
+      this.checkBox_addPlayingFolderToPlist.CheckedChanged += new System.EventHandler(this.checkBox_addPlayingFolderToPlist_CheckedChanged);
       // 
       // checkBox_updatePlistAfterLaunch
       // 
@@ -284,6 +271,21 @@
       this.checkBox_updatePlistAfterLaunch.TabIndex = 9;
       this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
       this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
+      this.checkBox_updatePlistAfterLaunch.CheckedChanged += new System.EventHandler(this.checkBox_updatePlistAfterLaunch_CheckedChanged);
+      // 
+      // checkBox_deleteFileDirectly
+      // 
+      this.checkBox_deleteFileDirectly.AutoSize = true;
+      this.checkBox_deleteFileDirectly.Checked = true;
+      this.checkBox_deleteFileDirectly.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_deleteFileDirectly.ForeColor = System.Drawing.Color.White;
+      this.checkBox_deleteFileDirectly.Location = new System.Drawing.Point(14, 25);
+      this.checkBox_deleteFileDirectly.Name = "checkBox_deleteFileDirectly";
+      this.checkBox_deleteFileDirectly.Size = new System.Drawing.Size(264, 16);
+      this.checkBox_deleteFileDirectly.TabIndex = 7;
+      this.checkBox_deleteFileDirectly.Text = "just delete playlist file without asking";
+      this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
+      this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
       // 
       // FormSettings
       // 

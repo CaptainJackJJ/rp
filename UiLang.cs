@@ -11,11 +11,11 @@ namespace RPlayer
     public static string langChinese = "中文";
 
     // Common
-    public static string delete;
+    public static string yes;
+    public static string no;
     public static string pathNotFound;
     public static string noPreFileInPlist;
-    public static string noNextFileInPlist;
-    public static string markAsFinished;
+    public static string noNextFileInPlist;  
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -30,12 +30,15 @@ namespace RPlayer
     public static string labelGeneral;
     public static string labelSubtitle;
     public static string labelAV;
+    public static string labelPlist;
 
-    // FormRegular
+    // PanelGeneral
     public static string uiLangLabel;
+
+    // PanelPlist
     public static string checkBoxUpdatePlistAfterLaunch;
     public static string checkBoxAutoAddFolderToPlist;
-
+    public static string checkBoxDeleteFileDirectly;
 
     // FormBottomBar
     public static string speedDisplay;
@@ -52,6 +55,9 @@ namespace RPlayer
     public static string ComboBoxSortByFileName;
     public static string ComboBoxSortByDuration;
     public static string messageToSelectItem;
+    public static string delete;
+    public static string markAsFinished;
+    public static string PlistFileDeleteWarning; 
 
     // FormDetails
     public static string labelDetailsTimeWatched;
@@ -76,11 +82,11 @@ namespace RPlayer
 
     private static void SetEnglish()
     {
-      delete = "delete";
+      yes = "Yes";
+      no = "No";
       pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
       noPreFileInPlist = "No previous file in playlist";
       noNextFileInPlist = "No next file in playlist";
-      markAsFinished = "Mark as finished";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -93,10 +99,13 @@ namespace RPlayer
       labelGeneral = "General";
       labelSubtitle = "Subtitle";
       labelAV = "AudioVideo";
+      labelPlist = "Playlist";
 
       uiLangLabel = "UI Language";
+
       checkBoxUpdatePlistAfterLaunch = "Auto update playlist after player launch";
       checkBoxAutoAddFolderToPlist = "Auto add playing folder to playlist";
+      checkBoxDeleteFileDirectly = "Delete plist file directly without asking";
 
       btnPlaylist = "Playlist";
       btnHistory = "Histroy";
@@ -109,6 +118,13 @@ namespace RPlayer
       ComboBoxSortByFileName = "File Name";
       ComboBoxSortByDuration = "Duration";
       messageToSelectItem = "Please select the item that you want to delete first";
+      delete = "delete";
+      markAsFinished = "Mark as finished";
+      PlistFileDeleteWarning = @"
+Warning: This will also delete the source file.
+(delete playlist folder does not delete source folder)
+
+Are you still want to delete it?";
 
       labelDetailsTimeWatched = "Time Watched:";
       labelDetailsDuration = "Duration:";
@@ -121,11 +137,11 @@ namespace RPlayer
 
     private static void SetChinese()
     {
-      delete = "删除";
+      yes = "是的";
+      no = "不了";
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
       noPreFileInPlist = "播放列表中没有上一个文件";
       noNextFileInPlist = "播放列表中没有下一个文件";
-      markAsFinished = "标记为已看完";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";
@@ -138,10 +154,13 @@ namespace RPlayer
       labelGeneral = "一般";
       labelSubtitle = "字幕";
       labelAV = "音视频";
+      labelPlist = "播放列表";
 
       uiLangLabel = "界面语言";
+
       checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
       checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";
+      checkBoxDeleteFileDirectly = "直接删除播放列表中的文件，不用询问";
 
       btnPlaylist = "播放列表";
       btnHistory = "播放历史";
@@ -154,6 +173,13 @@ namespace RPlayer
       ComboBoxSortByFileName = "文件名称";
       ComboBoxSortByDuration = "时长";
       messageToSelectItem = "请先选择要删除的项";
+      delete = "删除";
+      markAsFinished = "标记为已看完";
+      PlistFileDeleteWarning = @"
+警告: 这将同时删除源文件。
+(删除播放列表中的文件夹不会删除源文件夹)
+
+你仍然要删除它吗？";
 
       labelDetailsTimeWatched = "上次看到:";
       labelDetailsDuration = "总时长:";

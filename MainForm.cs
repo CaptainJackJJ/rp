@@ -1289,6 +1289,10 @@ namespace RPlayer
           }
         }
       }
+      else
+      {
+        m_formPlaylist.GetPlistFolderAndFile(url, ref m_curPlistFile, ref m_curPlistFolder);
+      }
 
       FillContextMenuDynamically();
 
@@ -1364,6 +1368,23 @@ namespace RPlayer
       colorSlider_volume.Value = Archive.volume;
 
       m_formPlaylist.UpdateListViewHistroy();
+    }
+
+    // return true means file is playing file and is deleted
+    public bool deletePlayingPlistFile(PlaylistFile file)
+    {
+      if(file == m_curPlistFile)
+      {
+        if (RpCore.IsPlaying())
+        {
+          StopPlay();
+          SwitchPlayingForm(false);
+        }
+        m_curPlistFolder.playlistFiles.Remove(file);
+        m_curPlistFile = null;
+        return true;
+      }
+      return false;
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)

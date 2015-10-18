@@ -29,6 +29,7 @@ namespace RPlayer
 
     private ContextMenuStrip m_contextMenuStrip_plist;
     private ToolStripMenuItem m_toolStripMenuItem_markPlistAsFinished;
+    private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
 
     private Color m_colorFinished = Color.RosyBrown;
     private Color m_colorPlayed = Color.DodgerBlue;
@@ -262,6 +263,24 @@ namespace RPlayer
         UpdatePlayListView(false, Url);
 
       return curPlistFolder;
+    }
+
+    public void GetPlistFolderAndFile(string fileUrl, ref PlaylistFile Plistfile, ref PlaylistFolder Plistfolder)
+    {
+      Plistfile = null;
+      Plistfolder = null;
+      foreach(PlaylistFolder folder in Archive.playlist)
+      {
+        foreach(PlaylistFile file in folder.playlistFiles)
+        {
+          if(file.url == fileUrl)
+          {
+            Plistfile = file;
+            Plistfolder = folder;
+            return;
+          }
+        }
+      }
     }
 
     public void UpdatePlayListView(bool bAllFloder, string folderUrl)
@@ -624,11 +643,18 @@ namespace RPlayer
       if (view.SelectedNode.Parent != null)// selected plist file node
       {
         m_contextMenuStrip_plist.Items.Clear();
+
         m_toolStripMenuItem_markPlistAsFinished = new ToolStripMenuItem();
         m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_markPlistAsFinished);
         m_toolStripMenuItem_markPlistAsFinished.Text = UiLang.markAsFinished;
         m_toolStripMenuItem_markPlistAsFinished.ForeColor = Color.White;
         m_toolStripMenuItem_markPlistAsFinished.Click += toolStripMenuItem_markPlistAsFinished_click;
+
+        m_toolStripMenuItem_deletePlistFile = new ToolStripMenuItem();
+        m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_deletePlistFile);
+        m_toolStripMenuItem_deletePlistFile.Text = UiLang.delete;
+        m_toolStripMenuItem_deletePlistFile.ForeColor = Color.White;
+        m_toolStripMenuItem_deletePlistFile.Click += toolStripMenuItem_deletePlistFile_click;
       }
       else // folder node
       {
@@ -645,5 +671,42 @@ namespace RPlayer
       file.playState = PlaylistFile.enumPlayState.finished;
     }
 
+    private void toolStripMenuItem_deletePlistFile_click(object sender, EventArgs e)
+    {     
+      if(!Archive.deleteFileDirectly)
+      {
+        FormPlistFileDeleteConfirm confirm = new FormPlistFileDeleteConfirm();
+        if (confirm.ShowDialog(this) == DialogResult.No)
+          return;
+      }
+
+      TreeNode node = treeView_playlist.SelectedNode;
+      TreeNode folderNode = node.Parent;
+      PlaylistFile file = node.Tag as PlaylistFile;
+      string url = file.url;
+      if(!m_mainForm.deletePlayingPlistFile(file)) // not playing file
+      {
+        foreach (PlaylistFolder folder in Archive.playlist)
+        {
+          if(folder.playlistFiles.IndexOf(file) != -1)
+          {
+            folder.playlistFiles.Remove(file);
+            break;
+          }          
+        }
+      }
+
+      File.Delete(url);
+
+      foreach(TreeNode fileNode in folderNode.Nodes)
+      {
+        PlaylistFile plistFile = fileNode.Tag as PlaylistFile;
+        if (plistFile.url == url)
+        {
+          folderNode.Nodes.Remove(fileNode);
+          break;
+        }
+      }
+    }
   }
 }

@@ -40,18 +40,22 @@
       this.label_subtitle = new System.Windows.Forms.Label();
       this.label_AV = new System.Windows.Forms.Label();
       this.panel_general = new System.Windows.Forms.Panel();
-      this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
-      this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
       this.label_uiLang = new System.Windows.Forms.Label();
       this.panel_subtitle = new System.Windows.Forms.Panel();
       this.label_fontType = new System.Windows.Forms.Label();
       this.panel_av = new System.Windows.Forms.Panel();
       this.label_volumeAmp = new System.Windows.Forms.Label();
+      this.label_plist = new System.Windows.Forms.Label();
+      this.panel_plist = new System.Windows.Forms.Panel();
+      this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
+      this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
+      this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
       this.panel_av.SuspendLayout();
+      this.panel_plist.SuspendLayout();
       this.SuspendLayout();
       // 
       // label_settings
@@ -190,42 +194,12 @@
       // 
       // panel_general
       // 
-      this.panel_general.Controls.Add(this.checkBox_addPlayingFolderToPlist);
-      this.panel_general.Controls.Add(this.checkBox_updatePlistAfterLaunch);
       this.panel_general.Controls.Add(this.comboBox_uiLang);
       this.panel_general.Controls.Add(this.label_uiLang);
       this.panel_general.Location = new System.Drawing.Point(101, 43);
       this.panel_general.Name = "panel_general";
       this.panel_general.Size = new System.Drawing.Size(422, 465);
       this.panel_general.TabIndex = 15;
-      // 
-      // checkBox_addPlayingFolderToPlist
-      // 
-      this.checkBox_addPlayingFolderToPlist.AutoSize = true;
-      this.checkBox_addPlayingFolderToPlist.Checked = true;
-      this.checkBox_addPlayingFolderToPlist.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox_addPlayingFolderToPlist.ForeColor = System.Drawing.Color.White;
-      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(26, 88);
-      this.checkBox_addPlayingFolderToPlist.Name = "checkBox_addPlayingFolderToPlist";
-      this.checkBox_addPlayingFolderToPlist.Size = new System.Drawing.Size(234, 16);
-      this.checkBox_addPlayingFolderToPlist.TabIndex = 5;
-      this.checkBox_addPlayingFolderToPlist.Text = "Auto add playing folder to playlist";
-      this.checkBox_addPlayingFolderToPlist.UseVisualStyleBackColor = true;
-      this.checkBox_addPlayingFolderToPlist.CheckedChanged += new System.EventHandler(this.checkBox_addPlayingFolderToPlist_CheckedChanged);
-      // 
-      // checkBox_updatePlistAfterLaunch
-      // 
-      this.checkBox_updatePlistAfterLaunch.AutoSize = true;
-      this.checkBox_updatePlistAfterLaunch.Checked = true;
-      this.checkBox_updatePlistAfterLaunch.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox_updatePlistAfterLaunch.ForeColor = System.Drawing.Color.White;
-      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(26, 54);
-      this.checkBox_updatePlistAfterLaunch.Name = "checkBox_updatePlistAfterLaunch";
-      this.checkBox_updatePlistAfterLaunch.Size = new System.Drawing.Size(264, 16);
-      this.checkBox_updatePlistAfterLaunch.TabIndex = 6;
-      this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
-      this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
-      this.checkBox_updatePlistAfterLaunch.CheckedChanged += new System.EventHandler(this.checkBox_updatePlistAfterLaunch_CheckedChanged);
       // 
       // comboBox_uiLang
       // 
@@ -288,15 +262,81 @@
       this.label_volumeAmp.TabIndex = 1;
       this.label_volumeAmp.Text = "音量放大";
       // 
+      // label_plist
+      // 
+      this.label_plist.BackColor = System.Drawing.Color.Transparent;
+      this.label_plist.ForeColor = System.Drawing.Color.White;
+      this.label_plist.Location = new System.Drawing.Point(0, 136);
+      this.label_plist.Name = "label_plist";
+      this.label_plist.Size = new System.Drawing.Size(98, 30);
+      this.label_plist.TabIndex = 13;
+      this.label_plist.Text = "Playlist";
+      this.label_plist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label_plist.Click += new System.EventHandler(this.label_plist_Click);
+      this.label_plist.MouseEnter += new System.EventHandler(this.label_plist_MouseEnter);
+      this.label_plist.MouseLeave += new System.EventHandler(this.label_plist_MouseLeave);
+      // 
+      // panel_plist
+      // 
+      this.panel_plist.Controls.Add(this.checkBox_addPlayingFolderToPlist);
+      this.panel_plist.Controls.Add(this.checkBox_updatePlistAfterLaunch);
+      this.panel_plist.Controls.Add(this.checkBox_deleteFileDirectly);
+      this.panel_plist.Location = new System.Drawing.Point(101, 43);
+      this.panel_plist.Name = "panel_plist";
+      this.panel_plist.Size = new System.Drawing.Size(422, 465);
+      this.panel_plist.TabIndex = 7;
+      // 
+      // checkBox_deleteFileDirectly
+      // 
+      this.checkBox_deleteFileDirectly.AutoSize = true;
+      this.checkBox_deleteFileDirectly.Checked = true;
+      this.checkBox_deleteFileDirectly.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_deleteFileDirectly.ForeColor = System.Drawing.Color.White;
+      this.checkBox_deleteFileDirectly.Location = new System.Drawing.Point(14, 25);
+      this.checkBox_deleteFileDirectly.Name = "checkBox_deleteFileDirectly";
+      this.checkBox_deleteFileDirectly.Size = new System.Drawing.Size(264, 16);
+      this.checkBox_deleteFileDirectly.TabIndex = 7;
+      this.checkBox_deleteFileDirectly.Text = "just delete playlist file without asking";
+      this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
+      this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
+      // 
+      // checkBox_addPlayingFolderToPlist
+      // 
+      this.checkBox_addPlayingFolderToPlist.AutoSize = true;
+      this.checkBox_addPlayingFolderToPlist.Checked = true;
+      this.checkBox_addPlayingFolderToPlist.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_addPlayingFolderToPlist.ForeColor = System.Drawing.Color.White;
+      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(14, 95);
+      this.checkBox_addPlayingFolderToPlist.Name = "checkBox_addPlayingFolderToPlist";
+      this.checkBox_addPlayingFolderToPlist.Size = new System.Drawing.Size(234, 16);
+      this.checkBox_addPlayingFolderToPlist.TabIndex = 8;
+      this.checkBox_addPlayingFolderToPlist.Text = "Auto add playing folder to playlist";
+      this.checkBox_addPlayingFolderToPlist.UseVisualStyleBackColor = true;
+      // 
+      // checkBox_updatePlistAfterLaunch
+      // 
+      this.checkBox_updatePlistAfterLaunch.AutoSize = true;
+      this.checkBox_updatePlistAfterLaunch.Checked = true;
+      this.checkBox_updatePlistAfterLaunch.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_updatePlistAfterLaunch.ForeColor = System.Drawing.Color.White;
+      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(14, 61);
+      this.checkBox_updatePlistAfterLaunch.Name = "checkBox_updatePlistAfterLaunch";
+      this.checkBox_updatePlistAfterLaunch.Size = new System.Drawing.Size(264, 16);
+      this.checkBox_updatePlistAfterLaunch.TabIndex = 9;
+      this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
+      this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
+      // 
       // FormSettings
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 562);
+      this.Controls.Add(this.panel_plist);
+      this.Controls.Add(this.panel_general);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.panel_subtitle);
-      this.Controls.Add(this.panel_general);
+      this.Controls.Add(this.label_plist);
       this.Controls.Add(this.label_AV);
       this.Controls.Add(this.label_subtitle);
       this.Controls.Add(this.label_regular);
@@ -317,6 +357,8 @@
       this.panel_subtitle.PerformLayout();
       this.panel_av.ResumeLayout(false);
       this.panel_av.PerformLayout();
+      this.panel_plist.ResumeLayout(false);
+      this.panel_plist.PerformLayout();
       this.ResumeLayout(false);
 
         }
@@ -335,13 +377,16 @@
         private System.Windows.Forms.Label label_subtitle;
         private System.Windows.Forms.Label label_AV;
         private System.Windows.Forms.Panel panel_general;
-        private System.Windows.Forms.CheckBox checkBox_addPlayingFolderToPlist;
-        private System.Windows.Forms.CheckBox checkBox_updatePlistAfterLaunch;
         private System.Windows.Forms.ComboBox comboBox_uiLang;
         private System.Windows.Forms.Label label_uiLang;
         private System.Windows.Forms.Panel panel_subtitle;
         private System.Windows.Forms.Label label_fontType;
         private System.Windows.Forms.Panel panel_av;
         private System.Windows.Forms.Label label_volumeAmp;
+        private System.Windows.Forms.Label label_plist;
+        private System.Windows.Forms.Panel panel_plist;
+        private System.Windows.Forms.CheckBox checkBox_deleteFileDirectly;
+        private System.Windows.Forms.CheckBox checkBox_addPlayingFolderToPlist;
+        private System.Windows.Forms.CheckBox checkBox_updatePlistAfterLaunch;
     }
 }

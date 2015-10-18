@@ -31,18 +31,18 @@ namespace RPlayer
             {
                 label_settingsClose.Text = "close";
             }
-
-            ConfigByArchive();
         }
 
         private void ConfigByArchive()
         {
+          comboBox_uiLang.Items.Clear();
           comboBox_uiLang.Items.Add(UiLang.langEnglish);
           comboBox_uiLang.Items.Add(UiLang.langChinese);
           comboBox_uiLang.SelectedItem = Archive.lang;
           comboBox_uiLang.SelectedIndexChanged += comboBox_uiLang_SelectedIndexChanged;
           checkBox_updatePlistAfterLaunch.Checked = Archive.updatePlistAfterLaunch;
           checkBox_addPlayingFolderToPlist.Checked = Archive.autoAddFolderToPlist;
+          checkBox_deleteFileDirectly.Checked = Archive.deleteFileDirectly;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,16 +63,21 @@ namespace RPlayer
           label_regular.Text = UiLang.labelGeneral;
           label_subtitle.Text = UiLang.labelSubtitle;
           label_AV.Text = UiLang.labelAV;
+          label_plist.Text = UiLang.labelPlist;
 
           label_uiLang.Text = UiLang.uiLangLabel;
           checkBox_updatePlistAfterLaunch.Text = UiLang.checkBoxUpdatePlistAfterLaunch;
           checkBox_addPlayingFolderToPlist.Text = UiLang.checkBoxAutoAddFolderToPlist;
+          checkBox_deleteFileDirectly.Text = UiLang.checkBoxDeleteFileDirectly;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
         {
           if (m_bShowing)
             return;
+
+          ConfigByArchive();
+
           m_bShowing = true;
           this.Show();
           switch (SettingType)
@@ -95,6 +100,7 @@ namespace RPlayer
           label_regular.BackColor = Color.Transparent;
           label_subtitle.BackColor = Color.Transparent;
           label_AV.BackColor = Color.Transparent;
+          label_plist.BackColor = Color.Transparent;
           this.Hide();
           m_bShowing = false;
           this.TopMost = false;
@@ -164,6 +170,7 @@ namespace RPlayer
             label_regular.BackColor = Color.DodgerBlue;
             label_subtitle.BackColor = Color.Transparent;
             label_AV.BackColor = Color.Transparent;
+            label_plist.BackColor = Color.Transparent;
 
             panel_general.BringToFront();
         }
@@ -175,6 +182,7 @@ namespace RPlayer
             label_regular.BackColor = Color.Transparent;
             label_subtitle.BackColor = Color.DodgerBlue;
             label_AV.BackColor = Color.Transparent;
+            label_plist.BackColor = Color.Transparent;
 
             panel_subtitle.BringToFront();
         }
@@ -186,8 +194,21 @@ namespace RPlayer
             label_regular.BackColor = Color.Transparent;
             label_subtitle.BackColor = Color.Transparent;
             label_AV.BackColor = Color.DodgerBlue;
+            label_plist.BackColor = Color.Transparent;
 
             panel_av.BringToFront();
+        }
+
+        private void showPlistPanel()
+        {
+          if (label_plist.BackColor == Color.DodgerBlue)
+            return;
+          label_regular.BackColor = Color.Transparent;
+          label_subtitle.BackColor = Color.Transparent;
+          label_AV.BackColor = Color.Transparent;
+          label_plist.BackColor = Color.DodgerBlue;
+
+          panel_plist.BringToFront();
         }
 
         private void label_regular_Click(object sender, EventArgs e)
@@ -241,6 +262,23 @@ namespace RPlayer
                 label_AV.BackColor = Color.Transparent;
         }
 
+        private void label_plist_Click(object sender, EventArgs e)
+        {
+          showPlistPanel();
+        }
+
+        private void label_plist_MouseEnter(object sender, EventArgs e)
+        {
+          if (label_plist.BackColor != Color.DodgerBlue)
+            label_plist.BackColor = Color.Silver;
+        }
+
+        private void label_plist_MouseLeave(object sender, EventArgs e)
+        {
+          if (label_plist.BackColor != Color.DodgerBlue)
+            label_plist.BackColor = Color.Transparent;
+        }
+
         private void button_ok_Click(object sender, EventArgs e)
         {
           HideForm();
@@ -259,6 +297,11 @@ namespace RPlayer
         private void checkBox_addPlayingFolderToPlist_CheckedChanged(object sender, EventArgs e)
         {
           Archive.autoAddFolderToPlist = checkBox_addPlayingFolderToPlist.Checked;
+        }
+
+        private void checkBox_deleteFileDirectly_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.deleteFileDirectly = checkBox_deleteFileDirectly.Checked;
         }
     }
 }

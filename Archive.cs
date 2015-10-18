@@ -39,17 +39,17 @@ namespace RPlayer
     static private XmlDocument xml = new XmlDocument();
     static private string xmlFileName = "archive.xml";
     static private string sectionOthers = "/archive/others/";
-    static private string sectionFormPList = "/archive/formPList/";    
-    static private string sectionGeneral = "/archive/general/";
+    static private string sectionFormPList = "/archive/formPList/";
+    static private string sectionGeneralSettings = "/archive/generalSettings/";
+    static private string sectionPlistSettings = "/archive/plistSettings/";
 
+    // others
     static public int volume;
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
     static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
-    static public bool updatePlistAfterLaunch;
-    static public bool autoAddFolderToPlist;
 
-    static public string lang;
+    // formPList
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
     public enum enumSortBy { creationTime, name, duration }
@@ -59,25 +59,26 @@ namespace RPlayer
     static public int formPlistWidth;
     static public int formPlistHeight;
 
+    // generalSettings
+    static public string lang;
+
+    // plistSettings
+    static public bool updatePlistAfterLaunch;
+    static public bool autoAddFolderToPlist;
+    static public bool deleteFileDirectly;
+
+    // histroy
     static public List<HistroyItem> histroy;
+    // playlist
     static public List<PlaylistFolder> playlist;
 
 
     static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
 
-    static public bool Load()
+    static private void LoadOthers()
     {
-      try
-      {
-        xml.Load(xmlFileName);
-      }
-      catch (System.IO.FileNotFoundException)
-      {
-        return false;
-      }
-
       // others
-      XmlNode node = xml.SelectSingleNode(sectionOthers +"volume");
+      XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
       volume = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionOthers + "mute");
       mute = Convert.ToBoolean(node.InnerText);
@@ -91,14 +92,12 @@ namespace RPlayer
       mainFormWidth = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
       mainFormHeight = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "updatePlistAfterLaunch");
-      updatePlistAfterLaunch = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "autoAddFolderToPlist");
-      autoAddFolderToPlist = Convert.ToBoolean(node.InnerText);
+    }
 
-
+    static private void LoadFormPlist()
+    {
       // formPList
-      node = xml.SelectSingleNode(sectionFormPList + "repeat");
+      XmlNode node = xml.SelectSingleNode(sectionFormPList + "repeat");
       repeatPlayback = (enumRepeatPlayback)Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionFormPList + "sortBy");
       sortBy = (enumSortBy)Convert.ToInt32(node.InnerText);
@@ -107,16 +106,33 @@ namespace RPlayer
       node = xml.SelectSingleNode(sectionFormPList + "width");
       formPlistWidth = Convert.ToInt32(node.InnerText);
       node = xml.SelectSingleNode(sectionFormPList + "height");
-      formPlistHeight = Convert.ToInt32(node.InnerText); 
+      formPlistHeight = Convert.ToInt32(node.InnerText);
+    }
 
-      // general
-      node = xml.SelectSingleNode(sectionGeneral + "lang");
+    static private void LoadGeneralSettings()
+    {
+      // generalSettings
+      XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
       lang = node.InnerText;
+    }
 
+    static private void LoadPlistSettings()
+    {
+      // plistSettings
+      XmlNode node = xml.SelectSingleNode(sectionPlistSettings + "updatePlistAfterLaunch");
+      updatePlistAfterLaunch = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionPlistSettings + "autoAddFolderToPlist");
+      autoAddFolderToPlist = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionPlistSettings + "deleteFileDirectly");
+      deleteFileDirectly = Convert.ToBoolean(node.InnerText);
+    }
+
+    static private void LoadHistroy()
+    {
       // histroy
       histroy = new List<HistroyItem>();
-      node = xml.SelectSingleNode("/archive/histroy");
-      if(node != null)
+      XmlNode node = xml.SelectSingleNode("/archive/histroy");
+      if (node != null)
       {
         int count = node.ChildNodes.Count;
         for (int i = count - 1; i >= 0; i--)
@@ -129,10 +145,13 @@ namespace RPlayer
           histroy.Add(item);
         }
       }
+    }
 
+    static private void LoadPlist()
+    {
       // playlist
       playlist = new List<PlaylistFolder>();
-      node = xml.SelectSingleNode("/archive/playlist");
+      XmlNode node = xml.SelectSingleNode("/archive/playlist");
       if (node != null)
       {
         int countFolders = node.ChildNodes.Count;
@@ -140,14 +159,14 @@ namespace RPlayer
         {
           XmlNode childFolderNode = node.ChildNodes[i];
           PlaylistFolder folder = new PlaylistFolder();
-          folder.url = childFolderNode.Attributes["url"].InnerText;                
+          folder.url = childFolderNode.Attributes["url"].InnerText;
           folder.folderName = childFolderNode.Attributes["folderName"].InnerText;
-          folder.expand = Convert.ToBoolean(childFolderNode.Attributes["expand"].InnerText); 
+          folder.expand = Convert.ToBoolean(childFolderNode.Attributes["expand"].InnerText);
           folder.creationTime = childFolderNode.Attributes["creationTime"].InnerText;
 
           folder.playlistFiles = new List<PlaylistFile>();
           int countFiles = childFolderNode.ChildNodes.Count;
-          
+
           for (int j = 0; j < countFiles; j++)
           {
             XmlNode childFileNode = childFolderNode.ChildNodes[j];
@@ -166,11 +185,30 @@ namespace RPlayer
           playlist.Add(folder);
         }
       }
+    }
+
+    static public bool Load()
+    {
+      try
+      {
+        xml.Load(xmlFileName);
+      }
+      catch (System.IO.FileNotFoundException)
+      {
+        return false;
+      }
+
+      LoadOthers();
+      LoadFormPlist();
+      LoadGeneralSettings();
+      LoadPlistSettings();
+      LoadHistroy();
+      LoadPlist();
 
       return true;
     }
 
-    static public void Save()
+    static private void SaveOthers()
     {
       // others
       XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
@@ -186,14 +224,13 @@ namespace RPlayer
       node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
       node.InnerText = mainFormWidth.ToString();
       node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
-      node.InnerText = mainFormHeight.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "updatePlistAfterLaunch");
-      node.InnerText = updatePlistAfterLaunch.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "autoAddFolderToPlist");
-      node.InnerText = autoAddFolderToPlist.ToString();
+      node.InnerText = mainFormHeight.ToString();  
+    }
 
+    static private void SaveFormPlist()
+    {
       // formPList
-      node = xml.SelectSingleNode(sectionFormPList + "repeat");
+      XmlNode node = xml.SelectSingleNode(sectionFormPList + "repeat");
       node.InnerText = ((int)repeatPlayback).ToString();
       node = xml.SelectSingleNode(sectionFormPList + "sortBy");
       node.InnerText = ((int)sortBy).ToString();
@@ -203,14 +240,31 @@ namespace RPlayer
       node.InnerText = formPlistWidth.ToString();
       node = xml.SelectSingleNode(sectionFormPList + "height");
       node.InnerText = formPlistHeight.ToString();
+    }
 
-      // general
-      node = xml.SelectSingleNode(sectionGeneral + "lang");
-      node.InnerText = lang;
+    static private void SaveGeneralSettings()
+    {
+      // generalSettings
+      XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
+      node.InnerText = lang;      
+    }
 
+    static private void SavePlistSettings()
+    {
+      // PlistSettings
+      XmlNode node = xml.SelectSingleNode(sectionPlistSettings + "updatePlistAfterLaunch");
+      node.InnerText = updatePlistAfterLaunch.ToString();
+      node = xml.SelectSingleNode(sectionPlistSettings + "autoAddFolderToPlist");
+      node.InnerText = autoAddFolderToPlist.ToString();
+      node = xml.SelectSingleNode(sectionPlistSettings + "deleteFileDirectly");
+      node.InnerText = deleteFileDirectly.ToString();
+    }
+
+    static private void SaveHistroy()
+    {
       // histroy
-      node = xml.SelectSingleNode("/archive/histroy");
-      if(node != null)
+      XmlNode node = xml.SelectSingleNode("/archive/histroy");
+      if (node != null)
         xml.DocumentElement.RemoveChild(node);
 
       XmlElement histroyElement = xml.CreateElement("histroy");
@@ -230,9 +284,12 @@ namespace RPlayer
         attribute.Value = item.duration.ToString();
         itemElement.Attributes.Append(attribute);
       }
+    }
 
+    static private void SavePlaylist()
+    {
       // playlist
-      node = xml.SelectSingleNode("/archive/playlist");
+      XmlNode node = xml.SelectSingleNode("/archive/playlist");
       if (node != null)
         xml.DocumentElement.RemoveChild(node);
 
@@ -294,6 +351,16 @@ namespace RPlayer
           folderElement.AppendChild(fileElement);
         }
       }
+    }
+
+    static public void Save()
+    {
+      SaveOthers();
+      SaveFormPlist();
+      SaveGeneralSettings();
+      SavePlistSettings();
+      SaveHistroy();
+      SavePlaylist();
 
       xml.Save(xmlFileName);
     }

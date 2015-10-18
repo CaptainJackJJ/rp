@@ -59,6 +59,7 @@ namespace RPlayer
     public static string ComboBoxSortByDurationDown;
     public static string messageToSelectItem;
     public static string delete;
+    public static string update;
     public static string markAsFinished;
     public static string PlistFileDeleteWarning; 
 
@@ -124,7 +125,8 @@ namespace RPlayer
       ComboBoxSortByDurationUp = "Duration Up";
       ComboBoxSortByDurationDown = "Duration Down";
       messageToSelectItem = "Please select the item that you want to delete first";
-      delete = "delete";
+      delete = "Delete";
+      update = "Update";
       markAsFinished = "Mark as finished";
       PlistFileDeleteWarning = @"
 Warning: This will also delete the source file.
@@ -183,6 +185,7 @@ Are you still want to delete it?";
       ComboBoxSortByDurationDown = "时长 降序";
       messageToSelectItem = "请先选择要删除的项";
       delete = "删除";
+      update = "更新";
       markAsFinished = "标记为已看完";
       PlistFileDeleteWarning = @"
 警告: 这将同时删除源文件。

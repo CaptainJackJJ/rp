@@ -29,6 +29,7 @@ namespace RPlayer
     private ContextMenuStrip m_contextMenuStrip_plist;
     private ToolStripMenuItem m_toolStripMenuItem_markPlistAsFinished;
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
+    private ToolStripMenuItem m_toolStripMenuItem_updatePlistFolder;
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
 
     private Color m_colorFinished = Color.RosyBrown;
@@ -174,14 +175,13 @@ namespace RPlayer
       PlaylistFolder curPlistFolder = null;
 
       // Check if folder is already in plist. If so, check which files need be added or deleted
+      List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
       foreach (PlaylistFolder folder in Archive.playlist) 
       {
         if (folder.url != Url)
           continue;
 
         curPlistFolder = folder;
-
-        List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
         foreach (PlaylistFile file in folder.playlistFiles)
         {
           int index = addFiles.IndexOf(file.url);
@@ -201,7 +201,7 @@ namespace RPlayer
         }
       }
 
-      if (addFiles.Count == 0)
+      if (addFiles.Count == 0 && deleteFiles.Count == 0) // Nothing changed
         return curPlistFolder;
 
       if (curPlistFolder == null)
@@ -695,6 +695,12 @@ namespace RPlayer
       {
         m_contextMenuStrip_plist.Items.Clear();
 
+        m_toolStripMenuItem_updatePlistFolder = new ToolStripMenuItem();
+        m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_updatePlistFolder);
+        m_toolStripMenuItem_updatePlistFolder.Text = UiLang.update;
+        m_toolStripMenuItem_updatePlistFolder.ForeColor = Color.White;
+        m_toolStripMenuItem_updatePlistFolder.Click += toolStripMenuItem_updatePlistFolder_click;
+
         m_toolStripMenuItem_deletePlistFolder = new ToolStripMenuItem();
         m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_deletePlistFolder);
         m_toolStripMenuItem_deletePlistFolder.Text = UiLang.delete;
@@ -749,6 +755,14 @@ namespace RPlayer
         }
       }
     }
+
+    private void toolStripMenuItem_updatePlistFolder_click(object sender, EventArgs e)
+    {
+      TreeNode node = treeView_playlist.SelectedNode;
+      PlaylistFolder folder = node.Tag as PlaylistFolder;
+      AddOrUpdatePlaylist(folder.url, true);
+    }
+
 
     private void toolStripMenuItem_deletePlistFolder_click(object sender, EventArgs e)
     {

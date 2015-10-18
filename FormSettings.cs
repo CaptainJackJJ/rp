@@ -13,13 +13,10 @@ namespace RPlayer
     {
         public enum enumSettingFormType { regular,subtitle,av}
 
-        private bool m_bTopBarMouseDown = false;
-        private Point m_TopBarMouseDownPos;
-        FormSettingRegular m_FormSettingRegular;
-        FormSettingSubtitle m_FormSettingSubtitle;
-        FormSettingAv m_FormSettingAv;
         private bool m_bShowing = false;
         public MainForm m_mainForm;
+        private bool m_bTopBarMouseDown = false;
+        private Point m_TopBarMouseDownPos;
 
         public FormSettings(MainForm mainForm)
         {
@@ -35,20 +32,29 @@ namespace RPlayer
                 label_settingsClose.Text = "close";
             }
 
-            m_FormSettingRegular = new FormSettingRegular(this);
-            m_FormSettingSubtitle = new FormSettingSubtitle(this);
-            m_FormSettingAv = new FormSettingAv(this);
-            this.AddOwnedForm(m_FormSettingRegular);
-            this.AddOwnedForm(m_FormSettingSubtitle);
-            this.AddOwnedForm(m_FormSettingAv);
+            ConfigByArchive();
+        }
+
+        private void ConfigByArchive()
+        {
+          comboBox_uiLang.Items.Add(UiLang.langEnglish);
+          comboBox_uiLang.Items.Add(UiLang.langChinese);
+          comboBox_uiLang.SelectedItem = Archive.lang;
+          comboBox_uiLang.SelectedIndexChanged += comboBox_uiLang_SelectedIndexChanged;
+          checkBox_updatePlistAfterLaunch.Checked = Archive.updatePlistAfterLaunch;
+          checkBox_addPlayingFolderToPlist.Checked = Archive.autoAddFolderToPlist;
+        }
+
+        private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          UiLang.SetLang(comboBox_uiLang.SelectedItem as string);
+
+          m_mainForm.SetAllUiLange();
         }
 
         public void SetAllUiLange()
         {
           SetUiLange();
-          m_FormSettingRegular.SetAllUiLange();
-          m_FormSettingSubtitle.SetAllUiLange();
-          m_FormSettingAv.SetAllUiLange();
         }
 
         private void SetUiLange()
@@ -57,6 +63,10 @@ namespace RPlayer
           label_regular.Text = UiLang.labelGeneral;
           label_subtitle.Text = UiLang.labelSubtitle;
           label_AV.Text = UiLang.labelAV;
+
+          label_uiLang.Text = UiLang.uiLangLabel;
+          checkBox_updatePlistAfterLaunch.Text = UiLang.checkBoxUpdatePlistAfterLaunch;
+          checkBox_addPlayingFolderToPlist.Text = UiLang.checkBoxAutoAddFolderToPlist;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
@@ -68,13 +78,13 @@ namespace RPlayer
           switch (SettingType)
           {
             case enumSettingFormType.regular:
-              showRegularForm();
+              showRegularPanel();
               break;
             case enumSettingFormType.subtitle:
-              showSubtitleForm();
+              showSubtitlePanel();
               break;
             case enumSettingFormType.av:
-              showAvForm();
+              showAvPanel();
               break;
           }
           this.TopMost = true;
@@ -85,9 +95,6 @@ namespace RPlayer
           label_regular.BackColor = Color.Transparent;
           label_subtitle.BackColor = Color.Transparent;
           label_AV.BackColor = Color.Transparent;
-          m_FormSettingAv.Hide();
-          m_FormSettingSubtitle.Hide();
-          m_FormSettingRegular.Hide();
           this.Hide();
           m_bShowing = false;
           this.TopMost = false;
@@ -131,39 +138,26 @@ namespace RPlayer
 
         private void panel_topBar_MouseDown(object sender, MouseEventArgs e)
         {
-            m_bTopBarMouseDown = true;
-            m_TopBarMouseDownPos = e.Location;
+          m_bTopBarMouseDown = true;
+          m_TopBarMouseDownPos = e.Location;
         }
 
         private void panel_topBar_MouseMove(object sender, MouseEventArgs e)
         {
-            if (m_bTopBarMouseDown)
-            {
-                int xDiff = e.X - m_TopBarMouseDownPos.X;
-                int yDiff = e.Y - m_TopBarMouseDownPos.Y;
-                this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
-
-                if (label_regular.BackColor == Color.DodgerBlue)
-                {
-                    m_FormSettingRegular.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
-                }
-                else if (label_subtitle.BackColor == Color.DodgerBlue)
-                {
-                    m_FormSettingSubtitle.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
-                }
-                else if (label_AV.BackColor == Color.DodgerBlue)
-                {
-                    m_FormSettingAv.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
-                }
-            }
+          if (m_bTopBarMouseDown)
+          {
+            int xDiff = e.X - m_TopBarMouseDownPos.X;
+            int yDiff = e.Y - m_TopBarMouseDownPos.Y;
+            this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
+          }
         }
 
         private void panel_topBar_MouseUp(object sender, MouseEventArgs e)
         {
-            m_bTopBarMouseDown = false;
+          m_bTopBarMouseDown = false;
         }
 
-        private void showRegularForm()
+        private void showRegularPanel()
         {
             if (label_regular.BackColor == Color.DodgerBlue)
                 return;
@@ -171,13 +165,10 @@ namespace RPlayer
             label_subtitle.BackColor = Color.Transparent;
             label_AV.BackColor = Color.Transparent;
 
-            m_FormSettingSubtitle.Hide();
-            m_FormSettingAv.Hide();
-            m_FormSettingRegular.Show();
-            m_FormSettingRegular.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
+            panel_general.BringToFront();
         }
 
-        private void showSubtitleForm()
+        private void showSubtitlePanel()
         {
             if (label_subtitle.BackColor == Color.DodgerBlue)
                 return;
@@ -185,13 +176,10 @@ namespace RPlayer
             label_subtitle.BackColor = Color.DodgerBlue;
             label_AV.BackColor = Color.Transparent;
 
-            m_FormSettingAv.Hide();
-            m_FormSettingSubtitle.Show();
-            m_FormSettingRegular.Hide();
-            m_FormSettingSubtitle.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
+            panel_subtitle.BringToFront();
         }
 
-        private void showAvForm()
+        private void showAvPanel()
         {
             if (label_AV.BackColor == Color.DodgerBlue)
                 return;
@@ -199,15 +187,12 @@ namespace RPlayer
             label_subtitle.BackColor = Color.Transparent;
             label_AV.BackColor = Color.DodgerBlue;
 
-            m_FormSettingAv.Show();
-            m_FormSettingSubtitle.Hide();
-            m_FormSettingRegular.Hide();
-            m_FormSettingAv.Location = new Point(this.Location.X + 100, this.Location.Y + 43);
+            panel_av.BringToFront();
         }
 
         private void label_regular_Click(object sender, EventArgs e)
         {
-            showRegularForm();            
+            showRegularPanel();            
         }
 
         private void label_regular_MouseEnter(object sender, EventArgs e)
@@ -224,7 +209,7 @@ namespace RPlayer
 
         private void label_subtitle_Click(object sender, EventArgs e)
         {
-            showSubtitleForm();
+            showSubtitlePanel();
         }
 
         private void label_subtitle_MouseEnter(object sender, EventArgs e)
@@ -241,7 +226,7 @@ namespace RPlayer
 
         private void label_AV_Click(object sender, EventArgs e)
         {
-            showAvForm();
+            showAvPanel();
         }
 
         private void label_AV_MouseEnter(object sender, EventArgs e)
@@ -264,6 +249,16 @@ namespace RPlayer
         private void button_cancel_Click(object sender, EventArgs e)
         {
           HideForm();
+        }
+
+        private void checkBox_updatePlistAfterLaunch_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.updatePlistAfterLaunch = checkBox_updatePlistAfterLaunch.Checked;
+        }
+
+        private void checkBox_addPlayingFolderToPlist_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.autoAddFolderToPlist = checkBox_addPlayingFolderToPlist.Checked;
         }
     }
 }

@@ -39,7 +39,19 @@
       this.label_regular = new System.Windows.Forms.Label();
       this.label_subtitle = new System.Windows.Forms.Label();
       this.label_AV = new System.Windows.Forms.Label();
+      this.panel_general = new System.Windows.Forms.Panel();
+      this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
+      this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
+      this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
+      this.label_uiLang = new System.Windows.Forms.Label();
+      this.panel_subtitle = new System.Windows.Forms.Panel();
+      this.label_fontType = new System.Windows.Forms.Label();
+      this.panel_av = new System.Windows.Forms.Panel();
+      this.label_volumeAmp = new System.Windows.Forms.Label();
       this.panel_topBar.SuspendLayout();
+      this.panel_general.SuspendLayout();
+      this.panel_subtitle.SuspendLayout();
+      this.panel_av.SuspendLayout();
       this.SuspendLayout();
       // 
       // label_settings
@@ -176,12 +188,115 @@
       this.label_AV.MouseEnter += new System.EventHandler(this.label_AV_MouseEnter);
       this.label_AV.MouseLeave += new System.EventHandler(this.label_AV_MouseLeave);
       // 
+      // panel_general
+      // 
+      this.panel_general.Controls.Add(this.checkBox_addPlayingFolderToPlist);
+      this.panel_general.Controls.Add(this.checkBox_updatePlistAfterLaunch);
+      this.panel_general.Controls.Add(this.comboBox_uiLang);
+      this.panel_general.Controls.Add(this.label_uiLang);
+      this.panel_general.Location = new System.Drawing.Point(101, 43);
+      this.panel_general.Name = "panel_general";
+      this.panel_general.Size = new System.Drawing.Size(422, 465);
+      this.panel_general.TabIndex = 15;
+      // 
+      // checkBox_addPlayingFolderToPlist
+      // 
+      this.checkBox_addPlayingFolderToPlist.AutoSize = true;
+      this.checkBox_addPlayingFolderToPlist.Checked = true;
+      this.checkBox_addPlayingFolderToPlist.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_addPlayingFolderToPlist.ForeColor = System.Drawing.Color.White;
+      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(26, 88);
+      this.checkBox_addPlayingFolderToPlist.Name = "checkBox_addPlayingFolderToPlist";
+      this.checkBox_addPlayingFolderToPlist.Size = new System.Drawing.Size(234, 16);
+      this.checkBox_addPlayingFolderToPlist.TabIndex = 5;
+      this.checkBox_addPlayingFolderToPlist.Text = "Auto add playing folder to playlist";
+      this.checkBox_addPlayingFolderToPlist.UseVisualStyleBackColor = true;
+      this.checkBox_addPlayingFolderToPlist.CheckedChanged += new System.EventHandler(this.checkBox_addPlayingFolderToPlist_CheckedChanged);
+      // 
+      // checkBox_updatePlistAfterLaunch
+      // 
+      this.checkBox_updatePlistAfterLaunch.AutoSize = true;
+      this.checkBox_updatePlistAfterLaunch.Checked = true;
+      this.checkBox_updatePlistAfterLaunch.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_updatePlistAfterLaunch.ForeColor = System.Drawing.Color.White;
+      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(26, 54);
+      this.checkBox_updatePlistAfterLaunch.Name = "checkBox_updatePlistAfterLaunch";
+      this.checkBox_updatePlistAfterLaunch.Size = new System.Drawing.Size(264, 16);
+      this.checkBox_updatePlistAfterLaunch.TabIndex = 6;
+      this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
+      this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
+      this.checkBox_updatePlistAfterLaunch.CheckedChanged += new System.EventHandler(this.checkBox_updatePlistAfterLaunch_CheckedChanged);
+      // 
+      // comboBox_uiLang
+      // 
+      this.comboBox_uiLang.BackColor = System.Drawing.SystemColors.WindowFrame;
+      this.comboBox_uiLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.comboBox_uiLang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.comboBox_uiLang.ForeColor = System.Drawing.Color.White;
+      this.comboBox_uiLang.FormattingEnabled = true;
+      this.comboBox_uiLang.Location = new System.Drawing.Point(107, 7);
+      this.comboBox_uiLang.Name = "comboBox_uiLang";
+      this.comboBox_uiLang.Size = new System.Drawing.Size(130, 20);
+      this.comboBox_uiLang.TabIndex = 4;
+      // 
+      // label_uiLang
+      // 
+      this.label_uiLang.AutoSize = true;
+      this.label_uiLang.BackColor = System.Drawing.Color.Transparent;
+      this.label_uiLang.ForeColor = System.Drawing.Color.White;
+      this.label_uiLang.Location = new System.Drawing.Point(24, 10);
+      this.label_uiLang.Name = "label_uiLang";
+      this.label_uiLang.Size = new System.Drawing.Size(71, 12);
+      this.label_uiLang.TabIndex = 3;
+      this.label_uiLang.Text = "UI Language";
+      // 
+      // panel_subtitle
+      // 
+      this.panel_subtitle.Controls.Add(this.label_fontType);
+      this.panel_subtitle.Location = new System.Drawing.Point(101, 43);
+      this.panel_subtitle.Name = "panel_subtitle";
+      this.panel_subtitle.Size = new System.Drawing.Size(422, 465);
+      this.panel_subtitle.TabIndex = 7;
+      // 
+      // label_fontType
+      // 
+      this.label_fontType.AutoSize = true;
+      this.label_fontType.BackColor = System.Drawing.Color.Transparent;
+      this.label_fontType.ForeColor = System.Drawing.Color.White;
+      this.label_fontType.Location = new System.Drawing.Point(24, 19);
+      this.label_fontType.Name = "label_fontType";
+      this.label_fontType.Size = new System.Drawing.Size(29, 12);
+      this.label_fontType.TabIndex = 1;
+      this.label_fontType.Text = "字体";
+      // 
+      // panel_av
+      // 
+      this.panel_av.Controls.Add(this.label_volumeAmp);
+      this.panel_av.Location = new System.Drawing.Point(101, 43);
+      this.panel_av.Name = "panel_av";
+      this.panel_av.Size = new System.Drawing.Size(422, 465);
+      this.panel_av.TabIndex = 2;
+      // 
+      // label_volumeAmp
+      // 
+      this.label_volumeAmp.AutoSize = true;
+      this.label_volumeAmp.BackColor = System.Drawing.Color.Transparent;
+      this.label_volumeAmp.ForeColor = System.Drawing.Color.White;
+      this.label_volumeAmp.Location = new System.Drawing.Point(24, 19);
+      this.label_volumeAmp.Name = "label_volumeAmp";
+      this.label_volumeAmp.Size = new System.Drawing.Size(53, 12);
+      this.label_volumeAmp.TabIndex = 1;
+      this.label_volumeAmp.Text = "音量放大";
+      // 
       // FormSettings
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 562);
+      this.Controls.Add(this.panel_av);
+      this.Controls.Add(this.panel_subtitle);
+      this.Controls.Add(this.panel_general);
       this.Controls.Add(this.label_AV);
       this.Controls.Add(this.label_subtitle);
       this.Controls.Add(this.label_regular);
@@ -196,6 +311,12 @@
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.panel_topBar.ResumeLayout(false);
       this.panel_topBar.PerformLayout();
+      this.panel_general.ResumeLayout(false);
+      this.panel_general.PerformLayout();
+      this.panel_subtitle.ResumeLayout(false);
+      this.panel_subtitle.PerformLayout();
+      this.panel_av.ResumeLayout(false);
+      this.panel_av.PerformLayout();
       this.ResumeLayout(false);
 
         }
@@ -213,5 +334,14 @@
         private System.Windows.Forms.Label label_regular;
         private System.Windows.Forms.Label label_subtitle;
         private System.Windows.Forms.Label label_AV;
+        private System.Windows.Forms.Panel panel_general;
+        private System.Windows.Forms.CheckBox checkBox_addPlayingFolderToPlist;
+        private System.Windows.Forms.CheckBox checkBox_updatePlistAfterLaunch;
+        private System.Windows.Forms.ComboBox comboBox_uiLang;
+        private System.Windows.Forms.Label label_uiLang;
+        private System.Windows.Forms.Panel panel_subtitle;
+        private System.Windows.Forms.Label label_fontType;
+        private System.Windows.Forms.Panel panel_av;
+        private System.Windows.Forms.Label label_volumeAmp;
     }
 }

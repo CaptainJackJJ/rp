@@ -32,9 +32,6 @@
       this.label_settingsClose = new System.Windows.Forms.Label();
       this.panel_topBar = new System.Windows.Forms.Panel();
       this.label_topBarLine = new System.Windows.Forms.Label();
-      this.label_bottomBarLine = new System.Windows.Forms.Label();
-      this.button_ok = new System.Windows.Forms.Button();
-      this.button_cancel = new System.Windows.Forms.Button();
       this.label_leftLine = new System.Windows.Forms.Label();
       this.label_regular = new System.Windows.Forms.Label();
       this.label_subtitle = new System.Windows.Forms.Label();
@@ -104,50 +101,12 @@
       this.label_topBarLine.Size = new System.Drawing.Size(525, 1);
       this.label_topBarLine.TabIndex = 4;
       // 
-      // label_bottomBarLine
-      // 
-      this.label_bottomBarLine.BackColor = System.Drawing.Color.Silver;
-      this.label_bottomBarLine.Location = new System.Drawing.Point(0, 511);
-      this.label_bottomBarLine.Name = "label_bottomBarLine";
-      this.label_bottomBarLine.Size = new System.Drawing.Size(525, 1);
-      this.label_bottomBarLine.TabIndex = 5;
-      // 
-      // button_ok
-      // 
-      this.button_ok.BackColor = System.Drawing.Color.DimGray;
-      this.button_ok.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_ok.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-      this.button_ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_ok.ForeColor = System.Drawing.Color.White;
-      this.button_ok.Location = new System.Drawing.Point(333, 527);
-      this.button_ok.Name = "button_ok";
-      this.button_ok.Size = new System.Drawing.Size(75, 23);
-      this.button_ok.TabIndex = 7;
-      this.button_ok.Text = "OK";
-      this.button_ok.UseVisualStyleBackColor = false;
-      this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
-      // 
-      // button_cancel
-      // 
-      this.button_cancel.BackColor = System.Drawing.Color.DimGray;
-      this.button_cancel.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_cancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-      this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_cancel.ForeColor = System.Drawing.Color.White;
-      this.button_cancel.Location = new System.Drawing.Point(433, 527);
-      this.button_cancel.Name = "button_cancel";
-      this.button_cancel.Size = new System.Drawing.Size(75, 23);
-      this.button_cancel.TabIndex = 8;
-      this.button_cancel.Text = "Cancel";
-      this.button_cancel.UseVisualStyleBackColor = false;
-      this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
-      // 
       // label_leftLine
       // 
       this.label_leftLine.BackColor = System.Drawing.Color.Silver;
       this.label_leftLine.Location = new System.Drawing.Point(98, 42);
       this.label_leftLine.Name = "label_leftLine";
-      this.label_leftLine.Size = new System.Drawing.Size(1, 469);
+      this.label_leftLine.Size = new System.Drawing.Size(1, 496);
       this.label_leftLine.TabIndex = 9;
       // 
       // label_regular
@@ -198,7 +157,7 @@
       this.panel_general.Controls.Add(this.label_uiLang);
       this.panel_general.Location = new System.Drawing.Point(101, 43);
       this.panel_general.Name = "panel_general";
-      this.panel_general.Size = new System.Drawing.Size(422, 465);
+      this.panel_general.Size = new System.Drawing.Size(422, 495);
       this.panel_general.TabIndex = 15;
       // 
       // comboBox_uiLang
@@ -229,7 +188,7 @@
       this.panel_subtitle.Controls.Add(this.label_fontType);
       this.panel_subtitle.Location = new System.Drawing.Point(101, 43);
       this.panel_subtitle.Name = "panel_subtitle";
-      this.panel_subtitle.Size = new System.Drawing.Size(422, 465);
+      this.panel_subtitle.Size = new System.Drawing.Size(422, 495);
       this.panel_subtitle.TabIndex = 7;
       // 
       // label_fontType
@@ -248,7 +207,7 @@
       this.panel_av.Controls.Add(this.label_volumeAmp);
       this.panel_av.Location = new System.Drawing.Point(101, 43);
       this.panel_av.Name = "panel_av";
-      this.panel_av.Size = new System.Drawing.Size(422, 465);
+      this.panel_av.Size = new System.Drawing.Size(422, 495);
       this.panel_av.TabIndex = 2;
       // 
       // label_volumeAmp
@@ -283,7 +242,7 @@
       this.panel_plist.Controls.Add(this.checkBox_deleteFileDirectly);
       this.panel_plist.Location = new System.Drawing.Point(101, 43);
       this.panel_plist.Name = "panel_plist";
-      this.panel_plist.Size = new System.Drawing.Size(422, 465);
+      this.panel_plist.Size = new System.Drawing.Size(422, 495);
       this.panel_plist.TabIndex = 7;
       // 
       // checkBox_deleteFileDirectly
@@ -331,7 +290,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
-      this.ClientSize = new System.Drawing.Size(525, 562);
+      this.ClientSize = new System.Drawing.Size(525, 539);
       this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_general);
       this.Controls.Add(this.panel_av);
@@ -341,9 +300,6 @@
       this.Controls.Add(this.label_subtitle);
       this.Controls.Add(this.label_regular);
       this.Controls.Add(this.label_leftLine);
-      this.Controls.Add(this.button_cancel);
-      this.Controls.Add(this.button_ok);
-      this.Controls.Add(this.label_bottomBarLine);
       this.Controls.Add(this.label_topBarLine);
       this.Controls.Add(this.panel_topBar);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -369,9 +325,6 @@
         private System.Windows.Forms.Label label_settingsClose;
         private System.Windows.Forms.Panel panel_topBar;
         private System.Windows.Forms.Label label_topBarLine;
-        private System.Windows.Forms.Label label_bottomBarLine;
-        private System.Windows.Forms.Button button_ok;
-        private System.Windows.Forms.Button button_cancel;
         private System.Windows.Forms.Label label_leftLine;
         private System.Windows.Forms.Label label_regular;
         private System.Windows.Forms.Label label_subtitle;

@@ -30,6 +30,7 @@ namespace RPlayer
     private ContextMenuStrip m_contextMenuStrip_plist;
     private ToolStripMenuItem m_toolStripMenuItem_markPlistAsFinished;
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
+    private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
 
     private Color m_colorFinished = Color.RosyBrown;
     private Color m_colorPlayed = Color.DodgerBlue;
@@ -659,6 +660,12 @@ namespace RPlayer
       else // folder node
       {
         m_contextMenuStrip_plist.Items.Clear();
+
+        m_toolStripMenuItem_deletePlistFolder = new ToolStripMenuItem();
+        m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_deletePlistFolder);
+        m_toolStripMenuItem_deletePlistFolder.Text = UiLang.delete;
+        m_toolStripMenuItem_deletePlistFolder.ForeColor = Color.White;
+        m_toolStripMenuItem_deletePlistFolder.Click += toolStripMenuItem_deletePlistFolder_click;
       }
     }
 
@@ -707,6 +714,15 @@ namespace RPlayer
           break;
         }
       }
+    }
+
+    private void toolStripMenuItem_deletePlistFolder_click(object sender, EventArgs e)
+    {
+      TreeNode node = treeView_playlist.SelectedNode;
+      PlaylistFolder folder = node.Tag as PlaylistFolder;
+      m_mainForm.deletePlayingPlistFolder(folder);
+      Archive.playlist.Remove(folder);
+      treeView_playlist.Nodes.Remove(node);
     }
   }
 }

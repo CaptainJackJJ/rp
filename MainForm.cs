@@ -1076,7 +1076,7 @@ namespace RPlayer
     {
       StopPlay();
 
-      if (m_curPlistFolder != null)
+      if (m_curPlistFolder != null && m_curPlistFile != null)
       {
         int index = m_curPlistFolder.playlistFiles.IndexOf(m_curPlistFile);
         if(index != -1 )
@@ -1343,21 +1343,24 @@ namespace RPlayer
         }
       }
 
-      PlaylistFile.enumPlayState playState;
-      if (curPlayingTime == 0)
+      if (m_curPlistFile != null)
       {
-        playState = PlaylistFile.enumPlayState.finished;
-        m_curPlistFile.timeWatched = 0;
-      }
-      else
-      {
-        playState = PlaylistFile.enumPlayState.played;
-        m_curPlistFile.timeWatched = curPlayingTime;
-      }
-      if(playState != m_curPlistFile.playState)
-      {
-        m_curPlistFile.playState = playState;
-        m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
+        PlaylistFile.enumPlayState playState;
+        if (curPlayingTime == 0)
+        {
+          playState = PlaylistFile.enumPlayState.finished;
+          m_curPlistFile.timeWatched = 0;
+        }
+        else
+        {
+          playState = PlaylistFile.enumPlayState.played;
+          m_curPlistFile.timeWatched = curPlayingTime;
+        }
+        if (playState != m_curPlistFile.playState && m_curPlistFolder != null)
+        {
+          m_curPlistFile.playState = playState;
+          m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
+        }
       }
 
       m_bStopPlayCalled = true;
@@ -1368,6 +1371,14 @@ namespace RPlayer
       colorSlider_volume.Value = Archive.volume;
 
       m_formPlaylist.UpdateListViewHistroy();
+    }
+
+    public void deletePlayingPlistFolder(PlaylistFolder file)
+    {
+      if (file != m_curPlistFolder)
+        return;
+      m_curPlistFile = null;
+      m_curPlistFolder = null;
     }
 
     // return true means file is playing file and is deleted

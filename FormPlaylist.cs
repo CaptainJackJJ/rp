@@ -23,6 +23,7 @@ namespace RPlayer
     private FormPlistFolderDetails m_formPlistFolderDetails;
     private ContextMenuStrip m_contextMenuStrip_histroy;
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
+    private ToolStripMenuItem m_toolStripMenuItem_markHistroyAsFinished;
     private bool m_bFirstShowHistroy = true;
     private bool m_bFirstShowPlaylist = true;
 
@@ -58,6 +59,12 @@ namespace RPlayer
       m_contextMenuStrip_histroy.Renderer = new CustomToolStripProfessionalRenderer();
       listView_histroy.ContextMenuStrip = m_contextMenuStrip_histroy;
 
+      m_toolStripMenuItem_markHistroyAsFinished = new ToolStripMenuItem();
+      m_contextMenuStrip_histroy.Items.Add(m_toolStripMenuItem_markHistroyAsFinished);
+      m_toolStripMenuItem_markHistroyAsFinished.Text = UiLang.markAsFinished;
+      m_toolStripMenuItem_markHistroyAsFinished.ForeColor = Color.White;
+      m_toolStripMenuItem_markHistroyAsFinished.Click += toolStripMenuItem_markHistroyAsFinished_click;
+
       m_toolStripMenuItem_histroyDelete = new ToolStripMenuItem();
       m_contextMenuStrip_histroy.Items.Add(m_toolStripMenuItem_histroyDelete);
       m_toolStripMenuItem_histroyDelete.Text = UiLang.delete;
@@ -81,8 +88,24 @@ namespace RPlayer
         foreach(ListViewItem item in listView_histroy.SelectedItems)
         {
           Archive.histroy.Remove(item.Tag as HistroyItem);
+          listView_histroy.Items.Remove(item);
         }
-        UpdateListViewHistroy();
+      }
+    }
+
+    private void toolStripMenuItem_markHistroyAsFinished_click(object sender, EventArgs e)
+    {
+      int count = listView_histroy.SelectedItems.Count;
+      if(count == 0)
+        MessageBox.Show(UiLang.messageToSelectItem);
+      else
+      {
+        foreach(ListViewItem item in listView_histroy.SelectedItems)
+        {
+          HistroyItem histroyItem = item.Tag as HistroyItem;
+          histroyItem.timeWatched = 0;
+          item.ForeColor = m_colorFinished;
+        }
       }
     }
 
@@ -389,9 +412,9 @@ namespace RPlayer
         listItem.Text = System.IO.Path.GetFileName(uri.LocalPath);
         listItem.Tag = item;
         if ((int)item.timeWatched != 0)
-          listItem.ForeColor = m_colorFinished;
-        else
           listItem.ForeColor = m_colorPlayed;
+        else
+          listItem.ForeColor = m_colorFinished;
         listView_histroy.Items.Add(listItem);
       }
     }

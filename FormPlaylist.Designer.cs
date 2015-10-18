@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -159,14 +159,15 @@
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
       this.listView_histroy.TabIndex = 37;
       this.listView_histroy.UseCompatibleStateImageBehavior = false;
       this.listView_histroy.View = System.Windows.Forms.View.List;
+      this.listView_histroy.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.listView_histroy_ItemMouseHover);
       this.listView_histroy.DoubleClick += new System.EventHandler(this.listView_histroy_DoubleClick);
       this.listView_histroy.MouseLeave += new System.EventHandler(this.listView_histroy_MouseLeave);
       this.listView_histroy.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listView_histroy_MouseMove);

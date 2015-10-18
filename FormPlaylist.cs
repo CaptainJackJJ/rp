@@ -21,7 +21,6 @@ namespace RPlayer
     private FormHistroyDetails m_formHistroyDetails;
     private FormPlistFileDetails m_formPlistFileDetails;
     private FormPlistFolderDetails m_formPlistFolderDetails;
-    private ListViewItem m_viewItemFocusingHistroy;
     private ContextMenuStrip m_contextMenuStrip_histroy;
     private ToolStripMenuItem m_toolStripMenuItem_histroyDelete;
     private bool m_bFirstShowHistroy = true;
@@ -527,37 +526,36 @@ namespace RPlayer
     {
       ListView view = sender as ListView;
       ListViewItem viewItem = view.GetItemAt(e.X, e.Y);
-      if (viewItem != null)
+      if (viewItem == null)
       {
-        if (m_viewItemFocusingHistroy == viewItem 
-          || listView_histroy.SelectedItems.Count > 1)
-          return;
-        m_viewItemFocusingHistroy = viewItem;
-        HistroyItem item = viewItem.Tag as HistroyItem;
-
-        m_formHistroyDetails.Location = view.PointToScreen(new Point(e.X + 3, e.Y + 3));
-        TimeSpan t = TimeSpan.FromSeconds(item.duration);
-        string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                      t.Hours, t.Minutes, t.Seconds);
-        string strTimeWatched = UiLang.labelDetailsFinished;
-        if ((int)item.timeWatched != 0)
-        {
-          t = TimeSpan.FromSeconds(item.timeWatched);
-          strTimeWatched = string.Format("{0:D2} : {1:D2} : {2:D2}",
-                        t.Hours, t.Minutes, t.Seconds);
-        }
-        m_formHistroyDetails.ShowForm(strTimeWatched, strDuration, item.url);
-      }
-      else
-      {
-        m_viewItemFocusingHistroy = null;
         m_formHistroyDetails.Hide();
       }
     }
 
+    private void listView_histroy_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+    {
+      ListView view = sender as ListView;
+      ListViewItem viewItem = e.Item;
+
+      HistroyItem item = viewItem.Tag as HistroyItem;
+
+      m_formHistroyDetails.Location 
+        = new Point(Control.MousePosition.X + 20, Control.MousePosition.Y + 3);
+      TimeSpan t = TimeSpan.FromSeconds(item.duration);
+      string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                    t.Hours, t.Minutes, t.Seconds);
+      string strTimeWatched = UiLang.labelDetailsFinished;
+      if ((int)item.timeWatched != 0)
+      {
+        t = TimeSpan.FromSeconds(item.timeWatched);
+        strTimeWatched = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                      t.Hours, t.Minutes, t.Seconds);
+      }
+      m_formHistroyDetails.ShowForm(strTimeWatched, strDuration, item.url);
+    }
+
     private void listView_histroy_MouseLeave(object sender, EventArgs e)
     {
-      m_viewItemFocusingHistroy = null;
       m_formHistroyDetails.Hide();
     }
 

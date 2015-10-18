@@ -51,11 +51,11 @@
       this.textBox_url.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.textBox_url.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.textBox_url.ForeColor = System.Drawing.Color.White;
-      this.textBox_url.Location = new System.Drawing.Point(39, 41);
+      this.textBox_url.Location = new System.Drawing.Point(13, 58);
       this.textBox_url.Multiline = true;
       this.textBox_url.Name = "textBox_url";
       this.textBox_url.ReadOnly = true;
-      this.textBox_url.Size = new System.Drawing.Size(175, 49);
+      this.textBox_url.Size = new System.Drawing.Size(201, 49);
       this.textBox_url.TabIndex = 36;
       this.textBox_url.TabStop = false;
       this.textBox_url.Text = "D:\\迅雷下载\\Modern.Family.S03E01.HDTV.XviD-75Mb-Arnarcool.mp4";
@@ -87,7 +87,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.DimGray;
-      this.ClientSize = new System.Drawing.Size(225, 101);
+      this.ClientSize = new System.Drawing.Size(225, 115);
       this.Controls.Add(this.textBox_url);
       this.Controls.Add(this.label_url);
       this.Controls.Add(this.label_creationTime);

@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -159,8 +159,8 @@
       this.listView_histroy.BackColor = System.Drawing.Color.DimGray;
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);

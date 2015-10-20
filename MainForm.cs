@@ -928,10 +928,12 @@ namespace RPlayer
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
         this.WindowState = FormWindowState.Normal;
         m_formBottomBar.Opacity = 1;
-        m_formBottomBar.Show();
+        if (m_bPlayingForm)
+          m_formBottomBar.Show();
         m_formBottomBar.ShowHidePlaylistLabel(true);
         m_formTopBar.Opacity = 1;
-        m_formTopBar.Show();
+        if (m_bPlayingForm)
+          m_formTopBar.Show();
         if (Archive.plistShowingInNoneDesktop)
         {
           m_formPlaylist.Show();

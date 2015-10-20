@@ -1291,7 +1291,7 @@ namespace RPlayer
       }
       else
       {
-        m_formPlaylist.GetPlistFolderAndFile(url, ref m_curPlistFile, ref m_curPlistFolder);
+        m_formPlaylist.GetPlistFolderAndFile(url, out m_curPlistFile, out m_curPlistFolder);
       }
 
       FillContextMenuDynamically();

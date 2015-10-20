@@ -321,7 +321,7 @@ namespace RPlayer
       UpdatePlayListView(true, "");
     }
 
-    public void GetPlistFolderAndFile(string fileUrl, ref PlaylistFile Plistfile, ref PlaylistFolder Plistfolder)
+    public void GetPlistFolderAndFile(string fileUrl, out PlaylistFile Plistfile, out PlaylistFolder Plistfolder)
     {
       Plistfile = null;
       Plistfolder = null;

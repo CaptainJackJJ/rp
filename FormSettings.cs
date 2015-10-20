@@ -43,6 +43,10 @@ namespace RPlayer
           checkBox_updatePlistAfterLaunch.Checked = Archive.updatePlistAfterLaunch;
           checkBox_addPlayingFolderToPlist.Checked = Archive.autoAddFolderToPlist;
           checkBox_deleteFileDirectly.Checked = Archive.deleteFileDirectly;
+
+          if (Archive.snapSavePath == "")
+            Archive.snapSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+          textBox_snapSavePath.Text = Archive.snapSavePath;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,6 +73,9 @@ namespace RPlayer
           checkBox_updatePlistAfterLaunch.Text = UiLang.checkBoxUpdatePlistAfterLaunch;
           checkBox_addPlayingFolderToPlist.Text = UiLang.checkBoxAutoAddFolderToPlist;
           checkBox_deleteFileDirectly.Text = UiLang.checkBoxDeleteFileDirectly;
+
+          label_snapSavePath.Text = UiLang.labelSnapSavePath;
+          button_snapSavePath.Text = UiLang.btnBrowse;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
@@ -302,6 +309,15 @@ namespace RPlayer
         private void checkBox_deleteFileDirectly_CheckedChanged(object sender, EventArgs e)
         {
           Archive.deleteFileDirectly = checkBox_deleteFileDirectly.Checked;
+        }
+
+        private void button_snapSavePath_Click(object sender, EventArgs e)
+        {
+          FolderBrowserDialog fbd = new FolderBrowserDialog();
+          DialogResult result = fbd.ShowDialog();
+
+          Archive.snapSavePath = fbd.SelectedPath;
+          textBox_snapSavePath.Text = Archive.snapSavePath; 
         }
     }
 }

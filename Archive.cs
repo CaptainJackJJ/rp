@@ -61,6 +61,7 @@ namespace RPlayer
 
     // generalSettings
     static public string lang;
+    static public string snapSavePath;
 
     // plistSettings
     static public bool updatePlistAfterLaunch;
@@ -114,6 +115,8 @@ namespace RPlayer
       // generalSettings
       XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
       lang = node.InnerText;
+      node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
+      snapSavePath = node.InnerText;
     }
 
     static private void LoadPlistSettings()
@@ -246,7 +249,9 @@ namespace RPlayer
     {
       // generalSettings
       XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
-      node.InnerText = lang;      
+      node.InnerText = lang;
+      node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
+      node.InnerText = snapSavePath; 
     }
 
     static private void SavePlistSettings()

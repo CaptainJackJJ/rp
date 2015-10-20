@@ -48,6 +48,9 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
+      this.label_snapSavePath = new System.Windows.Forms.Label();
+      this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
+      this.button_snapSavePath = new System.Windows.Forms.Button();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -153,8 +156,12 @@
       // 
       // panel_general
       // 
+      this.panel_general.Controls.Add(this.button_snapSavePath);
+      this.panel_general.Controls.Add(this.textBox_snapSavePath);
       this.panel_general.Controls.Add(this.comboBox_uiLang);
+      this.panel_general.Controls.Add(this.label_snapSavePath);
       this.panel_general.Controls.Add(this.label_uiLang);
+      this.panel_general.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.panel_general.Location = new System.Drawing.Point(101, 43);
       this.panel_general.Name = "panel_general";
       this.panel_general.Size = new System.Drawing.Size(422, 495);
@@ -169,7 +176,7 @@
       this.comboBox_uiLang.FormattingEnabled = true;
       this.comboBox_uiLang.Location = new System.Drawing.Point(107, 7);
       this.comboBox_uiLang.Name = "comboBox_uiLang";
-      this.comboBox_uiLang.Size = new System.Drawing.Size(130, 20);
+      this.comboBox_uiLang.Size = new System.Drawing.Size(130, 22);
       this.comboBox_uiLang.TabIndex = 4;
       // 
       // label_uiLang
@@ -179,7 +186,7 @@
       this.label_uiLang.ForeColor = System.Drawing.Color.White;
       this.label_uiLang.Location = new System.Drawing.Point(24, 10);
       this.label_uiLang.Name = "label_uiLang";
-      this.label_uiLang.Size = new System.Drawing.Size(71, 12);
+      this.label_uiLang.Size = new System.Drawing.Size(84, 14);
       this.label_uiLang.TabIndex = 3;
       this.label_uiLang.Text = "UI Language";
       // 
@@ -287,14 +294,55 @@
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
       // 
+      // label_snapSavePath
+      // 
+      this.label_snapSavePath.AutoSize = true;
+      this.label_snapSavePath.BackColor = System.Drawing.Color.Transparent;
+      this.label_snapSavePath.ForeColor = System.Drawing.Color.White;
+      this.label_snapSavePath.Location = new System.Drawing.Point(22, 49);
+      this.label_snapSavePath.Name = "label_snapSavePath";
+      this.label_snapSavePath.Size = new System.Drawing.Size(105, 14);
+      this.label_snapSavePath.TabIndex = 3;
+      this.label_snapSavePath.Text = "Snap Save Path";
+      // 
+      // textBox_snapSavePath
+      // 
+      this.textBox_snapSavePath.BackColor = System.Drawing.Color.DimGray;
+      this.textBox_snapSavePath.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.textBox_snapSavePath.ForeColor = System.Drawing.Color.White;
+      this.textBox_snapSavePath.Location = new System.Drawing.Point(26, 68);
+      this.textBox_snapSavePath.Multiline = true;
+      this.textBox_snapSavePath.Name = "textBox_snapSavePath";
+      this.textBox_snapSavePath.ReadOnly = true;
+      this.textBox_snapSavePath.Size = new System.Drawing.Size(283, 21);
+      this.textBox_snapSavePath.TabIndex = 37;
+      this.textBox_snapSavePath.TabStop = false;
+      this.textBox_snapSavePath.Text = "D:\\迅雷下载";
+      // 
+      // button_snapSavePath
+      // 
+      this.button_snapSavePath.BackColor = System.Drawing.Color.DimGray;
+      this.button_snapSavePath.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_snapSavePath.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_snapSavePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_snapSavePath.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_snapSavePath.ForeColor = System.Drawing.Color.White;
+      this.button_snapSavePath.Location = new System.Drawing.Point(326, 67);
+      this.button_snapSavePath.Name = "button_snapSavePath";
+      this.button_snapSavePath.Size = new System.Drawing.Size(75, 24);
+      this.button_snapSavePath.TabIndex = 38;
+      this.button_snapSavePath.Text = "Browse";
+      this.button_snapSavePath.UseVisualStyleBackColor = false;
+      this.button_snapSavePath.Click += new System.EventHandler(this.button_snapSavePath_Click);
+      // 
       // FormSettings
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
-      this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_general);
+      this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.label_plist);
@@ -343,5 +391,8 @@
         private System.Windows.Forms.CheckBox checkBox_deleteFileDirectly;
         private System.Windows.Forms.CheckBox checkBox_addPlayingFolderToPlist;
         private System.Windows.Forms.CheckBox checkBox_updatePlistAfterLaunch;
+        private System.Windows.Forms.Label label_snapSavePath;
+        private System.Windows.Forms.TextBox textBox_snapSavePath;
+        private System.Windows.Forms.Button button_snapSavePath;
     }
 }

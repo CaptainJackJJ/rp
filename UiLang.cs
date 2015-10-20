@@ -15,7 +15,8 @@ namespace RPlayer
     public static string no;
     public static string pathNotFound;
     public static string noPreFileInPlist;
-    public static string noNextFileInPlist;  
+    public static string noNextFileInPlist;
+    public static string btnBrowse;  
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -34,6 +35,7 @@ namespace RPlayer
 
     // PanelGeneral
     public static string uiLangLabel;
+    public static string labelSnapSavePath;
 
     // PanelPlist
     public static string checkBoxUpdatePlistAfterLaunch;
@@ -91,6 +93,7 @@ namespace RPlayer
       pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
       noPreFileInPlist = "No previous file in playlist";
       noNextFileInPlist = "No next file in playlist";
+      btnBrowse = "Browse";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -106,6 +109,7 @@ namespace RPlayer
       labelPlist = "Playlist";
 
       uiLangLabel = "UI Language";
+      labelSnapSavePath = "Snapshot Save Path";
 
       checkBoxUpdatePlistAfterLaunch = "Auto update playlist after player launch";
       checkBoxAutoAddFolderToPlist = "Auto add playing folder to playlist";
@@ -150,6 +154,7 @@ Are you still want to delete it?";
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
       noPreFileInPlist = "播放列表中没有上一个文件";
       noNextFileInPlist = "播放列表中没有下一个文件";
+      btnBrowse = "浏览";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";
@@ -165,6 +170,7 @@ Are you still want to delete it?";
       labelPlist = "播放列表";
 
       uiLangLabel = "界面语言";
+      labelSnapSavePath = "快照保存路径";
 
       checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
       checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";

@@ -200,7 +200,7 @@ namespace RPlayer
       colorSlider_volume.Location = new Point(nVolumeSliderX, nBottomButtonsY + 7);
       label_Volume.Location = new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
-      int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height;
+      int nPlayProcessY = label_Play.Location.Y - m_nPlayProcessToPlayBtnYMargin - colorSlider_playProcess.Height + 2;
 
       colorSlider_playProcess.Size
           = new Size(this.Width - (m_nPlayProcessXMargin * 2), colorSlider_playProcess.Height);

@@ -59,7 +59,8 @@ namespace RPlayer
     private ContextMenuStrip m_contextMenuStrip_playWnd;
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
     private ToolStripMenuItem m_toolStripMenuItem_audios;
-    private ToolStripMenuItem m_toolStripMenuItem_chapters;    
+    private ToolStripMenuItem m_toolStripMenuItem_chapters;
+    private ToolStripMenuItem m_toolStripMenuItem_snapshot;  
     private int m_nSubtitleAddItemIndex;
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
@@ -157,6 +158,7 @@ namespace RPlayer
       m_toolStripMenuItem_subtitles.Text = UiLang.contextMenuSubtitles;
       m_toolStripMenuItem_audios.Text = UiLang.contextMenuAudios;
       m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
+      m_toolStripMenuItem_snapshot.Text = UiLang.contextMenuSnapshot;
       ToolStripMenuItem item;
       if (m_nSubtitleAddItemIndex != -1)
       {
@@ -202,6 +204,19 @@ namespace RPlayer
       m_toolStripMenuItem_chapters = new ToolStripMenuItem(); 
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_chapters);
       m_toolStripMenuItem_chapters.MouseEnter += toolStripMenuItem_chapters_MouseEnter;
+
+      m_toolStripMenuItem_snapshot = new ToolStripMenuItem();
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_snapshot);
+      m_toolStripMenuItem_snapshot.Click += toolStripMenuItem_snapshot_MouseEnter;
+    }
+
+    private void toolStripMenuItem_snapshot_MouseEnter(object sender, EventArgs e)
+    {
+      string saveUrl = Archive.snapSavePath + "\\" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()
+        + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +
+        DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString() + ".jpg";
+
+      RpCore.CatchSnapshot(saveUrl);
     }
 
     // To mark selected items

@@ -25,6 +25,7 @@ namespace RPlayer
     public static string contextMenuAddSubtitle;
     public static string contextMenuHideSubtitle;
     public static string contextMenuChapter;
+    public static string contextMenuSnapshot;
 
     // FormSettings    
     public static string labelSettings;
@@ -101,6 +102,7 @@ namespace RPlayer
       contextMenuAddSubtitle = "Add Subtitle";
       contextMenuHideSubtitle = "Hide Subtitle";
       contextMenuChapter = "Chapter";
+      contextMenuSnapshot = "Snapshot";
 
       labelSettings = "Settings";
       labelGeneral = "General";
@@ -162,6 +164,7 @@ Are you still want to delete it?";
       contextMenuAddSubtitle = "添加字幕";
       contextMenuHideSubtitle = "隐藏字幕";
       contextMenuChapter = "章节";
+      contextMenuSnapshot = "快照";
 
       labelSettings = "设置";
       labelGeneral = "一般";

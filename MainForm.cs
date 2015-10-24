@@ -144,6 +144,14 @@ namespace RPlayer
         m_formPlaylist.Show();
         ChangePlayWndSizeInNonDesktop();
       }
+
+      RpCore.SetOverAssOrig(Archive.overAssOrig);
+      RpCore.SetSubtitleBold(Archive.bold);
+      RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
+      RpCore.SetSubtitleColor(Archive.fontColor);
+      RpCore.SetSubtitleItalic(Archive.italic);
+      RpCore.SetSubtitlePos(Archive.fontPos);
+      RpCore.SetSubtitleSize(Archive.fontSize);
     }
 
     public void SetAllUiLange()

@@ -1328,21 +1328,26 @@ namespace RPlayer
       }
       
       double nStartTime = 0;
+      int nPreSeletedAudioIndex = -1;
+      int nPreSeletedSubtitleIndex = -1;
       for (int i = Archive.histroy.Count - 1; i >= 0; i--)
       {
         HistroyItem item = Archive.histroy[i];
         if (item.url == url)
         { 
           nStartTime = item.timeWatched;
+          nPreSeletedAudioIndex = item.audioIndex;
+          nPreSeletedSubtitleIndex = item.subtitleIndex;
           break;
         }
       }
 
-      if (!RpCore.Play(url, nStartTime))
+      if (!RpCore.Play(url, nStartTime,nPreSeletedAudioIndex,nPreSeletedSubtitleIndex))
       {
         SwitchPlayingForm(false);
         return false;
       }
+
       m_strCurPlayingUrl = url;
       m_formBottomBar.StartPlay();
 
@@ -1409,11 +1414,15 @@ namespace RPlayer
         newItem.url = m_strCurPlayingUrl;
         newItem.timeWatched = curPlayingTime;
         newItem.duration = m_nFileDuration;
+        newItem.audioIndex = RpCore.GetCurrentAudio();
+        newItem.subtitleIndex = RpCore.GetCurrentSubtitle();
         Archive.histroy.Add(newItem);
       }
       else
       {
         item.timeWatched = curPlayingTime;
+        item.audioIndex = RpCore.GetCurrentAudio();
+        item.subtitleIndex = RpCore.GetCurrentSubtitle();
         if (index != Archive.histroy.Count - 1) // url is in histroy, but not the last one
         {
           Archive.histroy.Remove(item);

@@ -12,6 +12,8 @@ namespace RPlayer
     public string url;
     public double timeWatched;
     public double duration;
+    public int audioIndex;
+    public int subtitleIndex;
   }
 
   public class PlaylistFile
@@ -177,6 +179,8 @@ namespace RPlayer
           item.url = childNode.InnerText;
           item.timeWatched = Convert.ToDouble(childNode.Attributes["timeWatched"].InnerText);
           item.duration = Convert.ToDouble(childNode.Attributes["duration"].InnerText);
+          item.audioIndex = Convert.ToInt32(childNode.Attributes["audioIndex"].InnerText);
+          item.subtitleIndex = Convert.ToInt32(childNode.Attributes["subtitleIndex"].InnerText);
           histroy.Add(item);
         }
       }
@@ -339,6 +343,12 @@ namespace RPlayer
         itemElement.Attributes.Append(attribute);
         attribute = xml.CreateAttribute("duration");
         attribute.Value = item.duration.ToString();
+        itemElement.Attributes.Append(attribute);
+        attribute = xml.CreateAttribute("audioIndex");
+        attribute.Value = item.audioIndex.ToString();
+        itemElement.Attributes.Append(attribute);
+        attribute = xml.CreateAttribute("subtitleIndex");
+        attribute.Value = item.subtitleIndex.ToString();
         itemElement.Attributes.Append(attribute);
       }
     }

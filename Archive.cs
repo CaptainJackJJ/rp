@@ -14,6 +14,7 @@ namespace RPlayer
     public double duration;
     public int audioIndex;
     public int subtitleIndex;
+    public bool subtitleVisible;
   }
 
   public class PlaylistFile
@@ -181,6 +182,7 @@ namespace RPlayer
           item.duration = Convert.ToDouble(childNode.Attributes["duration"].InnerText);
           item.audioIndex = Convert.ToInt32(childNode.Attributes["audioIndex"].InnerText);
           item.subtitleIndex = Convert.ToInt32(childNode.Attributes["subtitleIndex"].InnerText);
+          item.subtitleVisible = Convert.ToBoolean(childNode.Attributes["subtitleVisible"].InnerText);
           histroy.Add(item);
         }
       }
@@ -349,6 +351,9 @@ namespace RPlayer
         itemElement.Attributes.Append(attribute);
         attribute = xml.CreateAttribute("subtitleIndex");
         attribute.Value = item.subtitleIndex.ToString();
+        itemElement.Attributes.Append(attribute);
+        attribute = xml.CreateAttribute("subtitleVisible");
+        attribute.Value = item.subtitleVisible.ToString();
         itemElement.Attributes.Append(attribute);
       }
     }

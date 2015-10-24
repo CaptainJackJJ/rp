@@ -41,6 +41,7 @@
       this.label_Volume = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_playlist = new System.Windows.Forms.Label();
+      this.label_openFile = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Play
@@ -211,6 +212,21 @@
       this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
       this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);
       // 
+      // label_openFile
+      // 
+      this.label_openFile.BackColor = System.Drawing.Color.Transparent;
+      this.label_openFile.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_openFile.ForeColor = System.Drawing.Color.White;
+      this.label_openFile.Location = new System.Drawing.Point(408, 266);
+      this.label_openFile.Name = "label_openFile";
+      this.label_openFile.Size = new System.Drawing.Size(98, 30);
+      this.label_openFile.TabIndex = 40;
+      this.label_openFile.Text = "OpenFile";
+      this.label_openFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label_openFile.Click += new System.EventHandler(this.label_openFile_Click);
+      this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
+      this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -218,6 +234,7 @@
       this.BackColor = System.Drawing.Color.Black;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
       this.ClientSize = new System.Drawing.Size(915, 562);
+      this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.colorSlider_volume);
@@ -258,6 +275,7 @@
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
         private System.Windows.Forms.Label label_playlist;
+        private System.Windows.Forms.Label label_openFile;
     }
 }
 

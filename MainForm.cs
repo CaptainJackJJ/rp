@@ -155,6 +155,7 @@ namespace RPlayer
 
     private void SetUiLange()
     {
+      label_openFile.Text = UiLang.labelOpenFile;
       m_toolStripMenuItem_subtitles.Text = UiLang.contextMenuSubtitles;
       m_toolStripMenuItem_audios.Text = UiLang.contextMenuAudios;
       m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
@@ -362,7 +363,7 @@ namespace RPlayer
     }
 
     private void MainForm_Resize(object sender, EventArgs e)
-    {
+    {     
       label_Close.Location =
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
@@ -415,6 +416,10 @@ namespace RPlayer
           width -= (m_formPlaylist.Width + 5);
         label_playWnd.Size = new Size(width, height);
         RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
+
+        label_openFile.Location =
+          new Point(label_playWnd.Location.X + (int)(label_playWnd.Width * 0.5 - label_openFile.Width * 0.5),
+            label_playWnd.Location.Y + (int)(label_playWnd.Height * 0.5 - label_openFile.Height * 0.5));
       }
     }
 
@@ -903,16 +908,21 @@ namespace RPlayer
       }
       else
       {
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        OpenFileDlg();
+      }
+    }
 
-        openFileDialog1.Filter = "All files (*.*)|*.*";
-        openFileDialog1.FilterIndex = 1;
-        openFileDialog1.RestoreDirectory = true;
+    private void OpenFileDlg()
+    {
+      OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-        if (openFileDialog1.ShowDialog() == DialogResult.OK)
-        {
-          StartPlay(openFileDialog1.FileName);
-        }
+      openFileDialog1.Filter = "All files (*.*)|*.*";
+      openFileDialog1.FilterIndex = 1;
+      openFileDialog1.RestoreDirectory = true;
+
+      if (openFileDialog1.ShowDialog() == DialogResult.OK)
+      {
+        StartPlay(openFileDialog1.FileName);
       }
     }
 
@@ -1032,6 +1042,21 @@ namespace RPlayer
       }
     }
 
+    private void label_openFile_Click(object sender, EventArgs e)
+    {
+      OpenFileDlg();
+    }
+
+    private void label_openFile_MouseEnter(object sender, EventArgs e)
+    {
+      label_openFile.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_openFile_MouseLeave(object sender, EventArgs e)
+    {
+      label_openFile.ForeColor = Color.White;
+    }
+
     private void ChangeSubFormsLocAndSize()
     {
       int nMarginBarToEdge;
@@ -1069,6 +1094,7 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        label_openFile.Hide();
         label_Play.Hide();
         label_Volume.Hide();
         colorSlider_volume.Hide();
@@ -1090,6 +1116,7 @@ namespace RPlayer
         }
         catch { }
 
+        label_openFile.Show();
         label_Play.Show();
         label_Volume.Show();
         colorSlider_volume.Show();

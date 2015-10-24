@@ -88,6 +88,12 @@
     <Compile Include="FormPlaylist.Designer.cs">
       <DependentUpon>FormPlaylist.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMediaInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMediaInfo.Designer.cs">
+      <DependentUpon>FormMediaInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlaylist.resx">
       <DependentUpon>FormPlaylist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMediaInfo.resx">
+      <DependentUpon>FormMediaInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>

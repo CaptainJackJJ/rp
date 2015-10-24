@@ -119,18 +119,6 @@ namespace RPlayer
           HideForm();
         }
 
-        private void FormSettings_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void FormSettings_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void FormSettings_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
-
         private void label_settingsClose_MouseEnter(object sender, EventArgs e)
         {
             try
@@ -284,16 +272,6 @@ namespace RPlayer
         {
           if (label_plist.BackColor != Color.DodgerBlue)
             label_plist.BackColor = Color.Transparent;
-        }
-
-        private void button_ok_Click(object sender, EventArgs e)
-        {
-          HideForm();
-        }
-
-        private void button_cancel_Click(object sender, EventArgs e)
-        {
-          HideForm();
         }
 
         private void checkBox_updatePlistAfterLaunch_CheckedChanged(object sender, EventArgs e)

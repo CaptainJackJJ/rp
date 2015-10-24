@@ -61,7 +61,8 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_audios;
     private ToolStripMenuItem m_toolStripMenuItem_chapters;
     private ToolStripMenuItem m_toolStripMenuItem_snapshot;
-    private ToolStripMenuItem m_toolStripMenuItem_playerSettings; 
+    private ToolStripMenuItem m_toolStripMenuItem_playerSettings;
+    private ToolStripMenuItem m_toolStripMenuItem_mediaInfo; 
     private int m_nSubtitleAddItemIndex;
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
@@ -162,6 +163,7 @@ namespace RPlayer
       m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
       m_toolStripMenuItem_snapshot.Text = UiLang.contextMenuSnapshot;
       m_toolStripMenuItem_playerSettings.Text = UiLang.contextMenuPlayerSettings;
+      m_toolStripMenuItem_mediaInfo.Text = UiLang.labelMediainfo;
       ToolStripMenuItem item;
       if (m_nSubtitleAddItemIndex != -1)
       {
@@ -214,6 +216,16 @@ namespace RPlayer
       m_toolStripMenuItem_playerSettings = new ToolStripMenuItem();
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_playerSettings);
       m_toolStripMenuItem_playerSettings.Click += toolStripMenuItem_PlayerSettings_MouseClick;
+
+      m_toolStripMenuItem_mediaInfo = new ToolStripMenuItem();
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_mediaInfo);
+      m_toolStripMenuItem_mediaInfo.Click += toolStripMenuItem_mediaInfo_MouseClick;
+    }
+
+    private void toolStripMenuItem_mediaInfo_MouseClick(object sender, EventArgs e)
+    {
+      FormMediaInfo info = new FormMediaInfo(m_strCurPlayingUrl);
+      info.ShowDialog();
     }
 
     private void toolStripMenuItem_PlayerSettings_MouseClick(object sender, EventArgs e)

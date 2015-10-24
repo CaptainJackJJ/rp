@@ -68,12 +68,28 @@ namespace RPlayer
     public static string markAsFinished;
     public static string PlistFileDeleteWarning; 
 
-    // FormDetails
+    // MediaInfo
     public static string labelDetailsTimeWatched;
     public static string labelDetailsDuration;
     public static string labelDetailsCreationTime;
     public static string labelDetailsUrl;
     public static string labelDetailsFinished;
+    public static string labelMediainfo;
+    public static string labelDetailsFileSize;
+    public static string mediaInfoBitrate;
+    public static string mediaInfoVideoAspectRatio;
+    public static string mediaInfoVideoHeight;
+    public static string mediaInfoVideoWidth;
+    public static string mediaInfoCodecName;
+    public static string mediaInfoAudioChannels;
+    public static string mediaInfoAudioSamplerate;
+    public static string mediaInfoAudioBitspersample;
+    public static string mediaInfoAudioLanguage;
+    public static string mediaInfoAudioCodecName;
+    public static string mediaInfoName;
+    public static string mediaInfoVideo;
+    public static string mediaInfoAudio;
+    public static string mediaInfoSubtitle;
 
     public static void SetLang(string uiLang)
     {
@@ -149,6 +165,21 @@ Are you still want to delete it?";
       labelDetailsCreationTime = "CreationTime:";
       labelDetailsUrl = "Url:";
       labelDetailsFinished = "Finished";
+      labelMediainfo = "MediaInfo";
+      labelDetailsFileSize = "File Size: ";
+      mediaInfoBitrate = "Bitrate: ";
+      mediaInfoVideoAspectRatio = "AspectRatio: ";
+      mediaInfoVideoHeight = "Height: ";
+      mediaInfoVideoWidth = "Width: ";
+      mediaInfoCodecName = "CodecName: ";
+      mediaInfoAudioChannels = "Channels: ";
+      mediaInfoAudioSamplerate = "Samplerate: ";
+      mediaInfoAudioBitspersample = "Bitspersample: ";
+      mediaInfoAudioLanguage = "Language: ";
+      mediaInfoName = "Name: ";
+      mediaInfoVideo = "Video";
+      mediaInfoAudio = "Audio";
+      mediaInfoSubtitle = "Subtitle";
 
       speedDisplay = "Speed: X";
     }
@@ -213,6 +244,21 @@ Are you still want to delete it?";
       labelDetailsCreationTime = "创建时间:";
       labelDetailsUrl = "全路径:";
       labelDetailsFinished = "已看完";
+      labelMediainfo = "媒体信息";
+      labelDetailsFileSize = "文件大小:";
+      mediaInfoBitrate = "比特率: ";
+      mediaInfoVideoAspectRatio = "纵横比: ";
+      mediaInfoVideoHeight = "高: ";
+      mediaInfoVideoWidth = "宽: ";
+      mediaInfoCodecName = "编码格式: ";
+      mediaInfoAudioChannels = "声道: ";
+      mediaInfoAudioSamplerate = "采样率: ";
+      mediaInfoAudioBitspersample = "音频位数: ";
+      mediaInfoAudioLanguage = "语言: ";
+      mediaInfoName = "名称: ";
+      mediaInfoVideo = "视频";
+      mediaInfoAudio = "音频";
+      mediaInfoSubtitle = "字幕";
 
       speedDisplay = "速度: X";
     }

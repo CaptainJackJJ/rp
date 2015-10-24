@@ -69,6 +69,8 @@ namespace RPlayer
     private bool m_bStopPlayCalled = true;
     private bool m_bPlayingForm = false;
 
+    private bool m_bContextMenuInited = false;
+
     public MainForm()
     {
       Archive.Load(); 
@@ -188,7 +190,6 @@ namespace RPlayer
       m_contextMenuStrip_playWnd.BackColor = Archive.colorContextMenu;
       m_contextMenuStrip_playWnd.ForeColor = Color.White;
       m_contextMenuStrip_playWnd.Renderer = new CustomToolStripProfessionalRenderer();
-      label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
 
       m_toolStripMenuItem_subtitles = new ToolStripMenuItem();
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_subtitles);    
@@ -1101,6 +1102,8 @@ namespace RPlayer
 
         m_formTopBar.Show();
         m_formBottomBar.Show();
+
+        label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
       }
       else
       {
@@ -1121,6 +1124,8 @@ namespace RPlayer
         label_Volume.Show();
         colorSlider_volume.Show();
         SwitchDesktopMode(false,false);
+
+        label_playWnd.ContextMenuStrip = null;
       }
     }
 

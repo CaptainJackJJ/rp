@@ -60,7 +60,8 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
     private ToolStripMenuItem m_toolStripMenuItem_audios;
     private ToolStripMenuItem m_toolStripMenuItem_chapters;
-    private ToolStripMenuItem m_toolStripMenuItem_snapshot;  
+    private ToolStripMenuItem m_toolStripMenuItem_snapshot;
+    private ToolStripMenuItem m_toolStripMenuItem_playerSettings; 
     private int m_nSubtitleAddItemIndex;
     private int m_nSubtitleHideItemIndex;
     private int m_nSubtitleSeperatorItemIndex;
@@ -68,8 +69,6 @@ namespace RPlayer
 
     private bool m_bStopPlayCalled = true;
     private bool m_bPlayingForm = false;
-
-    private bool m_bContextMenuInited = false;
 
     public MainForm()
     {
@@ -162,6 +161,7 @@ namespace RPlayer
       m_toolStripMenuItem_audios.Text = UiLang.contextMenuAudios;
       m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
       m_toolStripMenuItem_snapshot.Text = UiLang.contextMenuSnapshot;
+      m_toolStripMenuItem_playerSettings.Text = UiLang.contextMenuPlayerSettings;
       ToolStripMenuItem item;
       if (m_nSubtitleAddItemIndex != -1)
       {
@@ -209,10 +209,19 @@ namespace RPlayer
 
       m_toolStripMenuItem_snapshot = new ToolStripMenuItem();
       m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_snapshot);
-      m_toolStripMenuItem_snapshot.Click += toolStripMenuItem_snapshot_MouseEnter;
+      m_toolStripMenuItem_snapshot.Click += toolStripMenuItem_snapshot_Click;
+
+      m_toolStripMenuItem_playerSettings = new ToolStripMenuItem();
+      m_contextMenuStrip_playWnd.Items.Add(m_toolStripMenuItem_playerSettings);
+      m_toolStripMenuItem_playerSettings.Click += toolStripMenuItem_PlayerSettings_MouseClick;
     }
 
-    private void toolStripMenuItem_snapshot_MouseEnter(object sender, EventArgs e)
+    private void toolStripMenuItem_PlayerSettings_MouseClick(object sender, EventArgs e)
+    {
+      ShowFormSettings(FormSettings.enumSettingFormType.regular);
+    }
+
+    private void toolStripMenuItem_snapshot_Click(object sender, EventArgs e)
     {
       string saveUrl = Archive.snapSavePath + "\\" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()
         + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +

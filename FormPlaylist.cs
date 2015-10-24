@@ -754,6 +754,17 @@ namespace RPlayer
       TreeNode folderNode = node.Parent;
       PlaylistFile file = node.Tag as PlaylistFile;
       string url = file.url;
+
+      try
+      {
+        File.Delete(url);
+      }
+      catch(System.IO.IOException)
+      {
+        MessageBox.Show(UiLang.msgAnotherProcessUsingTheFile);
+        return;
+      }
+
       if(!m_mainForm.deletePlayingPlistFile(file)) // not playing file
       {
         foreach (PlaylistFolder folder in Archive.playlist)
@@ -765,8 +776,6 @@ namespace RPlayer
           }          
         }
       }
-
-      File.Delete(url);
 
       foreach(TreeNode fileNode in folderNode.Nodes)
       {

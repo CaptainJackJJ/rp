@@ -195,6 +195,15 @@ namespace RPlayer
           ).ToArray();
 
       List<string> addFiles = strFilesInCurrentDirectory.ToList();
+
+      if(addFiles.Count == 0)
+      {
+        if (File.Exists(Url))//Handle some file exts that not in the ext list
+        {
+          addFiles.Add(Url);
+        }
+      }
+
       PlaylistFolder curPlistFolder = null;
 
       // Check if folder is already in plist. If so, check which files need be added or deleted
@@ -224,7 +233,7 @@ namespace RPlayer
         }
       }
 
-      if (addFiles.Count == 0 && deleteFiles.Count == 0) // Nothing changed
+      if (addFiles.Count == 0 && deleteFiles.Count == 0 && curPlistFolder != null) // Nothing changed
         return curPlistFolder;
 
       if (curPlistFolder == null)

@@ -17,7 +17,8 @@ namespace RPlayer
     public static string noPreFileInPlist;
     public static string noNextFileInPlist;
     public static string btnBrowse;
-    public static string msgAnotherProcessUsingTheFile;  
+    public static string msgAnotherProcessUsingTheFile;
+    public static string msgCannotPlay;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -124,6 +125,7 @@ namespace RPlayer
       noNextFileInPlist = "No next file in playlist";
       btnBrowse = "Browse";
       msgAnotherProcessUsingTheFile = "Another process using the file, so can not delete it";
+      msgCannotPlay = "Can not playback this file";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -212,6 +214,7 @@ Are you still want to delete it?";
       noNextFileInPlist = "播放列表中没有下一个文件";
       btnBrowse = "浏览";
       msgAnotherProcessUsingTheFile = "另外一个软件正在使用该文件，所以无法删除它";
+      msgCannotPlay = "无法播放该文件";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";

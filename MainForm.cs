@@ -55,6 +55,7 @@ namespace RPlayer
     private PlaylistFolder m_curPlistFolder;
     private PlaylistFile m_curPlistFile;
     private string m_strCurPlayingUrl;
+    private bool m_bIsPlaying = false;
 
     private ContextMenuStrip m_contextMenuStrip_playWnd;
     private ToolStripMenuItem m_toolStripMenuItem_subtitles;
@@ -1179,10 +1180,6 @@ namespace RPlayer
       }
 
       SwitchPlayingForm(false);
-      if (bPre)
-        MessageBox.Show(UiLang.noPreFileInPlist);
-      else
-        MessageBox.Show(UiLang.noNextFileInPlist);
       return false;
     }
 
@@ -1358,6 +1355,8 @@ namespace RPlayer
         return false;
       }
 
+      m_bIsPlaying = true;
+
       if(RpCore.GetSubtitleVisible() != bPreSeletedSubtitleVisible)
       {
         RpCore.SetSubtitleVisible(bPreSeletedSubtitleVisible);
@@ -1470,6 +1469,7 @@ namespace RPlayer
       m_bStopPlayCalled = true;
       m_formBottomBar.StopPlay();
       RpCore.Stop();
+      m_bIsPlaying = false;
       ClearContextMenuDynamically();
 
       colorSlider_volume.Value = Archive.volume;
@@ -1513,6 +1513,13 @@ namespace RPlayer
     {      
       if (m_bStopPlayCalled)// ui stop button clicked
         return;
+
+      if (!m_bIsPlaying)
+      {
+        MessageBox.Show(UiLang.msgCannotPlay);
+        return;
+      }
+
       if (bInvoke)
       {
         ResponseOnEndedStoppedDelegate del = new ResponseOnEndedStoppedDelegate(ResponseOnEndedStopped);

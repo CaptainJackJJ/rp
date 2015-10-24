@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using RpCoreWrapper;
 
 namespace RPlayer
 {
@@ -47,6 +48,14 @@ namespace RPlayer
           if (Archive.snapSavePath == "")
             Archive.snapSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
           textBox_snapSavePath.Text = Archive.snapSavePath;
+
+          colorSlider_fontSize.Value = Archive.fontSize;
+          colorSlider_subtitlePos.Value = Archive.fontPos;
+          button_fontColor.ForeColor = Color.FromArgb(Archive.fontColor);
+          button_borderColor.ForeColor = Color.FromArgb(Archive.fontBorderColor);
+          checkBox_bold.Checked = Archive.bold;
+          checkBox_italic.Checked = Archive.italic;
+          checkBox_overAssOrig.Checked = Archive.overAssOrig;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,6 +85,14 @@ namespace RPlayer
 
           label_snapSavePath.Text = UiLang.labelSnapSavePath;
           button_snapSavePath.Text = UiLang.btnBrowse;
+
+          label_fontSize.Text = UiLang.labelSubtitleSize;
+          label_subtitlePos.Text = UiLang.labelSubtitlePos;
+          button_fontColor.Text = UiLang.labelSubtitleColor;
+          button_borderColor.Text = UiLang.labelSubtitleBorderColor;
+          checkBox_bold.Text = UiLang.labelSubtitleBold;
+          checkBox_italic.Text = UiLang.labelSubtitleItalic;
+          checkBox_overAssOrig.Text = UiLang.labelSubtitleOverAssOrig;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
@@ -296,6 +313,70 @@ namespace RPlayer
 
           Archive.snapSavePath = fbd.SelectedPath;
           textBox_snapSavePath.Text = Archive.snapSavePath; 
+        }
+
+        private void colorSlider_fontSize_ValueChanged(object sender, EventArgs e)
+        {
+          Archive.fontSize = colorSlider_fontSize.Value;
+          RpCore.SetSubtitleSize(Archive.fontSize);
+        }
+
+        private void colorSlider_subtitlePos_ValueChanged(object sender, EventArgs e)
+        {
+          Archive.fontPos = colorSlider_subtitlePos.Value;
+          RpCore.SetSubtitlePos(Archive.fontPos);
+        }
+
+        private void checkBox_bold_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.bold = checkBox_bold.Checked;
+          RpCore.SetSubtitleBold(Archive.bold);
+        }
+
+        private void checkBox_overAssOrig_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.overAssOrig = checkBox_overAssOrig.Checked;
+          RpCore.SetOverAssOrig(Archive.overAssOrig);
+        }
+
+        private void checkBox_italic_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.italic = checkBox_italic.Checked;
+          RpCore.SetSubtitleItalic(Archive.italic);
+        }
+
+        private void button_fontColor_Click(object sender, EventArgs e)
+        {
+          ColorDialog MyDialog = new ColorDialog();
+          // Allows the user to get help. (The default is false.)
+          MyDialog.ShowHelp = true;
+          // Sets the initial color select to the current text color.
+          MyDialog.Color = Color.FromArgb(Archive.fontColor);
+
+          // Update the text box color if the user clicks OK  
+          if (MyDialog.ShowDialog() == DialogResult.OK)
+          {
+            button_fontColor.ForeColor = MyDialog.Color;
+            Archive.fontColor = MyDialog.Color.ToArgb();
+            RpCore.SetSubtitleColor(Archive.fontColor);
+          }
+        }
+
+        private void button_borderColor_Click(object sender, EventArgs e)
+        {    
+          ColorDialog MyDialog = new ColorDialog();
+          // Allows the user to get help. (The default is false.)
+          MyDialog.ShowHelp = true;
+          // Sets the initial color select to the current text color.
+          MyDialog.Color = Color.FromArgb(Archive.fontBorderColor);
+
+          // Update the text box color if the user clicks OK  
+          if (MyDialog.ShowDialog() == DialogResult.OK)
+          {
+            button_fontColor.ForeColor = MyDialog.Color;
+            Archive.fontBorderColor = MyDialog.Color.ToArgb();
+            RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
+          }
         }
     }
 }

@@ -40,7 +40,7 @@
       this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
       this.label_uiLang = new System.Windows.Forms.Label();
       this.panel_subtitle = new System.Windows.Forms.Panel();
-      this.label_fontType = new System.Windows.Forms.Label();
+      this.label_fontSize = new System.Windows.Forms.Label();
       this.panel_av = new System.Windows.Forms.Panel();
       this.label_volumeAmp = new System.Windows.Forms.Label();
       this.label_plist = new System.Windows.Forms.Label();
@@ -51,6 +51,14 @@
       this.label_snapSavePath = new System.Windows.Forms.Label();
       this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
       this.button_snapSavePath = new System.Windows.Forms.Button();
+      this.colorSlider_fontSize = new MB.Controls.ColorSlider();
+      this.label_subtitlePos = new System.Windows.Forms.Label();
+      this.colorSlider_subtitlePos = new MB.Controls.ColorSlider();
+      this.checkBox_bold = new System.Windows.Forms.CheckBox();
+      this.checkBox_italic = new System.Windows.Forms.CheckBox();
+      this.button_fontColor = new System.Windows.Forms.Button();
+      this.button_borderColor = new System.Windows.Forms.Button();
+      this.checkBox_overAssOrig = new System.Windows.Forms.CheckBox();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -192,22 +200,30 @@
       // 
       // panel_subtitle
       // 
-      this.panel_subtitle.Controls.Add(this.label_fontType);
+      this.panel_subtitle.Controls.Add(this.button_borderColor);
+      this.panel_subtitle.Controls.Add(this.button_fontColor);
+      this.panel_subtitle.Controls.Add(this.checkBox_italic);
+      this.panel_subtitle.Controls.Add(this.checkBox_overAssOrig);
+      this.panel_subtitle.Controls.Add(this.checkBox_bold);
+      this.panel_subtitle.Controls.Add(this.colorSlider_subtitlePos);
+      this.panel_subtitle.Controls.Add(this.colorSlider_fontSize);
+      this.panel_subtitle.Controls.Add(this.label_subtitlePos);
+      this.panel_subtitle.Controls.Add(this.label_fontSize);
       this.panel_subtitle.Location = new System.Drawing.Point(101, 43);
       this.panel_subtitle.Name = "panel_subtitle";
       this.panel_subtitle.Size = new System.Drawing.Size(422, 495);
       this.panel_subtitle.TabIndex = 7;
       // 
-      // label_fontType
+      // label_fontSize
       // 
-      this.label_fontType.AutoSize = true;
-      this.label_fontType.BackColor = System.Drawing.Color.Transparent;
-      this.label_fontType.ForeColor = System.Drawing.Color.White;
-      this.label_fontType.Location = new System.Drawing.Point(24, 19);
-      this.label_fontType.Name = "label_fontType";
-      this.label_fontType.Size = new System.Drawing.Size(29, 12);
-      this.label_fontType.TabIndex = 1;
-      this.label_fontType.Text = "字体";
+      this.label_fontSize.AutoSize = true;
+      this.label_fontSize.BackColor = System.Drawing.Color.Transparent;
+      this.label_fontSize.ForeColor = System.Drawing.Color.White;
+      this.label_fontSize.Location = new System.Drawing.Point(24, 19);
+      this.label_fontSize.Name = "label_fontSize";
+      this.label_fontSize.Size = new System.Drawing.Size(29, 12);
+      this.label_fontSize.TabIndex = 1;
+      this.label_fontSize.Text = "Size";
       // 
       // panel_av
       // 
@@ -335,16 +351,151 @@
       this.button_snapSavePath.UseVisualStyleBackColor = false;
       this.button_snapSavePath.Click += new System.EventHandler(this.button_snapSavePath_Click);
       // 
+      // colorSlider_fontSize
+      // 
+      this.colorSlider_fontSize.BackColor = System.Drawing.Color.Transparent;
+      this.colorSlider_fontSize.BarInnerColor = System.Drawing.Color.Gray;
+      this.colorSlider_fontSize.BarOuterColor = System.Drawing.Color.Transparent;
+      this.colorSlider_fontSize.BarPenColor = System.Drawing.Color.Transparent;
+      this.colorSlider_fontSize.BorderRoundRectSize = new System.Drawing.Size(1, 1);
+      this.colorSlider_fontSize.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.colorSlider_fontSize.DrawFocusRectangle = false;
+      this.colorSlider_fontSize.ElapsedInnerColor = System.Drawing.Color.RoyalBlue;
+      this.colorSlider_fontSize.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
+      this.colorSlider_fontSize.KeyPressRespond = true;
+      this.colorSlider_fontSize.LargeChange = ((uint)(5u));
+      this.colorSlider_fontSize.Location = new System.Drawing.Point(98, 21);
+      this.colorSlider_fontSize.Maximum = 74;
+      this.colorSlider_fontSize.Minimum = 16;
+      this.colorSlider_fontSize.MouseEffects = false;
+      this.colorSlider_fontSize.MouseWheelBarPartitions = 58;
+      this.colorSlider_fontSize.MouseWheelRespond = true;
+      this.colorSlider_fontSize.Name = "colorSlider_fontSize";
+      this.colorSlider_fontSize.Size = new System.Drawing.Size(303, 10);
+      this.colorSlider_fontSize.SmallChange = ((uint)(1u));
+      this.colorSlider_fontSize.TabIndex = 38;
+      this.colorSlider_fontSize.ThumbInnerColor = System.Drawing.Color.White;
+      this.colorSlider_fontSize.ThumbPenColor = System.Drawing.Color.Transparent;
+      this.colorSlider_fontSize.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
+      this.colorSlider_fontSize.ThumbSize = 10;
+      this.colorSlider_fontSize.Value = 28;
+      this.colorSlider_fontSize.ValueChanged += new System.EventHandler(this.colorSlider_fontSize_ValueChanged);
+      // 
+      // label_subtitlePos
+      // 
+      this.label_subtitlePos.AutoSize = true;
+      this.label_subtitlePos.BackColor = System.Drawing.Color.Transparent;
+      this.label_subtitlePos.ForeColor = System.Drawing.Color.White;
+      this.label_subtitlePos.Location = new System.Drawing.Point(24, 53);
+      this.label_subtitlePos.Name = "label_subtitlePos";
+      this.label_subtitlePos.Size = new System.Drawing.Size(53, 12);
+      this.label_subtitlePos.TabIndex = 1;
+      this.label_subtitlePos.Text = "Position";
+      // 
+      // colorSlider_subtitlePos
+      // 
+      this.colorSlider_subtitlePos.BackColor = System.Drawing.Color.Transparent;
+      this.colorSlider_subtitlePos.BarInnerColor = System.Drawing.Color.Gray;
+      this.colorSlider_subtitlePos.BarOuterColor = System.Drawing.Color.Transparent;
+      this.colorSlider_subtitlePos.BarPenColor = System.Drawing.Color.Transparent;
+      this.colorSlider_subtitlePos.BorderRoundRectSize = new System.Drawing.Size(1, 1);
+      this.colorSlider_subtitlePos.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.colorSlider_subtitlePos.DrawFocusRectangle = false;
+      this.colorSlider_subtitlePos.ElapsedInnerColor = System.Drawing.Color.RoyalBlue;
+      this.colorSlider_subtitlePos.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
+      this.colorSlider_subtitlePos.KeyPressRespond = true;
+      this.colorSlider_subtitlePos.LargeChange = ((uint)(5u));
+      this.colorSlider_subtitlePos.Location = new System.Drawing.Point(98, 55);
+      this.colorSlider_subtitlePos.MouseEffects = false;
+      this.colorSlider_subtitlePos.MouseWheelBarPartitions = 58;
+      this.colorSlider_subtitlePos.MouseWheelRespond = true;
+      this.colorSlider_subtitlePos.Name = "colorSlider_subtitlePos";
+      this.colorSlider_subtitlePos.Size = new System.Drawing.Size(303, 10);
+      this.colorSlider_subtitlePos.SmallChange = ((uint)(1u));
+      this.colorSlider_subtitlePos.TabIndex = 38;
+      this.colorSlider_subtitlePos.ThumbInnerColor = System.Drawing.Color.White;
+      this.colorSlider_subtitlePos.ThumbPenColor = System.Drawing.Color.Transparent;
+      this.colorSlider_subtitlePos.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
+      this.colorSlider_subtitlePos.ThumbSize = 10;
+      this.colorSlider_subtitlePos.Value = 0;
+      this.colorSlider_subtitlePos.ValueChanged += new System.EventHandler(this.colorSlider_subtitlePos_ValueChanged);
+      // 
+      // checkBox_bold
+      // 
+      this.checkBox_bold.AutoSize = true;
+      this.checkBox_bold.ForeColor = System.Drawing.Color.White;
+      this.checkBox_bold.Location = new System.Drawing.Point(25, 128);
+      this.checkBox_bold.Name = "checkBox_bold";
+      this.checkBox_bold.Size = new System.Drawing.Size(48, 16);
+      this.checkBox_bold.TabIndex = 39;
+      this.checkBox_bold.Text = "Bold";
+      this.checkBox_bold.UseVisualStyleBackColor = true;
+      this.checkBox_bold.CheckedChanged += new System.EventHandler(this.checkBox_bold_CheckedChanged);
+      // 
+      // checkBox_italic
+      // 
+      this.checkBox_italic.AutoSize = true;
+      this.checkBox_italic.ForeColor = System.Drawing.Color.White;
+      this.checkBox_italic.Location = new System.Drawing.Point(107, 128);
+      this.checkBox_italic.Name = "checkBox_italic";
+      this.checkBox_italic.Size = new System.Drawing.Size(60, 16);
+      this.checkBox_italic.TabIndex = 39;
+      this.checkBox_italic.Text = "Italic";
+      this.checkBox_italic.UseVisualStyleBackColor = true;
+      this.checkBox_italic.CheckedChanged += new System.EventHandler(this.checkBox_italic_CheckedChanged);
+      // 
+      // button_fontColor
+      // 
+      this.button_fontColor.BackColor = System.Drawing.Color.DimGray;
+      this.button_fontColor.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_fontColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_fontColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_fontColor.ForeColor = System.Drawing.Color.White;
+      this.button_fontColor.Location = new System.Drawing.Point(25, 87);
+      this.button_fontColor.Name = "button_fontColor";
+      this.button_fontColor.Size = new System.Drawing.Size(75, 23);
+      this.button_fontColor.TabIndex = 40;
+      this.button_fontColor.Text = "Font Color";
+      this.button_fontColor.UseVisualStyleBackColor = false;
+      this.button_fontColor.Click += new System.EventHandler(this.button_fontColor_Click);
+      // 
+      // button_borderColor
+      // 
+      this.button_borderColor.BackColor = System.Drawing.Color.DimGray;
+      this.button_borderColor.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_borderColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_borderColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_borderColor.ForeColor = System.Drawing.Color.White;
+      this.button_borderColor.Location = new System.Drawing.Point(126, 87);
+      this.button_borderColor.Name = "button_borderColor";
+      this.button_borderColor.Size = new System.Drawing.Size(75, 23);
+      this.button_borderColor.TabIndex = 40;
+      this.button_borderColor.Text = "Border Color";
+      this.button_borderColor.UseVisualStyleBackColor = false;
+      this.button_borderColor.Click += new System.EventHandler(this.button_borderColor_Click);
+      // 
+      // checkBox_overAssOrig
+      // 
+      this.checkBox_overAssOrig.AutoSize = true;
+      this.checkBox_overAssOrig.ForeColor = System.Drawing.Color.White;
+      this.checkBox_overAssOrig.Location = new System.Drawing.Point(25, 169);
+      this.checkBox_overAssOrig.Name = "checkBox_overAssOrig";
+      this.checkBox_overAssOrig.Size = new System.Drawing.Size(180, 16);
+      this.checkBox_overAssOrig.TabIndex = 39;
+      this.checkBox_overAssOrig.Text = "Over Ass Original Settings";
+      this.checkBox_overAssOrig.UseVisualStyleBackColor = true;
+      this.checkBox_overAssOrig.CheckedChanged += new System.EventHandler(this.checkBox_overAssOrig_CheckedChanged);
+      // 
       // FormSettings
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
-      this.Controls.Add(this.panel_general);
-      this.Controls.Add(this.panel_plist);
-      this.Controls.Add(this.panel_av);
       this.Controls.Add(this.panel_subtitle);
+      this.Controls.Add(this.panel_plist);
+      this.Controls.Add(this.panel_general);
+      this.Controls.Add(this.panel_av);
       this.Controls.Add(this.label_plist);
       this.Controls.Add(this.label_AV);
       this.Controls.Add(this.label_subtitle);
@@ -383,7 +534,7 @@
         private System.Windows.Forms.ComboBox comboBox_uiLang;
         private System.Windows.Forms.Label label_uiLang;
         private System.Windows.Forms.Panel panel_subtitle;
-        private System.Windows.Forms.Label label_fontType;
+        private System.Windows.Forms.Label label_fontSize;
         private System.Windows.Forms.Panel panel_av;
         private System.Windows.Forms.Label label_volumeAmp;
         private System.Windows.Forms.Label label_plist;
@@ -394,5 +545,13 @@
         private System.Windows.Forms.Label label_snapSavePath;
         private System.Windows.Forms.TextBox textBox_snapSavePath;
         private System.Windows.Forms.Button button_snapSavePath;
+        private MB.Controls.ColorSlider colorSlider_fontSize;
+        private MB.Controls.ColorSlider colorSlider_subtitlePos;
+        private System.Windows.Forms.Label label_subtitlePos;
+        private System.Windows.Forms.CheckBox checkBox_italic;
+        private System.Windows.Forms.CheckBox checkBox_bold;
+        private System.Windows.Forms.Button button_borderColor;
+        private System.Windows.Forms.Button button_fontColor;
+        private System.Windows.Forms.CheckBox checkBox_overAssOrig;
     }
 }

@@ -40,6 +40,15 @@ namespace RPlayer
     public static string uiLangLabel;
     public static string labelSnapSavePath;
 
+    // PanelSubtitle
+    public static string labelSubtitleSize;
+    public static string labelSubtitlePos;
+    public static string labelSubtitleColor;
+    public static string labelSubtitleBorderColor;
+    public static string labelSubtitleBold;
+    public static string labelSubtitleItalic;
+    public static string labelSubtitleOverAssOrig;
+
     // PanelPlist
     public static string checkBoxUpdatePlistAfterLaunch;
     public static string checkBoxAutoAddFolderToPlist;
@@ -133,6 +142,14 @@ namespace RPlayer
       uiLangLabel = "UI Language";
       labelSnapSavePath = "Snapshot Save Path";
 
+      labelSubtitleSize = "Size";
+      labelSubtitlePos = "Position";
+      labelSubtitleColor = "Subtitle Color";
+      labelSubtitleBorderColor = "Border Color";
+      labelSubtitleBold = "Bold";
+      labelSubtitleItalic = "Italic";
+      labelSubtitleOverAssOrig = "Over Ass Original Settings";
+
       checkBoxUpdatePlistAfterLaunch = "Auto update playlist after player launch";
       checkBoxAutoAddFolderToPlist = "Auto add playing folder to playlist";
       checkBoxDeleteFileDirectly = "Delete plist file directly without asking";
@@ -211,6 +228,14 @@ Are you still want to delete it?";
 
       uiLangLabel = "界面语言";
       labelSnapSavePath = "快照保存路径";
+
+      labelSubtitleSize = "大小";
+      labelSubtitlePos = "位置";
+      labelSubtitleColor = "字幕颜色";
+      labelSubtitleBorderColor = "边框颜色";
+      labelSubtitleBold = "粗体";
+      labelSubtitleItalic = "斜体";
+      labelSubtitleOverAssOrig = "替换掉Ass字幕的原始设置";
 
       checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
       checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";

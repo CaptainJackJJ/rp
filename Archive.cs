@@ -41,6 +41,7 @@ namespace RPlayer
     static private string sectionOthers = "/archive/others/";
     static private string sectionFormPList = "/archive/formPList/";
     static private string sectionGeneralSettings = "/archive/generalSettings/";
+    static private string sectionSubtitleSettings = "/archive/subtitleSettings/";
     static private string sectionPlistSettings = "/archive/plistSettings/";
 
     // others
@@ -63,6 +64,15 @@ namespace RPlayer
     static public string lang;
     static public string snapSavePath;
 
+    // subtitleSettings
+    static public int fontSize;
+    static public int fontPos;
+    static public int fontColor;
+    static public int fontBorderColor;
+    static public bool bold;
+    static public bool italic;
+    static public bool overAssOrig;
+
     // plistSettings
     static public bool updatePlistAfterLaunch;
     static public bool autoAddFolderToPlist;
@@ -75,6 +85,9 @@ namespace RPlayer
 
 
     static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
+
+
+
 
     static private void LoadOthers()
     {
@@ -117,6 +130,25 @@ namespace RPlayer
       lang = node.InnerText;
       node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
       snapSavePath = node.InnerText;
+    }
+
+    static private void LoadSubtitleSettings()
+    {
+      // subtitleSettings
+      XmlNode node = xml.SelectSingleNode(sectionSubtitleSettings + "fontSize");
+      fontSize = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontPos");
+      fontPos = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontColor");
+      fontColor = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontBorderColor");
+      fontBorderColor = Convert.ToInt32(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "bold");
+      bold = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "italic");
+      italic = Convert.ToBoolean(node.InnerText);
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "overAssOrig");
+      overAssOrig = Convert.ToBoolean(node.InnerText);
     }
 
     static private void LoadPlistSettings()
@@ -204,6 +236,7 @@ namespace RPlayer
       LoadOthers();
       LoadFormPlist();
       LoadGeneralSettings();
+      LoadSubtitleSettings();
       LoadPlistSettings();
       LoadHistroy();
       LoadPlist();
@@ -252,6 +285,25 @@ namespace RPlayer
       node.InnerText = lang;
       node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
       node.InnerText = snapSavePath; 
+    }
+
+    static private void SaveSubtitleSettings()
+    {
+      // subtitleSettings
+      XmlNode node = xml.SelectSingleNode(sectionSubtitleSettings + "fontSize");
+      node.InnerText = fontSize.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontPos");
+      node.InnerText = fontPos.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontColor");
+      node.InnerText = fontColor.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontBorderColor");
+      node.InnerText = fontBorderColor.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "bold");
+      node.InnerText = bold.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "italic");
+      node.InnerText = italic.ToString();
+      node = xml.SelectSingleNode(sectionSubtitleSettings + "overAssOrig");
+      node.InnerText = overAssOrig.ToString();
     }
 
     static private void SavePlistSettings()
@@ -363,6 +415,7 @@ namespace RPlayer
       SaveOthers();
       SaveFormPlist();
       SaveGeneralSettings();
+      SaveSubtitleSettings();
       SavePlistSettings();
       SaveHistroy();
       SavePlaylist();

@@ -1176,6 +1176,16 @@ namespace RPlayer
           {
             return StartPlay(m_curPlistFolder.playlistFiles[index].url);
           }
+          // If no pre or next item and in repeat all mode
+          if(Archive.repeatPlayback == Archive.enumRepeatPlayback.all) 
+          {
+            int nPlayIndex = 0;
+            if (bPre)
+              nPlayIndex = m_curPlistFolder.playlistFiles.Count - 1;
+            else
+              nPlayIndex = 0;
+            return StartPlay(m_curPlistFolder.playlistFiles[nPlayIndex].url);
+          }
         }
       }
 
@@ -1537,7 +1547,7 @@ namespace RPlayer
             StartPlay(m_strCurPlayingUrl);
             break;
           case Archive.enumRepeatPlayback.all:
-            PlayPreNext(false);
+             PlayPreNext(false);    
             break;
         }
       }

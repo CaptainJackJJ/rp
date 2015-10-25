@@ -39,6 +39,7 @@ namespace RPlayer
 
   class Archive
   {
+    static private string xmlFilePath;
     static private XmlDocument xml = new XmlDocument();
     static private string xmlFileName = "archive.xml";
     static private string sectionOthers = "/archive/others/";
@@ -228,11 +229,12 @@ namespace RPlayer
       }
     }
 
-    static public bool Load()
+    static public bool Load(string xmlPath)
     {
       try
       {
-        xml.Load(xmlFileName);
+        xmlFilePath = xmlPath;
+        xml.Load(xmlFilePath + "\\" + xmlFileName);
       }
       catch (System.IO.FileNotFoundException)
       {
@@ -435,7 +437,7 @@ namespace RPlayer
       SaveHistroy();
       SavePlaylist();
 
-      xml.Save(xmlFileName);
+      xml.Save(xmlFilePath + "\\" + xmlFileName);
     }
   }
 }

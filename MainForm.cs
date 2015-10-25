@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using RpCoreWrapper;
 using System.IO;
+using Microsoft.Win32;
 
 namespace RPlayer
 {
@@ -72,9 +73,13 @@ namespace RPlayer
     private bool m_bStopPlayCalled = true;
     private bool m_bPlayingForm = false;
 
-    public MainForm()
+    public MainForm(string[] args)
     {
-      Archive.Load(); 
+      if (!Archive.Load(Application.StartupPath))
+      {
+        MessageBox.Show("Can not find settings xml");
+        return;
+      }
       InitializeComponent();
 
       try
@@ -117,6 +122,38 @@ namespace RPlayer
 
       ConfigByArchive();
       SetUiLange();
+
+      if (args.Length > 0)
+      {
+        StartPlay(args[0]);
+      }
+
+      AssociateExtension();
+    }
+
+    private void AssociateExtension()
+    {
+      // Associate extension
+      string ext = ".mp4";
+      string progId = "RabbitPlayer";
+      RegistryKey key = Registry.ClassesRoot.OpenSubKey(ext, true);
+      if (key == null)
+      {
+        key = Registry.ClassesRoot.CreateSubKey(ext);
+      }
+      string defaultId = key.GetValue("") as string;
+      if (defaultId == progId)
+        return;
+      key.SetValue("", progId);
+
+      // Set up progId
+      key = Registry.ClassesRoot.OpenSubKey(progId, false);
+      if (key != null)
+        return;
+      key = Registry.ClassesRoot.CreateSubKey(progId);
+      key.SetValue("", "RabbitPlayer is the greatest mediaplayer");
+      key.CreateSubKey("DefaultIcon").SetValue("", Application.ExecutablePath);
+      key.CreateSubKey(@"Shell\Open\Command").SetValue("", Application.ExecutablePath + " \"%1\"");
     }
 
     private void ConfigByArchive()

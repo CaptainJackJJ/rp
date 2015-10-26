@@ -1439,7 +1439,7 @@ namespace RPlayer
       }
 
       FillContextMenuDynamically();
-
+      this.Activate(); // This will bring player to front.
       return true;
     }
 

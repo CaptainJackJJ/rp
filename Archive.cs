@@ -67,6 +67,7 @@ namespace RPlayer
     // generalSettings
     static public string lang;
     static public string snapSavePath;
+    static public bool associateFiles;
 
     // subtitleSettings
     static public int fontSize;
@@ -134,6 +135,8 @@ namespace RPlayer
       lang = node.InnerText;
       node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
       snapSavePath = node.InnerText;
+      node = xml.SelectSingleNode(sectionGeneralSettings + "associateFiles");
+      associateFiles = Convert.ToBoolean(node.InnerText);
     }
 
     static private void LoadSubtitleSettings()
@@ -292,7 +295,9 @@ namespace RPlayer
       XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
       node.InnerText = lang;
       node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
-      node.InnerText = snapSavePath; 
+      node.InnerText = snapSavePath;
+      node = xml.SelectSingleNode(sectionGeneralSettings + "associateFiles");
+      node.InnerText = associateFiles.ToString(); 
     }
 
     static private void SaveSubtitleSettings()

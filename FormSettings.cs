@@ -93,6 +93,7 @@ namespace RPlayer
           checkBox_bold.Text = UiLang.labelSubtitleBold;
           checkBox_italic.Text = UiLang.labelSubtitleItalic;
           checkBox_overAssOrig.Text = UiLang.labelSubtitleOverAssOrig;
+          checkBox_associateFiles.Text = UiLang.checkBoxAssociateFiles;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
@@ -377,6 +378,11 @@ namespace RPlayer
             Archive.fontBorderColor = MyDialog.Color.ToArgb();
             RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
           }
+        }
+
+        private void checkBox_associateFiles_CheckedChanged(object sender, EventArgs e)
+        {
+          Archive.associateFiles = checkBox_associateFiles.Checked;
         }
     }
 }

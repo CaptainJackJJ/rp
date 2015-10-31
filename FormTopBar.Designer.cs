@@ -28,11 +28,14 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.label_settings = new System.Windows.Forms.Label();
       this.label_Max = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
       this.label_fileName = new System.Windows.Forms.Label();
+      this.label_curTime = new System.Windows.Forms.Label();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.SuspendLayout();
       // 
       // label_settings
@@ -83,14 +86,33 @@
       // 
       this.label_fileName.BackColor = System.Drawing.Color.Transparent;
       this.label_fileName.ForeColor = System.Drawing.Color.White;
-      this.label_fileName.Location = new System.Drawing.Point(130, 7);
+      this.label_fileName.Location = new System.Drawing.Point(225, 7);
       this.label_fileName.Name = "label_fileName";
-      this.label_fileName.Size = new System.Drawing.Size(650, 23);
+      this.label_fileName.Size = new System.Drawing.Size(465, 23);
       this.label_fileName.TabIndex = 43;
       this.label_fileName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.label_fileName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseDown);
       this.label_fileName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseMove);
       this.label_fileName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseUp);
+      // 
+      // label_curTime
+      // 
+      this.label_curTime.BackColor = System.Drawing.Color.Transparent;
+      this.label_curTime.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_curTime.ForeColor = System.Drawing.Color.White;
+      this.label_curTime.Location = new System.Drawing.Point(695, 7);
+      this.label_curTime.Name = "label_curTime";
+      this.label_curTime.Size = new System.Drawing.Size(72, 23);
+      this.label_curTime.TabIndex = 43;
+      this.label_curTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label_curTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseDown);
+      this.label_curTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseMove);
+      this.label_curTime.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseUp);
+      // 
+      // timer1
+      // 
+      this.timer1.Interval = 1000;
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // FormTopBar
       // 
@@ -98,6 +120,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 37);
+      this.Controls.Add(this.label_curTime);
       this.Controls.Add(this.label_fileName);
       this.Controls.Add(this.label_settings);
       this.Controls.Add(this.label_Max);
@@ -121,5 +144,7 @@
     private System.Windows.Forms.Label label_Close;
     private System.Windows.Forms.Label label_Min;
     private System.Windows.Forms.Label label_fileName;
+    private System.Windows.Forms.Label label_curTime;
+    private System.Windows.Forms.Timer timer1;
   }
 }

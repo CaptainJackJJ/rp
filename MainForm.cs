@@ -1031,8 +1031,9 @@ namespace RPlayer
         RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         m_formBottomBar.Hide();
         m_formBottomBar.ShowHidePlaylistLabel(false);
+        m_formTopBar.ShowCurrentTime(true);
         m_formTopBar.Hide();
-        m_formPlaylist.Hide();
+        m_formPlaylist.Hide();        
       }
       else
       {
@@ -1046,6 +1047,7 @@ namespace RPlayer
         m_formTopBar.Opacity = 1;
         if (m_bPlayingForm)
           m_formTopBar.Show();
+        m_formTopBar.ShowCurrentTime(false);
         if (Archive.plistShowingInNoneDesktop)
         {
           m_formPlaylist.Show();

@@ -81,8 +81,10 @@ namespace RPlayer
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4 + 10,
               label_settings.Location.Y);
+      label_curTime.Location =
+         new Point(label_settings.Location.X - label_curTime.Width - 5,label_curTime.Location.Y);
       label_fileName.Size =
-        new Size(this.Width - (this.Width - label_settings.Location.X + 5) * 2, label_fileName.Height);
+        new Size(this.Width - (this.Width - label_curTime.Location.X + 25) * 2, label_fileName.Height);
     }
 
     private void label_Min_MouseEnter(object sender, EventArgs e)
@@ -196,6 +198,20 @@ namespace RPlayer
     private void FormTopBar_MouseUp(object sender, MouseEventArgs e)
     {
       m_bFormMouseDown = false;
+    }
+
+    public void ShowCurrentTime(bool bShow)
+    {
+      label_curTime.Text = "";
+      if (bShow)
+        timer1.Start();
+      else
+        timer1.Stop();
+    }
+
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+      label_curTime.Text = DateTime.Now.ToString("HH : mm : ss");
     }
   }
 }

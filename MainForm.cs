@@ -1453,6 +1453,10 @@ namespace RPlayer
 
       FillContextMenuDynamically();
       this.Activate(); // This will bring player to front.
+
+      if (m_curPlistFolder != null && m_curPlistFile != null)
+        m_formPlaylist.MarkPlayingPlist(m_curPlistFolder, m_curPlistFile);
+
       return true;
     }
 
@@ -1508,22 +1512,18 @@ namespace RPlayer
 
       if (m_curPlistFile != null)
       {
-        PlaylistFile.enumPlayState playState;
         if (curPlayingTime == 0)
         {
-          playState = PlaylistFile.enumPlayState.finished;
+          m_curPlistFile.playState = PlaylistFile.enumPlayState.finished;
           m_curPlistFile.timeWatched = 0;
         }
         else
         {
-          playState = PlaylistFile.enumPlayState.played;
+          m_curPlistFile.playState = PlaylistFile.enumPlayState.played;
           m_curPlistFile.timeWatched = curPlayingTime;
         }
-        if (playState != m_curPlistFile.playState && m_curPlistFolder != null)
-        {
-          m_curPlistFile.playState = playState;
-          m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
-        }
+
+        m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
       }
 
       m_bStopPlayCalled = true;

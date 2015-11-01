@@ -348,6 +348,26 @@ namespace RPlayer
       }
     }
 
+    public void MarkPlayingPlist(PlaylistFolder plistFolder, PlaylistFile plistFile)
+    {
+      foreach (TreeNode nodeFolder in treeView_playlist.Nodes)
+      {
+        if (((PlaylistFolder)(nodeFolder.Tag) == plistFolder))
+        {
+          foreach (TreeNode nodeFile in nodeFolder.Nodes)
+          {
+            if (((PlaylistFile)(nodeFile.Tag) == plistFile))
+            {
+              nodeFile.ForeColor = Color.Red;
+              return;
+            }
+          }
+          return;
+        }
+      }
+     MessageBox.Show("MarkPlayingPlist: no match plistFile");
+    }
+
     public void UpdatePlayListView(bool bAllFloder, string folderUrl)
     {
       Cursor.Current = Cursors.WaitCursor;

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppShare.cs" />
     <Compile Include="FormBottomBar.cs">
       <SubType>Form</SubType>
     </Compile>

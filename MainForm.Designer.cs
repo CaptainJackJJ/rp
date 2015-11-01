@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+      this.components = new System.ComponentModel.Container();
       this.label_Play = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
@@ -42,6 +43,7 @@
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_playlist = new System.Windows.Forms.Label();
       this.label_openFile = new System.Windows.Forms.Label();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.SuspendLayout();
       // 
       // label_Play
@@ -227,6 +229,11 @@
       this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
       this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
       // 
+      // timer1
+      // 
+      this.timer1.Enabled = true;
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -276,6 +283,7 @@
         private MB.Controls.ColorSlider colorSlider_volume;
         private System.Windows.Forms.Label label_playlist;
         private System.Windows.Forms.Label label_openFile;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

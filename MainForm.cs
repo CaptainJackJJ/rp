@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using RpCoreWrapper;
 using System.IO;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace RPlayer
 {
@@ -75,6 +76,47 @@ namespace RPlayer
 
     public MainForm(string[] args)
     {
+      //bool createdNew = true;
+      //using (Mutex mutex = new Mutex(true, "RabbitPlayer", out createdNew))
+      //{
+      //  MessageBox.Show("new Mutex");
+      //  if (!createdNew)// Already running one
+      //  {
+      //    MessageBox.Show("!createdNew");
+      //    if (!AppShare.SetGetNewUrl(Application.StartupPath, true, args[0]))
+      //    {
+      //      MessageBox.Show("Can not find AppShare xml");
+      //    }
+      //    this.Close();
+      //    MessageBox.Show("this.Close();");
+      //  }
+      //}
+
+      bool bRunning = false;
+      if (AppShare.SetGetAppIsRunning(Application.StartupPath, false, ref bRunning))
+      {
+        if (bRunning)
+        {
+          if (args.Length > 0)
+          {
+            if (!AppShare.SetGetNewUrl(Application.StartupPath, true, ref args[0]))
+            {
+              MessageBox.Show("Can not find AppShare xml");
+            }
+            this.Close();
+          }
+        }
+        else
+        {
+          bRunning = true;
+          AppShare.SetGetAppIsRunning(Application.StartupPath, true, ref bRunning);
+        }
+      }
+      else
+      {
+        MessageBox.Show("Can not find AppShare xml");
+      }
+
       if (!Archive.Load(Application.StartupPath))
       {
         MessageBox.Show("Can not find settings xml");
@@ -681,6 +723,11 @@ namespace RPlayer
       Archive.mainFormHeight = this.Height;
 
       Archive.Save();
+
+      bool bRunning = false;
+      if (!AppShare.SetGetAppIsRunning(Application.StartupPath, true, ref bRunning))
+        MessageBox.Show("Can not find AppShare xml");
+
       this.Close();
     }
 
@@ -1569,6 +1616,21 @@ namespace RPlayer
     {
       Archive.volume = colorSlider_volume.Value;
       RpCore.SetVolume((float)(Archive.volume * 0.01));
+    }
+
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+      string url = "";
+      if (!AppShare.SetGetNewUrl(Application.StartupPath, false, ref url))
+      {
+        MessageBox.Show("Can not find AppShare xml");
+      }
+      if(url != "")
+      {
+        if (m_bIsPlaying)
+          StopPlay();
+        StartPlay(url);
+      }
     }
 
     delegate void ResponseOnEndedStoppedDelegate(bool bInvoke);

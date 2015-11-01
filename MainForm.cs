@@ -672,6 +672,9 @@ namespace RPlayer
       RpCore.UninitPlayer();
       RpCore.UnLoadLib();
 
+      if (m_bDesktop)
+        SwitchDesktopMode(false, false);
+
       Archive.mainFormLocX = this.Location.X;
       Archive.mainFormLocY = this.Location.Y;
       Archive.mainFormWidth = this.Width;

@@ -76,22 +76,6 @@ namespace RPlayer
 
     public MainForm(string[] args)
     {
-      //bool createdNew = true;
-      //using (Mutex mutex = new Mutex(true, "RabbitPlayer", out createdNew))
-      //{
-      //  MessageBox.Show("new Mutex");
-      //  if (!createdNew)// Already running one
-      //  {
-      //    MessageBox.Show("!createdNew");
-      //    if (!AppShare.SetGetNewUrl(Application.StartupPath, true, args[0]))
-      //    {
-      //      MessageBox.Show("Can not find AppShare xml");
-      //    }
-      //    this.Close();
-      //    MessageBox.Show("this.Close();");
-      //  }
-      //}
-
       bool bRunning = false;
       if (AppShare.SetGetAppIsRunning(Application.StartupPath, false, ref bRunning))
       {

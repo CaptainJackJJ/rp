@@ -10,6 +10,8 @@ using RpCoreWrapper;
 using System.IO;
 using Microsoft.Win32;
 using System.Threading;
+using System.Runtime.InteropServices;
+
 
 namespace RPlayer
 {
@@ -72,7 +74,12 @@ namespace RPlayer
     private bool m_bSubtitleVisible = true;
 
     private bool m_bStopPlayCalled = true;
-    private bool m_bPlayingForm = false;    
+    private bool m_bPlayingForm = false;
+    private bool m_bPlayerInited = false;
+    private string m_strPlayUrlAfterInit = "";
+
+    [DllImport("user32.dll")]
+    static extern int ShowCursor(bool bShow);
 
     public MainForm(string[] args)
     {
@@ -127,10 +134,7 @@ namespace RPlayer
         label_Min.Text = "min";
         label_playlist.Text = "Plist";
       }
-      m_rpCallback = new RpCallback(this);
-      RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
-      RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
-
+     
       UiLang.SetLang(Archive.lang);
 
       m_formBottomBar = new FormBottomBar(this);
@@ -146,8 +150,34 @@ namespace RPlayer
 
       InitContextMenuStrip();
 
-      ConfigByArchive();
       SetUiLange();
+
+      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+
+      colorSlider_volume.Value = Archive.volume;
+      try
+      {
+        if (Archive.mute)
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+        else
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+      }
+      catch
+      {
+        if (Archive.mute)
+          label_Volume.Text = "mute";
+        else
+          label_Volume.Text = "volume";
+      }
+      if (Archive.plistShowingInNoneDesktop)
+      {
+        m_formPlaylist.Show();
+        ChangePlayWndSizeInNonDesktop();
+      }
+      ShowCursor(true);
+      Thread Thread1 = new Thread(ThreadLoadLib);
+      Thread1.Start();
 
       if (args.Length > 0)
       {
@@ -156,6 +186,40 @@ namespace RPlayer
 
       if(Archive.associateFiles)
         AssociateExtension();
+    }
+
+    // Load lib is slow, so put it in a thread to let form show fast.
+    private void ThreadLoadLib()
+    {
+      m_rpCallback = new RpCallback(this);
+      RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
+      Init(true);
+    }
+
+    delegate void InitDelegate(bool bInvoke);
+    private void Init(bool bInvoke)
+    {      
+      if (bInvoke)
+      {
+        InitDelegate del = new InitDelegate(Init);
+        this.Invoke(del, false);
+      }
+      else
+      {
+        RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
+        m_bPlayerInited = true;
+        RpCore.SetMute(Archive.mute);
+        RpCore.SetOverAssOrig(Archive.overAssOrig);
+        RpCore.SetSubtitleBold(Archive.bold);
+        RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
+        RpCore.SetSubtitleColor(Archive.fontColor);
+        RpCore.SetSubtitleItalic(Archive.italic);
+        RpCore.SetSubtitlePos(Archive.fontPos);
+        RpCore.SetSubtitleSize(Archive.fontSize);
+
+        if (m_strPlayUrlAfterInit != "")
+          StartPlay(m_strPlayUrlAfterInit);
+      }
     }
 
     private void AssociateExtension()
@@ -191,42 +255,6 @@ namespace RPlayer
       key.SetValue("", "RabbitPlayer is the greatest mediaplayer");
       key.CreateSubKey("DefaultIcon").SetValue("", Application.ExecutablePath);
       key.CreateSubKey(@"Shell\Open\Command").SetValue("", Application.ExecutablePath + " \"%1\"");
-    }
-
-    private void ConfigByArchive()
-    {
-      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-
-      colorSlider_volume.Value = Archive.volume;
-      try
-      {
-        RpCore.SetMute(Archive.mute);
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-      }
-      catch 
-      {
-        if (Archive.mute)
-          label_Volume.Text = "mute";
-        else
-          label_Volume.Text = "volume";        
-      }
-      if (Archive.plistShowingInNoneDesktop)
-      {
-        m_formPlaylist.Show();
-        ChangePlayWndSizeInNonDesktop();
-      }
-
-      RpCore.SetOverAssOrig(Archive.overAssOrig);
-      RpCore.SetSubtitleBold(Archive.bold);
-      RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
-      RpCore.SetSubtitleColor(Archive.fontColor);
-      RpCore.SetSubtitleItalic(Archive.italic);
-      RpCore.SetSubtitlePos(Archive.fontPos);
-      RpCore.SetSubtitleSize(Archive.fontSize);
     }
 
     public void SetAllUiLange()
@@ -1412,6 +1440,13 @@ namespace RPlayer
 
     public bool StartPlay(string url)
     {
+      if(!m_bPlayerInited)
+      {
+        m_strPlayUrlAfterInit = url; // To let method init to play it.
+        return true;
+      }
+      m_strPlayUrlAfterInit = "";
+
       SwitchPlayingForm(true);
 
       if (RpCore.IsPlaying())
@@ -1601,6 +1636,8 @@ namespace RPlayer
       Archive.volume = colorSlider_volume.Value;
       RpCore.SetVolume((float)(Archive.volume * 0.01));
     }
+
+
 
     private void timer1_Tick(object sender, EventArgs e)
     {

@@ -124,6 +124,7 @@ namespace RPlayer
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
+        this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
       }
       catch
       {
@@ -1255,6 +1256,7 @@ namespace RPlayer
         m_formBottomBar.Show();
 
         label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
+        this.BackgroundImage = null;
       }
       else
       {
@@ -1277,6 +1279,7 @@ namespace RPlayer
         SwitchDesktopMode(false,false);
 
         label_playWnd.ContextMenuStrip = null;
+        this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
       }
     }
 

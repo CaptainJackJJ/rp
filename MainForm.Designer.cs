@@ -217,13 +217,13 @@
       // label_openFile
       // 
       this.label_openFile.BackColor = System.Drawing.Color.Transparent;
+      this.label_openFile.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_openFile.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_openFile.ForeColor = System.Drawing.Color.White;
       this.label_openFile.Location = new System.Drawing.Point(408, 266);
       this.label_openFile.Name = "label_openFile";
-      this.label_openFile.Size = new System.Drawing.Size(98, 30);
+      this.label_openFile.Size = new System.Drawing.Size(100, 100);
       this.label_openFile.TabIndex = 40;
-      this.label_openFile.Text = "OpenFile";
       this.label_openFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.label_openFile.Click += new System.EventHandler(this.label_openFile_Click);
       this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);

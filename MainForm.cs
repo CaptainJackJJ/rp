@@ -123,6 +123,7 @@ namespace RPlayer
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
+        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
       }
       catch
       {
@@ -133,6 +134,7 @@ namespace RPlayer
         label_Max.Text = "max";
         label_Min.Text = "min";
         label_playlist.Text = "Plist";
+        label_openFile.Text = "OpenFile";
       }
      
       UiLang.SetLang(Archive.lang);
@@ -268,7 +270,6 @@ namespace RPlayer
 
     private void SetUiLange()
     {
-      label_openFile.Text = UiLang.labelOpenFile;
       m_toolStripMenuItem_subtitles.Text = UiLang.contextMenuSubtitles;
       m_toolStripMenuItem_audios.Text = UiLang.contextMenuAudios;
       m_toolStripMenuItem_chapters.Text = UiLang.contextMenuChapters;
@@ -551,7 +552,7 @@ namespace RPlayer
         RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
 
         label_openFile.Location =
-          new Point(label_playWnd.Location.X + (int)(label_playWnd.Width * 0.5 - label_openFile.Width * 0.5),
+          new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - label_openFile.Width * 0.5),
             label_playWnd.Location.Y + (int)(label_playWnd.Height * 0.5 - label_openFile.Height * 0.5));
       }
     }
@@ -1192,12 +1193,20 @@ namespace RPlayer
 
     private void label_openFile_MouseEnter(object sender, EventArgs e)
     {
-      label_openFile.ForeColor = Color.DodgerBlue;
+      try
+      {
+        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFileFocus.png");
+      }
+      catch { }
     }
 
     private void label_openFile_MouseLeave(object sender, EventArgs e)
     {
-      label_openFile.ForeColor = Color.White;
+      try
+      {
+        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
+      }
+      catch { }
     }
 
     private void ChangeSubFormsLocAndSize()

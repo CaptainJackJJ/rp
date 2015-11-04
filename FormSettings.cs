@@ -56,6 +56,7 @@ namespace RPlayer
           checkBox_bold.Checked = Archive.bold;
           checkBox_italic.Checked = Archive.italic;
           checkBox_overAssOrig.Checked = Archive.overAssOrig;
+          checkBox_associateFiles.Checked = Archive.associateFiles;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)

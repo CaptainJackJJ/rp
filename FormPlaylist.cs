@@ -784,6 +784,11 @@ namespace RPlayer
       PlaylistFile file = node.Tag as PlaylistFile;
       string url = file.url;
 
+      if(url == m_mainForm.m_strCurPlayingUrl && RpCore.IsPlaying())
+      {
+        m_mainForm.StopPlay();
+      }
+
       try
       {
         File.Delete(url);
@@ -809,9 +814,13 @@ namespace RPlayer
       foreach(TreeNode fileNode in folderNode.Nodes)
       {
         PlaylistFile plistFile = fileNode.Tag as PlaylistFile;
+        TreeNode nextNode = fileNode.NextNode;
         if (plistFile.url == url)
         {
           folderNode.Nodes.Remove(fileNode);
+
+          if (nextNode != null)
+            treeView_playlist.SelectedNode = nextNode;
           break;
         }
       }

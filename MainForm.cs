@@ -58,7 +58,7 @@ namespace RPlayer
     private double m_nFileDuration;
     private PlaylistFolder m_curPlistFolder;
     private PlaylistFile m_curPlistFile;
-    private string m_strCurPlayingUrl;
+    public string m_strCurPlayingUrl;
     private bool m_bIsPlaying = false;
 
     private ContextMenuStrip m_contextMenuStrip_playWnd;

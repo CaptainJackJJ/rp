@@ -34,7 +34,7 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
 
     private Color m_colorFinished = Color.RosyBrown;
-    private Color m_colorPlayed = Color.DodgerBlue;
+    private Color m_colorPlayed = Color.SkyBlue;
     
     public FormPlaylist(MainForm mainForm)
     {

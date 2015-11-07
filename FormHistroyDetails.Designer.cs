@@ -62,7 +62,7 @@
       // 
       this.label_timeWatchedShow.AutoSize = true;
       this.label_timeWatchedShow.BackColor = System.Drawing.Color.Transparent;
-      this.label_timeWatchedShow.ForeColor = System.Drawing.Color.DeepSkyBlue;
+      this.label_timeWatchedShow.ForeColor = System.Drawing.Color.Azure;
       this.label_timeWatchedShow.Location = new System.Drawing.Point(101, 9);
       this.label_timeWatchedShow.Name = "label_timeWatchedShow";
       this.label_timeWatchedShow.Size = new System.Drawing.Size(77, 12);
@@ -73,7 +73,7 @@
       // 
       this.label_durationShow.AutoSize = true;
       this.label_durationShow.BackColor = System.Drawing.Color.Transparent;
-      this.label_durationShow.ForeColor = System.Drawing.Color.DeepSkyBlue;
+      this.label_durationShow.ForeColor = System.Drawing.Color.Azure;
       this.label_durationShow.Location = new System.Drawing.Point(101, 30);
       this.label_durationShow.Name = "label_durationShow";
       this.label_durationShow.Size = new System.Drawing.Size(77, 12);

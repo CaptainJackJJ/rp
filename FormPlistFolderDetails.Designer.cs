@@ -64,7 +64,7 @@
       // 
       this.label_creationTimeShow.AutoSize = true;
       this.label_creationTimeShow.BackColor = System.Drawing.Color.Transparent;
-      this.label_creationTimeShow.ForeColor = System.Drawing.Color.DeepSkyBlue;
+      this.label_creationTimeShow.ForeColor = System.Drawing.Color.White;
       this.label_creationTimeShow.Location = new System.Drawing.Point(101, 17);
       this.label_creationTimeShow.Name = "label_creationTimeShow";
       this.label_creationTimeShow.Size = new System.Drawing.Size(113, 12);

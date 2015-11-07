@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -78,10 +78,11 @@
       // 
       // button_playlist
       // 
-      this.button_playlist.BackColor = System.Drawing.Color.DodgerBlue;
+      this.button_playlist.BackColor = System.Drawing.Color.Gray;
       this.button_playlist.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
       this.button_playlist.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
       this.button_playlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_playlist.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_playlist.ForeColor = System.Drawing.Color.White;
       this.button_playlist.Location = new System.Drawing.Point(10, 10);
       this.button_playlist.Name = "button_playlist";
@@ -157,10 +158,11 @@
       // listView_histroy
       // 
       this.listView_histroy.BackColor = System.Drawing.Color.Gray;
+      this.listView_histroy.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem25,
+            listViewItem26});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(149, 362);
@@ -177,6 +179,7 @@
       this.treeView_playlist.AllowDrop = true;
       this.treeView_playlist.BackColor = System.Drawing.Color.Gray;
       this.treeView_playlist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.treeView_playlist.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.treeView_playlist.ForeColor = System.Drawing.Color.White;
       this.treeView_playlist.ItemHeight = 18;
       this.treeView_playlist.LineColor = System.Drawing.Color.White;

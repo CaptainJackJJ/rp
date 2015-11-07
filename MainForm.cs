@@ -1151,7 +1151,11 @@ namespace RPlayer
         m_formBottomBar.ShowHidePlaylistLabel(false);
         m_formTopBar.ShowCurrentTime(true);
         m_formTopBar.Hide();
-        m_formPlaylist.Hide();        
+        m_formPlaylist.Hide();
+        m_formTopBar.Location = new Point(0, 0);
+        m_formTopBar.Size = new Size(this.Width, m_formTopBar.Height);
+        m_formBottomBar.Location = new Point(0, m_formBottomBar.Location.Y);
+        m_formBottomBar.Size = new Size(this.Width, m_formBottomBar.Height);
       }
       else
       {

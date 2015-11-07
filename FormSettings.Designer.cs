@@ -38,6 +38,7 @@
       this.label_AV = new System.Windows.Forms.Label();
       this.panel_general = new System.Windows.Forms.Panel();
       this.checkBox_associateFiles = new System.Windows.Forms.CheckBox();
+      this.button_restoreFactory = new System.Windows.Forms.Button();
       this.button_snapSavePath = new System.Windows.Forms.Button();
       this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
       this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
@@ -60,7 +61,6 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
-      this.button_restoreFactory = new System.Windows.Forms.Button();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -154,12 +154,13 @@
       // 
       this.label_AV.BackColor = System.Drawing.Color.Transparent;
       this.label_AV.ForeColor = System.Drawing.Color.White;
-      this.label_AV.Location = new System.Drawing.Point(0, 104);
+      this.label_AV.Location = new System.Drawing.Point(0, 139);
       this.label_AV.Name = "label_AV";
       this.label_AV.Size = new System.Drawing.Size(98, 30);
       this.label_AV.TabIndex = 13;
       this.label_AV.Text = "AudioVideo";
       this.label_AV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label_AV.Visible = false;
       this.label_AV.Click += new System.EventHandler(this.label_AV_Click);
       this.label_AV.MouseEnter += new System.EventHandler(this.label_AV_MouseEnter);
       this.label_AV.MouseLeave += new System.EventHandler(this.label_AV_MouseLeave);
@@ -192,6 +193,22 @@
       this.checkBox_associateFiles.Text = "Always associate all video files";
       this.checkBox_associateFiles.UseVisualStyleBackColor = true;
       this.checkBox_associateFiles.CheckedChanged += new System.EventHandler(this.checkBox_associateFiles_CheckedChanged);
+      // 
+      // button_restoreFactory
+      // 
+      this.button_restoreFactory.BackColor = System.Drawing.Color.DimGray;
+      this.button_restoreFactory.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_restoreFactory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_restoreFactory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_restoreFactory.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_restoreFactory.ForeColor = System.Drawing.Color.White;
+      this.button_restoreFactory.Location = new System.Drawing.Point(25, 460);
+      this.button_restoreFactory.Name = "button_restoreFactory";
+      this.button_restoreFactory.Size = new System.Drawing.Size(176, 24);
+      this.button_restoreFactory.TabIndex = 38;
+      this.button_restoreFactory.Text = "Restore factory settings";
+      this.button_restoreFactory.UseVisualStyleBackColor = false;
+      this.button_restoreFactory.Click += new System.EventHandler(this.button_restoreFactory_Click);
       // 
       // button_snapSavePath
       // 
@@ -442,7 +459,7 @@
       // 
       this.label_plist.BackColor = System.Drawing.Color.Transparent;
       this.label_plist.ForeColor = System.Drawing.Color.White;
-      this.label_plist.Location = new System.Drawing.Point(0, 136);
+      this.label_plist.Location = new System.Drawing.Point(0, 104);
       this.label_plist.Name = "label_plist";
       this.label_plist.Size = new System.Drawing.Size(98, 30);
       this.label_plist.TabIndex = 13;
@@ -503,22 +520,6 @@
       this.checkBox_deleteFileDirectly.Text = "just delete playlist file without asking";
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
-      // 
-      // button_restoreFactory
-      // 
-      this.button_restoreFactory.BackColor = System.Drawing.Color.DimGray;
-      this.button_restoreFactory.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_restoreFactory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-      this.button_restoreFactory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_restoreFactory.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_restoreFactory.ForeColor = System.Drawing.Color.White;
-      this.button_restoreFactory.Location = new System.Drawing.Point(25, 460);
-      this.button_restoreFactory.Name = "button_restoreFactory";
-      this.button_restoreFactory.Size = new System.Drawing.Size(176, 24);
-      this.button_restoreFactory.TabIndex = 38;
-      this.button_restoreFactory.Text = "Restore factory settings";
-      this.button_restoreFactory.UseVisualStyleBackColor = false;
-      this.button_restoreFactory.Click += new System.EventHandler(this.button_restoreFactory_Click);
       // 
       // FormSettings
       // 

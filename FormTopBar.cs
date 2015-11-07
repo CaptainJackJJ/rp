@@ -216,7 +216,7 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      System.Diagnostics.Process.Start(m_mainForm.m_strRabbitSiteUrl);
+      m_mainForm.LaunchAboutProcess();
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)

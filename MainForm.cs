@@ -17,7 +17,6 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
-    public string m_strRabbitSiteUrl = "http://rabbitplayer.com/";
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;
@@ -1267,7 +1266,15 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      System.Diagnostics.Process.Start(m_strRabbitSiteUrl);
+      LaunchAboutProcess();
+    }
+
+    public void LaunchAboutProcess()
+    {
+      System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+      startInfo.FileName = Application.StartupPath + "\\RVersion.exe";
+      startInfo.Arguments = Archive.lang;
+      System.Diagnostics.Process.Start(startInfo);
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)

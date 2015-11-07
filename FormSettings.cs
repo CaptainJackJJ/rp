@@ -375,7 +375,7 @@ namespace RPlayer
           // Update the text box color if the user clicks OK  
           if (MyDialog.ShowDialog() == DialogResult.OK)
           {
-            button_fontColor.ForeColor = MyDialog.Color;
+            button_borderColor.ForeColor = MyDialog.Color;
             Archive.fontBorderColor = MyDialog.Color.ToArgb();
             RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
           }

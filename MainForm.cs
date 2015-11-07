@@ -17,6 +17,7 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
+    public string m_strRabbitSiteUrl = "http://rabbitplayer.com/";
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;
@@ -333,6 +334,7 @@ namespace RPlayer
         number = i + 1;
         item.Text = UiLang.contextMenuChapter + number.ToString();
       }
+      label_logo.Text = UiLang.rabbitPlayer;
     }
 
     private void InitContextMenuStrip()
@@ -1262,6 +1264,23 @@ namespace RPlayer
       }
       catch { }
     }
+
+    private void label_logo_Click(object sender, EventArgs e)
+    {
+      System.Diagnostics.Process.Start(m_strRabbitSiteUrl);
+    }
+
+    private void label_logo_MouseEnter(object sender, EventArgs e)
+    {
+      label_logo.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_logo_MouseLeave(object sender, EventArgs e)
+    {
+      label_logo.ForeColor = Color.White;
+    }
+
+
 
     private void ChangeSubFormsLocAndSize()
     {

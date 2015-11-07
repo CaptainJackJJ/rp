@@ -36,6 +36,7 @@
       this.label_fileName = new System.Windows.Forms.Label();
       this.label_curTime = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
+      this.label_logo = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_settings
@@ -114,12 +115,29 @@
       this.timer1.Interval = 1000;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
+      // label_logo
+      // 
+      this.label_logo.AutoSize = true;
+      this.label_logo.BackColor = System.Drawing.Color.Transparent;
+      this.label_logo.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_logo.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_logo.ForeColor = System.Drawing.Color.White;
+      this.label_logo.Location = new System.Drawing.Point(12, 6);
+      this.label_logo.Name = "label_logo";
+      this.label_logo.Size = new System.Drawing.Size(166, 24);
+      this.label_logo.TabIndex = 44;
+      this.label_logo.Text = "RabbitPlayer";
+      this.label_logo.Click += new System.EventHandler(this.label_logo_Click);
+      this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
+      this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
+      // 
       // FormTopBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 37);
+      this.Controls.Add(this.label_logo);
       this.Controls.Add(this.label_curTime);
       this.Controls.Add(this.label_fileName);
       this.Controls.Add(this.label_settings);
@@ -134,6 +152,7 @@
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseUp);
       this.Resize += new System.EventHandler(this.FormTopBar_Resize);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -146,5 +165,6 @@
     private System.Windows.Forms.Label label_fileName;
     private System.Windows.Forms.Label label_curTime;
     private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.Label label_logo;
   }
 }

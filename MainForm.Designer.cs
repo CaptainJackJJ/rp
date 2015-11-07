@@ -44,6 +44,7 @@
       this.label_playlist = new System.Windows.Forms.Label();
       this.label_openFile = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
+      this.label_logo = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Play
@@ -234,6 +235,22 @@
       this.timer1.Enabled = true;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
+      // label_logo
+      // 
+      this.label_logo.AutoSize = true;
+      this.label_logo.BackColor = System.Drawing.Color.Transparent;
+      this.label_logo.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_logo.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_logo.ForeColor = System.Drawing.Color.White;
+      this.label_logo.Location = new System.Drawing.Point(21, 6);
+      this.label_logo.Name = "label_logo";
+      this.label_logo.Size = new System.Drawing.Size(166, 24);
+      this.label_logo.TabIndex = 45;
+      this.label_logo.Text = "RabbitPlayer";
+      this.label_logo.Click += new System.EventHandler(this.label_logo_Click);
+      this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
+      this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -242,7 +259,7 @@
       this.ClientSize = new System.Drawing.Size(915, 562);
       this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.label_playWnd);
-      this.Controls.Add(this.label_settings);
+      this.Controls.Add(this.label_logo);
       this.Controls.Add(this.colorSlider_volume);
       this.Controls.Add(this.label_playlist);
       this.Controls.Add(this.label_Volume);
@@ -254,6 +271,7 @@
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_Min);
       this.Controls.Add(this.label_Play);
+      this.Controls.Add(this.label_settings);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -263,6 +281,7 @@
       this.Move += new System.EventHandler(this.MainForm_Move);
       this.Resize += new System.EventHandler(this.MainForm_Resize);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
         }
 
@@ -283,6 +302,7 @@
         private System.Windows.Forms.Label label_playlist;
         private System.Windows.Forms.Label label_openFile;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label_logo;
     }
 }
 

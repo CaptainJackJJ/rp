@@ -47,7 +47,7 @@ namespace RPlayer
 
     private void SetUiLange()
     {
-
+      label_logo.Text = UiLang.rabbitPlayer;
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -212,6 +212,21 @@ namespace RPlayer
     private void timer1_Tick(object sender, EventArgs e)
     {
       label_curTime.Text = DateTime.Now.ToString("HH : mm : ss");
+    }
+
+    private void label_logo_Click(object sender, EventArgs e)
+    {
+      System.Diagnostics.Process.Start(m_mainForm.m_strRabbitSiteUrl);
+    }
+
+    private void label_logo_MouseEnter(object sender, EventArgs e)
+    {
+      label_logo.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_logo_MouseLeave(object sender, EventArgs e)
+    {
+      label_logo.ForeColor = Color.White;
     }
   }
 }

@@ -11,6 +11,7 @@ namespace RPlayer
     public static string langChinese = "中文";
 
     // Common
+    public static string rabbitPlayer;
     public static string yes;
     public static string no;
     public static string pathNotFound;
@@ -98,7 +99,6 @@ namespace RPlayer
     public static string mediaInfoAudioSamplerate;
     public static string mediaInfoAudioBitspersample;
     public static string mediaInfoAudioLanguage;
-    public static string mediaInfoAudioCodecName;
     public static string mediaInfoName;
     public static string mediaInfoVideo;
     public static string mediaInfoAudio;
@@ -120,6 +120,7 @@ namespace RPlayer
 
     private static void SetEnglish()
     {
+      rabbitPlayer = "RabbitPlayer";
       yes = "Yes";
       no = "No";
       pathNotFound = "Can not find this source. It may be deleted or renamed or moved... Source path is:";
@@ -211,6 +212,7 @@ Are you still want to delete it?";
 
     private static void SetChinese()
     {
+      rabbitPlayer = "兔子影音";
       yes = "是的";
       no = "不了";
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";

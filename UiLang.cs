@@ -42,6 +42,7 @@ namespace RPlayer
     public static string uiLangLabel;
     public static string labelSnapSavePath;
     public static string checkBoxAssociateFiles;
+    public static string btnRestoreFactory;
 
     // PanelSubtitle
     public static string labelSubtitleSize;
@@ -147,6 +148,7 @@ namespace RPlayer
       uiLangLabel = "UI Language";
       labelSnapSavePath = "Snapshot Save Path";
       checkBoxAssociateFiles = "Always associate all video files";
+      btnRestoreFactory = "Restore factory settings";
 
       labelSubtitleSize = "Size";
       labelSubtitlePos = "Position";
@@ -237,6 +239,7 @@ Are you still want to delete it?";
       uiLangLabel = "界面语言";
       labelSnapSavePath = "快照保存路径";
       checkBoxAssociateFiles = "设置为系统默认播放器";
+      btnRestoreFactory = "恢复出厂设置";
 
       labelSubtitleSize = "大小";
       labelSubtitlePos = "位置";

@@ -34,7 +34,7 @@ namespace RPlayer
             }
         }
 
-        private void ConfigByArchive()
+        public void ConfigByArchive()
         {
           comboBox_uiLang.Items.Clear();
           comboBox_uiLang.Items.Add(UiLang.langEnglish);
@@ -95,6 +95,7 @@ namespace RPlayer
           checkBox_italic.Text = UiLang.labelSubtitleItalic;
           checkBox_overAssOrig.Text = UiLang.labelSubtitleOverAssOrig;
           checkBox_associateFiles.Text = UiLang.checkBoxAssociateFiles;
+          button_restoreFactory.Text = UiLang.btnRestoreFactory;
         }
 
         public void ShowForm(enumSettingFormType SettingType)
@@ -384,6 +385,13 @@ namespace RPlayer
         private void checkBox_associateFiles_CheckedChanged(object sender, EventArgs e)
         {
           Archive.associateFiles = checkBox_associateFiles.Checked;
+        }
+
+        private void button_restoreFactory_Click(object sender, EventArgs e)
+        {
+          Archive.Reset();
+          m_mainForm.ConfigAllByArchive();
+          m_mainForm.SetAllUiLange();
         }
     }
 }

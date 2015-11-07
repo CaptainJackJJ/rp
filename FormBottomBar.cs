@@ -107,11 +107,10 @@ namespace RPlayer
       return base.ProcessCmdKey(ref msg, keyData);
     }
 
-    public void StartPlay()
-    {     
+    public void ConfigByAchive()
+    {
       try
       {
-        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
         if (Archive.mute)
           label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
         else
@@ -119,13 +118,25 @@ namespace RPlayer
       }
       catch
       {
-        label_Play.Text = "pause";
         if (Archive.mute)
           label_Volume.Text = "mute";
         else
           label_Volume.Text = "volume";
       }
       colorSlider_volume.Value = Archive.volume;
+    }
+
+    public void StartPlay()
+    {     
+      try
+      {
+        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
+      }
+      catch
+      {
+        label_Play.Text = "pause";
+      }
+      ConfigByAchive();
 
       m_nTotalTime = (int)RpCore.GetTotalTime();
       if (m_nTotalTime == 0)

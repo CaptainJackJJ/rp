@@ -128,7 +128,7 @@ namespace RPlayer
       comboBox_sort.Location = new Point(comboBox_sort.Location.X, nSortByY);      
     }
 
-    private void ConfigByArchive()
+    public void ConfigByArchive()
     {
       this.Size = new Size(Archive.formPlistWidth, Archive.formPlistHeight);
       SwitchListView(Archive.selectedPListBtn);

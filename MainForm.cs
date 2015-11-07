@@ -84,6 +84,7 @@ namespace RPlayer
 
     public MainForm(string[] args)
     {
+      //------------- only run one instance
       bool bRunning = false;
       if (AppShare.SetGetAppIsRunning(Application.StartupPath, false, ref bRunning))
       {
@@ -114,6 +115,8 @@ namespace RPlayer
         MessageBox.Show("Can not find settings xml");
         return;
       }
+      // ************* only run one instance
+
       InitializeComponent();
 
       try
@@ -157,29 +160,8 @@ namespace RPlayer
 
       SetUiLange();
 
-      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-
-      colorSlider_volume.Value = Archive.volume;
-      try
-      {
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-      }
-      catch
-      {
-        if (Archive.mute)
-          label_Volume.Text = "mute";
-        else
-          label_Volume.Text = "volume";
-      }
-      if (Archive.plistShowingInNoneDesktop)
-      {
-        m_formPlaylist.Show();
-        ChangePlayWndSizeInNonDesktop();
-      }
+      ConfigUiByArchive();
+      
       ShowCursor(true);
       Thread Thread1 = new Thread(ThreadLoadLib);
       Thread1.Start();
@@ -213,14 +195,8 @@ namespace RPlayer
       {
         RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
         m_bPlayerInited = true;
-        RpCore.SetMute(Archive.mute);
-        RpCore.SetOverAssOrig(Archive.overAssOrig);
-        RpCore.SetSubtitleBold(Archive.bold);
-        RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
-        RpCore.SetSubtitleColor(Archive.fontColor);
-        RpCore.SetSubtitleItalic(Archive.italic);
-        RpCore.SetSubtitlePos(Archive.fontPos);
-        RpCore.SetSubtitleSize(Archive.fontSize);
+
+        ConfigRpcoreByArchive();
 
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
@@ -260,6 +236,64 @@ namespace RPlayer
       key.SetValue("", "RabbitPlayer is the greatest mediaplayer");
       key.CreateSubKey("DefaultIcon").SetValue("", Application.ExecutablePath);
       key.CreateSubKey(@"Shell\Open\Command").SetValue("", Application.ExecutablePath + " \"%1\"");
+    }
+
+    public void ConfigAllByArchive()
+    {
+      ConfigByArchive();
+      m_formBottomBar.ConfigByAchive();
+      m_formPlaylist.ConfigByArchive();
+      m_formSettings.ConfigByArchive();
+    }
+
+    private void ConfigByArchive()
+    {
+      ConfigUiByArchive();
+      ConfigRpcoreByArchive();
+    }
+
+    private void ConfigUiByArchive()
+    {
+      if (m_bDesktop)
+        SwitchDesktopMode(false, false);
+      if (Archive.mainFormLocX >= 0 && Archive.mainFormLocY >= 0)
+        this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+
+      colorSlider_volume.Value = Archive.volume;
+      try
+      {
+        if (Archive.mute)
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
+        else
+          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+      }
+      catch
+      {
+        if (Archive.mute)
+          label_Volume.Text = "mute";
+        else
+          label_Volume.Text = "volume";
+      }
+      if (Archive.plistShowingInNoneDesktop)
+      {
+        m_formPlaylist.Show();
+        ChangePlayWndSizeInNonDesktop();
+      }
+      else
+        m_formPlaylist.Hide();
+    }
+
+    private void ConfigRpcoreByArchive()
+    {
+      RpCore.SetMute(Archive.mute);
+      RpCore.SetOverAssOrig(Archive.overAssOrig);
+      RpCore.SetSubtitleBold(Archive.bold);
+      RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
+      RpCore.SetSubtitleColor(Archive.fontColor);
+      RpCore.SetSubtitleItalic(Archive.italic);
+      RpCore.SetSubtitlePos(Archive.fontPos);
+      RpCore.SetSubtitleSize(Archive.fontSize);
     }
 
     public void SetAllUiLange()
@@ -538,25 +572,25 @@ namespace RPlayer
         UpdateEdge();
       }
 
-      ChangePlayWndSizeInNonDesktop();
-
       ChangeSubFormsLocAndSize();
+
+      ChangePlayWndSizeInNonDesktop();
     }
 
     public void ChangePlayWndSizeInNonDesktop()
     {
       if (!m_bDesktop)
       {
-        int width = this.Width - 4;
-        int height = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
+        int playWndWidth = this.Width - 4;
+        int playWndHeight = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
         if (Archive.plistShowingInNoneDesktop)
-          width -= (m_formPlaylist.Width + 5);
-        label_playWnd.Size = new Size(width, height);
-        RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
+          playWndWidth -= (m_formPlaylist.Width + 5);
+        label_playWnd.Size = new Size(playWndWidth, playWndHeight);
+        RpCore.PlayWndResized(playWndWidth, playWndHeight);
 
         label_openFile.Location =
           new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - label_openFile.Width * 0.5),
-            label_playWnd.Location.Y + (int)(label_playWnd.Height * 0.5 - label_openFile.Height * 0.5));
+            label_playWnd.Location.Y + (int)(playWndHeight * 0.5 - label_openFile.Height * 0.5));
       }
     }
 
@@ -1635,6 +1669,8 @@ namespace RPlayer
       colorSlider_volume.Value = Archive.volume;
 
       m_formPlaylist.UpdateListViewHistroy();
+
+      this.Activate(); // This will bring player to front.
     }
 
     public void deletePlayingPlistFolder(PlaylistFolder file)

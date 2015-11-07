@@ -37,6 +37,7 @@
       this.label_subtitle = new System.Windows.Forms.Label();
       this.label_AV = new System.Windows.Forms.Label();
       this.panel_general = new System.Windows.Forms.Panel();
+      this.checkBox_associateFiles = new System.Windows.Forms.CheckBox();
       this.button_snapSavePath = new System.Windows.Forms.Button();
       this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
       this.comboBox_uiLang = new System.Windows.Forms.ComboBox();
@@ -59,7 +60,7 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
-      this.checkBox_associateFiles = new System.Windows.Forms.CheckBox();
+      this.button_restoreFactory = new System.Windows.Forms.Button();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -166,6 +167,7 @@
       // panel_general
       // 
       this.panel_general.Controls.Add(this.checkBox_associateFiles);
+      this.panel_general.Controls.Add(this.button_restoreFactory);
       this.panel_general.Controls.Add(this.button_snapSavePath);
       this.panel_general.Controls.Add(this.textBox_snapSavePath);
       this.panel_general.Controls.Add(this.comboBox_uiLang);
@@ -176,6 +178,20 @@
       this.panel_general.Name = "panel_general";
       this.panel_general.Size = new System.Drawing.Size(422, 495);
       this.panel_general.TabIndex = 15;
+      // 
+      // checkBox_associateFiles
+      // 
+      this.checkBox_associateFiles.AutoSize = true;
+      this.checkBox_associateFiles.Checked = true;
+      this.checkBox_associateFiles.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox_associateFiles.ForeColor = System.Drawing.Color.White;
+      this.checkBox_associateFiles.Location = new System.Drawing.Point(26, 126);
+      this.checkBox_associateFiles.Name = "checkBox_associateFiles";
+      this.checkBox_associateFiles.Size = new System.Drawing.Size(250, 18);
+      this.checkBox_associateFiles.TabIndex = 39;
+      this.checkBox_associateFiles.Text = "Always associate all video files";
+      this.checkBox_associateFiles.UseVisualStyleBackColor = true;
+      this.checkBox_associateFiles.CheckedChanged += new System.EventHandler(this.checkBox_associateFiles_CheckedChanged);
       // 
       // button_snapSavePath
       // 
@@ -488,19 +504,21 @@
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
       // 
-      // checkBox_associateFiles
+      // button_restoreFactory
       // 
-      this.checkBox_associateFiles.AutoSize = true;
-      this.checkBox_associateFiles.Checked = true;
-      this.checkBox_associateFiles.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox_associateFiles.ForeColor = System.Drawing.Color.White;
-      this.checkBox_associateFiles.Location = new System.Drawing.Point(26, 126);
-      this.checkBox_associateFiles.Name = "checkBox_associateFiles";
-      this.checkBox_associateFiles.Size = new System.Drawing.Size(250, 18);
-      this.checkBox_associateFiles.TabIndex = 39;
-      this.checkBox_associateFiles.Text = "Always associate all video files";
-      this.checkBox_associateFiles.UseVisualStyleBackColor = true;
-      this.checkBox_associateFiles.CheckedChanged += new System.EventHandler(this.checkBox_associateFiles_CheckedChanged);
+      this.button_restoreFactory.BackColor = System.Drawing.Color.DimGray;
+      this.button_restoreFactory.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_restoreFactory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_restoreFactory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_restoreFactory.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_restoreFactory.ForeColor = System.Drawing.Color.White;
+      this.button_restoreFactory.Location = new System.Drawing.Point(25, 460);
+      this.button_restoreFactory.Name = "button_restoreFactory";
+      this.button_restoreFactory.Size = new System.Drawing.Size(176, 24);
+      this.button_restoreFactory.TabIndex = 38;
+      this.button_restoreFactory.Text = "Restore factory settings";
+      this.button_restoreFactory.UseVisualStyleBackColor = false;
+      this.button_restoreFactory.Click += new System.EventHandler(this.button_restoreFactory_Click);
       // 
       // FormSettings
       // 
@@ -570,5 +588,6 @@
         private System.Windows.Forms.Button button_fontColor;
         private System.Windows.Forms.CheckBox checkBox_overAssOrig;
         private System.Windows.Forms.CheckBox checkBox_associateFiles;
+        private System.Windows.Forms.Button button_restoreFactory;
     }
 }

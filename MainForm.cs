@@ -31,7 +31,8 @@ namespace RPlayer
     private bool m_bRightBottomCornerMouseDown = false;
     private bool m_bRightTopCornerMouseDown = false;
 
-    private const int m_nMinSize = 50;
+    private const int m_nMinMainFormWidth = 500;
+    private const int m_nMinMainFormHeight = 275;
     private const int m_nEdgeMargin = 1;
     private const int m_nTopBarButtonsMargin = 20;
     private const int m_nTopBarButtonsWidth = 13;
@@ -599,11 +600,13 @@ namespace RPlayer
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
         int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
-        if (this.Size.Width + xDiff > m_nMinSize &&
-            this.Size.Height + yDiff > m_nMinSize)
-        {
+
+        if (this.Size.Width + xDiff < m_nMinMainFormWidth)
+          xDiff = 0;
+        if (this.Size.Height + yDiff < m_nMinMainFormHeight)
+          yDiff = 0;
+        if(xDiff != 0 || yDiff != 0)
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
-        }
       }
       else if (m_bLeftTopCornerMouseDown)
       {
@@ -611,8 +614,12 @@ namespace RPlayer
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = this.Location.X - MouseScreenPoint.X;
         int yDiff = this.Location.Y - MouseScreenPoint.Y;
-        if (this.Size.Width + xDiff > m_nMinSize &&
-            this.Size.Height + yDiff > m_nMinSize)
+
+        if (this.Size.Width + xDiff < m_nMinMainFormWidth)
+          xDiff = 0;
+        if (this.Size.Height + yDiff < m_nMinMainFormHeight)
+          yDiff = 0;
+        if (xDiff != 0 || yDiff != 0)
         {
           this.Location = new Point(MouseScreenPoint.X, MouseScreenPoint.Y);
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
@@ -624,8 +631,12 @@ namespace RPlayer
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = this.Location.X - MouseScreenPoint.X;
         int yDiff = MouseScreenPoint.Y - (this.Location.Y + this.Size.Height);
-        if (this.Size.Width + xDiff > m_nMinSize &&
-            this.Size.Height + yDiff > m_nMinSize)
+
+        if (this.Size.Width + xDiff < m_nMinMainFormWidth)
+          xDiff = 0;
+        if (this.Size.Height + yDiff < m_nMinMainFormHeight)
+          yDiff = 0;
+        if (xDiff != 0 || yDiff != 0)
         {
           this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
@@ -637,10 +648,15 @@ namespace RPlayer
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
         int yDiff = this.Location.Y - MouseScreenPoint.Y;
-        if (this.Size.Width + xDiff > m_nMinSize &&
-            this.Size.Height + yDiff > m_nMinSize)
+
+        if (this.Size.Width + xDiff < m_nMinMainFormWidth)
+          xDiff = 0;
+        if (this.Size.Height + yDiff < m_nMinMainFormHeight)
+          yDiff = 0;
+        if (xDiff != 0 || yDiff != 0)
         {
-          this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
+          if (yDiff != 0)
+            this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
         }
       }
@@ -826,7 +842,7 @@ namespace RPlayer
 
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = this.Location.X - MouseScreenPoint.X;
-        if (this.Size.Width + xDiff > m_nMinSize)
+        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
         {
           this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
@@ -853,7 +869,7 @@ namespace RPlayer
         Control control = (Control)sender;
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int yDiff = this.Location.Y - MouseScreenPoint.Y;
-        if (this.Size.Height + yDiff > m_nMinSize)
+        if (this.Size.Height + yDiff > m_nMinMainFormHeight)
         {
           this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
           this.Size = new Size(this.Size.Width, this.Size.Height + yDiff);
@@ -881,7 +897,7 @@ namespace RPlayer
 
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
         int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
-        if (this.Size.Width + xDiff > m_nMinSize)
+        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
       }
     }
@@ -905,7 +921,9 @@ namespace RPlayer
         Control control = (Control)sender;
 
         Point MouseScrrenPoint = control.PointToScreen(new Point(e.X, e.Y));
-        this.Size = new Size(this.Size.Width, MouseScrrenPoint.Y - this.Location.Y);
+        int newHeight = MouseScrrenPoint.Y - this.Location.Y;
+        if (newHeight > m_nMinMainFormHeight)
+          this.Size = new Size(this.Size.Width, newHeight);
       }
     }
 

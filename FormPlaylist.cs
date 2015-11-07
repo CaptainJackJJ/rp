@@ -32,6 +32,7 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
     private ToolStripMenuItem m_toolStripMenuItem_updatePlistFolder;
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
+    private Color m_ContextBackColor = Color.DimGray;
 
     private Color m_colorFinished = Color.RosyBrown;
     private Color m_colorPlayed = Color.SkyBlue;
@@ -54,9 +55,9 @@ namespace RPlayer
     private void InitContextMenuStrip()
     {
       m_contextMenuStrip_histroy = new ContextMenuStrip();
-      m_contextMenuStrip_histroy.BackColor = Archive.colorContextMenu;
+      m_contextMenuStrip_histroy.BackColor = m_ContextBackColor;
       m_contextMenuStrip_histroy.ForeColor = Color.White;
-      m_contextMenuStrip_histroy.Renderer = new CustomToolStripProfessionalRenderer();
+      m_contextMenuStrip_histroy.Renderer = new CustomToolStripProfessionalRendererPlist();
       listView_histroy.ContextMenuStrip = m_contextMenuStrip_histroy;
 
       m_toolStripMenuItem_markHistroyAsFinished = new ToolStripMenuItem();
@@ -72,9 +73,9 @@ namespace RPlayer
       m_toolStripMenuItem_histroyDelete.Click += toolStripMenuItem_histroyDelete_click;
 
       m_contextMenuStrip_plist = new ContextMenuStrip();
-      m_contextMenuStrip_plist.BackColor = Archive.colorContextMenu;
+      m_contextMenuStrip_plist.BackColor = m_ContextBackColor;
       m_contextMenuStrip_plist.ForeColor = Color.White;
-      m_contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRenderer();
+      m_contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRendererPlist();
       treeView_playlist.ContextMenuStrip = m_contextMenuStrip_plist;
     }
 
@@ -852,6 +853,61 @@ namespace RPlayer
     {
       Archive.sortBy = (Archive.enumSortBy)comboBox_sort.SelectedIndex;
       SortPlist();
+    }
+  }
+
+  public class CustomToolStripProfessionalRendererPlist : ToolStripProfessionalRenderer
+  {
+    public CustomToolStripProfessionalRendererPlist() : base(new CustomProfessionalColorTablePlist()) { }
+  }
+
+  public class CustomProfessionalColorTablePlist : ProfessionalColorTable
+  {
+    private Color m_color = Color.Gray;
+    private Color m_backColor = Color.DimGray;
+    public override Color MenuItemSelected
+    {
+      get { return m_color; }
+    }
+    public override Color MenuItemBorder
+    {
+      get { return m_color; }
+    }
+    public override Color MenuBorder
+    {
+      get { return m_color; }
+    }
+    public override Color ToolStripDropDownBackground
+    {
+      get { return m_backColor; }
+    }
+    public override Color ButtonSelectedBorder
+    {
+      get { return m_color; }
+    }
+    public override Color CheckBackground
+    {
+      get { return m_color; }
+    }
+    public override Color CheckSelectedBackground
+    {
+      get { return m_color; }
+    }
+    public override Color ImageMarginGradientBegin
+    {
+      get { return m_backColor; }
+    }
+    public override Color ImageMarginGradientMiddle
+    {
+      get { return m_backColor; }
+    }
+    public override Color ImageMarginGradientEnd
+    {
+      get { return m_backColor; }
+    }
+    public override Color SeparatorDark
+    {
+      get { return m_color; }
     }
   }
 }

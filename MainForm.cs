@@ -129,7 +129,7 @@ namespace RPlayer
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
         if (args.Length == 0)
-          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
+          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm1 (6).jpg");
       }
       catch
       {
@@ -1322,6 +1322,7 @@ namespace RPlayer
             label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
           else
             label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
+          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
         }
         catch { }
 
@@ -1331,8 +1332,7 @@ namespace RPlayer
         colorSlider_volume.Show();
         SwitchDesktopMode(false,false);
 
-        label_playWnd.ContextMenuStrip = null;
-        this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
+        label_playWnd.ContextMenuStrip = null;        
       }
     }
 

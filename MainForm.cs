@@ -129,7 +129,7 @@ namespace RPlayer
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
         if (args.Length == 0)
-          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm1 (6).jpg");
+          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
       }
       catch
       {

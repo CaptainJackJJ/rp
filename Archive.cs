@@ -41,18 +41,34 @@ namespace RPlayer
   {
     static private string xmlFilePath;
     static private XmlDocument xml = new XmlDocument();
+    static private XmlNode nodeArchive,nodeSectionOthers,nodeSectionFormPList,
+      nodeSectionGeneralSettings, nodeSectionSubtitleSettings, nodeSectionPlistSettings;
     static private string xmlFileName = "archive.xml";
-    static private string sectionOthers = "/archive/others/";
-    static private string sectionFormPList = "/archive/formPList/";
-    static private string sectionGeneralSettings = "/archive/generalSettings/";
-    static private string sectionSubtitleSettings = "/archive/subtitleSettings/";
-    static private string sectionPlistSettings = "/archive/plistSettings/";
+    static private string sectionOthers = "others";
+    static private string sectionFormPList = "formPList";
+    static private string sectionGeneralSettings = "generalSettings";
+    static private string sectionSubtitleSettings = "subtitleSettings";
+    static private string sectionPlistSettings = "plistSettings";
 
     // others
     static public int volume;
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
     static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
+
+    static private readonly string SettingName_volume = "volume";
+    static private readonly string SettingName_mute = "mute";
+    static private readonly string SettingName_plistShowingInNoneDesktop = "plistShowingInNoneDesktop";
+    static private readonly string SettingName_mainFormLocX = "mainFormLocX";
+    static private readonly string SettingName_mainFormLocY = "mainFormLocY";
+    static private readonly string SettingName_mainFormWidth = "mainFormWidth";
+    static private readonly string SettingName_mainFormHeight = "mainFormHeight";
+
+    static private readonly int volumeDefault = 100;
+    static private readonly bool muteDefault = false;
+    static private readonly bool plistShowingInNoneDesktopDefault = false;
+    static private readonly int mainFormLocXDefault = -1, mainFormLocYDefault = -1,
+      mainFormWidthDefault = 915, mainFormHeightDefault = 562;
 
     // formPList
     public enum enumRepeatPlayback { none,one,all}
@@ -64,10 +80,30 @@ namespace RPlayer
     static public int formPlistWidth;
     static public int formPlistHeight;
 
+    static private readonly string SettingName_repeatPlayback = "repeatPlayback";
+    static private readonly string SettingName_sortBy = "sortBy";
+    static private readonly string SettingName_selectedPListBtn = "selectedPListBtn";
+    static private readonly string SettingName_formPlistWidth = "formPlistWidth";
+    static private readonly string SettingName_formPlistHeight = "formPlistHeight";
+
+    static private readonly enumRepeatPlayback repeatPlaybackDefault = enumRepeatPlayback.all;
+    static private readonly enumSortBy sortByDefault = enumSortBy.creationTimeDown;
+    static private readonly enumSelectedPListBtn selectedPListBtnDefault = enumSelectedPListBtn.playlist;
+    static private readonly int formPlistWidthDefault = 196;
+    static private readonly int formPlistHeightDefault = 456;
+
     // generalSettings
     static public string lang;
     static public string snapSavePath;
     static public bool associateFiles;
+
+    static private readonly string SettingName_lang = "lang";
+    static private readonly string SettingName_snapSavePath = "snapSavePath";
+    static private readonly string SettingName_associateFiles = "associateFiles";
+
+    static private readonly string langDefault = "中文";
+    static private readonly string snapSavePathDefault = "";
+    static private readonly bool associateFilesDefault = true;
 
     // subtitleSettings
     static public int fontSize;
@@ -78,10 +114,34 @@ namespace RPlayer
     static public bool italic;
     static public bool overAssOrig;
 
+    static private readonly string SettingName_fontSize = "fontSize";
+    static private readonly string SettingName_fontPos = "fontPos";
+    static private readonly string SettingName_fontColor = "fontColor";
+    static private readonly string SettingName_fontBorderColor = "fontBorderColor";
+    static private readonly string SettingName_bold = "bold";
+    static private readonly string SettingName_italic = "italic";
+    static private readonly string SettingName_overAssOrig = "overAssOrig";
+
+    static private readonly int fontSizeDefault = 28;
+    static private readonly int fontPosDefault = 0;
+    static private readonly int fontColorDefault = -1;
+    static private readonly int fontBorderColorDefault = -16777216;
+    static private readonly bool boldDefault = false;
+    static private readonly bool italicDefault = false;
+    static private readonly bool overAssOrigDefault = false;
+
     // plistSettings
     static public bool updatePlistAfterLaunch;
     static public bool autoAddFolderToPlist;
     static public bool deleteFileDirectly;
+
+    static private readonly string SettingName_updatePlistAfterLaunch = "updatePlistAfterLaunch";
+    static private readonly string SettingName_autoAddFolderToPlist = "autoAddFolderToPlist";
+    static private readonly string SettingName_deleteFileDirectly = "deleteFileDirectly";
+
+    static private readonly bool updatePlistAfterLaunchDefault = false;
+    static private readonly bool autoAddFolderToPlistDefault = false;
+    static private readonly bool deleteFileDirectlyDefault = false;
 
     // histroy
     static public List<HistroyItem> histroy;
@@ -92,81 +152,122 @@ namespace RPlayer
     static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
 
 
+    static private string LoadNodeInner(XmlNode nodeSection, string nodeUrl)
+    {
+      XmlNode node = nodeSection.SelectSingleNode(nodeUrl);
+      if (node == null)
+      {
+        node = xml.CreateElement(nodeUrl);
+        nodeSection.AppendChild(node);
+      }
 
+      return node.InnerText;
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out int nodeValue, int nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = Convert.ToInt32(vaule);
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out bool nodeValue, bool nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = Convert.ToBoolean(vaule);
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out string nodeValue, string nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = vaule;
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out enumRepeatPlayback nodeValue, 
+      enumRepeatPlayback nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = (enumRepeatPlayback)Convert.ToInt32(vaule);
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out enumSortBy nodeValue, 
+      enumSortBy nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = (enumSortBy)Convert.ToInt32(vaule);
+    }
+
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out enumSelectedPListBtn nodeValue, 
+      enumSelectedPListBtn nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = (enumSelectedPListBtn)Convert.ToInt32(vaule);
+    }
 
     static private void LoadOthers()
     {
       // others
-      XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
-      volume = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mute");
-      mute = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
-      plistShowingInNoneDesktop = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocX");
-      mainFormLocX = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocY");
-      mainFormLocY = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
-      mainFormWidth = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
-      mainFormHeight = Convert.ToInt32(node.InnerText);
+      LoadNode(nodeSectionOthers,SettingName_volume,out volume,volumeDefault);
+      LoadNode(nodeSectionOthers,SettingName_mute,out mute,muteDefault);
+      LoadNode(nodeSectionOthers,SettingName_plistShowingInNoneDesktop,out plistShowingInNoneDesktop,plistShowingInNoneDesktopDefault);
+      LoadNode(nodeSectionOthers,SettingName_mainFormLocX,out mainFormLocX,mainFormLocXDefault);
+      LoadNode(nodeSectionOthers,SettingName_mainFormLocY,out mainFormLocY,mainFormLocYDefault);
+      LoadNode(nodeSectionOthers,SettingName_mainFormWidth,out mainFormWidth,mainFormWidthDefault);
+      LoadNode(nodeSectionOthers,SettingName_mainFormHeight,out mainFormHeight,mainFormHeightDefault);
     }
 
     static private void LoadFormPlist()
     {
-      // formPList
-      XmlNode node = xml.SelectSingleNode(sectionFormPList + "repeat");
-      repeatPlayback = (enumRepeatPlayback)Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "sortBy");
-      sortBy = (enumSortBy)Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "selectedPListBtn");
-      selectedPListBtn = (enumSelectedPListBtn)Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "width");
-      formPlistWidth = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "height");
-      formPlistHeight = Convert.ToInt32(node.InnerText);
+      LoadNode(nodeSectionFormPList, SettingName_repeatPlayback, out repeatPlayback, repeatPlaybackDefault);
+      LoadNode(nodeSectionFormPList, SettingName_sortBy, out sortBy, sortByDefault);
+      LoadNode(nodeSectionFormPList, SettingName_selectedPListBtn, out selectedPListBtn, selectedPListBtnDefault);
+      LoadNode(nodeSectionFormPList, SettingName_formPlistWidth, out formPlistWidth, formPlistWidthDefault);
+      LoadNode(nodeSectionFormPList, SettingName_formPlistHeight, out formPlistHeight, formPlistHeightDefault);
     }
 
     static private void LoadGeneralSettings()
     {
-      // generalSettings
-      XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
-      lang = node.InnerText;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
-      snapSavePath = node.InnerText;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "associateFiles");
-      associateFiles = Convert.ToBoolean(node.InnerText);
+      LoadNode(nodeSectionGeneralSettings, SettingName_lang, out lang, langDefault);
+      LoadNode(nodeSectionGeneralSettings, SettingName_snapSavePath, out snapSavePath, snapSavePathDefault);
+      LoadNode(nodeSectionGeneralSettings, SettingName_associateFiles, out associateFiles, associateFilesDefault);
     }
 
     static private void LoadSubtitleSettings()
     {
-      // subtitleSettings
-      XmlNode node = xml.SelectSingleNode(sectionSubtitleSettings + "fontSize");
-      fontSize = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontPos");
-      fontPos = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontColor");
-      fontColor = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontBorderColor");
-      fontBorderColor = Convert.ToInt32(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "bold");
-      bold = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "italic");
-      italic = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "overAssOrig");
-      overAssOrig = Convert.ToBoolean(node.InnerText);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_fontSize, out fontSize, fontSizeDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_fontPos, out fontPos, fontPosDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_fontColor, out fontColor, fontColorDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_fontBorderColor, out fontBorderColor, fontBorderColorDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_bold, out bold, boldDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_italic, out italic, italicDefault);
+      LoadNode(nodeSectionSubtitleSettings, SettingName_overAssOrig, out overAssOrig, overAssOrigDefault);
     }
 
     static private void LoadPlistSettings()
     {
-      // plistSettings
-      XmlNode node = xml.SelectSingleNode(sectionPlistSettings + "updatePlistAfterLaunch");
-      updatePlistAfterLaunch = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionPlistSettings + "autoAddFolderToPlist");
-      autoAddFolderToPlist = Convert.ToBoolean(node.InnerText);
-      node = xml.SelectSingleNode(sectionPlistSettings + "deleteFileDirectly");
-      deleteFileDirectly = Convert.ToBoolean(node.InnerText);
+      LoadNode(nodeSectionPlistSettings, SettingName_updatePlistAfterLaunch, out updatePlistAfterLaunch,
+        updatePlistAfterLaunchDefault);
+      LoadNode(nodeSectionPlistSettings, SettingName_autoAddFolderToPlist, out autoAddFolderToPlist,
+        autoAddFolderToPlistDefault);
+      LoadNode(nodeSectionPlistSettings, SettingName_deleteFileDirectly, out deleteFileDirectly,
+        deleteFileDirectlyDefault);
     }
 
     static private void LoadHistroy()
@@ -232,6 +333,16 @@ namespace RPlayer
       }
     }
 
+    static private void LoadSection(out XmlNode nodeSection, string section)
+    {
+      nodeSection = nodeArchive.SelectSingleNode(section);
+      if(nodeSection == null)
+      {
+        nodeSection = xml.CreateElement(section);
+        nodeArchive.AppendChild(nodeSection);
+      }
+    }
+
     static public bool Load(string xmlPath)
     {
       try
@@ -241,8 +352,20 @@ namespace RPlayer
       }
       catch (System.IO.FileNotFoundException)
       {
-        return false;
       }
+
+      nodeArchive = xml.SelectSingleNode("/archive");
+      if(nodeArchive == null)
+      {
+        nodeArchive = xml.CreateElement("archive");
+        xml.AppendChild(nodeArchive);
+      }
+
+      LoadSection(out nodeSectionOthers, sectionOthers);
+      LoadSection(out nodeSectionFormPList, sectionFormPList);
+      LoadSection(out nodeSectionGeneralSettings, sectionGeneralSettings);
+      LoadSection(out nodeSectionSubtitleSettings, sectionSubtitleSettings);
+      LoadSection(out nodeSectionPlistSettings, sectionPlistSettings);
 
       LoadOthers();
       LoadFormPlist();
@@ -258,75 +381,75 @@ namespace RPlayer
     static private void SaveOthers()
     {
       // others
-      XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
+      XmlNode node = nodeSectionOthers.SelectSingleNode(SettingName_volume);      
       node.InnerText = volume.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "mute");
+      node = nodeSectionOthers.SelectSingleNode(SettingName_mute);
       node.InnerText = mute.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
+      node = nodeSectionOthers.SelectSingleNode(SettingName_plistShowingInNoneDesktop);
       node.InnerText = plistShowingInNoneDesktop.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocX");
+      node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormLocX);
       node.InnerText = mainFormLocX.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocY");
+      node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormLocY);
       node.InnerText = mainFormLocY.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
+      node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormWidth);
       node.InnerText = mainFormWidth.ToString();
-      node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
-      node.InnerText = mainFormHeight.ToString();  
+      node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormHeight);
+      node.InnerText = mainFormHeight.ToString();
     }
 
     static private void SaveFormPlist()
     {
       // formPList
-      XmlNode node = xml.SelectSingleNode(sectionFormPList + "repeat");
+      XmlNode node = nodeSectionFormPList.SelectSingleNode(SettingName_repeatPlayback);
       node.InnerText = ((int)repeatPlayback).ToString();
-      node = xml.SelectSingleNode(sectionFormPList + "sortBy");
+      node = nodeSectionFormPList.SelectSingleNode(SettingName_sortBy);
       node.InnerText = ((int)sortBy).ToString();
-      node = xml.SelectSingleNode(sectionFormPList + "selectedPListBtn");
+      node = nodeSectionFormPList.SelectSingleNode(SettingName_selectedPListBtn);
       node.InnerText = ((int)selectedPListBtn).ToString();
-      node = xml.SelectSingleNode(sectionFormPList + "width");
+      node = nodeSectionFormPList.SelectSingleNode(SettingName_formPlistWidth);
       node.InnerText = formPlistWidth.ToString();
-      node = xml.SelectSingleNode(sectionFormPList + "height");
-      node.InnerText = formPlistHeight.ToString();
+      node = nodeSectionFormPList.SelectSingleNode(SettingName_formPlistHeight);
+      node.InnerText = formPlistHeight.ToString(); 
     }
 
     static private void SaveGeneralSettings()
     {
       // generalSettings
-      XmlNode node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
+      XmlNode node = nodeSectionGeneralSettings.SelectSingleNode(SettingName_lang);
       node.InnerText = lang;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
+      node = nodeSectionGeneralSettings.SelectSingleNode(SettingName_snapSavePath);
       node.InnerText = snapSavePath;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "associateFiles");
-      node.InnerText = associateFiles.ToString(); 
+      node = nodeSectionGeneralSettings.SelectSingleNode(SettingName_associateFiles);
+      node.InnerText = associateFiles.ToString();
     }
 
     static private void SaveSubtitleSettings()
     {
       // subtitleSettings
-      XmlNode node = xml.SelectSingleNode(sectionSubtitleSettings + "fontSize");
+      XmlNode node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_fontSize);
       node.InnerText = fontSize.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontPos");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_fontPos);
       node.InnerText = fontPos.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontColor");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_fontColor);
       node.InnerText = fontColor.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontBorderColor");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_fontBorderColor);
       node.InnerText = fontBorderColor.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "bold");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_bold);
       node.InnerText = bold.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "italic");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_italic);
       node.InnerText = italic.ToString();
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "overAssOrig");
+      node = nodeSectionSubtitleSettings.SelectSingleNode(SettingName_overAssOrig);
       node.InnerText = overAssOrig.ToString();
     }
 
     static private void SavePlistSettings()
     {
       // PlistSettings
-      XmlNode node = xml.SelectSingleNode(sectionPlistSettings + "updatePlistAfterLaunch");
+      XmlNode node = nodeSectionPlistSettings.SelectSingleNode(SettingName_updatePlistAfterLaunch);
       node.InnerText = updatePlistAfterLaunch.ToString();
-      node = xml.SelectSingleNode(sectionPlistSettings + "autoAddFolderToPlist");
+      node = nodeSectionPlistSettings.SelectSingleNode(SettingName_autoAddFolderToPlist);
       node.InnerText = autoAddFolderToPlist.ToString();
-      node = xml.SelectSingleNode(sectionPlistSettings + "deleteFileDirectly");
+      node = nodeSectionPlistSettings.SelectSingleNode(SettingName_deleteFileDirectly);
       node.InnerText = deleteFileDirectly.ToString();
     }
 

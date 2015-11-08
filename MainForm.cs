@@ -210,32 +210,48 @@ namespace RPlayer
       // Only check mp4. Do nothing if it already associated to my player
       string extMp4 = ".mp4";
       RegistryKey key = Registry.ClassesRoot.OpenSubKey(extMp4, true);
-      if (key != null && key.GetValue("") as string == strProgId)
-        return;
-
-      // Associate all extension
-      string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
-      string[] extArray = strExtension.Split('|');
-      string defaultId;
-      foreach (string ext in extArray)
+      if (key == null || key.GetValue("") as string != strProgId)
       {
-        key = Registry.ClassesRoot.OpenSubKey(ext, true);
-        if (key == null)
-          key = Registry.ClassesRoot.CreateSubKey(ext);
-        defaultId = key.GetValue("") as string;
-        if (defaultId == strProgId)
-          continue;
-        key.SetValue("", strProgId);
+        // Associate all extension
+        string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
+        string[] extArray = strExtension.Split('|');
+        string defaultId;
+        foreach (string ext in extArray)
+        {
+          key = Registry.ClassesRoot.OpenSubKey(ext, true);
+          if (key == null)
+            key = Registry.ClassesRoot.CreateSubKey(ext);
+          defaultId = key.GetValue("") as string;
+          if (defaultId == strProgId)
+            continue;
+          key.SetValue("", strProgId);
+        }
       }
-
+            
       // Set up progId
-      key = Registry.ClassesRoot.OpenSubKey(strProgId, false);
-      if (key != null)
-        return;
-      key = Registry.ClassesRoot.CreateSubKey(strProgId);
-      key.SetValue("", "RabbitPlayer is the greatest mediaplayer");
-      key.CreateSubKey("DefaultIcon").SetValue("", Application.ExecutablePath);
-      key.CreateSubKey(@"Shell\Open\Command").SetValue("", Application.ExecutablePath + " \"%1\"");
+      string name = strProgId;
+      string value = "RabbitPlayer media file";
+      key = Registry.ClassesRoot.OpenSubKey(name, true);
+      if (key == null)
+        key = Registry.ClassesRoot.CreateSubKey(name);
+      if (key.GetValue("") as string != value)
+        key.SetValue("", value);
+
+      name = "DefaultIcon";
+      value = Application.ExecutablePath;
+      RegistryKey subKey = key.OpenSubKey(name, true);
+      if (subKey == null)
+        key.CreateSubKey(name);
+      if (subKey.GetValue("") as string != value)
+        subKey.SetValue("", value);
+
+      name = @"Shell\Open\Command";
+      value = Application.ExecutablePath + " \"%1\"";
+      subKey = key.OpenSubKey(name, true);
+      if (subKey == null)
+        key.CreateSubKey(name);
+      if (subKey.GetValue("") as string != value)
+        subKey.SetValue("", value);
     }
 
     public void ConfigAllByArchive()

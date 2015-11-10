@@ -216,7 +216,7 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      m_mainForm.LaunchAboutProcess();
+      m_mainForm.ShowFormAbout();
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)

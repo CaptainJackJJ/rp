@@ -59,6 +59,12 @@
     <Compile Include="FormBottomBar.Designer.cs">
       <DependentUpon>FormBottomBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlistFileDeleteConfirm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     <Compile Include="UiLang.cs" />
     <EmbeddedResource Include="FormBottomBar.resx">
       <DependentUpon>FormBottomBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlistFileDeleteConfirm.resx">
       <DependentUpon>FormPlistFileDeleteConfirm.cs</DependentUpon>

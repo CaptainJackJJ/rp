@@ -79,6 +79,11 @@ namespace RPlayer
     private bool m_bPlayerInited = false;
     private string m_strPlayUrlAfterInit = "";
 
+    private readonly string m_strCompanyName = "PirateRabbit";
+    private readonly string m_strAppName = "RabbitPlayer";
+    private readonly string m_strAppVersionRegistryName = "AppVersion";
+    private string m_strAppVersion;
+
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
 
@@ -116,6 +121,13 @@ namespace RPlayer
         return;
       }
       // ************* only run one instance
+
+      m_strAppVersion = GetAppVersion();
+      if (m_strAppVersion == "")
+      {
+        MessageBox.Show("Can not get app version");
+        return;
+      }
 
       InitializeComponent();
 
@@ -201,6 +213,24 @@ namespace RPlayer
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
       }
+    }
+
+    private string GetAppVersion()
+    {
+      RegistryKey key = Registry.CurrentUser.OpenSubKey("Software");
+      if(key != null)
+      {
+        key = key.OpenSubKey(m_strCompanyName);
+        if(key != null)
+        {
+          key = key.OpenSubKey(m_strAppName);
+          if (key != null)
+          {            
+            return key.GetValue(m_strAppVersionRegistryName) as string;
+          }
+        }
+      }
+      return "";
     }
 
     private void AssociateExtension()
@@ -1286,15 +1316,13 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      LaunchAboutProcess();
+      ShowFormAbout();
     }
 
-    public void LaunchAboutProcess()
+    public void ShowFormAbout()
     {
-      System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-      startInfo.FileName = Application.StartupPath + "\\RVersion.exe";
-      startInfo.Arguments = Archive.lang;
-      System.Diagnostics.Process.Start(startInfo);
+      FormAbout f = new FormAbout();
+      f.ShowForm(m_strAppVersion);
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)

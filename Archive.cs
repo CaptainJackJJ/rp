@@ -139,8 +139,8 @@ namespace RPlayer
     static private readonly string SettingName_autoAddFolderToPlist = "autoAddFolderToPlist";
     static private readonly string SettingName_deleteFileDirectly = "deleteFileDirectly";
 
-    static private readonly bool updatePlistAfterLaunchDefault = false;
-    static private readonly bool autoAddFolderToPlistDefault = false;
+    static private readonly bool updatePlistAfterLaunchDefault = true;
+    static private readonly bool autoAddFolderToPlistDefault = true;
     static private readonly bool deleteFileDirectlyDefault = false;
 
     // histroy

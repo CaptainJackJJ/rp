@@ -17,7 +17,7 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
-    private readonly string m_strUiVersion = "1.0.1";
+    private readonly string m_strUiVersion = "1.0.2";
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;
@@ -83,6 +83,8 @@ namespace RPlayer
     private readonly string m_strCompanyName = "PirateRabbit";
     private readonly string m_strAppName = "RabbitPlayer";
     private readonly string m_strAppVersionRegistryName = "AppVersion";
+    private readonly string m_strRPUpdaterExeName = "RPUpdater.exe";
+    private readonly string m_strRPUpdaterName = "RPUpdater";
     private string m_strAppVersion;
 
     [DllImport("user32.dll")]
@@ -176,7 +178,7 @@ namespace RPlayer
       ConfigUiByArchive();
       
       ShowCursor(true);
-      Thread Thread1 = new Thread(ThreadLoadLib);
+      Thread Thread1 = new Thread(ThreadDoSomething);
       Thread1.Start();
 
       if (args.Length > 0)
@@ -189,12 +191,47 @@ namespace RPlayer
     }
 
     // Load lib is slow, so put it in a thread to let form show fast.
-    private void ThreadLoadLib()
+    private void ThreadDoSomething()
     {
       m_rpCallback = new RpCallback(this);
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
       RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Init(true);
+
+      // Register RPUpdater to auto run
+      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
+      if (File.Exists(strRPUpdaterPath))
+      {
+        RegistryKey RunKey
+          = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
+          .OpenSubKey("CurrentVersion").OpenSubKey("Run", true);
+
+        object value = RunKey.GetValue(m_strRPUpdaterName);
+        if (value == null || value as string != strRPUpdaterPath)
+        {
+          RunKey.SetValue(m_strRPUpdaterName, strRPUpdaterPath);
+        }
+
+        // Launch RPUpdater.
+        bool bRPUpdaterIsRunning = false;
+        System.Diagnostics.Process[] GetPArry = System.Diagnostics.Process.GetProcesses();
+        foreach (System.Diagnostics.Process testProcess in GetPArry)
+        {
+          string ProcessName = testProcess.ProcessName;
+          if (ProcessName.CompareTo(m_strRPUpdaterName) == 0)
+          {
+            bRPUpdaterIsRunning = true;
+            break;
+          }
+        }
+
+        if (!bRPUpdaterIsRunning)
+        {
+          System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+          startInfo.FileName = strRPUpdaterPath;
+          System.Diagnostics.Process.Start(startInfo);
+        }
+      }            
     }
 
     delegate void InitDelegate(bool bInvoke);

@@ -605,6 +605,7 @@ namespace RPlayer
                       t.Hours, t.Minutes, t.Seconds);
       }
       m_formHistroyDetails.ShowForm(strTimeWatched, strDuration, item.url);
+      listView_histroy.Focus();
     }
 
     private void listView_histroy_MouseLeave(object sender, EventArgs e)
@@ -695,6 +696,7 @@ namespace RPlayer
 
         m_formPlistFileDetails.ShowForm(strTimeWatched, strDuration, strCreationTime,file.url);
       }
+      treeView_playlist.Focus();
     }
 
     private void treeView_playlist_MouseLeave(object sender, EventArgs e)

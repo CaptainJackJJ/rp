@@ -86,7 +86,7 @@
       // label_fileName
       // 
       this.label_fileName.BackColor = System.Drawing.Color.Transparent;
-      this.label_fileName.ForeColor = System.Drawing.Color.White;
+      this.label_fileName.ForeColor = System.Drawing.Color.Gainsboro;
       this.label_fileName.Location = new System.Drawing.Point(225, 7);
       this.label_fileName.Name = "label_fileName";
       this.label_fileName.Size = new System.Drawing.Size(465, 23);

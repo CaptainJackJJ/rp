@@ -78,7 +78,7 @@
       this.label_webSiteShow.BackColor = System.Drawing.Color.Transparent;
       this.label_webSiteShow.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_webSiteShow.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_webSiteShow.ForeColor = System.Drawing.Color.DodgerBlue;
+      this.label_webSiteShow.ForeColor = System.Drawing.Color.Gold;
       this.label_webSiteShow.Location = new System.Drawing.Point(97, 71);
       this.label_webSiteShow.Name = "label_webSiteShow";
       this.label_webSiteShow.Size = new System.Drawing.Size(192, 16);
@@ -113,7 +113,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.DimGray;
+      this.BackColor = System.Drawing.Color.SlateGray;
       this.ClientSize = new System.Drawing.Size(297, 104);
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_versionShow);

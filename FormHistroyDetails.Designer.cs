@@ -93,8 +93,8 @@
       // 
       // textBox_url
       // 
-      this.textBox_url.BackColor = System.Drawing.Color.DimGray;
-      this.textBox_url.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.textBox_url.BackColor = System.Drawing.Color.SlateGray;
+      this.textBox_url.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.textBox_url.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.textBox_url.ForeColor = System.Drawing.Color.White;
       this.textBox_url.Location = new System.Drawing.Point(14, 67);
@@ -110,7 +110,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.DimGray;
+      this.BackColor = System.Drawing.Color.SlateGray;
       this.ClientSize = new System.Drawing.Size(195, 126);
       this.Controls.Add(this.textBox_url);
       this.Controls.Add(this.label_url);

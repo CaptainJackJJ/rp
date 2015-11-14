@@ -32,7 +32,7 @@ namespace RPlayer
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
     private ToolStripMenuItem m_toolStripMenuItem_updatePlistFolder;
     private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
-    private Color m_ContextBackColor = Color.DimGray;
+    private Color m_ContextBackColor = Color.SlateGray;
 
     private Color m_colorFinished = Color.RosyBrown;
     private Color m_colorPlayed = Color.SkyBlue;
@@ -454,7 +454,7 @@ namespace RPlayer
       switch (selectedBtn)
       {
         case Archive.enumSelectedPListBtn.playlist:
-          button_histroy.BackColor = Color.Gray;
+          button_histroy.BackColor = Color.SlateGray;
           button_playlist.BackColor = Color.DodgerBlue;
           listView_histroy.Hide();
           treeView_playlist.Show();
@@ -469,7 +469,7 @@ namespace RPlayer
           break;
         case Archive.enumSelectedPListBtn.histroy:
           button_histroy.BackColor = Color.DodgerBlue;
-          button_playlist.BackColor = Color.Gray;
+          button_playlist.BackColor = Color.SlateGray;
           listView_histroy.Show();
           treeView_playlist.Hide();
           Archive.selectedPListBtn = Archive.enumSelectedPListBtn.histroy;
@@ -863,8 +863,8 @@ namespace RPlayer
 
   public class CustomProfessionalColorTablePlist : ProfessionalColorTable
   {
-    private Color m_color = Color.Gray;
-    private Color m_backColor = Color.DimGray;
+    private Color m_color = Color.LightSlateGray;
+    private Color m_backColor = Color.SlateGray;
     public override Color MenuItemSelected
     {
       get { return m_color; }

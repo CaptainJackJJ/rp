@@ -17,6 +17,7 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
+    private readonly string m_strUiVersion = "1.0.1";
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;
@@ -192,6 +193,7 @@ namespace RPlayer
     {
       m_rpCallback = new RpCallback(this);
       RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
+      RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Init(true);
     }
 

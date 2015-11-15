@@ -65,6 +65,12 @@
     <Compile Include="FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRegisterAsk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRegisterAsk.Designer.cs">
+      <DependentUpon>FormRegisterAsk.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlistFileDeleteConfirm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRegisterAsk.resx">
+      <DependentUpon>FormRegisterAsk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlistFileDeleteConfirm.resx">
       <DependentUpon>FormPlistFileDeleteConfirm.cs</DependentUpon>

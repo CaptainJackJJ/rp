@@ -11,8 +11,6 @@ namespace RPlayer
   class AppShare
   {
     static private string xmlFileName = "appShare.xml";
-    static private string appShareUrl = "/appShare/url";
-    static private string appRunning = "/appShare/appRunning";
 
     static private void GetNode(XmlDocument xml,string xmlPath,string nodeUrl, out XmlNode node)
     {
@@ -20,7 +18,7 @@ namespace RPlayer
       {
         xml.Load(xmlPath + "\\" + xmlFileName);
       }
-      catch (System.IO.FileNotFoundException)
+      catch
       {
       }
 
@@ -43,13 +41,26 @@ namespace RPlayer
       node = xml.SelectSingleNode(nodeUrl);
     }
 
-    static public bool GetAllowAutoRunRPUdater(string xmlPath)
+    static public bool SetGetAllowAutoRunRPUdater(string xmlPath,bool bSet)
     {
       XmlDocument xml = new XmlDocument();
       XmlNode node;
       GetNode(xml, xmlPath, "/appShare/allowAutoRunRPUdater", out node);
-      xml.Save(xmlPath + "\\" + xmlFileName);
-      return Convert.ToBoolean(node.InnerText);
+      bool allow = true;
+      if (bSet)
+      {
+        node.InnerText = "False";
+      }
+      else
+        allow = Convert.ToBoolean(node.InnerText);
+      try
+      {
+        xml.Save(xmlPath + "\\" + xmlFileName);
+      }
+      catch
+      {
+      }
+      return allow;
     }
 
     static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
@@ -60,7 +71,13 @@ namespace RPlayer
       if (bSet)
       {
         node.InnerText = bRunning.ToString();
-        xml.Save(xmlPath + "\\" + xmlFileName);
+        try
+        {
+          xml.Save(xmlPath + "\\" + xmlFileName);
+        }
+        catch
+        {
+        }
       }
       else
         bRunning = Convert.ToBoolean(node.InnerText);
@@ -89,8 +106,16 @@ namespace RPlayer
           node.InnerText = "";
       }
 
-      if(bNeedSave)
-        xml.Save(xmlPath + "\\" + xmlFileName);
+      if (bNeedSave)
+      {
+        try
+        {
+          xml.Save(xmlPath + "\\" + xmlFileName);
+        }
+        catch
+        {
+        }
+      }
 
       return true;
     }

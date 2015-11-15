@@ -223,7 +223,7 @@ namespace RPlayer
         }
 
         // Register RPUpdater to auto run 
-        if (AppShare.GetAllowAutoRunRPUdater(Application.StartupPath))
+        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath,false))
         {
           RegistryKey RunKey
             = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
@@ -232,10 +232,8 @@ namespace RPlayer
           object value = RunKey.GetValue(m_strRPUpdaterName);
           if (value == null || value as string != strRPUpdaterPath)
           {
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.FileName = Application.StartupPath + "\\" + m_strRPRegisterExeName;
-            startInfo.Arguments = Archive.lang;
-            System.Diagnostics.Process.Start(startInfo);
+            FormRegisterAsk f = new FormRegisterAsk();
+            f.ShowDialog();
           }
         }
       }

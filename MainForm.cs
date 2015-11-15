@@ -179,6 +179,26 @@ namespace RPlayer
       ConfigUiByArchive();
       
       ShowCursor(true);
+
+      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
+      if (File.Exists(strRPUpdaterPath))
+      {
+        // Register RPUpdater to auto run 
+        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath, false))
+        {
+          RegistryKey RunKey
+            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
+            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
+
+          object value = RunKey.GetValue(m_strRPUpdaterName);
+          if (value == null || value as string != strRPUpdaterPath)
+          {
+            FormRegisterAsk f = new FormRegisterAsk();
+            f.ShowDialog();
+          }
+        }
+      }
+
       Thread Thread1 = new Thread(ThreadDoSomething);
       Thread1.Start();
 
@@ -220,21 +240,6 @@ namespace RPlayer
           System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
           startInfo.FileName = strRPUpdaterPath;
           System.Diagnostics.Process.Start(startInfo);
-        }
-
-        // Register RPUpdater to auto run 
-        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath,false))
-        {
-          RegistryKey RunKey
-            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
-
-          object value = RunKey.GetValue(m_strRPUpdaterName);
-          if (value == null || value as string != strRPUpdaterPath)
-          {
-            FormRegisterAsk f = new FormRegisterAsk();
-            f.ShowDialog();
-          }
         }
       }
     }

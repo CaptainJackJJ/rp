@@ -86,6 +86,7 @@ namespace RPlayer
     private readonly string m_strRPUpdaterExeName = "RPUpdater.exe";
     private readonly string m_strRPUpdaterName = "RPUpdater";
     private string m_strAppVersion;
+    private readonly string m_strRPRegisterExeName = "RPRegister.exe";
 
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
@@ -198,21 +199,10 @@ namespace RPlayer
       RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Init(true);
 
-      // Register RPUpdater to auto run
       string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
       if (File.Exists(strRPUpdaterPath))
       {
-        RegistryKey RunKey
-          = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-          .OpenSubKey("CurrentVersion").OpenSubKey("Run", true);
-
-        object value = RunKey.GetValue(m_strRPUpdaterName);
-        if (value == null || value as string != strRPUpdaterPath)
-        {
-          RunKey.SetValue(m_strRPUpdaterName, strRPUpdaterPath);
-        }
-
-        // Launch RPUpdater.
+        // Launch RPUpdater.        
         bool bRPUpdaterIsRunning = false;
         System.Diagnostics.Process[] GetPArry = System.Diagnostics.Process.GetProcesses();
         foreach (System.Diagnostics.Process testProcess in GetPArry)
@@ -231,7 +221,24 @@ namespace RPlayer
           startInfo.FileName = strRPUpdaterPath;
           System.Diagnostics.Process.Start(startInfo);
         }
-      }            
+
+        // Register RPUpdater to auto run 
+        if (AppShare.GetAllowAutoRunRPUdater(Application.StartupPath))
+        {
+          RegistryKey RunKey
+            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
+            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
+
+          object value = RunKey.GetValue(m_strRPUpdaterName);
+          if (value == null || value as string != strRPUpdaterPath)
+          {
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.FileName = Application.StartupPath + "\\" + m_strRPRegisterExeName;
+            startInfo.Arguments = Archive.lang;
+            System.Diagnostics.Process.Start(startInfo);
+          }
+        }
+      }
     }
 
     delegate void InitDelegate(bool bInvoke);

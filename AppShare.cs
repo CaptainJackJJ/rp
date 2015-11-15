@@ -14,19 +14,49 @@ namespace RPlayer
     static private string appShareUrl = "/appShare/url";
     static private string appRunning = "/appShare/appRunning";
 
-    static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
+    static private void GetNode(XmlDocument xml,string xmlPath,string nodeUrl, out XmlNode node)
     {
-      XmlDocument xml = new XmlDocument();
       try
       {
         xml.Load(xmlPath + "\\" + xmlFileName);
       }
       catch (System.IO.FileNotFoundException)
       {
-        return false;
       }
 
-      XmlNode node = xml.SelectSingleNode(appRunning);
+      XmlNode nodeAppShare = xml.SelectSingleNode("/appShare");
+      if (nodeAppShare == null)
+      {
+        nodeAppShare = xml.CreateElement("appShare");
+        xml.AppendChild(nodeAppShare);
+        node = xml.CreateElement("appRunning");
+        nodeAppShare.AppendChild(node);
+        node.InnerText = "False";
+        node = xml.CreateElement("allowAutoRunRPUdater");
+        nodeAppShare.AppendChild(node);
+        node.InnerText = "True";
+        node = xml.CreateElement("url");
+        nodeAppShare.AppendChild(node);
+        node.InnerText = "";
+      }
+
+      node = xml.SelectSingleNode(nodeUrl);
+    }
+
+    static public bool GetAllowAutoRunRPUdater(string xmlPath)
+    {
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, xmlPath, "/appShare/allowAutoRunRPUdater", out node);
+      xml.Save(xmlPath + "\\" + xmlFileName);
+      return Convert.ToBoolean(node.InnerText);
+    }
+
+    static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
+    {
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, xmlPath, "/appShare/appRunning", out node);
       if (bSet)
       {
         node.InnerText = bRunning.ToString();
@@ -44,16 +74,8 @@ namespace RPlayer
       if(!bSet)
         url = "";
       XmlDocument xml = new XmlDocument();
-      try
-      {
-        xml.Load(xmlPath + "\\" + xmlFileName);
-      }
-      catch (System.IO.FileNotFoundException)
-      {
-        return false;
-      }
-
-      XmlNode node = xml.SelectSingleNode(appShareUrl);
+      XmlNode node;
+      GetNode(xml, xmlPath, "/appShare/url", out node);
       if (bSet)
       {
         node.InnerText = url;
@@ -73,26 +95,6 @@ namespace RPlayer
       return true;
     }
 
-    //static public bool GetUrl(string xmlPath, out string url)
-    //{
-    //  url = "";
-    //  XmlDocument xml = new XmlDocument();
-    //  try
-    //  {
-    //    xml.Load(xmlPath + "\\" + xmlFileName);
-    //  }
-    //  catch (System.IO.FileNotFoundException)
-    //  {
-    //    return false;
-    //  }
 
-    //  XmlNode node = xml.SelectSingleNode(appShareUrl);
-    //  url = node.InnerText;
-    //  node.InnerText = "";
-
-    //  xml.Save(xmlPath + "\\" + xmlFileName);
-
-    //  return true;
-    //}
   }
 }

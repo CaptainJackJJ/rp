@@ -86,7 +86,6 @@ namespace RPlayer
     private readonly string m_strRPUpdaterExeName = "RPUpdater.exe";
     private readonly string m_strRPUpdaterName = "RPUpdater";
     private string m_strAppVersion;
-    private readonly string m_strRPRegisterExeName = "RPRegister.exe";
 
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
@@ -179,25 +178,6 @@ namespace RPlayer
       ConfigUiByArchive();
       
       ShowCursor(true);
-
-      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
-      if (File.Exists(strRPUpdaterPath))
-      {
-        // Register RPUpdater to auto run 
-        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath, false))
-        {
-          RegistryKey RunKey
-            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
-
-          object value = RunKey.GetValue(m_strRPUpdaterName);
-          if (value == null || value as string != strRPUpdaterPath)
-          {
-            FormRegisterAsk f = new FormRegisterAsk();
-            f.ShowDialog();
-          }
-        }
-      }
 
       Thread Thread1 = new Thread(ThreadDoSomething);
       Thread1.Start();
@@ -1875,6 +1855,28 @@ namespace RPlayer
           case Archive.enumRepeatPlayback.all:
              PlayPreNext(false);    
             break;
+        }
+      }
+    }
+
+    private void MainForm_Shown(object sender, EventArgs e)
+    {
+      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
+      if (File.Exists(strRPUpdaterPath))
+      {
+        // Register RPUpdater to auto run 
+        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath, false))
+        {
+          RegistryKey RunKey
+            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
+            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
+
+          object value = RunKey.GetValue(m_strRPUpdaterName);
+          if (value == null || value as string != strRPUpdaterPath)
+          {
+            FormRegisterAsk f = new FormRegisterAsk();
+            f.ShowDialog();
+          }
         }
       }
     }

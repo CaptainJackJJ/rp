@@ -275,6 +275,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Shown += new System.EventHandler(this.MainForm_Shown);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);

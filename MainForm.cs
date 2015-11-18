@@ -87,20 +87,25 @@ namespace RPlayer
     private readonly string m_strRPUpdaterName = "RPUpdater";
     private string m_strAppVersion;
 
+    private string m_tempPath;
+
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
 
     public MainForm(string[] args)
     {
+      m_tempPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + m_strAppName;
+      Directory.CreateDirectory(m_tempPath);
+
       //------------- only run one instance
       bool bRunning = false;
-      if (AppShare.SetGetAppIsRunning(Application.StartupPath, false, ref bRunning))
+      if (AppShare.SetGetAppIsRunning(m_tempPath, false, ref bRunning))
       {
         if (bRunning)
         {
           if (args.Length > 0)
           {
-            if (!AppShare.SetGetNewUrl(Application.StartupPath, true, ref args[0]))
+            if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
             {
               MessageBox.Show("Can not find AppShare xml");
             }
@@ -110,7 +115,7 @@ namespace RPlayer
         else
         {
           bRunning = true;
-          AppShare.SetGetAppIsRunning(Application.StartupPath, true, ref bRunning);
+          AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning);
         }
       }
       else
@@ -118,7 +123,7 @@ namespace RPlayer
         MessageBox.Show("Can not find AppShare xml");
       }
 
-      if (!Archive.Load(Application.StartupPath))
+      if (!Archive.Load(m_tempPath))
       {
         MessageBox.Show("Can not find settings xml");
         return;
@@ -195,7 +200,7 @@ namespace RPlayer
     private void ThreadDoSomething()
     {
       m_rpCallback = new RpCallback(this);
-      RpCore.LoadLib(Application.StartupPath, Application.StartupPath + "\\", m_rpCallback);
+      RpCore.LoadLib(Application.StartupPath, m_tempPath + "\\", m_rpCallback);
       RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Init(true);
 

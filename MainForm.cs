@@ -1651,7 +1651,6 @@ namespace RPlayer
         SwitchPlayingForm(false);
         return false;
       }
-
       m_bIsPlaying = true;
 
       if(RpCore.GetSubtitleVisible() != bPreSeletedSubtitleVisible)

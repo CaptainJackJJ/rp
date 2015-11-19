@@ -294,7 +294,7 @@ namespace RPlayer
             
       // Set up progId
       string name = strProgId;
-      string value = "RabbitPlayer media file";
+      string value = "RPlayer media";
       key = Registry.ClassesRoot.OpenSubKey(name, true);
       if (key == null)
         key = Registry.ClassesRoot.CreateSubKey(name);
@@ -305,7 +305,7 @@ namespace RPlayer
       value = Application.ExecutablePath;
       RegistryKey subKey = key.OpenSubKey(name, true);
       if (subKey == null)
-        key.CreateSubKey(name);
+        subKey = key.CreateSubKey(name);
       if (subKey.GetValue("") as string != value)
         subKey.SetValue("", value);
 
@@ -313,7 +313,7 @@ namespace RPlayer
       value = Application.ExecutablePath + " \"%1\"";
       subKey = key.OpenSubKey(name, true);
       if (subKey == null)
-        key.CreateSubKey(name);
+        subKey = key.CreateSubKey(name);
       if (subKey.GetValue("") as string != value)
         subKey.SetValue("", value);
     }

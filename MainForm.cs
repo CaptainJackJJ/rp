@@ -871,7 +871,7 @@ namespace RPlayer
       Archive.Save();
 
       bool bRunning = false;
-      if (!AppShare.SetGetAppIsRunning(Application.StartupPath, true, ref bRunning))
+      if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
         MessageBox.Show("Can not find AppShare xml");
 
       this.Close();
@@ -1816,7 +1816,7 @@ namespace RPlayer
     private void timer1_Tick(object sender, EventArgs e)
     {
       string url = "";
-      if (!AppShare.SetGetNewUrl(Application.StartupPath, false, ref url))
+      if (!AppShare.SetGetNewUrl(m_tempPath, false, ref url))
       {
         MessageBox.Show("Can not find AppShare xml");
       }
@@ -1869,7 +1869,7 @@ namespace RPlayer
       if (File.Exists(strRPUpdaterPath))
       {
         // Register RPUpdater to auto run 
-        if (AppShare.SetGetAllowAutoRunRPUdater(Application.StartupPath, false))
+        if (AppShare.SetGetAllowAutoRunRPUdater(m_tempPath, false))
         {
           RegistryKey RunKey
             = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")

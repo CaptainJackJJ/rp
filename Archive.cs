@@ -570,65 +570,40 @@ namespace RPlayer
 
     static public void Reset()
     {
-      XmlNode node = xml.SelectSingleNode(sectionOthers + "volume");
-      volume = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mute");
-      mute = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "plistShowingInNoneDesktop");
-      plistShowingInNoneDesktop = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocX");
-      mainFormLocX = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormLocY");
-      mainFormLocY = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormWidth");
-      mainFormWidth = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionOthers + "mainFormHeight");
-      mainFormHeight = Convert.ToInt32(node.Attributes["default"].InnerText);
+      // other
+      volume = volumeDefault;
+      mute = muteDefault;
+      plistShowingInNoneDesktop = plistShowingInNoneDesktopDefault;
+      mainFormLocX = mainFormLocXDefault;
+      mainFormLocY = mainFormLocYDefault;
+      mainFormWidth = mainFormWidthDefault;
+      mainFormHeight = mainFormHeightDefault;
 
-      // formPList
-      node = xml.SelectSingleNode(sectionFormPList + "repeat");
-      repeatPlayback = (enumRepeatPlayback)Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "sortBy");
-      sortBy = (enumSortBy)Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "selectedPListBtn");
-      selectedPListBtn = (enumSelectedPListBtn)Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "width");
-      formPlistWidth = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionFormPList + "height");
-      formPlistHeight = Convert.ToInt32(node.Attributes["default"].InnerText);
+      // plistfrom
+      repeatPlayback = repeatPlaybackDefault;
+      sortBy = sortByDefault;
+      selectedPListBtn = selectedPListBtnDefault;
+      formPlistWidth = formPlistWidthDefault;
+      formPlistHeight = formPlistHeightDefault;
 
       // generalSettings
-      node = xml.SelectSingleNode(sectionGeneralSettings + "lang");
-      lang = node.Attributes["default"].InnerText;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "snapSavePath");
-      snapSavePath = node.Attributes["default"].InnerText;
-      node = xml.SelectSingleNode(sectionGeneralSettings + "associateFiles");
-      associateFiles = Convert.ToBoolean(node.Attributes["default"].InnerText);
+      lang = langDefault;
+      snapSavePath = snapSavePathDefault;
+      associateFiles = associateFilesDefault;
 
       // subtitleSettings
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontSize");
-      fontSize = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontPos");
-      fontPos = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontColor");
-      fontColor = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "fontBorderColor");
-      fontBorderColor = Convert.ToInt32(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "bold");
-      bold = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "italic");
-      italic = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionSubtitleSettings + "overAssOrig");
-      overAssOrig = Convert.ToBoolean(node.Attributes["default"].InnerText);
+      fontSize = fontSizeDefault;
+      fontPos = fontPosDefault;
+      fontColor = fontColorDefault;
+      fontBorderColor = fontBorderColorDefault;
+      bold = boldDefault;
+      italic = italicDefault;
+      overAssOrig = overAssOrigDefault;
 
       // plistSettings
-      node = xml.SelectSingleNode(sectionPlistSettings + "updatePlistAfterLaunch");
-      updatePlistAfterLaunch = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionPlistSettings + "autoAddFolderToPlist");
-      autoAddFolderToPlist = Convert.ToBoolean(node.Attributes["default"].InnerText);
-      node = xml.SelectSingleNode(sectionPlistSettings + "deleteFileDirectly");
-      deleteFileDirectly = Convert.ToBoolean(node.Attributes["default"].InnerText);
-
+      updatePlistAfterLaunch = updatePlistAfterLaunchDefault;
+      autoAddFolderToPlist = autoAddFolderToPlistDefault;
+      deleteFileDirectly = deleteFileDirectlyDefault;
     }
   }
 }

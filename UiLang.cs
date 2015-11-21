@@ -20,6 +20,7 @@ namespace RPlayer
     public static string btnBrowse;
     public static string msgAnotherProcessUsingTheFile;
     public static string msgCannotPlay;
+    public static string msgWndClosedBySfApp;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -129,6 +130,8 @@ namespace RPlayer
       btnBrowse = "Browse";
       msgAnotherProcessUsingTheFile = "Another process using the file, so can not delete it";
       msgCannotPlay = "Can not playback this file";
+      msgWndClosedBySfApp = "RPlayer's sub window is closed by some antivirus in misjudge way."
+      + "Pelease set your antivirus to allow RPlayer's subwindow";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -221,6 +224,8 @@ Are you still want to delete it?";
       btnBrowse = "浏览";
       msgAnotherProcessUsingTheFile = "另外一个软件正在使用该文件，所以无法删除它";
       msgCannotPlay = "无法播放该文件";
+      msgWndClosedBySfApp = "您电脑上的安全软件错误的屏蔽了兔子影音的子窗体，例如360安全卫士。"
+        + "您可以打开它的360弹窗拦截器，设置为不拦截兔子影音的窗体!";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";

@@ -1112,17 +1112,24 @@ namespace RPlayer
 
     public void ShowHidePlayListFormInNoneDesktop()
     {
-      if (Archive.plistShowingInNoneDesktop)
+      try
       {
-        m_formPlaylist.Hide();
-        Archive.plistShowingInNoneDesktop = false;
+        if (Archive.plistShowingInNoneDesktop)
+        {
+          m_formPlaylist.Hide();
+          Archive.plistShowingInNoneDesktop = false;
+        }
+        else
+        {
+          m_formPlaylist.Show();
+          Archive.plistShowingInNoneDesktop = true;
+        }
+        ChangePlayWndSizeInNonDesktop();
       }
-      else
+      catch
       {
-        m_formPlaylist.Show();
-        Archive.plistShowingInNoneDesktop = true;
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
-      ChangePlayWndSizeInNonDesktop();
     }
 
     private void label_playlist_Click(object sender, EventArgs e)

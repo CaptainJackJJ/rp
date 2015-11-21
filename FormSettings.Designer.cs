@@ -342,6 +342,7 @@
       this.checkBox_overAssOrig.TabIndex = 39;
       this.checkBox_overAssOrig.Text = "Over Ass Original Settings";
       this.checkBox_overAssOrig.UseVisualStyleBackColor = true;
+      this.checkBox_overAssOrig.Visible = false;
       this.checkBox_overAssOrig.CheckedChanged += new System.EventHandler(this.checkBox_overAssOrig_CheckedChanged);
       // 
       // checkBox_bold
@@ -527,9 +528,9 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
+      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_general);
       this.Controls.Add(this.panel_plist);
-      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.label_plist);
       this.Controls.Add(this.label_AV);

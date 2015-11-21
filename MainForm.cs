@@ -269,53 +269,60 @@ namespace RPlayer
 
     private void AssociateExtension()
     {
-      const string strProgId = "RabbitPlayer";
-
-      // Only check mp4. Do nothing if it already associated to my player
-      string extMp4 = ".mp4";
-      RegistryKey key = Registry.ClassesRoot.OpenSubKey(extMp4, true);
-      if (key == null || key.GetValue("") as string != strProgId)
+      try
       {
-        // Associate all extension
-        string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
-        string[] extArray = strExtension.Split('|');
-        string defaultId;
-        foreach (string ext in extArray)
+        const string strProgId = "RabbitPlayer";
+
+        // Only check mp4. Do nothing if it already associated to my player
+        string extMp4 = ".mp4";
+        RegistryKey key = Registry.ClassesRoot.OpenSubKey(extMp4, true);
+        if (key == null || key.GetValue("") as string != strProgId)
         {
-          key = Registry.ClassesRoot.OpenSubKey(ext, true);
-          if (key == null)
-            key = Registry.ClassesRoot.CreateSubKey(ext);
-          defaultId = key.GetValue("") as string;
-          if (defaultId == strProgId)
-            continue;
-          key.SetValue("", strProgId);
+          // Associate all extension
+          string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
+          string[] extArray = strExtension.Split('|');
+          string defaultId;
+          foreach (string ext in extArray)
+          {
+            key = Registry.ClassesRoot.OpenSubKey(ext, true);
+            if (key == null)
+              key = Registry.ClassesRoot.CreateSubKey(ext);
+            defaultId = key.GetValue("") as string;
+            if (defaultId == strProgId)
+              continue;
+            key.SetValue("", strProgId);
+          }
         }
+
+        // Set up progId
+        string name = strProgId;
+        string value = "RPlayer media";
+        key = Registry.ClassesRoot.OpenSubKey(name, true);
+        if (key == null)
+          key = Registry.ClassesRoot.CreateSubKey(name);
+        if (key.GetValue("") as string != value)
+          key.SetValue("", value);
+
+        name = "DefaultIcon";
+        value = Application.ExecutablePath;
+        RegistryKey subKey = key.OpenSubKey(name, true);
+        if (subKey == null)
+          subKey = key.CreateSubKey(name);
+        if (subKey.GetValue("") as string != value)
+          subKey.SetValue("", value);
+
+        name = @"Shell\Open\Command";
+        value = Application.ExecutablePath + " \"%1\"";
+        subKey = key.OpenSubKey(name, true);
+        if (subKey == null)
+          subKey = key.CreateSubKey(name);
+        if (subKey.GetValue("") as string != value)
+          subKey.SetValue("", value);
       }
-            
-      // Set up progId
-      string name = strProgId;
-      string value = "RPlayer media";
-      key = Registry.ClassesRoot.OpenSubKey(name, true);
-      if (key == null)
-        key = Registry.ClassesRoot.CreateSubKey(name);
-      if (key.GetValue("") as string != value)
-        key.SetValue("", value);
-
-      name = "DefaultIcon";
-      value = Application.ExecutablePath;
-      RegistryKey subKey = key.OpenSubKey(name, true);
-      if (subKey == null)
-        subKey = key.CreateSubKey(name);
-      if (subKey.GetValue("") as string != value)
-        subKey.SetValue("", value);
-
-      name = @"Shell\Open\Command";
-      value = Application.ExecutablePath + " \"%1\"";
-      subKey = key.OpenSubKey(name, true);
-      if (subKey == null)
-        subKey = key.CreateSubKey(name);
-      if (subKey.GetValue("") as string != value)
-        subKey.SetValue("", value);
+      catch
+      {
+        MessageBox.Show(UiLang.msgSetAsDefaultFailed);
+      }
     }
 
     public void ConfigAllByArchive()
@@ -537,17 +544,41 @@ namespace RPlayer
 
     public void SetFormSpeedDisplayString(string str)
     {
-      m_formSpeedDisplay.SetString(str);
+      try
+      { 
+        m_formSpeedDisplay.SetString(str);
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
 
     public void ShowFormSpeedDisplay()
     {
-      m_formSpeedDisplay.Show();
+      try
+      {
+        m_formSpeedDisplay.Show();
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
 
     public void HideFormSpeedDisplay()
     {
-      m_formSpeedDisplay.Hide();
+      try
+      { 
+        m_formSpeedDisplay.Hide();
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
 
     public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
@@ -1128,6 +1159,7 @@ namespace RPlayer
       }
       catch
       {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -1162,7 +1194,15 @@ namespace RPlayer
 
     public void ShowFormSettings(FormSettings.enumSettingFormType settingType)
     {
-      m_formSettings.ShowForm(settingType);
+      try
+      {
+        m_formSettings.ShowForm(settingType);
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "settings form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)
@@ -1380,33 +1420,41 @@ namespace RPlayer
 
     private void ChangeSubFormsLocAndSize()
     {
-      int nMarginBarToEdge;
-      if (m_bDesktop)
-        nMarginBarToEdge = 0;
-      else
-        nMarginBarToEdge = 2;
+      try
+      {
+        int nMarginBarToEdge;
+        if (m_bDesktop)
+          nMarginBarToEdge = 0;
+        else
+          nMarginBarToEdge = 2;
 
-      m_formBottomBar.Location
-        = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - nMarginBarToEdge);
+        m_formBottomBar.Location
+          = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - nMarginBarToEdge);
 
-      m_formBottomBar.Size
-        = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
+        m_formBottomBar.Size
+          = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
 
-      m_formTopBar.Location
-        = new Point(this.Location.X + m_nCornerSize, this.Location.Y + nMarginBarToEdge);
+        m_formTopBar.Location
+          = new Point(this.Location.X + m_nCornerSize, this.Location.Y + nMarginBarToEdge);
 
-      m_formTopBar.Size
-        = new Size(this.Width - m_nCornerSize * 2, m_formTopBar.Height);
+        m_formTopBar.Size
+          = new Size(this.Width - m_nCornerSize * 2, m_formTopBar.Height);
 
-      m_formSpeedDisplay.Location
-        = new Point(this.Location.X + (this.Width - m_formSpeedDisplay.Width) / 2, this.Location.Y + label_playWnd.Location.Y);
-      
-      m_formPlaylist.Location
-       = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge, 
-         this.Location.Y + label_playWnd.Location.Y + 1);
-      m_formPlaylist.Size
-        = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
-    }
+        m_formSpeedDisplay.Location
+          = new Point(this.Location.X + (this.Width - m_formSpeedDisplay.Width) / 2, this.Location.Y + label_playWnd.Location.Y);
+
+        m_formPlaylist.Location
+         = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
+           this.Location.Y + label_playWnd.Location.Y + 1);
+        m_formPlaylist.Size
+          = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "sub forms is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
+   }
 
     public void SwitchPlayingForm(bool bPlaying)
     {
@@ -1420,16 +1468,32 @@ namespace RPlayer
         label_Volume.Hide();
         colorSlider_volume.Hide();
 
-        m_formTopBar.Show();
-        m_formBottomBar.Show();
+        try
+        {
+          m_formTopBar.Show();
+          m_formBottomBar.Show();
+        }
+        catch
+        {
+          RpCore.WriteLog(RpCore.ELogType.error, "top bottom form is closed by antivirus");
+          MessageBox.Show(UiLang.msgWndClosedBySfApp);
+        }
 
         label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
         this.BackgroundImage = null;
       }
       else
       {
-        m_formTopBar.Hide();
-        m_formBottomBar.Hide();
+        try
+        {
+          m_formTopBar.Hide();
+          m_formBottomBar.Hide();
+        }
+        catch
+        {
+          RpCore.WriteLog(RpCore.ELogType.error, "top bottom form is closed by antivirus");
+          MessageBox.Show(UiLang.msgWndClosedBySfApp);
+        }
 
         try
         {

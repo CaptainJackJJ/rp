@@ -21,6 +21,7 @@ namespace RPlayer
     public static string msgAnotherProcessUsingTheFile;
     public static string msgCannotPlay;
     public static string msgWndClosedBySfApp;
+    public static string msgSetAsDefaultFailed;
 
     // MainForm
     public static string contextMenuSubtitles;
@@ -132,6 +133,11 @@ namespace RPlayer
       msgCannotPlay = "Can not playback this file";
       msgWndClosedBySfApp = "RPlayer's sub window is closed by some antivirus in misjudge way."
       + "Pelease set your antivirus to allow RPlayer's subwindow";
+      msgSetAsDefaultFailed = "Associate media file failed. This is may caused by some antivirus."
+      + "If you want RabbitPlayer to be the default MediaPlayer, please restart RabbitPlayer,"
+      + "and allow it to modify all registry when your antivirus ask you."
+      + "If you do not want RabbitPlayer as your default MediaPlayer,"
+      + "you can go to settings->general to change setting.";
 
       contextMenuSubtitles = "Subtitles";
       contextMenuAudios = "Audios";
@@ -226,6 +232,9 @@ Are you still want to delete it?";
       msgCannotPlay = "无法播放该文件";
       msgWndClosedBySfApp = "您电脑上的安全软件错误的屏蔽了兔子影音的子窗体，例如360安全卫士。"
         + "您可以打开它的360弹窗拦截器，设置为不拦截兔子影音的窗体!";
+      msgSetAsDefaultFailed = "无法注册为默认播放器。一般是由于一些安全软件导致的。"
+        + "如果您想让兔子影音成为您的默认播放器，请重新打开本软件，并且当您的安全软件询问您是否允许兔子影音修改"
+        + "注册表时，您选择允许所有操作。";
 
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";

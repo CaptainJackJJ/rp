@@ -17,7 +17,7 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
-    private readonly string m_strUiVersion = "1.0.0";
+    private readonly string m_strUiVersion = "1.0.1";
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;

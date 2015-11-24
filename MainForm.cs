@@ -88,6 +88,8 @@ namespace RPlayer
     private string m_strAppVersion;
 
     private string m_tempPath;
+    private Thread m_threadDoSomething;
+
 
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
@@ -184,8 +186,8 @@ namespace RPlayer
       
       ShowCursor(true);
 
-      Thread Thread1 = new Thread(ThreadDoSomething);
-      Thread1.Start();
+      m_threadDoSomething = new Thread(ThreadDoSomething);
+      m_threadDoSomething.Start();
 
       if (args.Length > 0)
       {
@@ -196,11 +198,27 @@ namespace RPlayer
         AssociateExtension();
     }
 
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      if (m_threadDoSomething != null && m_threadDoSomething.IsAlive)
+      {
+        m_threadDoSomething.Abort(); // To avoid crash when user close app after lauch immediately
+        m_threadDoSomething = null;
+      }
+    }
+
     // Load lib is slow, so put it in a thread to let form show fast.
     private void ThreadDoSomething()
     {
       m_rpCallback = new RpCallback(this);
-      RpCore.LoadLib(Application.StartupPath, m_tempPath + "\\", m_rpCallback);
+      try
+      {
+        RpCore.LoadLib(Application.StartupPath, m_tempPath + "\\", m_rpCallback);
+      }
+      catch(System.AccessViolationException)
+      {
+        return; // To avoid crash when user close app after lauch immediately
+      }
       RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Init(true);
 

@@ -342,7 +342,6 @@
       this.checkBox_overAssOrig.TabIndex = 39;
       this.checkBox_overAssOrig.Text = "Over Ass Original Settings";
       this.checkBox_overAssOrig.UseVisualStyleBackColor = true;
-      this.checkBox_overAssOrig.Visible = false;
       this.checkBox_overAssOrig.CheckedChanged += new System.EventHandler(this.checkBox_overAssOrig_CheckedChanged);
       // 
       // checkBox_bold

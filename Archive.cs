@@ -128,7 +128,7 @@ namespace RPlayer
     static private readonly int fontBorderColorDefault = -16777216;
     static private readonly bool boldDefault = false;
     static private readonly bool italicDefault = false;
-    static private readonly bool overAssOrigDefault = true;
+    static private readonly bool overAssOrigDefault = false;
 
     // plistSettings
     static public bool updatePlistAfterLaunch;

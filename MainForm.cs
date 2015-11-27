@@ -10,7 +10,6 @@ using RpCoreWrapper;
 using System.IO;
 using Microsoft.Win32;
 using System.Threading;
-using System.Runtime.InteropServices;
 
 
 namespace RPlayer
@@ -92,9 +91,6 @@ namespace RPlayer
 
     private Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     private bool m_bCursorShowing = true;
-
-    [DllImport("user32.dll")]
-    static extern int ShowCursor(bool bShow);
 
     public MainForm(string[] args)
     {
@@ -185,8 +181,9 @@ namespace RPlayer
       SetUiLange();
 
       ConfigUiByArchive();
-      
-      ShowCursor(true);
+
+      Cursor.Show();
+      m_bCursorShowing = true;
 
       m_threadDoSomething = new Thread(ThreadDoSomething);
       m_threadDoSomething.Start();

@@ -90,6 +90,8 @@ namespace RPlayer
     private string m_tempPath;
     private Thread m_threadDoSomething;
 
+    private Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
+    private bool m_bCursorShowing = true;
 
     [DllImport("user32.dll")]
     static extern int ShowCursor(bool bShow);
@@ -1301,6 +1303,8 @@ namespace RPlayer
         m_formTopBar.Size = new Size(this.Width, m_formTopBar.Height);
         m_formBottomBar.Location = new Point(0, m_formBottomBar.Location.Y);
         m_formBottomBar.Size = new Size(this.Width, m_formBottomBar.Height);
+
+        m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
       }
       else
       {
@@ -1318,6 +1322,13 @@ namespace RPlayer
         if (Archive.plistShowingInNoneDesktop)
         {
           m_formPlaylist.Show();
+        }
+
+        m_lastMousePosInPlayWndAndDesktop = Point.Empty;
+        if (!m_bCursorShowing)
+        {
+          Cursor.Show();
+          m_bCursorShowing = true;
         }
       }
     }
@@ -1347,6 +1358,7 @@ namespace RPlayer
         m_formBottomBar.Hide();
         m_formPlaylist.Hide();
         this.BringToFront();
+        m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
       }
     }
 
@@ -1365,6 +1377,19 @@ namespace RPlayer
         else if (e.Location.X >= label_playWnd.Width - m_formPlaylist.Width)
         {
           m_formPlaylist.Show();
+        }
+      }
+    }
+
+    private void label_playWnd_MouseLeave(object sender, EventArgs e)
+    {
+      if (m_bDesktop)
+      {
+        m_lastMousePosInPlayWndAndDesktop = Point.Empty;
+        if (!m_bCursorShowing)
+        {
+          Cursor.Show();
+          m_bCursorShowing = true;
         }
       }
     }
@@ -1914,6 +1939,28 @@ namespace RPlayer
         if (m_bIsPlaying)
           StopPlay();
         StartPlay(url);
+      }
+
+      // auto hide cursor
+      if(m_lastMousePosInPlayWndAndDesktop != Point.Empty) // mouse is in playWnd at desktop mode
+      {
+        if(m_lastMousePosInPlayWndAndDesktop == Control.MousePosition)
+        {
+          if (m_bCursorShowing)
+          {
+            Cursor.Hide();
+            m_bCursorShowing = false;
+          }
+        }
+        else
+        {
+          if(!m_bCursorShowing)
+          {
+            Cursor.Show();
+            m_bCursorShowing = true;            
+          }
+          m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
+        }
       }
     }
 

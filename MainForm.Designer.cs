@@ -163,6 +163,7 @@
       this.label_playWnd.DragEnter += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragEnter);
       this.label_playWnd.DoubleClick += new System.EventHandler(this.label_playWnd_DoubleClick);
       this.label_playWnd.MouseEnter += new System.EventHandler(this.label_playWnd_MouseEnter);
+      this.label_playWnd.MouseLeave += new System.EventHandler(this.label_playWnd_MouseLeave);
       this.label_playWnd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_playWnd_MouseMove);
       // 
       // label_Volume
@@ -233,6 +234,7 @@
       // timer1
       // 
       this.timer1.Enabled = true;
+      this.timer1.Interval = 200;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // label_logo

@@ -89,8 +89,8 @@ namespace RPlayer
     private string m_tempPath;
     private Thread m_threadDoSomething;
 
-    private Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
-    private bool m_bCursorShowing = true;
+    public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
+    public bool m_bCursorShowing = true;
 
     public MainForm(string[] args)
     {
@@ -1936,28 +1936,6 @@ namespace RPlayer
         if (m_bIsPlaying)
           StopPlay();
         StartPlay(url);
-      }
-
-      // auto hide cursor
-      if(m_lastMousePosInPlayWndAndDesktop != Point.Empty) // mouse is in playWnd at desktop mode
-      {
-        if(m_lastMousePosInPlayWndAndDesktop == Control.MousePosition)
-        {
-          if (m_bCursorShowing)
-          {
-            Cursor.Hide();
-            m_bCursorShowing = false;
-          }
-        }
-        else
-        {
-          if(!m_bCursorShowing)
-          {
-            Cursor.Show();
-            m_bCursorShowing = true;            
-          }
-          m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
-        }
       }
     }
 

@@ -176,6 +176,28 @@ namespace RPlayer
       double nCurTime = RpCore.GetCurTime();
       if ((int)nCurTime <= colorSlider_playProcess.Maximum)
         colorSlider_playProcess.Value = (int)nCurTime;
+
+      // auto hide cursor
+      if (m_mainForm.m_lastMousePosInPlayWndAndDesktop != Point.Empty) // mouse is in playWnd at desktop mode
+      {
+        if (m_mainForm.m_lastMousePosInPlayWndAndDesktop == Control.MousePosition)
+        {
+          if (m_mainForm.m_bCursorShowing)
+          {
+            Cursor.Hide();
+            m_mainForm.m_bCursorShowing = false;
+          }
+        }
+        else
+        {
+          if (!m_mainForm.m_bCursorShowing)
+          {
+            Cursor.Show();
+            m_mainForm.m_bCursorShowing = true;
+          }
+          m_mainForm.m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
+        }
+      }
     }
 
     private void FormBottomBar_Resize(object sender, EventArgs e)

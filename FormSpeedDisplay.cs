@@ -11,9 +11,19 @@ namespace RPlayer
 {
   public partial class FormSpeedDisplay : Form
   {
-    public FormSpeedDisplay()
+    private MainForm m_mainForm;
+
+    public FormSpeedDisplay(MainForm mainForm)
     {
+      m_mainForm = mainForm;
       InitializeComponent();
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      if (m_mainForm.HandleCmdKey(keyData))
+        return true;
+      return base.ProcessCmdKey(ref msg, keyData);
     }
 
     public void SetString(string str)

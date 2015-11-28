@@ -116,6 +116,12 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormVolumeDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormVolumeDisplay.Designer.cs">
+      <DependentUpon>FormVolumeDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSpeedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormVolumeDisplay.resx">
+      <DependentUpon>FormVolumeDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSpeedDisplay.resx">
       <DependentUpon>FormSpeedDisplay.cs</DependentUpon>

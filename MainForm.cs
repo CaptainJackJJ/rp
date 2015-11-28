@@ -53,6 +53,7 @@ namespace RPlayer
     private FormSettings m_formSettings;
     private FormSpeedDisplay m_formSpeedDisplay;
     private FormPlaylist m_formPlaylist;
+    private FormVolumeDisplay m_formVolumeDisplay;
 
     private RpCallback m_rpCallback;
 
@@ -168,13 +169,15 @@ namespace RPlayer
       m_formBottomBar = new FormBottomBar(this);
       m_formTopBar = new FormTopBar(this);
       m_formSettings = new FormSettings(this);
-      m_formSpeedDisplay = new FormSpeedDisplay();
+      m_formSpeedDisplay = new FormSpeedDisplay(this);
+      m_formVolumeDisplay = new FormVolumeDisplay(this);
       m_formPlaylist = new FormPlaylist(this);
       this.AddOwnedForm(m_formBottomBar);
       this.AddOwnedForm(m_formTopBar);
       this.AddOwnedForm(m_formSettings);
       this.AddOwnedForm(m_formSpeedDisplay);
       this.AddOwnedForm(m_formPlaylist);
+      this.AddOwnedForm(m_formVolumeDisplay);
 
       InitContextMenuStrip();
 
@@ -562,7 +565,7 @@ namespace RPlayer
     public void SetFormSpeedDisplayString(string str)
     {
       try
-      { 
+      {        
         m_formSpeedDisplay.SetString(str);
       }
       catch
@@ -576,6 +579,7 @@ namespace RPlayer
     {
       try
       {
+       
         m_formSpeedDisplay.Show();
       }
       catch
@@ -1456,8 +1460,6 @@ namespace RPlayer
       label_logo.ForeColor = Color.White;
     }
 
-
-
     private void ChangeSubFormsLocAndSize()
     {
       try
@@ -1483,9 +1485,13 @@ namespace RPlayer
         m_formSpeedDisplay.Location
           = new Point(this.Location.X + (this.Width - m_formSpeedDisplay.Width) / 2, this.Location.Y + label_playWnd.Location.Y);
 
+        m_formVolumeDisplay.Location
+          = new Point(this.Location.X + 20, m_formTopBar.Location.Y + m_formTopBar.Height);
+
         m_formPlaylist.Location
          = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
            this.Location.Y + label_playWnd.Location.Y + 1);
+
         m_formPlaylist.Size
           = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
       }
@@ -1921,8 +1927,6 @@ namespace RPlayer
       Archive.volume = colorSlider_volume.Value;
       RpCore.SetVolume((float)(Archive.volume * 0.01));
     }
-
-
 
     private void timer1_Tick(object sender, EventArgs e)
     {

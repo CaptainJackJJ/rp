@@ -207,6 +207,10 @@ namespace RPlayer
         m_threadDoSomething.Abort(); // To avoid crash when user close app after lauch immediately
         m_threadDoSomething = null;
       }
+
+      bool bRunning = false;
+      if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
+        MessageBox.Show("Can not find AppShare xml");
     }
 
     // Load lib is slow, so put it in a thread to let form show fast.
@@ -921,10 +925,6 @@ namespace RPlayer
       Archive.mainFormHeight = this.Height;
 
       Archive.Save();
-
-      bool bRunning = false;
-      if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
-        MessageBox.Show("Can not find AppShare xml");
 
       this.Close();
     }

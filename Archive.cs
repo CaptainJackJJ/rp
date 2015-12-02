@@ -39,6 +39,7 @@ namespace RPlayer
 
   class Archive
   {
+    static private bool bLoaded = false;
     static private string xmlFilePath;
     static private XmlDocument xml = new XmlDocument();
     static private XmlNode nodeArchive,nodeSectionOthers,nodeSectionFormPList,
@@ -375,7 +376,9 @@ namespace RPlayer
       LoadHistroy();
       LoadPlist();
 
-      return true;
+      bLoaded = true;
+
+      return bLoaded;
     }
 
     static private void SaveOthers()
@@ -557,6 +560,8 @@ namespace RPlayer
 
     static public void Save()
     {
+      if (!bLoaded)
+        return;
       SaveOthers();
       SaveFormPlist();
       SaveGeneralSettings();

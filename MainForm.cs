@@ -208,6 +208,21 @@ namespace RPlayer
         m_threadDoSomething = null;
       }
 
+      if (RpCore.IsPlaying())
+        StopPlay();
+      RpCore.UninitPlayer();
+      RpCore.UnLoadLib();
+
+      if (m_bDesktop)
+        SwitchDesktopMode(false, false);
+
+      Archive.mainFormLocX = this.Location.X;
+      Archive.mainFormLocY = this.Location.Y;
+      Archive.mainFormWidth = this.Width;
+      Archive.mainFormHeight = this.Height;
+
+      Archive.Save();
+
       bool bRunning = false;
       if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
         MessageBox.Show("Can not find AppShare xml");
@@ -909,29 +924,9 @@ namespace RPlayer
       this.WindowState = FormWindowState.Minimized;
     }
 
-    public void ClickClose()
-    {
-      if (RpCore.IsPlaying())
-        StopPlay();
-      RpCore.UninitPlayer();
-      RpCore.UnLoadLib();
-
-      if (m_bDesktop)
-        SwitchDesktopMode(false, false);
-
-      Archive.mainFormLocX = this.Location.X;
-      Archive.mainFormLocY = this.Location.Y;
-      Archive.mainFormWidth = this.Width;
-      Archive.mainFormHeight = this.Height;
-
-      Archive.Save();
-
-      this.Close();
-    }
-
     private void label_Close_Click(object sender, EventArgs e)
     {
-      ClickClose();
+      Close();
     }
 
     private void label_Close_MouseEnter(object sender, EventArgs e)

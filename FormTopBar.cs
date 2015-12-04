@@ -112,7 +112,7 @@ namespace RPlayer
 
     private void label_Close_Click(object sender, EventArgs e)
     {
-      m_mainForm.ClickClose();
+      m_mainForm.Close();
     }
 
     private void label_Close_MouseEnter(object sender, EventArgs e)

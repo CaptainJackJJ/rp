@@ -597,9 +597,9 @@ namespace RPlayer
     public void ShowFormSpeedDisplay()
     {
       try
-      {
-       
+      {       
         m_formSpeedDisplay.Show();
+        m_formSpeedDisplay.Size = new Size(84, 28);
       }
       catch
       {
@@ -661,7 +661,10 @@ namespace RPlayer
       switch (keyData)
       {
         case Keys.Space:
-          m_formBottomBar.Pause();
+          if (m_formBottomBar.IsSameSpeed(m_formBottomBar.Speed,1.0f))
+            m_formBottomBar.SetSpeed(0);
+          else
+            m_formBottomBar.SetSpeed(1);
           break;
         case Keys.Escape:
           SwitchDesktopMode(false,false);

@@ -56,6 +56,7 @@ namespace RPlayer
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
     static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
+    static public float speedFF,speedRW;
 
     static private readonly string SettingName_volume = "volume";
     static private readonly string SettingName_mute = "mute";
@@ -64,12 +65,16 @@ namespace RPlayer
     static private readonly string SettingName_mainFormLocY = "mainFormLocY";
     static private readonly string SettingName_mainFormWidth = "mainFormWidth";
     static private readonly string SettingName_mainFormHeight = "mainFormHeight";
+    static private readonly string SettingName_speedFF = "speedFF";
+    static private readonly string SettingName_speedRW = "speedRW";
 
     static private readonly int volumeDefault = 100;
     static private readonly bool muteDefault = false;
     static private readonly bool plistShowingInNoneDesktopDefault = false;
     static private readonly int mainFormLocXDefault = -1, mainFormLocYDefault = -1,
       mainFormWidthDefault = 915, mainFormHeightDefault = 562;
+    static private readonly int speedFFDefault = 2;
+    static private readonly int speedRWDefault = -2;
 
     // formPList
     public enum enumRepeatPlayback { none,one,all}
@@ -174,6 +179,15 @@ namespace RPlayer
         nodeValue = Convert.ToInt32(vaule);
     }
 
+    static private void LoadNode(XmlNode nodeSection, string nodeUrl, out float nodeValue, float nodeValueDefault)
+    {
+      string vaule = LoadNodeInner(nodeSection, nodeUrl);
+      if (vaule == "")
+        nodeValue = nodeValueDefault;
+      else
+        nodeValue = Convert.ToSingle(vaule);
+    }
+
     static private void LoadNode(XmlNode nodeSection, string nodeUrl, out bool nodeValue, bool nodeValueDefault)
     {
       string vaule = LoadNodeInner(nodeSection, nodeUrl);
@@ -232,6 +246,8 @@ namespace RPlayer
       LoadNode(nodeSectionOthers,SettingName_mainFormLocY,out mainFormLocY,mainFormLocYDefault);
       LoadNode(nodeSectionOthers,SettingName_mainFormWidth,out mainFormWidth,mainFormWidthDefault);
       LoadNode(nodeSectionOthers,SettingName_mainFormHeight,out mainFormHeight,mainFormHeightDefault);
+      LoadNode(nodeSectionOthers, SettingName_speedFF, out speedFF, speedFFDefault);
+      LoadNode(nodeSectionOthers, SettingName_speedRW, out speedRW, speedRWDefault);
     }
 
     static private void LoadFormPlist()
@@ -398,6 +414,10 @@ namespace RPlayer
       node.InnerText = mainFormWidth.ToString();
       node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormHeight);
       node.InnerText = mainFormHeight.ToString();
+      node = nodeSectionOthers.SelectSingleNode(SettingName_speedFF);
+      node.InnerText = speedFF.ToString();
+      node = nodeSectionOthers.SelectSingleNode(SettingName_speedRW);
+      node.InnerText = speedRW.ToString();
     }
 
     static private void SaveFormPlist()

@@ -30,11 +30,12 @@ namespace RPlayer
 
     private MainForm m_mainForm;
     private double m_nTotalTime = 0;
-    private bool m_bPaused = false;
     public bool m_bProcessBarMouseUp = true;
     public bool m_bSeekDone = true;
     private bool m_bDragSeeking = false;
     private float m_fSpeed = 1f;
+    public float Speed { get { return m_fSpeed; } }
+    private FormSpeedControl m_formSpeedControl;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -65,6 +66,8 @@ namespace RPlayer
         label_playlist.Text = "plist";
       }
       m_mainForm = mainForm;
+      m_formSpeedControl = new FormSpeedControl(this);
+      this.AddOwnedForm(m_formSpeedControl);
     }
 
     public void SetAllUiLange()
@@ -174,7 +177,7 @@ namespace RPlayer
     private void timer_updateProcessBar_Tick(object sender, EventArgs e)
     {
       double nCurTime = RpCore.GetCurTime();
-      if ((int)nCurTime <= colorSlider_playProcess.Maximum)
+      if ((int)nCurTime <= colorSlider_playProcess.Maximum && (int)nCurTime >= 0)
         colorSlider_playProcess.Value = (int)nCurTime;
 
       // auto hide cursor
@@ -244,14 +247,34 @@ namespace RPlayer
       label_timeLast.Location =
           new Point(m_nPlayProcessXMargin + colorSlider_playProcess.Width, nPlayProcessY - 4);
 
+      m_formSpeedControl.Location
+          = new Point(this.Location.X + (this.Width - m_formSpeedControl.Width) / 2, this.Location.Y - m_formSpeedControl.Height);
     }
 
-    public void Pause()
+    public bool IsSameSpeed(float fSpeed1, float fSpeed2)
     {
-      RpCore.Pause();
-      if (m_bPaused)
+      return Math.Abs(fSpeed1 - fSpeed2) < 0.05;
+    }
+
+    public bool IsLargerSpeed(float fSpeed1, float fSpeed2)
+    {
+      return fSpeed1 - fSpeed2 > 0.05; 
+    }
+
+    public bool IsSmallerSpeed(float fSpeed1, float fSpeed2)
+    {
+      return fSpeed1 - fSpeed2 < -0.05; 
+    }
+
+    public void SetSpeed(float fSpeed)
+    {
+      if (IsSameSpeed(fSpeed,m_fSpeed))
+        return;
+
+      RpCore.ToFFRW(fSpeed);
+
+      if (IsSameSpeed(fSpeed,1.0f))
       {
-        m_bPaused = false;
         try
         {
           label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\pause.png");
@@ -260,43 +283,64 @@ namespace RPlayer
         {
           label_Play.Text = "play";
         }
-      }
-      else
-      {
-        m_bPaused = true;
+
         try
         {
-          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+          m_formSpeedControl.HideMe();
         }
         catch
         {
-          label_Play.Text = "pause";
+          RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+          MessageBox.Show(UiLang.msgWndClosedBySfApp);
+        }
+
+        m_mainForm.HideFormSpeedDisplay();   
+      }
+      else
+      {
+        if (IsSameSpeed(m_fSpeed, 1.0f))
+        {
+          try
+          {
+            label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+          }
+          catch
+          {
+            label_Play.Text = "pause";
+          }          
+        }
+
+        if (IsSameSpeed(fSpeed, 0.0f))
+        {
+          m_mainForm.HideFormSpeedDisplay();          
+        }
+        else
+        {
+          m_mainForm.SetFormSpeedDisplayString(UiLang.speedDisplay + fSpeed.ToString());
+          m_mainForm.ShowFormSpeedDisplay();
+          m_formSpeedControl.Focus();
+
+          if (IsLargerSpeed(fSpeed, 1.0f))
+            Archive.speedFF = fSpeed;
+          else
+            Archive.speedRW = fSpeed;
         }
       }
+
+      m_fSpeed = fSpeed;
     }
 
     private void label_Play_Click(object sender, EventArgs e)
     {
-      m_fSpeed = 1.0f;
-      m_mainForm.HideFormSpeedDisplay();
-
-      Pause();
+      if (IsSameSpeed(m_fSpeed, 1.0f))
+        SetSpeed(0);
+      else
+        SetSpeed(1);
     }
 
     private void label_Play_MouseEnter(object sender, EventArgs e)
     {
-      if (m_bPaused)
-      {
-        try
-        {
-          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
-        }
-        catch
-        {
-          label_Play.Text = "playFocus";
-        }
-      }
-      else
+      if (IsSameSpeed(m_fSpeed,1.0f))
       {
         try
         {
@@ -307,22 +351,22 @@ namespace RPlayer
           label_Play.Text = "pauseFocus";
         }
       }
+      else
+      {
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\playFocus.png");
+        }
+        catch
+        {
+          label_Play.Text = "playFocus";
+        }
+      }
     }
 
     private void label_Play_MouseLeave(object sender, EventArgs e)
     {
-      if (m_bPaused)
-      {
-        try
-        {
-          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-        }
-        catch
-        {
-          label_Play.Text = "play";
-        }
-      }
-      else
+      if (IsSameSpeed(m_fSpeed,1.0f))
       {
         try
         {
@@ -331,6 +375,17 @@ namespace RPlayer
         catch
         {
           label_Play.Text = "pause";
+        }
+      }
+      else
+      {
+        try
+        {
+          label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+        }
+        catch
+        {
+          label_Play.Text = "play";
         }
       }
     }
@@ -377,56 +432,29 @@ namespace RPlayer
       catch { }
     }
 
-    public void ChangeSpeed(bool bForward)
-    {
-      int nSpeed = (int)(m_fSpeed * 1000);
-      if(bForward)
-      {
-        if(nSpeed >= 1000)
-        {
-          m_fSpeed *= 2;
-        }
-        else
-        {
-          m_fSpeed /= 2;
-        }
-      }
-      else
-      {
-        if (nSpeed > 1000)
-        {
-          m_fSpeed /= 2;
-        }
-        else if (nSpeed == 1000)
-        {
-          m_fSpeed *= -2;
-        }
-        else
-        {
-          m_fSpeed *= 2;
-        }
-      }
-      nSpeed = (int)(m_fSpeed * 1000);
-      if (nSpeed == -1000)
-        m_fSpeed = 1;
-      RpCore.ToFFRW(m_fSpeed);
-
-      if (nSpeed != 1000 && nSpeed != -1000)
-      {
-        m_mainForm.SetFormSpeedDisplayString(UiLang.speedDisplay + m_fSpeed.ToString());
-        m_mainForm.ShowFormSpeedDisplay();
-      }
-      else
-        m_mainForm.HideFormSpeedDisplay();      
-    }
-
     private void label_FF_Click(object sender, EventArgs e)
     {
-      ChangeSpeed(true);
+      try
+      {
+        m_formSpeedControl.ShowMe(true);
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
     private void label_FB_Click(object sender, EventArgs e)
     {
-      ChangeSpeed(false);
+      try
+      {
+        m_formSpeedControl.ShowMe(false);
+      }
+      catch
+      {
+        RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+        MessageBox.Show(UiLang.msgWndClosedBySfApp);
+      }
     }
 
     private void label_FB_MouseEnter(object sender, EventArgs e)
@@ -656,6 +684,12 @@ namespace RPlayer
     {
       Archive.volume = colorSlider_volume.Value;
       RpCore.SetVolume((float)(Archive.volume * 0.01));
+    }
+
+    private void FormBottomBar_Move(object sender, EventArgs e)
+    {
+      m_formSpeedControl.Location
+        = new Point(this.Location.X + (this.Width - m_formSpeedControl.Width) / 2, this.Location.Y - m_formSpeedControl.Height);
     }
   }
 }

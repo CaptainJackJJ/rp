@@ -37,6 +37,7 @@
       this.label_curTime = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
+      this.label_version = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_settings
@@ -131,12 +132,26 @@
       this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
       this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
       // 
+      // label_version
+      // 
+      this.label_version.AutoSize = true;
+      this.label_version.BackColor = System.Drawing.Color.Transparent;
+      this.label_version.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_version.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_version.ForeColor = System.Drawing.Color.White;
+      this.label_version.Location = new System.Drawing.Point(170, 18);
+      this.label_version.Name = "label_version";
+      this.label_version.Size = new System.Drawing.Size(40, 12);
+      this.label_version.TabIndex = 46;
+      this.label_version.Text = "1.0.0";
+      // 
       // FormTopBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 37);
+      this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
       this.Controls.Add(this.label_curTime);
       this.Controls.Add(this.label_fileName);
@@ -166,5 +181,6 @@
     private System.Windows.Forms.Label label_curTime;
     private System.Windows.Forms.Timer timer1;
     private System.Windows.Forms.Label label_logo;
+    private System.Windows.Forms.Label label_version;
   }
 }

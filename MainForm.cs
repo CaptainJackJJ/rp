@@ -85,7 +85,7 @@ namespace RPlayer
     private readonly string m_strAppVersionRegistryName = "AppVersion";
     private readonly string m_strRPUpdaterExeName = "RPUpdater.exe";
     private readonly string m_strRPUpdaterName = "RPUpdater";
-    private string m_strAppVersion;
+    public string m_strAppVersion;
 
     private string m_tempPath;
     private Thread m_threadDoSomething;
@@ -139,6 +139,8 @@ namespace RPlayer
       }
 
       InitializeComponent();
+
+      label_version.Text = m_strAppVersion;
 
       try
       {
@@ -241,6 +243,8 @@ namespace RPlayer
         return; // To avoid crash when user close app after lauch immediately
       }
       RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
+      RpCore.WriteLog(RpCore.ELogType.notice, "****************** App version: " + m_strAppVersion);
+      
       Init(true);
 
       string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;

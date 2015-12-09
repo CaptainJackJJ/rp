@@ -19,7 +19,7 @@ namespace RPlayer
 
     public FormTopBar(MainForm mainForm)
     {     
-      InitializeComponent();
+      InitializeComponent();      
       SetUiLange();
       this.ShowInTaskbar = false;
       try
@@ -38,6 +38,7 @@ namespace RPlayer
         label_Min.Text = "min";
       }
       m_mainForm = mainForm;
+      label_version.Text = m_mainForm.m_strAppVersion;
     }
 
     public void SetAllUiLange()

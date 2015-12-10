@@ -154,7 +154,7 @@
       this.label_fileSizeShow.AutoSize = true;
       this.label_fileSizeShow.BackColor = System.Drawing.Color.Transparent;
       this.label_fileSizeShow.ForeColor = System.Drawing.Color.White;
-      this.label_fileSizeShow.Location = new System.Drawing.Point(307, 101);
+      this.label_fileSizeShow.Location = new System.Drawing.Point(310, 101);
       this.label_fileSizeShow.Name = "label_fileSizeShow";
       this.label_fileSizeShow.Size = new System.Drawing.Size(29, 12);
       this.label_fileSizeShow.TabIndex = 41;

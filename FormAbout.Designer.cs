@@ -34,6 +34,8 @@
       this.label_webSiteShow = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
       this.label_logo = new System.Windows.Forms.Label();
+      this.label_weChatGroup = new System.Windows.Forms.Label();
+      this.label_weChatGroupShow = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_version
@@ -109,12 +111,37 @@
       this.label_logo.TabIndex = 38;
       this.label_logo.Text = "RabbitPlayer";
       // 
+      // label_weChatGroup
+      // 
+      this.label_weChatGroup.AutoSize = true;
+      this.label_weChatGroup.BackColor = System.Drawing.Color.Transparent;
+      this.label_weChatGroup.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_weChatGroup.ForeColor = System.Drawing.Color.White;
+      this.label_weChatGroup.Location = new System.Drawing.Point(12, 106);
+      this.label_weChatGroup.Name = "label_weChatGroup";
+      this.label_weChatGroup.Size = new System.Drawing.Size(112, 16);
+      this.label_weChatGroup.TabIndex = 40;
+      this.label_weChatGroup.Text = "WeChat Group:";
+      // 
+      // label_weChatGroupShow
+      // 
+      this.label_weChatGroupShow.BackColor = System.Drawing.Color.Transparent;
+      this.label_weChatGroupShow.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_weChatGroupShow.ForeColor = System.Drawing.Color.White;
+      this.label_weChatGroupShow.Image = global::RPlayer.Properties.Resources.未标题_1;
+      this.label_weChatGroupShow.Location = new System.Drawing.Point(25, 132);
+      this.label_weChatGroupShow.Name = "label_weChatGroupShow";
+      this.label_weChatGroupShow.Size = new System.Drawing.Size(250, 309);
+      this.label_weChatGroupShow.TabIndex = 40;
+      // 
       // FormAbout
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.SlateGray;
-      this.ClientSize = new System.Drawing.Size(297, 104);
+      this.ClientSize = new System.Drawing.Size(297, 454);
+      this.Controls.Add(this.label_weChatGroupShow);
+      this.Controls.Add(this.label_weChatGroup);
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_versionShow);
       this.Controls.Add(this.label_webSiteShow);
@@ -137,6 +164,8 @@
     private System.Windows.Forms.Label label_webSiteShow;
     private System.Windows.Forms.Label label_Close;
     private System.Windows.Forms.Label label_logo;
+    private System.Windows.Forms.Label label_weChatGroup;
+    private System.Windows.Forms.Label label_weChatGroupShow;
   }
 }
 

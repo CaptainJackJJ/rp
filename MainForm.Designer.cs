@@ -246,9 +246,9 @@
       this.label_logo.ForeColor = System.Drawing.Color.White;
       this.label_logo.Location = new System.Drawing.Point(21, 6);
       this.label_logo.Name = "label_logo";
-      this.label_logo.Size = new System.Drawing.Size(166, 24);
+      this.label_logo.Size = new System.Drawing.Size(110, 24);
       this.label_logo.TabIndex = 45;
-      this.label_logo.Text = "RabbitPlayer";
+      this.label_logo.Text = "兔子影音";
       this.label_logo.Click += new System.EventHandler(this.label_logo_Click);
       this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
       this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
@@ -260,7 +260,7 @@
       this.label_version.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_version.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_version.ForeColor = System.Drawing.Color.White;
-      this.label_version.Location = new System.Drawing.Point(180, 18);
+      this.label_version.Location = new System.Drawing.Point(135, 18);
       this.label_version.Name = "label_version";
       this.label_version.Size = new System.Drawing.Size(40, 12);
       this.label_version.TabIndex = 45;

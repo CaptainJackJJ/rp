@@ -464,6 +464,14 @@ namespace RPlayer
         item.Text = UiLang.contextMenuChapter + number.ToString();
       }
       label_logo.Text = UiLang.rabbitPlayer;
+      if (Archive.lang == "English")
+      {
+        label_version.Location = new Point(180, 18);
+      }
+      else
+      {
+        label_version.Location = new Point(135, 18);
+      }
     }
 
     private void InitContextMenuStrip()

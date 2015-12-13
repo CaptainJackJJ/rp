@@ -292,6 +292,8 @@ namespace RPlayer
 
         ConfigRpcoreByArchive();
 
+        m_formPlaylist.ConfigByArchive();
+
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
       }

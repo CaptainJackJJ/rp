@@ -54,8 +54,7 @@ namespace RPlayer
       InitContextMenuStrip();
 
       m_bConstructed = true;
-      this.Size = new Size(this.Width-1, this.Height);
-      this.Size = new Size(this.Width + 1, this.Height);
+      this.OnResize(EventArgs.Empty);
     }
 
     private void InitContextMenuStrip()

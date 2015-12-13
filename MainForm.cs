@@ -204,8 +204,7 @@ namespace RPlayer
         AssociateExtension();
 
       m_bConstructed = true;
-      this.Size = new Size(this.Width-1, this.Height);
-      this.Size = new Size(this.Width + 1, this.Height);
+      this.OnResize(EventArgs.Empty);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

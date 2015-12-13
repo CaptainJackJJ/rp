@@ -70,8 +70,7 @@ namespace RPlayer
       m_formSpeedControl = new FormSpeedControl(this);
       this.AddOwnedForm(m_formSpeedControl);
       m_bConstructed = true;
-      this.Size = new Size(this.Width-1, this.Height);
-      this.Size = new Size(this.Width + 1, this.Height);
+      this.OnResize(EventArgs.Empty);
     }
 
     public void SetAllUiLange()

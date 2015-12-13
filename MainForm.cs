@@ -93,6 +93,9 @@ namespace RPlayer
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
 
+    // Resize and move event are fired in InitializeComponent on some pc(my sister's pc)
+    // , and crash caused because some component is not inited.
+    // So add this flag to let Resize and Move method do nothing before constructed.
     private bool m_bConstructed = false;
 
     public MainForm(string[] args)

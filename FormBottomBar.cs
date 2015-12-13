@@ -179,6 +179,8 @@ namespace RPlayer
 
     private void timer_updateProcessBar_Tick(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
       double nCurTime = RpCore.GetCurTime();
       if ((int)nCurTime <= colorSlider_playProcess.Maximum && (int)nCurTime >= 0)
         colorSlider_playProcess.Value = (int)nCurTime;

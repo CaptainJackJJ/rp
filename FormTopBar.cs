@@ -49,14 +49,7 @@ namespace RPlayer
     private void SetUiLange()
     {
       label_logo.Text = UiLang.rabbitPlayer;
-      if (Archive.lang == "English")
-      {
-        label_version.Location = new Point(170, 18);
-      }
-      else
-      {
-        label_version.Location = new Point(125, 18);
-      }
+      label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)

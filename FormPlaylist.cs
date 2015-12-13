@@ -36,6 +36,8 @@ namespace RPlayer
 
     private Color m_colorFinished = Color.RosyBrown;
     private Color m_colorPlayed = Color.SkyBlue;
+
+    private bool m_bConstructed = false;
     
     public FormPlaylist(MainForm mainForm)
     {
@@ -50,6 +52,10 @@ namespace RPlayer
       m_formPlistFolderDetails = new FormPlistFolderDetails();
       this.AddOwnedForm(m_formPlistFolderDetails);
       InitContextMenuStrip();
+
+      m_bConstructed = true;
+      this.Size = new Size(this.Width-1, this.Height);
+      this.Size = new Size(this.Width + 1, this.Height);
     }
 
     private void InitContextMenuStrip()
@@ -112,6 +118,9 @@ namespace RPlayer
 
     private void FormPlaylist_Resize(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
+
       Archive.formPlistWidth = this.Width;
       Archive.formPlistHeight = this.Height;
       int nBtnHeight = button_histroy.Height;

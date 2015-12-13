@@ -36,6 +36,7 @@ namespace RPlayer
     private float m_fSpeed = 1f;
     public float Speed { get { return m_fSpeed; } }
     private FormSpeedControl m_formSpeedControl;
+    private bool m_bConstructed = false;
 
     public FormBottomBar(MainForm mainForm)
     {
@@ -68,6 +69,9 @@ namespace RPlayer
       m_mainForm = mainForm;
       m_formSpeedControl = new FormSpeedControl(this);
       this.AddOwnedForm(m_formSpeedControl);
+      m_bConstructed = true;
+      this.Size = new Size(this.Width-1, this.Height);
+      this.Size = new Size(this.Width + 1, this.Height);
     }
 
     public void SetAllUiLange()
@@ -205,6 +209,8 @@ namespace RPlayer
 
     private void FormBottomBar_Resize(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
       // Every control's location is based on label_Play.
       label_Play.Location =
         new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
@@ -688,6 +694,8 @@ namespace RPlayer
 
     private void FormBottomBar_Move(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
       m_formSpeedControl.Location
         = new Point(this.Location.X + (this.Width - m_formSpeedControl.Width) / 2, this.Location.Y - m_formSpeedControl.Height);
     }

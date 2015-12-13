@@ -93,6 +93,8 @@ namespace RPlayer
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
 
+    private bool m_bConstructed = false;
+
     public MainForm(string[] args)
     {
       m_tempPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + m_strAppName;
@@ -200,6 +202,10 @@ namespace RPlayer
 
       if(Archive.associateFiles)
         AssociateExtension();
+
+      m_bConstructed = true;
+      this.Size = new Size(this.Width-1, this.Height);
+      this.Size = new Size(this.Width + 1, this.Height);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -464,14 +470,8 @@ namespace RPlayer
         item.Text = UiLang.contextMenuChapter + number.ToString();
       }
       label_logo.Text = UiLang.rabbitPlayer;
-      if (Archive.lang == "English")
-      {
-        label_version.Location = new Point(180, 18);
-      }
-      else
-      {
-        label_version.Location = new Point(135, 18);
-      }
+
+      label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
     }
 
     private void InitContextMenuStrip()
@@ -701,7 +701,9 @@ namespace RPlayer
     }
 
     private void MainForm_Resize(object sender, EventArgs e)
-    {     
+    {
+      if (!m_bConstructed)
+        return;
       label_Close.Location =
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
@@ -887,6 +889,8 @@ namespace RPlayer
 
     private void MainForm_Move(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
       ChangeSubFormsLocAndSize();
     }
 
@@ -1940,6 +1944,8 @@ namespace RPlayer
 
     private void timer1_Tick(object sender, EventArgs e)
     {
+      if (!m_bConstructed)
+        return;
       string url = "";
       if (!AppShare.SetGetNewUrl(m_tempPath, false, ref url))
       {

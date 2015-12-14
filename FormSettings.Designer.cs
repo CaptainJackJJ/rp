@@ -527,8 +527,8 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
-      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_general);
+      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.label_plist);

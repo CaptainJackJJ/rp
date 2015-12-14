@@ -313,9 +313,11 @@ namespace RPlayer
         {
           FolderBrowserDialog fbd = new FolderBrowserDialog();
           DialogResult result = fbd.ShowDialog();
-
-          Archive.snapSavePath = fbd.SelectedPath;
-          textBox_snapSavePath.Text = Archive.snapSavePath; 
+          if (result == DialogResult.OK)
+          {
+            Archive.snapSavePath = fbd.SelectedPath;
+            textBox_snapSavePath.Text = Archive.snapSavePath;
+          }
         }
 
         private void colorSlider_fontSize_ValueChanged(object sender, EventArgs e)

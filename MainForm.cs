@@ -1748,6 +1748,7 @@ namespace RPlayer
 
     public bool StartPlay(string url)
     {
+      url = url.Replace("\\\\", "smb://");
       if(!m_bPlayerInited)
       {
         m_strPlayUrlAfterInit = url; // To let method init to play it.

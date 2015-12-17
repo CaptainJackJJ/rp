@@ -56,7 +56,6 @@ namespace RPlayer
           checkBox_bold.Checked = Archive.bold;
           checkBox_italic.Checked = Archive.italic;
           checkBox_overAssOrig.Checked = Archive.overAssOrig;
-          checkBox_associateFiles.Checked = Archive.associateFiles;
         }
 
         private void comboBox_uiLang_SelectedIndexChanged(object sender, EventArgs e)
@@ -94,7 +93,7 @@ namespace RPlayer
           checkBox_bold.Text = UiLang.labelSubtitleBold;
           checkBox_italic.Text = UiLang.labelSubtitleItalic;
           checkBox_overAssOrig.Text = UiLang.labelSubtitleOverAssOrig;
-          checkBox_associateFiles.Text = UiLang.checkBoxAssociateFiles;
+          button_setAsDefaultPlayer.Text = UiLang.buttonSetAsDefaultPlayer;
           button_restoreFactory.Text = UiLang.btnRestoreFactory;
         }
 
@@ -384,16 +383,16 @@ namespace RPlayer
           }
         }
 
-        private void checkBox_associateFiles_CheckedChanged(object sender, EventArgs e)
-        {
-          Archive.associateFiles = checkBox_associateFiles.Checked;
-        }
-
         private void button_restoreFactory_Click(object sender, EventArgs e)
         {
           Archive.Reset();
           m_mainForm.ConfigAllByArchive();
           m_mainForm.SetAllUiLange();
+        }
+
+        private void button_setAsDefaultPlayer_Click(object sender, EventArgs e)
+        {
+          m_mainForm.AssociateExtension();
         }
     }
 }

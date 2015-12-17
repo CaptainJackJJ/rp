@@ -87,7 +87,7 @@ namespace RPlayer
     private readonly string m_strRPUpdaterName = "RPUpdater";
     public string m_strAppVersion;
 
-    private string m_tempPath;
+    public string m_tempPath;
     private Thread m_threadDoSomething;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
@@ -203,9 +203,6 @@ namespace RPlayer
         StartPlay(args[0]);
       }
 
-      if(Archive.associateFiles)
-        AssociateExtension();
-
       m_bConstructed = true;
       this.OnResize(EventArgs.Empty);
     }
@@ -236,6 +233,28 @@ namespace RPlayer
       bool bRunning = false;
       if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
         MessageBox.Show("Can not find AppShare xml");
+    }
+
+    private void MainForm_Shown(object sender, EventArgs e)
+    {
+      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
+      if (File.Exists(strRPUpdaterPath))
+      {
+        // Register RPUpdater to auto run 
+        if (AppShare.SetGetAllowAutoRunRPUdater(m_tempPath, false))
+        {
+          RegistryKey RunKey
+            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
+            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
+
+          object value = RunKey.GetValue(m_strRPUpdaterName);
+          if (value == null || value as string != strRPUpdaterPath)
+          {
+            FormRegisterAsk f = new FormRegisterAsk(this);
+            f.ShowDialog();
+          }
+        }
+      }
     }
 
     // Load lib is slow, so put it in a thread to let form show fast.
@@ -320,31 +339,26 @@ namespace RPlayer
       return "";
     }
 
-    private void AssociateExtension()
+    public void AssociateExtension()
     {
       try
       {
-        const string strProgId = "RabbitPlayer";
+        const string strProgId = "RabbitPlayer1";
 
-        // Only check mp4. Do nothing if it already associated to my player
-        string extMp4 = ".mp4";
-        RegistryKey key = Registry.ClassesRoot.OpenSubKey(extMp4, true);
-        if (key == null || key.GetValue("") as string != strProgId)
+        RegistryKey key;
+        // Associate all extension
+        string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.wpl|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
+        string[] extArray = strExtension.Split('|');
+        string defaultId;
+        foreach (string ext in extArray)
         {
-          // Associate all extension
-          string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.wpl|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
-          string[] extArray = strExtension.Split('|');
-          string defaultId;
-          foreach (string ext in extArray)
-          {
-            key = Registry.ClassesRoot.OpenSubKey(ext, true);
-            if (key == null)
-              key = Registry.ClassesRoot.CreateSubKey(ext);
-            defaultId = key.GetValue("") as string;
-            if (defaultId == strProgId)
-              continue;
-            key.SetValue("", strProgId);
-          }
+          key = Registry.ClassesRoot.OpenSubKey(ext, true);
+          if (key == null)
+            key = Registry.ClassesRoot.CreateSubKey(ext);
+          defaultId = key.GetValue("") as string;
+          if (defaultId == strProgId)
+            continue;
+          key.SetValue("", strProgId);
         }
 
         // Set up progId
@@ -1995,28 +2009,6 @@ namespace RPlayer
           case Archive.enumRepeatPlayback.all:
              PlayPreNext(false);    
             break;
-        }
-      }
-    }
-
-    private void MainForm_Shown(object sender, EventArgs e)
-    {
-      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
-      if (File.Exists(strRPUpdaterPath))
-      {
-        // Register RPUpdater to auto run 
-        if (AppShare.SetGetAllowAutoRunRPUdater(m_tempPath, false))
-        {
-          RegistryKey RunKey
-            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
-
-          object value = RunKey.GetValue(m_strRPUpdaterName);
-          if (value == null || value as string != strRPUpdaterPath)
-          {
-            FormRegisterAsk f = new FormRegisterAsk();
-            f.ShowDialog();
-          }
         }
       }
     }

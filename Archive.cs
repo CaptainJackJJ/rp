@@ -109,7 +109,6 @@ namespace RPlayer
 
     static private readonly string langDefault = "中文";
     static private readonly string snapSavePathDefault = "";
-    static private readonly bool associateFilesDefault = true;
 
     // subtitleSettings
     static public int fontSize;
@@ -263,7 +262,6 @@ namespace RPlayer
     {
       LoadNode(nodeSectionGeneralSettings, SettingName_lang, out lang, langDefault);
       LoadNode(nodeSectionGeneralSettings, SettingName_snapSavePath, out snapSavePath, snapSavePathDefault);
-      LoadNode(nodeSectionGeneralSettings, SettingName_associateFiles, out associateFiles, associateFilesDefault);
     }
 
     static private void LoadSubtitleSettings()
@@ -614,7 +612,6 @@ namespace RPlayer
       // generalSettings
       lang = langDefault;
       snapSavePath = snapSavePathDefault;
-      associateFiles = associateFilesDefault;
 
       // subtitleSettings
       fontSize = fontSizeDefault;

@@ -69,7 +69,7 @@
       this.textBox_description.BackColor = System.Drawing.Color.SlateGray;
       this.textBox_description.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.textBox_description.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.textBox_description.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.textBox_description.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.textBox_description.ForeColor = System.Drawing.Color.White;
       this.textBox_description.Location = new System.Drawing.Point(16, 21);
       this.textBox_description.Multiline = true;
@@ -81,7 +81,7 @@
       this.textBox_description.Text = "In order to give you better service some modules of RabbitPlayer better to be aut" +
     "o run.\r\n(Some SecuritySoftware may ask your permisson agian)";
       // 
-      // FormMain
+      // FormRegisterAsk
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -91,7 +91,7 @@
       this.Controls.Add(this.button_notAllow);
       this.Controls.Add(this.button_allow);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-      this.Name = "FormMain";
+      this.Name = "FormRegisterAsk";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.ResumeLayout(false);
       this.PerformLayout();

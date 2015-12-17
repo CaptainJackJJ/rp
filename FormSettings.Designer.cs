@@ -37,7 +37,6 @@
       this.label_subtitle = new System.Windows.Forms.Label();
       this.label_AV = new System.Windows.Forms.Label();
       this.panel_general = new System.Windows.Forms.Panel();
-      this.checkBox_associateFiles = new System.Windows.Forms.CheckBox();
       this.button_restoreFactory = new System.Windows.Forms.Button();
       this.button_snapSavePath = new System.Windows.Forms.Button();
       this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
@@ -61,6 +60,7 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
+      this.button_setAsDefaultPlayer = new System.Windows.Forms.Button();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -167,7 +167,7 @@
       // 
       // panel_general
       // 
-      this.panel_general.Controls.Add(this.checkBox_associateFiles);
+      this.panel_general.Controls.Add(this.button_setAsDefaultPlayer);
       this.panel_general.Controls.Add(this.button_restoreFactory);
       this.panel_general.Controls.Add(this.button_snapSavePath);
       this.panel_general.Controls.Add(this.textBox_snapSavePath);
@@ -179,20 +179,6 @@
       this.panel_general.Name = "panel_general";
       this.panel_general.Size = new System.Drawing.Size(422, 495);
       this.panel_general.TabIndex = 15;
-      // 
-      // checkBox_associateFiles
-      // 
-      this.checkBox_associateFiles.AutoSize = true;
-      this.checkBox_associateFiles.Checked = true;
-      this.checkBox_associateFiles.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox_associateFiles.ForeColor = System.Drawing.Color.White;
-      this.checkBox_associateFiles.Location = new System.Drawing.Point(26, 126);
-      this.checkBox_associateFiles.Name = "checkBox_associateFiles";
-      this.checkBox_associateFiles.Size = new System.Drawing.Size(250, 18);
-      this.checkBox_associateFiles.TabIndex = 39;
-      this.checkBox_associateFiles.Text = "Always associate all video files";
-      this.checkBox_associateFiles.UseVisualStyleBackColor = true;
-      this.checkBox_associateFiles.CheckedChanged += new System.EventHandler(this.checkBox_associateFiles_CheckedChanged);
       // 
       // button_restoreFactory
       // 
@@ -521,6 +507,22 @@
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
       // 
+      // button_setAsDefaultPlayer
+      // 
+      this.button_setAsDefaultPlayer.BackColor = System.Drawing.Color.DimGray;
+      this.button_setAsDefaultPlayer.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_setAsDefaultPlayer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_setAsDefaultPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_setAsDefaultPlayer.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_setAsDefaultPlayer.ForeColor = System.Drawing.Color.White;
+      this.button_setAsDefaultPlayer.Location = new System.Drawing.Point(25, 116);
+      this.button_setAsDefaultPlayer.Name = "button_setAsDefaultPlayer";
+      this.button_setAsDefaultPlayer.Size = new System.Drawing.Size(176, 24);
+      this.button_setAsDefaultPlayer.TabIndex = 38;
+      this.button_setAsDefaultPlayer.Text = "Set As Default Player";
+      this.button_setAsDefaultPlayer.UseVisualStyleBackColor = false;
+      this.button_setAsDefaultPlayer.Click += new System.EventHandler(this.button_setAsDefaultPlayer_Click);
+      // 
       // FormSettings
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -588,7 +590,7 @@
         private System.Windows.Forms.Button button_borderColor;
         private System.Windows.Forms.Button button_fontColor;
         private System.Windows.Forms.CheckBox checkBox_overAssOrig;
-        private System.Windows.Forms.CheckBox checkBox_associateFiles;
         private System.Windows.Forms.Button button_restoreFactory;
+        private System.Windows.Forms.Button button_setAsDefaultPlayer;
     }
 }

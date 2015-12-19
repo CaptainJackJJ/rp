@@ -112,7 +112,6 @@
       this.textBox_changeLog.Multiline = true;
       this.textBox_changeLog.Name = "textBox_changeLog";
       this.textBox_changeLog.ReadOnly = true;
-      this.textBox_changeLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
       this.textBox_changeLog.Size = new System.Drawing.Size(539, 336);
       this.textBox_changeLog.TabIndex = 44;
       this.textBox_changeLog.TabStop = false;

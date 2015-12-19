@@ -230,5 +230,21 @@ namespace RPlayer
     {
       label_logo.ForeColor = Color.White;
     }
+
+    private void label_version_Click(object sender, EventArgs e)
+    {
+      FormChangeLog f = new FormChangeLog();
+      f.Show();
+    }
+
+    private void label_version_MouseEnter(object sender, EventArgs e)
+    {
+      label_version.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_version_MouseLeave(object sender, EventArgs e)
+    {
+      label_version.ForeColor = Color.White;
+    }
   }
 }

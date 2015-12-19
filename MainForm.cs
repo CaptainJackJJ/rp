@@ -1476,12 +1476,6 @@ namespace RPlayer
       ShowFormAbout();
     }
 
-    public void ShowFormAbout()
-    {
-      FormAbout f = new FormAbout();
-      f.ShowForm(m_strAppVersion);
-    }
-
     private void label_logo_MouseEnter(object sender, EventArgs e)
     {
       label_logo.ForeColor = Color.DodgerBlue;
@@ -1490,6 +1484,28 @@ namespace RPlayer
     private void label_logo_MouseLeave(object sender, EventArgs e)
     {
       label_logo.ForeColor = Color.White;
+    }
+
+    public void ShowFormAbout()
+    {
+      FormAbout f = new FormAbout();
+      f.ShowForm(m_strAppVersion);
+    }
+
+    private void label_version_Click(object sender, EventArgs e)
+    {
+      FormChangeLog f = new FormChangeLog();
+      f.Show();
+    }
+
+    private void label_version_MouseEnter(object sender, EventArgs e)
+    {
+      label_version.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_version_MouseLeave(object sender, EventArgs e)
+    {
+      label_version.ForeColor = Color.White;
     }
 
     private void ChangeSubFormsLocAndSize()
@@ -2012,6 +2028,7 @@ namespace RPlayer
         }
       }
     }
+
   }
 
   public class RpCallback : IRpCallback

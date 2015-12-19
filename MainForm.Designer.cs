@@ -265,9 +265,9 @@
       this.label_version.Size = new System.Drawing.Size(40, 12);
       this.label_version.TabIndex = 45;
       this.label_version.Text = "1.0.0";
-      this.label_version.Click += new System.EventHandler(this.label_logo_Click);
-      this.label_version.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
-      this.label_version.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
+      this.label_version.Click += new System.EventHandler(this.label_version_Click);
+      this.label_version.MouseEnter += new System.EventHandler(this.label_version_MouseEnter);
+      this.label_version.MouseLeave += new System.EventHandler(this.label_version_MouseLeave);
       // 
       // MainForm
       // 

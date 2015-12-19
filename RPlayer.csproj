@@ -68,6 +68,12 @@
     <Compile Include="FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormChangeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChangeLog.Designer.cs">
+      <DependentUpon>FormChangeLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRegisterAsk.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +162,9 @@
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormChangeLog.resx">
+      <DependentUpon>FormChangeLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormRegisterAsk.resx">
       <DependentUpon>FormRegisterAsk.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\未标题-1.png" />
+    <None Include="Resources\tree.jpg" />
     <Content Include="RPlayer.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

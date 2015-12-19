@@ -53,7 +53,7 @@
       // label_settingsClose
       // 
       this.label_settingsClose.BackColor = System.Drawing.Color.Transparent;
-      this.label_settingsClose.Location = new System.Drawing.Point(529, 14);
+      this.label_settingsClose.Location = new System.Drawing.Point(469, 17);
       this.label_settingsClose.Name = "label_settingsClose";
       this.label_settingsClose.Size = new System.Drawing.Size(13, 13);
       this.label_settingsClose.TabIndex = 1;
@@ -69,7 +69,7 @@
       this.panel_topBar.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel_topBar.Location = new System.Drawing.Point(0, 0);
       this.panel_topBar.Name = "panel_topBar";
-      this.panel_topBar.Size = new System.Drawing.Size(554, 41);
+      this.panel_topBar.Size = new System.Drawing.Size(503, 41);
       this.panel_topBar.TabIndex = 3;
       this.panel_topBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_topBar_MouseDown);
       this.panel_topBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_topBar_MouseMove);
@@ -81,7 +81,7 @@
       this.label_topBarLine.Dock = System.Windows.Forms.DockStyle.Top;
       this.label_topBarLine.Location = new System.Drawing.Point(0, 41);
       this.label_topBarLine.Name = "label_topBarLine";
-      this.label_topBarLine.Size = new System.Drawing.Size(554, 1);
+      this.label_topBarLine.Size = new System.Drawing.Size(503, 1);
       this.label_topBarLine.TabIndex = 4;
       // 
       // textBox_thanks
@@ -95,7 +95,7 @@
       this.textBox_thanks.Multiline = true;
       this.textBox_thanks.Name = "textBox_thanks";
       this.textBox_thanks.ReadOnly = true;
-      this.textBox_thanks.Size = new System.Drawing.Size(334, 109);
+      this.textBox_thanks.Size = new System.Drawing.Size(289, 109);
       this.textBox_thanks.TabIndex = 44;
       this.textBox_thanks.TabStop = false;
       this.textBox_thanks.Text = "Thank you for accompanying RabbitPlayer grows up.\r\n\r\nI am working hard to fix bug" +
@@ -112,7 +112,7 @@
       this.textBox_changeLog.Multiline = true;
       this.textBox_changeLog.Name = "textBox_changeLog";
       this.textBox_changeLog.ReadOnly = true;
-      this.textBox_changeLog.Size = new System.Drawing.Size(539, 336);
+      this.textBox_changeLog.Size = new System.Drawing.Size(494, 336);
       this.textBox_changeLog.TabIndex = 44;
       this.textBox_changeLog.TabStop = false;
       this.textBox_changeLog.Text = "1.1.5 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +
@@ -135,7 +135,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
-      this.ClientSize = new System.Drawing.Size(554, 539);
+      this.ClientSize = new System.Drawing.Size(503, 539);
       this.Controls.Add(this.label_tree);
       this.Controls.Add(this.textBox_changeLog);
       this.Controls.Add(this.textBox_thanks);

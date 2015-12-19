@@ -18,50 +18,86 @@ namespace RPlayer
       {
         xml.Load(xmlPath + "\\" + xmlFileName);
       }
-      catch
-      {
-      }
+      catch{}
 
       XmlNode nodeAppShare = xml.SelectSingleNode("/appShare");
       if (nodeAppShare == null)
       {
         nodeAppShare = xml.CreateElement("appShare");
         xml.AppendChild(nodeAppShare);
-        node = xml.CreateElement("appRunning");
-        nodeAppShare.AppendChild(node);
-        node.InnerText = "False";
-        node = xml.CreateElement("allowAutoRunRPUdater");
-        nodeAppShare.AppendChild(node);
-        node.InnerText = "True";
-        node = xml.CreateElement("url");
-        nodeAppShare.AppendChild(node);
-        node.InnerText = "";
       }
 
       node = xml.SelectSingleNode(nodeUrl);
+      if(node == null)
+      {
+        if(nodeUrl == "/appShare/appRunning")
+        {
+          node = xml.CreateElement("appRunning");
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "False";
+        }
+        //if (nodeUrl == "/appShare/allowAutoRunRPUdater")
+        //{
+          //node = xml.CreateElement("allowAutoRunRPUdater");
+          //nodeAppShare.AppendChild(node);
+          //node.InnerText = "True";
+        //}
+        if (nodeUrl == "/appShare/firstTimeRun")
+        {
+          node = xml.CreateElement("firstTimeRun");
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "True";
+        }
+        if (nodeUrl == "/appShare/url")
+        {
+          node = xml.CreateElement("url");
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "";
+        }
+      }
     }
 
-    static public bool SetGetAllowAutoRunRPUdater(string xmlPath,bool bSet)
+    static public bool SetGetFirstTimeRun(string xmlPath, bool bSet)
     {
       XmlDocument xml = new XmlDocument();
       XmlNode node;
-      GetNode(xml, xmlPath, "/appShare/allowAutoRunRPUdater", out node);
-      bool allow = true;
+      GetNode(xml, xmlPath, "/appShare/firstTimeRun", out node);
+      bool first = true;
       if (bSet)
       {
         node.InnerText = "False";
       }
       else
-        allow = Convert.ToBoolean(node.InnerText);
+        first = Convert.ToBoolean(node.InnerText);
       try
       {
         xml.Save(xmlPath + "\\" + xmlFileName);
       }
-      catch
-      {
-      }
-      return allow;
+      catch{}
+      return first;
     }
+
+    //static public bool SetGetAllowAutoRunRPUdater(string xmlPath,bool bSet)
+    //{
+    //  XmlDocument xml = new XmlDocument();
+    //  XmlNode node;
+    //  GetNode(xml, xmlPath, "/appShare/allowAutoRunRPUdater", out node);
+    //  bool allow = true;
+    //  if (bSet)
+    //  {
+    //    node.InnerText = "False";
+    //  }
+    //  else
+    //    allow = Convert.ToBoolean(node.InnerText);
+    //  try
+    //  {
+    //    xml.Save(xmlPath + "\\" + xmlFileName);
+    //  }
+    //  catch
+    //  {
+    //  }
+    //  return allow;
+    //}
 
     static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
     {
@@ -75,9 +111,7 @@ namespace RPlayer
         {
           xml.Save(xmlPath + "\\" + xmlFileName);
         }
-        catch
-        {
-        }
+        catch{}
       }
       else
         bRunning = Convert.ToBoolean(node.InnerText);
@@ -112,9 +146,7 @@ namespace RPlayer
         {
           xml.Save(xmlPath + "\\" + xmlFileName);
         }
-        catch
-        {
-        }
+        catch{}
       }
 
       return true;

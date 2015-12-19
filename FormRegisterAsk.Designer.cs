@@ -44,7 +44,7 @@
       this.button_notAllow.Name = "button_notAllow";
       this.button_notAllow.Size = new System.Drawing.Size(75, 23);
       this.button_notAllow.TabIndex = 41;
-      this.button_notAllow.Text = "Not Allow";
+      this.button_notAllow.Text = "Later";
       this.button_notAllow.UseVisualStyleBackColor = false;
       this.button_notAllow.Click += new System.EventHandler(this.button_notAllow_Click);
       // 
@@ -60,7 +60,7 @@
       this.button_allow.Name = "button_allow";
       this.button_allow.Size = new System.Drawing.Size(75, 23);
       this.button_allow.TabIndex = 40;
-      this.button_allow.Text = "Allow";
+      this.button_allow.Text = "Yes";
       this.button_allow.UseVisualStyleBackColor = false;
       this.button_allow.Click += new System.EventHandler(this.button_allow_Click);
       // 
@@ -78,8 +78,8 @@
       this.textBox_description.Size = new System.Drawing.Size(291, 90);
       this.textBox_description.TabIndex = 41;
       this.textBox_description.TabStop = false;
-      this.textBox_description.Text = "In order to give you better service some modules of RabbitPlayer better to be aut" +
-    "o run.\r\n(Some SecuritySoftware may ask your permisson agian)";
+      this.textBox_description.Text = "Do you want to set RabbitPlayer as default media player.\r\n\r\nSome SecuritySoftware" +
+    " may ask your permisson agian.";
       // 
       // FormRegisterAsk
       // 

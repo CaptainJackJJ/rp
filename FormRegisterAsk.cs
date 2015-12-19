@@ -25,9 +25,11 @@ namespace RPlayer
       InitializeComponent();
       if (Archive.lang == "中文")
       {
-        button_allow.Text = "允许";
-        button_notAllow.Text = "不允许";
-        textBox_description.Text = @"尊敬的用户，为了能给您提供更好的服务，兔子影音的某些模块最好在开机时启动，在此征求您的许可。
+        button_allow.Text = "是的";
+        button_notAllow.Text = "稍后";
+        textBox_description.Text = @"尊敬的用户，您想要将兔子影音设为默认播放器吗？这样可方便您观看影片！直接双击视频文件即可自动播放。
+
+或者您可稍后在本软件的“设置->一般”中选择“设置为系统默认播放器”。
 
 某些安全软件可能会再次征求您的许可,请选择“更多->允许程序所有操作”";
       }
@@ -35,15 +37,6 @@ namespace RPlayer
 
     private void button_allow_Click(object sender, EventArgs e)
     {
-      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
-
-      try
-      {
-        Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-            .OpenSubKey("CurrentVersion").OpenSubKey("Run", true).SetValue(m_strRPUpdaterName, strRPUpdaterPath);
-      }
-      catch{}
-
       m_mainForm.AssociateExtension();
 
       this.Close();
@@ -51,8 +44,6 @@ namespace RPlayer
 
     private void button_notAllow_Click(object sender, EventArgs e)
     {
-      AppShare.SetGetAllowAutoRunRPUdater(m_mainForm.m_tempPath, true);
-
       this.Close();
     }
   }

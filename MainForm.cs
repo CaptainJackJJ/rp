@@ -237,23 +237,11 @@ namespace RPlayer
 
     private void MainForm_Shown(object sender, EventArgs e)
     {
-      string strRPUpdaterPath = Application.StartupPath + "\\" + m_strRPUpdaterExeName;
-      if (File.Exists(strRPUpdaterPath))
+      if(AppShare.SetGetFirstTimeRun(m_tempPath,false)) // first time run
       {
-        // Register RPUpdater to auto run 
-        if (AppShare.SetGetAllowAutoRunRPUdater(m_tempPath, false))
-        {
-          RegistryKey RunKey
-            = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows")
-            .OpenSubKey("CurrentVersion").OpenSubKey("Run");
-
-          object value = RunKey.GetValue(m_strRPUpdaterName);
-          if (value == null || value as string != strRPUpdaterPath)
-          {
-            FormRegisterAsk f = new FormRegisterAsk(this);
-            f.ShowDialog();
-          }
-        }
+        FormRegisterAsk f = new FormRegisterAsk(this);
+        f.ShowDialog();
+        AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
       }
     }
 

@@ -35,7 +35,7 @@ namespace RPlayer
         label_logo.Text = "兔子影音";
         label_version.Text = "版本号:";
         label_webSite.Text = "官方网站:";
-        label_weChatGroup.Text = "微信官方群:";
+        label_weChatGroup.Text = "微信交流群:";
       }
       label_versionShow.Text = version;
       this.Show();

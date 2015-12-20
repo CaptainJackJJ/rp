@@ -40,7 +40,7 @@
       this.button_notAllow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
       this.button_notAllow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_notAllow.ForeColor = System.Drawing.Color.White;
-      this.button_notAllow.Location = new System.Drawing.Point(179, 116);
+      this.button_notAllow.Location = new System.Drawing.Point(178, 160);
       this.button_notAllow.Name = "button_notAllow";
       this.button_notAllow.Size = new System.Drawing.Size(75, 23);
       this.button_notAllow.TabIndex = 41;
@@ -56,7 +56,7 @@
       this.button_allow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_allow.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_allow.ForeColor = System.Drawing.Color.White;
-      this.button_allow.Location = new System.Drawing.Point(49, 116);
+      this.button_allow.Location = new System.Drawing.Point(48, 160);
       this.button_allow.Name = "button_allow";
       this.button_allow.Size = new System.Drawing.Size(75, 23);
       this.button_allow.TabIndex = 40;
@@ -71,22 +71,22 @@
       this.textBox_description.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.textBox_description.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.textBox_description.ForeColor = System.Drawing.Color.White;
-      this.textBox_description.Location = new System.Drawing.Point(16, 21);
+      this.textBox_description.Location = new System.Drawing.Point(13, 12);
       this.textBox_description.Multiline = true;
       this.textBox_description.Name = "textBox_description";
       this.textBox_description.ReadOnly = true;
-      this.textBox_description.Size = new System.Drawing.Size(291, 90);
+      this.textBox_description.Size = new System.Drawing.Size(291, 142);
       this.textBox_description.TabIndex = 41;
       this.textBox_description.TabStop = false;
-      this.textBox_description.Text = "Do you want to set RabbitPlayer as default media player.\r\n\r\nSome SecuritySoftware" +
-    " may ask your permisson agian.";
+      this.textBox_description.Text = "\r\n\r\nDo you want to set RabbitPlayer as default media player.\r\n\r\nSome SecuritySoft" +
+    "ware may ask your permisson agian.";
       // 
       // FormRegisterAsk
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.SlateGray;
-      this.ClientSize = new System.Drawing.Size(309, 155);
+      this.ClientSize = new System.Drawing.Size(309, 195);
       this.Controls.Add(this.textBox_description);
       this.Controls.Add(this.button_notAllow);
       this.Controls.Add(this.button_allow);

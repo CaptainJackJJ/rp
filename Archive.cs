@@ -101,11 +101,9 @@ namespace RPlayer
     // generalSettings
     static public string lang;
     static public string snapSavePath;
-    static public bool associateFiles;
 
     static private readonly string SettingName_lang = "lang";
     static private readonly string SettingName_snapSavePath = "snapSavePath";
-    static private readonly string SettingName_associateFiles = "associateFiles";
 
     static private readonly string langDefault = "中文";
     static private readonly string snapSavePathDefault = "";
@@ -440,8 +438,6 @@ namespace RPlayer
       node.InnerText = lang;
       node = nodeSectionGeneralSettings.SelectSingleNode(SettingName_snapSavePath);
       node.InnerText = snapSavePath;
-      node = nodeSectionGeneralSettings.SelectSingleNode(SettingName_associateFiles);
-      node.InnerText = associateFiles.ToString();
     }
 
     static private void SaveSubtitleSettings()

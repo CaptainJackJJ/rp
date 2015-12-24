@@ -10,6 +10,8 @@ using RpCoreWrapper;
 using System.IO;
 using Microsoft.Win32;
 using System.Threading;
+using System.Runtime.InteropServices;
+
 
 
 namespace RPlayer
@@ -327,11 +329,15 @@ namespace RPlayer
       return "";
     }
 
+        [DllImport("shell32.dll")]
+        public static extern void SHChangeNotify(long wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
+
+
     public void AssociateExtension()
     {
       try
       {
-        const string strProgId = "RabbitPlayer1";
+        const string strProgId = "RabbitPlayer";
 
         RegistryKey key;
         // Associate all extension
@@ -373,6 +379,8 @@ namespace RPlayer
           subKey = key.CreateSubKey(name);
         if (subKey.GetValue("") as string != value)
           subKey.SetValue("", value);
+
+        SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero);
       }
       catch
       {

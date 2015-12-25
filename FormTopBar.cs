@@ -239,7 +239,7 @@ namespace RPlayer
 
     private void label_version_MouseEnter(object sender, EventArgs e)
     {
-      label_version.ForeColor = Color.DodgerBlue;
+      label_version.ForeColor = Color.Gold;
     }
 
     private void label_version_MouseLeave(object sender, EventArgs e)

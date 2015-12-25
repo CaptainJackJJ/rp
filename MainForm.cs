@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 
 
 
@@ -340,16 +341,32 @@ namespace RPlayer
         const string strProgId = "RabbitPlayer";
 
         RegistryKey key;
+        RegistryKey subKey;
         // Associate all extension
         string strExtension = ".m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.mpg|.mpeg|.mp4|.mkv|.mk3d|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.wpl|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv";
         string[] extArray = strExtension.Split('|');
-        string defaultId;
         foreach (string ext in extArray)
         {
+          // Delete user choice so my assicote can take effect.
+          key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\" + ext,true);
+          if (key != null)
+          {
+            if (key.OpenSubKey("UserChoice", false) != null)
+            {
+              RegistrySecurity rs = key.GetAccessControl();
+              string currentUserStr = Environment.UserDomainName + "\\" + Environment.UserName;
+              rs.AddAccessRule(new RegistryAccessRule(currentUserStr, RegistryRights.Delete, AccessControlType.Allow));
+              key.SetAccessControl(rs);
+
+              key.DeleteSubKey("UserChoice");
+            }
+          }
+
+          // Associate ext to my progId
           key = Registry.ClassesRoot.OpenSubKey(ext, true);
           if (key == null)
             key = Registry.ClassesRoot.CreateSubKey(ext);
-          defaultId = key.GetValue("") as string;
+          string defaultId = key.GetValue("") as string;
           if (defaultId == strProgId)
             continue;
           key.SetValue("", strProgId);
@@ -366,7 +383,7 @@ namespace RPlayer
 
         name = "DefaultIcon";
         value = Application.ExecutablePath;
-        RegistryKey subKey = key.OpenSubKey(name, true);
+        subKey = key.OpenSubKey(name, true);
         if (subKey == null)
           subKey = key.CreateSubKey(name);
         if (subKey.GetValue("") as string != value)
@@ -382,9 +399,9 @@ namespace RPlayer
 
         SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero);
       }
-      catch
+      catch(Exception ex)
       {
-        MessageBox.Show(UiLang.msgSetAsDefaultFailed);
+        MessageBox.Show(UiLang.msgSetAsDefaultFailed + "   error info is :" + ex.ToString());
       }
     }
 

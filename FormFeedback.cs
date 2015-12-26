@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace RPlayer
 {
-  public partial class FormAbout : Form
+  public partial class FormFeedback : Form
   {
-    public FormAbout()
+    public FormFeedback()
     {
       InitializeComponent();
       try
@@ -21,34 +21,9 @@ namespace RPlayer
       catch { }
     }
 
-    public void ShowForm(string version)
-    {
-      if (Archive.lang == "English")
-      {
-        label_logo.Text = "RabbitPlayer";
-        label_version.Text = "Version:";
-        label_webSite.Text = "WebSite:";
-        label_weChatGroup.Text = "WeChat Group:";
-      }
-      else
-      {
-        label_logo.Text = "兔子影音";
-        label_version.Text = "版本号:";
-        label_webSite.Text = "官方网站:";
-        label_weChatGroup.Text = "微信交流群:";
-      }
-      label_versionShow.Text = version;
-      this.Show();
-    }
-
     private void label_Close_Click(object sender, EventArgs e)
     {
       this.Close();
-    }
-
-    private void label_webSiteShow_Click(object sender, EventArgs e)
-    {
-      System.Diagnostics.Process.Start("http://rabbitplayer.com/");
     }
 
     private void label_Close_MouseEnter(object sender, EventArgs e)
@@ -67,6 +42,18 @@ namespace RPlayer
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
       }
       catch { }
+    }
+
+    private void FormFeedback_Shown(object sender, EventArgs e)
+    {
+      if (Archive.lang == "English")
+      {
+        label_guide.Text = "Scan WeChat to feedback please.";
+      }
+      else
+      {
+        label_guide.Text = "亲，扫我微信进行反馈！";
+      }
     }
   }
 }

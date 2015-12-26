@@ -46,6 +46,7 @@
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
       this.label_version = new System.Windows.Forms.Label();
+      this.label_feedback = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Play
@@ -269,6 +270,22 @@
       this.label_version.MouseEnter += new System.EventHandler(this.label_version_MouseEnter);
       this.label_version.MouseLeave += new System.EventHandler(this.label_version_MouseLeave);
       // 
+      // label_feedback
+      // 
+      this.label_feedback.AutoSize = true;
+      this.label_feedback.BackColor = System.Drawing.Color.Transparent;
+      this.label_feedback.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_feedback.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_feedback.ForeColor = System.Drawing.Color.White;
+      this.label_feedback.Location = new System.Drawing.Point(674, 13);
+      this.label_feedback.Name = "label_feedback";
+      this.label_feedback.Size = new System.Drawing.Size(61, 12);
+      this.label_feedback.TabIndex = 45;
+      this.label_feedback.Text = "feedback";
+      this.label_feedback.Click += new System.EventHandler(this.label_feedback_Click);
+      this.label_feedback.MouseEnter += new System.EventHandler(this.label_feedback_MouseEnter);
+      this.label_feedback.MouseLeave += new System.EventHandler(this.label_feedback_MouseLeave);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -277,6 +294,7 @@
       this.ClientSize = new System.Drawing.Size(915, 562);
       this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.label_playWnd);
+      this.Controls.Add(this.label_feedback);
       this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
       this.Controls.Add(this.colorSlider_volume);
@@ -325,6 +343,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label_logo;
         private System.Windows.Forms.Label label_version;
+        private System.Windows.Forms.Label label_feedback;
     }
 }
 

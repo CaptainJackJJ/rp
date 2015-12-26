@@ -50,6 +50,10 @@ namespace RPlayer
     {
       label_logo.Text = UiLang.rabbitPlayer;
       label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
+      label_feedback.Text = UiLang.labelFeedback;
+      label_feedback.Location =
+        new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
+            label_settings.Location.Y);
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -82,6 +86,9 @@ namespace RPlayer
               label_Min.Location.Y);
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4 + 10,
+              label_settings.Location.Y);
+      label_feedback.Location =
+          new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
               label_settings.Location.Y);
       label_curTime.Location =
          new Point(label_settings.Location.X - label_curTime.Width - 5,label_curTime.Location.Y);
@@ -206,9 +213,15 @@ namespace RPlayer
     {
       label_curTime.Text = "";
       if (bShow)
+      {
+        label_feedback.Visible = false;
         timer1.Start();
+      }
       else
+      {
         timer1.Stop();
+        label_feedback.Visible = true;
+      }
     }
 
     private void timer1_Tick(object sender, EventArgs e)
@@ -245,6 +258,22 @@ namespace RPlayer
     private void label_version_MouseLeave(object sender, EventArgs e)
     {
       label_version.ForeColor = Color.White;
+    }
+
+    private void label_feedback_Click(object sender, EventArgs e)
+    {
+      FormFeedback f = new FormFeedback();
+      f.Show();
+    }
+
+    private void label_feedback_MouseEnter(object sender, EventArgs e)
+    {
+      label_feedback.ForeColor = Color.DodgerBlue;
+    }
+
+    private void label_feedback_MouseLeave(object sender, EventArgs e)
+    {
+      label_feedback.ForeColor = Color.White;
     }
   }
 }

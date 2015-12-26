@@ -55,6 +55,7 @@ namespace RPlayer
     public static string labelSubtitleBold;
     public static string labelSubtitleItalic;
     public static string labelSubtitleOverAssOrig;
+    public static string textBoxSubNotice;
 
     // PanelPlist
     public static string checkBoxUpdatePlistAfterLaunch;
@@ -157,7 +158,7 @@ namespace RPlayer
 
       uiLangLabel = "UI Language";
       labelSnapSavePath = "Snapshot Save Path";
-      buttonSetAsDefaultPlayer = "Always associate all video files";
+      buttonSetAsDefaultPlayer = "Set as default player";
       btnRestoreFactory = "Restore factory settings";
 
       labelSubtitleSize = "Size";
@@ -167,6 +168,7 @@ namespace RPlayer
       labelSubtitleBold = "Bold";
       labelSubtitleItalic = "Italic";
       labelSubtitleOverAssOrig = "Over Ass Original Settings";
+      textBoxSubNotice = "Notice: picture subtitle can not be adjusted";
 
       checkBoxUpdatePlistAfterLaunch = "Auto update playlist after player launch";
       checkBoxAutoAddFolderToPlist = "Auto add playing folder to playlist";
@@ -264,6 +266,7 @@ Are you still want to delete it?";
       labelSubtitleBold = "粗体";
       labelSubtitleItalic = "斜体";
       labelSubtitleOverAssOrig = "替换掉Ass字幕的原始设置";
+      textBoxSubNotice = "小提示：图形字幕无法被调整";
 
       checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
       checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";

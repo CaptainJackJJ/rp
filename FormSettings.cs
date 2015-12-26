@@ -95,6 +95,8 @@ namespace RPlayer
           checkBox_overAssOrig.Text = UiLang.labelSubtitleOverAssOrig;
           button_setAsDefaultPlayer.Text = UiLang.buttonSetAsDefaultPlayer;
           button_restoreFactory.Text = UiLang.btnRestoreFactory;
+
+          textBox_notice.Text = UiLang.textBoxSubNotice;
         }
 
         public void ShowForm(enumSettingFormType SettingType)

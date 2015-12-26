@@ -37,6 +37,7 @@
       this.label_subtitle = new System.Windows.Forms.Label();
       this.label_AV = new System.Windows.Forms.Label();
       this.panel_general = new System.Windows.Forms.Panel();
+      this.button_setAsDefaultPlayer = new System.Windows.Forms.Button();
       this.button_restoreFactory = new System.Windows.Forms.Button();
       this.button_snapSavePath = new System.Windows.Forms.Button();
       this.textBox_snapSavePath = new System.Windows.Forms.TextBox();
@@ -60,7 +61,7 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
-      this.button_setAsDefaultPlayer = new System.Windows.Forms.Button();
+      this.textBox_notice = new System.Windows.Forms.TextBox();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -180,6 +181,22 @@
       this.panel_general.Size = new System.Drawing.Size(422, 495);
       this.panel_general.TabIndex = 15;
       // 
+      // button_setAsDefaultPlayer
+      // 
+      this.button_setAsDefaultPlayer.BackColor = System.Drawing.Color.DimGray;
+      this.button_setAsDefaultPlayer.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_setAsDefaultPlayer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_setAsDefaultPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_setAsDefaultPlayer.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_setAsDefaultPlayer.ForeColor = System.Drawing.Color.White;
+      this.button_setAsDefaultPlayer.Location = new System.Drawing.Point(25, 116);
+      this.button_setAsDefaultPlayer.Name = "button_setAsDefaultPlayer";
+      this.button_setAsDefaultPlayer.Size = new System.Drawing.Size(176, 24);
+      this.button_setAsDefaultPlayer.TabIndex = 38;
+      this.button_setAsDefaultPlayer.Text = "Set As Default Player";
+      this.button_setAsDefaultPlayer.UseVisualStyleBackColor = false;
+      this.button_setAsDefaultPlayer.Click += new System.EventHandler(this.button_setAsDefaultPlayer_Click);
+      // 
       // button_restoreFactory
       // 
       this.button_restoreFactory.BackColor = System.Drawing.Color.DimGray;
@@ -262,6 +279,7 @@
       // 
       // panel_subtitle
       // 
+      this.panel_subtitle.Controls.Add(this.textBox_notice);
       this.panel_subtitle.Controls.Add(this.button_borderColor);
       this.panel_subtitle.Controls.Add(this.button_fontColor);
       this.panel_subtitle.Controls.Add(this.checkBox_italic);
@@ -507,21 +525,21 @@
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
       // 
-      // button_setAsDefaultPlayer
+      // textBox_notice
       // 
-      this.button_setAsDefaultPlayer.BackColor = System.Drawing.Color.DimGray;
-      this.button_setAsDefaultPlayer.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_setAsDefaultPlayer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-      this.button_setAsDefaultPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_setAsDefaultPlayer.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_setAsDefaultPlayer.ForeColor = System.Drawing.Color.White;
-      this.button_setAsDefaultPlayer.Location = new System.Drawing.Point(25, 116);
-      this.button_setAsDefaultPlayer.Name = "button_setAsDefaultPlayer";
-      this.button_setAsDefaultPlayer.Size = new System.Drawing.Size(176, 24);
-      this.button_setAsDefaultPlayer.TabIndex = 38;
-      this.button_setAsDefaultPlayer.Text = "Set As Default Player";
-      this.button_setAsDefaultPlayer.UseVisualStyleBackColor = false;
-      this.button_setAsDefaultPlayer.Click += new System.EventHandler(this.button_setAsDefaultPlayer_Click);
+      this.textBox_notice.BackColor = System.Drawing.SystemColors.WindowFrame;
+      this.textBox_notice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.textBox_notice.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.textBox_notice.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.textBox_notice.ForeColor = System.Drawing.Color.White;
+      this.textBox_notice.Location = new System.Drawing.Point(25, 460);
+      this.textBox_notice.Multiline = true;
+      this.textBox_notice.Name = "textBox_notice";
+      this.textBox_notice.ReadOnly = true;
+      this.textBox_notice.Size = new System.Drawing.Size(368, 22);
+      this.textBox_notice.TabIndex = 45;
+      this.textBox_notice.TabStop = false;
+      this.textBox_notice.Text = "Notice: picture subtitle can not be adjusted";
       // 
       // FormSettings
       // 
@@ -592,5 +610,6 @@
         private System.Windows.Forms.CheckBox checkBox_overAssOrig;
         private System.Windows.Forms.Button button_restoreFactory;
         private System.Windows.Forms.Button button_setAsDefaultPlayer;
+        private System.Windows.Forms.TextBox textBox_notice;
     }
 }

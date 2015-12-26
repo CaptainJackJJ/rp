@@ -36,7 +36,7 @@ namespace RPlayer
         {
           label_changeLog.Text = "版本历史";
 
-          textBox_thanks.Text =
+          richTextBox_thanks.Text =
 @"
 谢谢您陪伴着兔子影音成长。
 
@@ -49,14 +49,14 @@ namespace RPlayer
           {
             using (StreamReader sr = new StreamReader("changeLogCh.txt"))
             {
-              textBox_changeLog.Text = sr.ReadToEnd();
+              richTextBox_changeLog.Text = sr.ReadToEnd();
             }
           }
           else
           {
             using (StreamReader sr = new StreamReader("changeLogEng.txt"))
             {
-              textBox_changeLog.Text = sr.ReadToEnd();
+              richTextBox_changeLog.Text = sr.ReadToEnd();
             }
           }
 

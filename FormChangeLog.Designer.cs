@@ -32,9 +32,9 @@
       this.label_settingsClose = new System.Windows.Forms.Label();
       this.panel_topBar = new System.Windows.Forms.Panel();
       this.label_topBarLine = new System.Windows.Forms.Label();
-      this.textBox_thanks = new System.Windows.Forms.TextBox();
-      this.textBox_changeLog = new System.Windows.Forms.TextBox();
       this.label_tree = new System.Windows.Forms.Label();
+      this.richTextBox_changeLog = new System.Windows.Forms.RichTextBox();
+      this.richTextBox_thanks = new System.Windows.Forms.RichTextBox();
       this.panel_topBar.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -84,41 +84,6 @@
       this.label_topBarLine.Size = new System.Drawing.Size(503, 1);
       this.label_topBarLine.TabIndex = 4;
       // 
-      // textBox_thanks
-      // 
-      this.textBox_thanks.BackColor = System.Drawing.SystemColors.WindowFrame;
-      this.textBox_thanks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.textBox_thanks.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.textBox_thanks.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.textBox_thanks.ForeColor = System.Drawing.Color.White;
-      this.textBox_thanks.Location = new System.Drawing.Point(214, 62);
-      this.textBox_thanks.Multiline = true;
-      this.textBox_thanks.Name = "textBox_thanks";
-      this.textBox_thanks.ReadOnly = true;
-      this.textBox_thanks.Size = new System.Drawing.Size(289, 109);
-      this.textBox_thanks.TabIndex = 44;
-      this.textBox_thanks.TabStop = false;
-      this.textBox_thanks.Text = "Thank you for accompanying RabbitPlayer grows up.\r\n\r\nI am working hard to fix bug" +
-    " and add new feature to bring you better media player.\r\nI will never stop.";
-      // 
-      // textBox_changeLog
-      // 
-      this.textBox_changeLog.BackColor = System.Drawing.SystemColors.WindowFrame;
-      this.textBox_changeLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.textBox_changeLog.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.textBox_changeLog.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.textBox_changeLog.ForeColor = System.Drawing.Color.White;
-      this.textBox_changeLog.Location = new System.Drawing.Point(9, 191);
-      this.textBox_changeLog.Multiline = true;
-      this.textBox_changeLog.Name = "textBox_changeLog";
-      this.textBox_changeLog.ReadOnly = true;
-      this.textBox_changeLog.Size = new System.Drawing.Size(494, 336);
-      this.textBox_changeLog.TabIndex = 44;
-      this.textBox_changeLog.TabStop = false;
-      this.textBox_changeLog.Text = "1.1.5 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +
-    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n\r\n1.1.2 yyyyyyyyyyyyyyyyyyyyyyyyyyy" +
-    "yyyyyyyyyyyyyyyyyyyyyyy";
-      // 
       // label_tree
       // 
       this.label_tree.BackColor = System.Drawing.Color.Transparent;
@@ -130,15 +95,46 @@
       this.label_tree.Size = new System.Drawing.Size(200, 133);
       this.label_tree.TabIndex = 0;
       // 
+      // richTextBox_changeLog
+      // 
+      this.richTextBox_changeLog.BackColor = System.Drawing.SystemColors.WindowFrame;
+      this.richTextBox_changeLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.richTextBox_changeLog.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.richTextBox_changeLog.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.richTextBox_changeLog.ForeColor = System.Drawing.Color.White;
+      this.richTextBox_changeLog.Location = new System.Drawing.Point(9, 191);
+      this.richTextBox_changeLog.Name = "richTextBox_changeLog";
+      this.richTextBox_changeLog.ReadOnly = true;
+      this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+      this.richTextBox_changeLog.Size = new System.Drawing.Size(494, 336);
+      this.richTextBox_changeLog.TabIndex = 45;
+      this.richTextBox_changeLog.Text = "";
+      // 
+      // richTextBox_thanks
+      // 
+      this.richTextBox_thanks.BackColor = System.Drawing.SystemColors.WindowFrame;
+      this.richTextBox_thanks.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.richTextBox_thanks.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.richTextBox_thanks.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.richTextBox_thanks.ForeColor = System.Drawing.Color.White;
+      this.richTextBox_thanks.Location = new System.Drawing.Point(208, 46);
+      this.richTextBox_thanks.Name = "richTextBox_thanks";
+      this.richTextBox_thanks.ReadOnly = true;
+      this.richTextBox_thanks.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+      this.richTextBox_thanks.Size = new System.Drawing.Size(295, 138);
+      this.richTextBox_thanks.TabIndex = 45;
+      this.richTextBox_thanks.Text = "Thank you for accompanying RabbitPlayer grows up.\n\nI am working hard to fix bug a" +
+    "nd add new feature to bring you better media player.\nI will never stop.";
+      // 
       // FormChangeLog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(503, 539);
+      this.Controls.Add(this.richTextBox_thanks);
+      this.Controls.Add(this.richTextBox_changeLog);
       this.Controls.Add(this.label_tree);
-      this.Controls.Add(this.textBox_changeLog);
-      this.Controls.Add(this.textBox_thanks);
       this.Controls.Add(this.label_topBarLine);
       this.Controls.Add(this.panel_topBar);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -148,7 +144,6 @@
       this.panel_topBar.ResumeLayout(false);
       this.panel_topBar.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 
@@ -158,8 +153,8 @@
         private System.Windows.Forms.Label label_settingsClose;
         private System.Windows.Forms.Panel panel_topBar;
         private System.Windows.Forms.Label label_topBarLine;
-        private System.Windows.Forms.TextBox textBox_thanks;
-        private System.Windows.Forms.TextBox textBox_changeLog;
         private System.Windows.Forms.Label label_tree;
+        private System.Windows.Forms.RichTextBox richTextBox_changeLog;
+        private System.Windows.Forms.RichTextBox richTextBox_thanks;
     }
 }

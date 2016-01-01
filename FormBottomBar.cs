@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
-using RpCoreWrapper;
+using CoreWrapper;
 using MB.Controls;
 
 namespace RPlayer
@@ -144,7 +144,7 @@ namespace RPlayer
       }
       ConfigByAchive();
 
-      m_nTotalTime = (int)RpCore.GetTotalTime();
+      m_nTotalTime = (int)Core.GetTotalTime();
       if (m_nTotalTime == 0)
         m_nTotalTime = 1;
       colorSlider_playProcess.Maximum = (int)m_nTotalTime;
@@ -181,7 +181,7 @@ namespace RPlayer
     {
       if (!m_bConstructed)
         return;
-      double nCurTime = RpCore.GetCurTime();
+      double nCurTime = Core.GetCurTime();
       if ((int)nCurTime <= colorSlider_playProcess.Maximum && (int)nCurTime >= 0)
         colorSlider_playProcess.Value = (int)nCurTime;
 
@@ -278,7 +278,7 @@ namespace RPlayer
       if (IsSameSpeed(fSpeed,m_fSpeed))
         return;
 
-      RpCore.ToFFRW(fSpeed);
+      Core.ToFFRW(fSpeed);
 
       if (IsSameSpeed(fSpeed,1.0f))
       {
@@ -297,7 +297,7 @@ namespace RPlayer
         }
         catch
         {
-          RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+          Core.WriteLog(Core.ELogType.error, "Speed control form is closed by antivirus");
           MessageBox.Show(UiLang.msgWndClosedBySfApp);
         }
 
@@ -447,7 +447,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed control form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -459,7 +459,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed control form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed control form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -535,7 +535,7 @@ namespace RPlayer
 
       timer_updateProcessBar.Enabled = false;
       m_bSeekDone = false;
-      RpCore.Seek(time, false);
+      Core.Seek(time, false);
       m_bProcessBarMouseUp = false;
     }
 
@@ -546,7 +546,7 @@ namespace RPlayer
         m_bDragSeeking = false;
         m_bProcessBarMouseUp = true;
         m_bSeekDone = false;
-        RpCore.Seek(colorSlider_playProcess.Value, false);
+        Core.Seek(colorSlider_playProcess.Value, false);
       }
       else
       {
@@ -577,7 +577,7 @@ namespace RPlayer
       {
         m_bDragSeeking = true;
         m_bSeekDone = false;
-        RpCore.Seek(nCurTime, false);
+        Core.Seek(nCurTime, false);
       }
     }
 
@@ -684,13 +684,13 @@ namespace RPlayer
         }
       }
       catch { }
-      RpCore.SetMute(Archive.mute);
+      Core.SetMute(Archive.mute);
     }
 
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
     {
       Archive.volume = colorSlider_volume.Value;
-      RpCore.SetVolume((float)(Archive.volume * 0.01));
+      Core.SetVolume((float)(Archive.volume * 0.01));
     }
 
     private void FormBottomBar_Move(object sender, EventArgs e)

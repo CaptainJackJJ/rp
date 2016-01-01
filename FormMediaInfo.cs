@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RpCoreWrapper;
+using CoreWrapper;
 using System.IO;
 
 namespace RPlayer
@@ -31,7 +31,7 @@ namespace RPlayer
 
         textBox_url.Text = url;
 
-        TimeSpan t = TimeSpan.FromSeconds(RpCore.GetTotalTime());
+        TimeSpan t = TimeSpan.FromSeconds(Core.GetTotalTime());
         string strText = string.Format("{0:D2} : {1:D2} : {2:D2}",t.Hours,t.Minutes,t.Seconds);
         label_durationShow.Text = strText;
 
@@ -50,7 +50,7 @@ namespace RPlayer
         label_creationTimeShow.Text = dir.CreationTime.ToString();
 
         string strInfoDetail;
-        VideoStreamInfo vInfo = RpCore.GetVideoStreamInfo();
+        VideoStreamInfo vInfo = Core.GetVideoStreamInfo();
         strInfoDetail =
 UiLang.mediaInfoVideo +
 Environment.NewLine +
@@ -66,9 +66,9 @@ UiLang.mediaInfoBitrate + (vInfo.bitrate/ 1024) +" kbps" +
 Environment.NewLine +
 Environment.NewLine;
 
-        for (int i = 0; i < RpCore.GetAudioCount(); i++)
+        for (int i = 0; i < Core.GetAudioCount(); i++)
         {
-          AudioStreamInfo aInfo = RpCore.GetAudioStreamInfo(i);
+          AudioStreamInfo aInfo = Core.GetAudioStreamInfo(i);
           strInfoDetail += 
 UiLang.mediaInfoAudio + (i + 1) +
 Environment.NewLine +

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RpCoreWrapper;
+using CoreWrapper;
 
 namespace RPlayer
 {
@@ -324,31 +324,31 @@ namespace RPlayer
         private void colorSlider_fontSize_ValueChanged(object sender, EventArgs e)
         {
           Archive.fontSize = colorSlider_fontSize.Value;
-          RpCore.SetSubtitleSize(Archive.fontSize);
+          Core.SetSubtitleSize(Archive.fontSize);
         }
 
         private void colorSlider_subtitlePos_ValueChanged(object sender, EventArgs e)
         {
           Archive.fontPos = colorSlider_subtitlePos.Value;
-          RpCore.SetSubtitlePos(Archive.fontPos);
+          Core.SetSubtitlePos(Archive.fontPos);
         }
 
         private void checkBox_bold_CheckedChanged(object sender, EventArgs e)
         {
           Archive.bold = checkBox_bold.Checked;
-          RpCore.SetSubtitleBold(Archive.bold);
+          Core.SetSubtitleBold(Archive.bold);
         }
 
         private void checkBox_overAssOrig_CheckedChanged(object sender, EventArgs e)
         {
           Archive.overAssOrig = checkBox_overAssOrig.Checked;
-          RpCore.SetOverAssOrig(Archive.overAssOrig);
+          Core.SetOverAssOrig(Archive.overAssOrig);
         }
 
         private void checkBox_italic_CheckedChanged(object sender, EventArgs e)
         {
           Archive.italic = checkBox_italic.Checked;
-          RpCore.SetSubtitleItalic(Archive.italic);
+          Core.SetSubtitleItalic(Archive.italic);
         }
 
         private void button_fontColor_Click(object sender, EventArgs e)
@@ -364,7 +364,7 @@ namespace RPlayer
           {
             button_fontColor.ForeColor = MyDialog.Color;
             Archive.fontColor = MyDialog.Color.ToArgb();
-            RpCore.SetSubtitleColor(Archive.fontColor);
+            Core.SetSubtitleColor(Archive.fontColor);
           }
         }
 
@@ -381,7 +381,7 @@ namespace RPlayer
           {
             button_borderColor.ForeColor = MyDialog.Color;
             Archive.fontBorderColor = MyDialog.Color.ToArgb();
-            RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
+            Core.SetSubtitleBorderColor(Archive.fontBorderColor);
           }
         }
 

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RpCoreWrapper;
+using CoreWrapper;
 using System.IO;
 using Microsoft.Win32;
 using System.Threading;
@@ -91,6 +91,7 @@ namespace RPlayer
     public string m_strAppVersion;
 
     public string m_tempPath;
+    public string m_CoreTempPath;
     private Thread m_threadDoSomething;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
@@ -105,6 +106,8 @@ namespace RPlayer
     {
       m_tempPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + m_strAppName;
       Directory.CreateDirectory(m_tempPath);
+      m_CoreTempPath = m_tempPath + "\\CoreTemp";
+      Directory.CreateDirectory(m_CoreTempPath);
 
       //------------- only run one instance
       bool bRunning = false;
@@ -218,10 +221,10 @@ namespace RPlayer
         m_threadDoSomething = null;
       }
 
-      if (RpCore.IsPlaying())
+      if (Core.IsPlaying())
         StopPlay();
-      RpCore.UninitPlayer();
-      RpCore.UnLoadLib();
+      Core.UninitPlayer();
+      Core.UnLoadLib();
 
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
@@ -254,14 +257,14 @@ namespace RPlayer
       m_rpCallback = new RpCallback(this);
       try
       {
-        RpCore.LoadLib(Application.StartupPath, m_tempPath + "\\", m_rpCallback);
+        Core.LoadLib(Application.StartupPath, m_tempPath + "\\",m_CoreTempPath + "\\", m_rpCallback);
       }
       catch(System.AccessViolationException)
       {
         return; // To avoid crash when user close app after lauch immediately
       }
-      RpCore.WriteLog(RpCore.ELogType.notice, "****************** UI version: " + m_strUiVersion);
-      RpCore.WriteLog(RpCore.ELogType.notice, "****************** App version: " + m_strAppVersion);
+      Core.WriteLog(Core.ELogType.notice, "****************** UI version: " + m_strUiVersion);
+      Core.WriteLog(Core.ELogType.notice, "****************** App version: " + m_strAppVersion);
       
       Init(true);
 
@@ -300,7 +303,7 @@ namespace RPlayer
       }
       else
       {
-        RpCore.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
+        Core.InitPlayer((int)label_playWnd.Handle, label_playWnd.ClientSize.Width, label_playWnd.ClientSize.Height);
         m_bPlayerInited = true;
 
         ConfigRpcoreByArchive();
@@ -453,14 +456,14 @@ namespace RPlayer
 
     private void ConfigRpcoreByArchive()
     {
-      RpCore.SetMute(Archive.mute);
-      RpCore.SetOverAssOrig(Archive.overAssOrig);
-      RpCore.SetSubtitleBold(Archive.bold);
-      RpCore.SetSubtitleBorderColor(Archive.fontBorderColor);
-      RpCore.SetSubtitleColor(Archive.fontColor);
-      RpCore.SetSubtitleItalic(Archive.italic);
-      RpCore.SetSubtitlePos(Archive.fontPos);
-      RpCore.SetSubtitleSize(Archive.fontSize);
+      Core.SetMute(Archive.mute);
+      Core.SetOverAssOrig(Archive.overAssOrig);
+      Core.SetSubtitleBold(Archive.bold);
+      Core.SetSubtitleBorderColor(Archive.fontBorderColor);
+      Core.SetSubtitleColor(Archive.fontColor);
+      Core.SetSubtitleItalic(Archive.italic);
+      Core.SetSubtitlePos(Archive.fontPos);
+      Core.SetSubtitleSize(Archive.fontSize);
     }
 
     public void SetAllUiLange()
@@ -562,7 +565,7 @@ namespace RPlayer
         + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +
         DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString() + ".jpg";
 
-      RpCore.CatchSnapshot(saveUrl);
+      Core.CatchSnapshot(saveUrl);
     }
 
     // To mark selected items
@@ -570,7 +573,7 @@ namespace RPlayer
     {
       if (m_toolStripMenuItem_audios.DropDownItems.Count > 0)
       {
-        int index = RpCore.GetCurrentAudio();
+        int index = Core.GetCurrentAudio();
         if (index < 0)
           return;
 
@@ -590,10 +593,10 @@ namespace RPlayer
       int count = m_toolStripMenuItem_subtitles.DropDownItems.Count;
       if (count > 0)
       {
-        int index = RpCore.GetCurrentSubtitle();
+        int index = Core.GetCurrentSubtitle();
 
         ToolStripMenuItem subtitleItem = (ToolStripMenuItem)m_toolStripMenuItem_subtitles.DropDownItems[m_nSubtitleHideItemIndex];
-        if (RpCore.GetSubtitleVisible())
+        if (Core.GetSubtitleVisible())
           subtitleItem.Checked = false;
         else
           subtitleItem.Checked = true;
@@ -616,7 +619,7 @@ namespace RPlayer
     {
       if (m_toolStripMenuItem_chapters.DropDownItems.Count > 0)
       {
-        int number = RpCore.GetCurrentChapter();
+        int number = Core.GetCurrentChapter();
 
         foreach (ToolStripMenuItem item in m_toolStripMenuItem_chapters.DropDownItems)
         {
@@ -636,7 +639,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -650,7 +653,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -663,14 +666,14 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
 
     public void TriggerVolumeOnMouseWheel(MouseEventArgs e)
     {
-      if (RpCore.IsPlaying())
+      if (Core.IsPlaying())
         m_formBottomBar.TriggerVolumeOnMouseWheel(e);
       else
         colorSlider_volume.TriggerOnMouseWheel(e);
@@ -683,7 +686,7 @@ namespace RPlayer
 
     public void UpDownVolume(bool bUp)
     {
-      if (RpCore.IsPlaying())
+      if (Core.IsPlaying())
       {
         m_formBottomBar.UpDownVolume(bUp);
       }
@@ -793,7 +796,7 @@ namespace RPlayer
         if (Archive.plistShowingInNoneDesktop)
           playWndWidth -= (m_formPlaylist.Width + 5);
         label_playWnd.Size = new Size(playWndWidth, playWndHeight);
-        RpCore.PlayWndResized(playWndWidth, playWndHeight);
+        Core.PlayWndResized(playWndWidth, playWndHeight);
 
         label_openFile.Location =
           new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - label_openFile.Width * 0.5),
@@ -1193,7 +1196,7 @@ namespace RPlayer
         }
       }
       catch { }
-      RpCore.SetMute(Archive.mute);
+      Core.SetMute(Archive.mute);
     }
 
     private void label_playlist_MouseEnter(object sender, EventArgs e)
@@ -1232,7 +1235,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "Speed form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "Speed form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -1273,7 +1276,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "settings form is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "settings form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
     }
@@ -1346,7 +1349,7 @@ namespace RPlayer
         this.WindowState = FormWindowState.Maximized;
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
-        RpCore.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
+        Core.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
         m_formBottomBar.Hide();
         m_formBottomBar.ShowHidePlaylistLabel(false);
         m_formTopBar.ShowCurrentTime(true);
@@ -1399,7 +1402,7 @@ namespace RPlayer
 
     private void label_playWnd_DoubleClick(object sender, EventArgs e)
     {
-      if(RpCore.IsPlaying())
+      if(Core.IsPlaying())
         SwitchDesktopMode(true,false);
     }
 
@@ -1457,7 +1460,7 @@ namespace RPlayer
     private void label_playWnd_DragDrop(object sender, DragEventArgs e)
     {
       string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-      if (RpCore.IsPlaying())
+      if (Core.IsPlaying())
       {
         StopPlay();
         StartPlay(FileList[0]);
@@ -1581,7 +1584,7 @@ namespace RPlayer
       }
       catch
       {
-        RpCore.WriteLog(RpCore.ELogType.error, "sub forms is closed by antivirus");
+        Core.WriteLog(Core.ELogType.error, "sub forms is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
    }
@@ -1605,7 +1608,7 @@ namespace RPlayer
         }
         catch
         {
-          RpCore.WriteLog(RpCore.ELogType.error, "top bottom form is closed by antivirus");
+          Core.WriteLog(Core.ELogType.error, "top bottom form is closed by antivirus");
           MessageBox.Show(UiLang.msgWndClosedBySfApp);
         }
 
@@ -1621,7 +1624,7 @@ namespace RPlayer
         }
         catch
         {
-          RpCore.WriteLog(RpCore.ELogType.error, "top bottom form is closed by antivirus");
+          Core.WriteLog(Core.ELogType.error, "top bottom form is closed by antivirus");
           MessageBox.Show(UiLang.msgWndClosedBySfApp);
         }
 
@@ -1682,19 +1685,19 @@ namespace RPlayer
     private void SubtitleItemClick(object sender, EventArgs e)
     {
       ToolStripMenuItem item = sender as ToolStripMenuItem;
-      RpCore.SwitchSubtitle((int)item.Tag);
+      Core.SwitchSubtitle((int)item.Tag);
     }
 
     private void AudioItemClick(object sender, EventArgs e)
     {
       ToolStripMenuItem item = sender as ToolStripMenuItem;
-      RpCore.SwitchAudio((int)item.Tag);
+      Core.SwitchAudio((int)item.Tag);
     }
 
     private void ChapterItemClick(object sender, EventArgs e)
     {
       ToolStripMenuItem item = sender as ToolStripMenuItem;
-      RpCore.SwitchChapter((int)item.Tag);
+      Core.SwitchChapter((int)item.Tag);
     }
 
     private void AddSubtitleItemClick(object sender, EventArgs e)
@@ -1707,10 +1710,10 @@ namespace RPlayer
 
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
-        int index = RpCore.AddSubtitle(openFileDialog1.FileName);
+        int index = Core.AddSubtitle(openFileDialog1.FileName);
         if (index >= 0)
         {
-          RpCore.SwitchSubtitle(index);
+          Core.SwitchSubtitle(index);
 
           ToolStripMenuItem item = new ToolStripMenuItem();
           Uri uri = new Uri(openFileDialog1.FileName);
@@ -1730,7 +1733,7 @@ namespace RPlayer
         m_bSubtitleVisible = false;
       else
         m_bSubtitleVisible = true;
-      RpCore.SetSubtitleVisible(m_bSubtitleVisible);
+      Core.SetSubtitleVisible(m_bSubtitleVisible);
     }
 
     private void ClearContextMenuDynamically()
@@ -1765,11 +1768,11 @@ namespace RPlayer
       separator.Height = 1;
       m_nSubtitleSeperatorItemIndex = m_toolStripMenuItem_subtitles.DropDownItems.Add(separator);      
 
-      int amount = RpCore.GetSubtitleCount();
+      int amount = Core.GetSubtitleCount();
       for(int i = 0; i < amount;i++)
       {
         item = new ToolStripMenuItem();
-        SubtitleStreamInfo info = RpCore.GetSubtitleStreamInfo(i);
+        SubtitleStreamInfo info = Core.GetSubtitleStreamInfo(i);
         if (info.bExternalSub)
         {
           Uri uri = new Uri(info.filename);
@@ -1785,11 +1788,11 @@ namespace RPlayer
       }
       
       // audios
-      amount = RpCore.GetAudioCount();
+      amount = Core.GetAudioCount();
       for (int i = 0; i < amount; i++)
       {
         item = new ToolStripMenuItem();
-        AudioStreamInfo info = RpCore.GetAudioStreamInfo(i);
+        AudioStreamInfo info = Core.GetAudioStreamInfo(i);
         item.Text = info.language + " " + info.name;
         item.Tag = i;
         item.Click += AudioItemClick;
@@ -1799,7 +1802,7 @@ namespace RPlayer
       }
 
       // chapters
-      amount = RpCore.GetChapterCount();
+      amount = Core.GetChapterCount();
       for (int i = 1; i < amount+1; i++)
       {
         item = new ToolStripMenuItem();
@@ -1824,7 +1827,7 @@ namespace RPlayer
 
       SwitchPlayingForm(true);
 
-      if (RpCore.IsPlaying())
+      if (Core.IsPlaying())
         StopPlay();
 
       m_bStopPlayCalled = false;
@@ -1853,22 +1856,22 @@ namespace RPlayer
         }
       }
 
-      if (!RpCore.Play(url, nStartTime,nPreSeletedAudioIndex,nPreSeletedSubtitleIndex))
+      if (!Core.Play(url, nStartTime,nPreSeletedAudioIndex,nPreSeletedSubtitleIndex))
       {
         SwitchPlayingForm(false);
         return false;
       }
       m_bIsPlaying = true;
 
-      if(RpCore.GetSubtitleVisible() != bPreSeletedSubtitleVisible)
+      if(Core.GetSubtitleVisible() != bPreSeletedSubtitleVisible)
       {
-        RpCore.SetSubtitleVisible(bPreSeletedSubtitleVisible);
+        Core.SetSubtitleVisible(bPreSeletedSubtitleVisible);
       }
 
       m_strCurPlayingUrl = url;
       m_formBottomBar.StartPlay();
 
-      m_nFileDuration = RpCore.GetTotalTime();
+      m_nFileDuration = Core.GetTotalTime();
 
       Uri uri = new Uri(url);
       string strCurrentFileName = System.IO.Path.GetFileName(uri.LocalPath);
@@ -1920,11 +1923,11 @@ namespace RPlayer
         }
       }
       double curPlayingTime;
-      if (!RpCore.IsPlaying()) // play ended not be stoped from ui.
+      if (!Core.IsPlaying()) // play ended not be stoped from ui.
         curPlayingTime = 0;
       else
       {
-        curPlayingTime = RpCore.GetCurTime();
+        curPlayingTime = Core.GetCurTime();
         if (m_nFileDuration - curPlayingTime < 60) // Just left 1 minute, so still is finished playback
           curPlayingTime = 0;
       }
@@ -1935,17 +1938,17 @@ namespace RPlayer
         newItem.url = m_strCurPlayingUrl;
         newItem.timeWatched = curPlayingTime;
         newItem.duration = m_nFileDuration;
-        newItem.audioIndex = RpCore.GetCurrentAudio();
-        newItem.subtitleIndex = RpCore.GetCurrentSubtitle();
-        newItem.subtitleVisible = RpCore.GetSubtitleVisible();
+        newItem.audioIndex = Core.GetCurrentAudio();
+        newItem.subtitleIndex = Core.GetCurrentSubtitle();
+        newItem.subtitleVisible = Core.GetSubtitleVisible();
         Archive.histroy.Add(newItem);
       }
       else
       {
         item.timeWatched = curPlayingTime;
-        item.audioIndex = RpCore.GetCurrentAudio();
-        item.subtitleIndex = RpCore.GetCurrentSubtitle();
-        item.subtitleVisible = RpCore.GetSubtitleVisible();
+        item.audioIndex = Core.GetCurrentAudio();
+        item.subtitleIndex = Core.GetCurrentSubtitle();
+        item.subtitleVisible = Core.GetSubtitleVisible();
         if (index != Archive.histroy.Count - 1) // url is in histroy, but not the last one
         {
           Archive.histroy.Remove(item);
@@ -1971,7 +1974,7 @@ namespace RPlayer
 
       m_bStopPlayCalled = true;
       m_formBottomBar.StopPlay();
-      RpCore.Stop();
+      Core.Stop();
       m_bIsPlaying = false;
       ClearContextMenuDynamically();
 
@@ -1995,7 +1998,7 @@ namespace RPlayer
     {
       if(file == m_curPlistFile)
       {
-        if (RpCore.IsPlaying())
+        if (Core.IsPlaying())
         {
           StopPlay();
           SwitchPlayingForm(false);
@@ -2010,7 +2013,7 @@ namespace RPlayer
     private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
     {
       Archive.volume = colorSlider_volume.Value;
-      RpCore.SetVolume((float)(Archive.volume * 0.01));
+      Core.SetVolume((float)(Archive.volume * 0.01));
     }
 
     private void timer1_Tick(object sender, EventArgs e)
@@ -2067,7 +2070,7 @@ namespace RPlayer
 
   }
 
-  public class RpCallback : IRpCallback
+  public class RpCallback : ICoreCallback
   {
     private MainForm m_mainForm;
     public RpCallback(MainForm mainForm) { m_mainForm = mainForm; }

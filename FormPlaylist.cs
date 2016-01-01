@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using RpCoreWrapper;
+using CoreWrapper;
 
 namespace RPlayer
 {
@@ -270,7 +270,7 @@ namespace RPlayer
         file.timeWatched = 0;
         file.playState = PlaylistFile.enumPlayState.notPlayed;
         MediaInfo info = new MediaInfo();
-        info = RpCore.GetMediaInfo(fileUrl);
+        info = Core.GetMediaInfo(fileUrl);
         file.duration = info.nDuration;
         file.creationTime = File.GetCreationTime(fileUrl).ToString();
         curPlistFolder.playlistFiles.Add(file);
@@ -794,7 +794,7 @@ namespace RPlayer
       PlaylistFile file = node.Tag as PlaylistFile;
       string url = file.url;
 
-      if(url == m_mainForm.m_strCurPlayingUrl && RpCore.IsPlaying())
+      if(url == m_mainForm.m_strCurPlayingUrl && Core.IsPlaying())
       {
         m_mainForm.StopPlay();
       }

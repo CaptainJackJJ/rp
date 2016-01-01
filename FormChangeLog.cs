@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RpCoreWrapper;
+using CoreWrapper;
 using System.IO;
 
 namespace RPlayer

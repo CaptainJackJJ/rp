@@ -105,7 +105,7 @@
       this.richTextBox_changeLog.Location = new System.Drawing.Point(9, 191);
       this.richTextBox_changeLog.Name = "richTextBox_changeLog";
       this.richTextBox_changeLog.ReadOnly = true;
-      this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+      this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
       this.richTextBox_changeLog.Size = new System.Drawing.Size(494, 336);
       this.richTextBox_changeLog.TabIndex = 45;
       this.richTextBox_changeLog.Text = "";

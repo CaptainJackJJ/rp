@@ -1757,6 +1757,48 @@ namespace RPlayer
       m_nSubtitleSeperatorItemIndex = -1;
     }
 
+    private void ConvertToChinese(ref string str)
+    {
+      switch (str)
+      {
+        case "Chinese":
+          {
+            str = "中文";
+            break;
+          }
+        case "English":
+          {
+            str = "英语";
+            break;
+          }
+        case "Japanese":
+          {
+            str = "日语";
+            break;
+          }
+        case "Franch":
+          {
+            str = "法语";
+            break;
+          }
+        case "German":
+          {
+            str = "德语";
+            break;
+          }
+        case "Korean":
+          {
+            str = "韩语";
+            break;
+          }
+        case "Russian":
+          {
+            str = "俄语";
+            break;
+          }
+      }
+    }
+
     private void FillContextMenuDynamically()
     {
       // subtitles
@@ -1790,7 +1832,14 @@ namespace RPlayer
           item.Text = System.IO.Path.GetFileName(uri.LocalPath);
         }
         else
-          item.Text = info.language;
+        {
+          string strLan = info.language;
+          if (Archive.lang == "中文")
+          {
+            ConvertToChinese(ref strLan);
+          }
+          item.Text = strLan;
+        }
         item.Tag = i;
         item.Click += SubtitleItemClick;
         item.BackColor = Archive.colorContextMenu;
@@ -1804,7 +1853,12 @@ namespace RPlayer
       {
         item = new ToolStripMenuItem();
         AudioStreamInfo info = Core.GetAudioStreamInfo(i);
-        item.Text = info.language + " " + info.name;
+        string strLan = info.language;
+        if (Archive.lang == "中文")
+        {
+          ConvertToChinese(ref strLan);
+        }
+        item.Text = strLan + " " + info.name;
         item.Tag = i;
         item.Click += AudioItemClick;
         item.BackColor = Archive.colorContextMenu;

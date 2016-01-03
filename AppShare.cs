@@ -10,13 +10,18 @@ namespace RPlayer
 {
   class AppShare
   {
-    static private string xmlFileName = "appShare.xml";
+    static readonly private string m_strXmlFileName = "appShare.xml";
+    static private string m_strXmlFileUrl;
+    static readonly private string m_strNodeNameRoot = "/appShare";
+    static readonly private string m_strNodeNameDownloadedSetupsSelfVersion = "downloadedSetupSelfVersion";
+    static readonly private string m_strNodeUrlDownloadedSetupSelfVersion 
+      = m_strNodeNameRoot + "/" + m_strNodeNameDownloadedSetupsSelfVersion;
 
-    static private void GetNode(XmlDocument xml,string xmlPath,string nodeUrl, out XmlNode node)
+    static private void GetNode(XmlDocument xml,string nodeUrl, out XmlNode node)
     {
       try
       {
-        xml.Load(xmlPath + "\\" + xmlFileName);
+        xml.Load(m_strXmlFileUrl);
       }
       catch{}
 
@@ -42,26 +47,55 @@ namespace RPlayer
           //nodeAppShare.AppendChild(node);
           //node.InnerText = "True";
         //}
-        if (nodeUrl == "/appShare/firstTimeRun")
+        else if (nodeUrl == "/appShare/firstTimeRun")
         {
           node = xml.CreateElement("firstTimeRun");
           nodeAppShare.AppendChild(node);
           node.InnerText = "True";
         }
-        if (nodeUrl == "/appShare/url")
+        else if (nodeUrl == "/appShare/url")
         {
           node = xml.CreateElement("url");
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "";
+        }
+        else if (nodeUrl == m_strNodeUrlDownloadedSetupSelfVersion)
+        {
+          node = xml.CreateElement(m_strNodeNameDownloadedSetupsSelfVersion);
           nodeAppShare.AppendChild(node);
           node.InnerText = "";
         }
       }
     }
 
-    static public bool SetGetFirstTimeRun(string xmlPath, bool bSet)
+    static public void SetGetDownloadedSetupSelfVersion(string xmlPath, bool bSet,ref string strVersion)
     {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
       XmlDocument xml = new XmlDocument();
       XmlNode node;
-      GetNode(xml, xmlPath, "/appShare/firstTimeRun", out node);
+      GetNode(xml, m_strNodeUrlDownloadedSetupSelfVersion, out node);
+      if (bSet)
+      {
+        node.InnerText = strVersion;
+
+        try
+        {
+          xml.Save(m_strXmlFileUrl);
+        }
+        catch { }
+      }
+      else
+      {
+        strVersion = node.InnerText;
+      }
+    }
+
+    static public bool SetGetFirstTimeRun(string xmlPath, bool bSet)
+    {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, "/appShare/firstTimeRun", out node);
       bool first = true;
       if (bSet)
       {
@@ -71,7 +105,7 @@ namespace RPlayer
         first = Convert.ToBoolean(node.InnerText);
       try
       {
-        xml.Save(xmlPath + "\\" + xmlFileName);
+        xml.Save(m_strXmlFileUrl);
       }
       catch{}
       return first;
@@ -91,7 +125,7 @@ namespace RPlayer
     //    allow = Convert.ToBoolean(node.InnerText);
     //  try
     //  {
-    //    xml.Save(xmlPath + "\\" + xmlFileName);
+    //    xml.Save(xmlPath + "\\" + m_strXmlFileName);
     //  }
     //  catch
     //  {
@@ -101,15 +135,16 @@ namespace RPlayer
 
     static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
     {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
       XmlDocument xml = new XmlDocument();
       XmlNode node;
-      GetNode(xml, xmlPath, "/appShare/appRunning", out node);
+      GetNode(xml, "/appShare/appRunning", out node);
       if (bSet)
       {
         node.InnerText = bRunning.ToString();
         try
         {
-          xml.Save(xmlPath + "\\" + xmlFileName);
+          xml.Save(m_strXmlFileUrl);
         }
         catch{}
       }
@@ -120,13 +155,14 @@ namespace RPlayer
 
     static public bool SetGetNewUrl(string xmlPath,bool bSet,ref string url)
     {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
       bool bNeedSave = true;
 
       if(!bSet)
         url = "";
       XmlDocument xml = new XmlDocument();
       XmlNode node;
-      GetNode(xml, xmlPath, "/appShare/url", out node);
+      GetNode(xml, "/appShare/url", out node);
       if (bSet)
       {
         node.InnerText = url;
@@ -144,7 +180,7 @@ namespace RPlayer
       {
         try
         {
-          xml.Save(xmlPath + "\\" + xmlFileName);
+          xml.Save(m_strXmlFileUrl);
         }
         catch{}
       }

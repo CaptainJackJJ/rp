@@ -14,8 +14,6 @@ namespace RPlayer
 {
   public partial class FormRegisterAsk : Form
   {
-    private readonly string m_strRPUpdaterName = "RPUpdater";
-    private readonly string m_strRPUpdaterExeName = "RPUpdater.exe";
     private MainForm m_mainForm;
 
     public string url;

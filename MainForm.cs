@@ -19,7 +19,9 @@ namespace RPlayer
 {
   public partial class MainForm : Form
   {
-    private readonly string m_strUiVersion = "1.1.2";
+
+    #region properties
+
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
     private Point m_TopBarAreaMouseDownPos;
@@ -101,6 +103,10 @@ namespace RPlayer
     // , and crash caused because some component is not inited.
     // So add this flag to let Resize and Move method do nothing before constructed.
     private bool m_bConstructed = false;
+
+    private Updater m_updaterApp;
+
+    #endregion
 
     public MainForm(string[] args)
     {
@@ -201,6 +207,8 @@ namespace RPlayer
       Cursor.Show();
       m_bCursorShowing = true;
 
+      m_updaterApp = new Updater(this);
+
       m_threadDoSomething = new Thread(ThreadDoSomething);
       m_threadDoSomething.Start();
 
@@ -220,6 +228,8 @@ namespace RPlayer
         m_threadDoSomething.Abort(); // To avoid crash when user close app after lauch immediately
         m_threadDoSomething = null;
       }
+
+      m_updaterApp.Stop();
 
       if (Core.IsPlaying())
         StopPlay();
@@ -263,7 +273,6 @@ namespace RPlayer
       {
         return; // To avoid crash when user close app after lauch immediately
       }
-      Core.WriteLog(Core.ELogType.notice, "****************** UI version: " + m_strUiVersion);
       Core.WriteLog(Core.ELogType.notice, "****************** App version: " + m_strAppVersion);
       
       Init(true);
@@ -312,6 +321,8 @@ namespace RPlayer
 
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
+
+        m_updaterApp.Start();
       }
     }
 

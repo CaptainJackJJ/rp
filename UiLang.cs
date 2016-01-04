@@ -244,7 +244,7 @@ Are you still want to delete it?";
       contextMenuSubtitles = "字幕";
       contextMenuAudios = "音轨";
       contextMenuChapters = "章节";
-      contextMenuAddSubtitle = "添加字幕";
+      contextMenuAddSubtitle = "添加外挂字幕";
       contextMenuHideSubtitle = "隐藏字幕";
       contextMenuChapter = "章节";
       contextMenuSnapshot = "快照";

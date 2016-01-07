@@ -1372,6 +1372,7 @@ namespace RPlayer
         m_formBottomBar.Size = new Size(this.Width, m_formBottomBar.Height);
 
         m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
+        this.TopMost = true;
       }
       else
       {
@@ -1397,6 +1398,7 @@ namespace RPlayer
           Cursor.Show();
           m_bCursorShowing = true;
         }
+        this.TopMost = false;
       }
     }
 
@@ -1419,6 +1421,7 @@ namespace RPlayer
 
     private void label_playWnd_MouseEnter(object sender, EventArgs e)
     {
+      label_playWnd.Cursor = Cursors.Arrow;
       if (m_bDesktop)
       {
         m_formTopBar.Hide();

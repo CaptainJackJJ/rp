@@ -1994,7 +1994,7 @@ namespace RPlayer
       else
       {
         curPlayingTime = Core.GetCurTime();
-        if (m_nFileDuration - curPlayingTime < 60) // Just left 1 minute, so still is finished playback
+        if (m_nFileDuration - curPlayingTime < 120) // Just left 2 minute, so still is finished playback
           curPlayingTime = 0;
       }
       

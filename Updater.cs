@@ -36,8 +36,10 @@ namespace RPlayer
       m_strRemoteSetupSelfVerison = m_strDownloadedVersion = "";
 
       m_SetupSelfInfoDownloader = new WebClient();
+      m_SetupSelfInfoDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
       m_SetupSelfInfoDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfInfoDownloadCompeleted);
       m_SetupSelfDownloader = new WebClient();
+      m_SetupSelfDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
       m_SetupSelfDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfDownloadCompeleted);
 
       m_strDownloadedSetupSelfInfoUrl = m_mainForm.m_tempPath + "\\" + m_strSetupSelfInfoXmlName;

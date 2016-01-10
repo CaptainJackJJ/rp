@@ -1372,7 +1372,6 @@ namespace RPlayer
         m_formBottomBar.Size = new Size(this.Width, m_formBottomBar.Height);
 
         m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
-        this.TopMost = true;
       }
       else
       {
@@ -1398,7 +1397,6 @@ namespace RPlayer
           Cursor.Show();
           m_bCursorShowing = true;
         }
-        this.TopMost = false;
       }
     }
 
@@ -1424,10 +1422,10 @@ namespace RPlayer
       label_playWnd.Cursor = Cursors.Arrow;
       if (m_bDesktop)
       {
+        this.BringToFront();
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
         m_formPlaylist.Hide();
-        this.BringToFront();
         m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
       }
     }

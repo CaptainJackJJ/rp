@@ -169,7 +169,9 @@ namespace RPlayer
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
         if (args.Length == 0)
-          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
+          this.BackColor = Color.FromArgb(255, 66, 75, 92);  
+        else
+          this.BackColor = Color.FromArgb(255, 0, 0, 0);
       }
       catch
       {
@@ -1608,6 +1610,7 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        this.BackColor = Color.FromArgb(255, 0, 0, 0); 
         label_openFile.Hide();
         label_Play.Hide();
         label_Volume.Hide();
@@ -1629,6 +1632,7 @@ namespace RPlayer
       }
       else
       {
+        this.BackColor = Color.FromArgb(255, 66, 75, 92); 
         try
         {
           m_formTopBar.Hide();
@@ -1646,7 +1650,6 @@ namespace RPlayer
             label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
           else
             label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-          this.BackgroundImage = Image.FromFile(Application.StartupPath + @"\pic\mainForm.jpg");
         }
         catch { }
 

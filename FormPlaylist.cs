@@ -461,7 +461,7 @@ namespace RPlayer
       switch (selectedBtn)
       {
         case Archive.enumSelectedPListBtn.playlist:
-          button_histroy.BackColor = Color.SlateGray;
+          button_histroy.BackColor = Color.FromArgb(255, 66, 75, 92); 
           button_playlist.BackColor = Color.DodgerBlue;
           listView_histroy.Hide();
           treeView_playlist.Show();
@@ -476,7 +476,7 @@ namespace RPlayer
           break;
         case Archive.enumSelectedPListBtn.histroy:
           button_histroy.BackColor = Color.DodgerBlue;
-          button_playlist.BackColor = Color.SlateGray;
+          button_playlist.BackColor = Color.FromArgb(255, 66, 75, 92); 
           listView_histroy.Show();
           treeView_playlist.Hide();
           Archive.selectedPListBtn = Archive.enumSelectedPListBtn.histroy;

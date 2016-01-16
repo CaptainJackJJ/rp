@@ -167,7 +167,6 @@ namespace RPlayer
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
-        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
         if (args.Length == 0)
           this.BackColor = Color.FromArgb(255, 66, 75, 92);  
         else
@@ -182,7 +181,6 @@ namespace RPlayer
         label_Max.Text = "max";
         label_Min.Text = "min";
         label_playlist.Text = "Plist";
-        label_openFile.Text = "OpenFile";
       }
      
       UiLang.SetLang(Archive.lang);
@@ -523,6 +521,7 @@ namespace RPlayer
       label_feedback.Location =
         new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
             label_settings.Location.Y);
+      button_openFile.Text = UiLang.buttonOpenFile;
     }
 
     private void InitContextMenuStrip()
@@ -811,9 +810,9 @@ namespace RPlayer
         label_playWnd.Size = new Size(playWndWidth, playWndHeight);
         Core.PlayWndResized(playWndWidth, playWndHeight);
 
-        label_openFile.Location =
-          new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - label_openFile.Width * 0.5),
-            label_playWnd.Location.Y + (int)(playWndHeight * 0.5 - label_openFile.Height * 0.5));
+        button_openFile.Location =
+          new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - button_openFile.Width * 0.5),
+            label_playWnd.Location.Y + (int)(playWndHeight * 0.5 - button_openFile.Height * 0.5));
       }
     }
 
@@ -1485,27 +1484,9 @@ namespace RPlayer
       }
     }
 
-    private void label_openFile_Click(object sender, EventArgs e)
+    private void button_openFile_Click(object sender, EventArgs e)
     {
       OpenFileDlg();
-    }
-
-    private void label_openFile_MouseEnter(object sender, EventArgs e)
-    {
-      try
-      {
-        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFileFocus.png");
-      }
-      catch { }
-    }
-
-    private void label_openFile_MouseLeave(object sender, EventArgs e)
-    {
-      try
-      {
-        label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
-      }
-      catch { }
     }
 
     private void label_logo_Click(object sender, EventArgs e)
@@ -1611,7 +1592,7 @@ namespace RPlayer
       if (m_bPlayingForm)
       {
         this.BackColor = Color.FromArgb(255, 0, 0, 0); 
-        label_openFile.Hide();
+        button_openFile.Hide();
         label_Play.Hide();
         label_Volume.Hide();
         colorSlider_volume.Hide();
@@ -1653,7 +1634,7 @@ namespace RPlayer
         }
         catch { }
 
-        label_openFile.Show();
+        button_openFile.Show();
         label_Play.Show();
         label_Volume.Show();
         colorSlider_volume.Show();

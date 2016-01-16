@@ -42,11 +42,11 @@
       this.label_Volume = new System.Windows.Forms.Label();
       this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_playlist = new System.Windows.Forms.Label();
-      this.label_openFile = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
       this.label_version = new System.Windows.Forms.Label();
       this.label_feedback = new System.Windows.Forms.Label();
+      this.button_openFile = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // label_Play
@@ -218,21 +218,6 @@
       this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
       this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);
       // 
-      // label_openFile
-      // 
-      this.label_openFile.BackColor = System.Drawing.Color.Transparent;
-      this.label_openFile.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.label_openFile.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_openFile.ForeColor = System.Drawing.Color.White;
-      this.label_openFile.Location = new System.Drawing.Point(408, 266);
-      this.label_openFile.Name = "label_openFile";
-      this.label_openFile.Size = new System.Drawing.Size(100, 100);
-      this.label_openFile.TabIndex = 40;
-      this.label_openFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      this.label_openFile.Click += new System.EventHandler(this.label_openFile_Click);
-      this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
-      this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
-      // 
       // timer1
       // 
       this.timer1.Enabled = true;
@@ -286,13 +271,31 @@
       this.label_feedback.MouseEnter += new System.EventHandler(this.label_feedback_MouseEnter);
       this.label_feedback.MouseLeave += new System.EventHandler(this.label_feedback_MouseLeave);
       // 
+      // button_openFile
+      // 
+      this.button_openFile.AutoSize = true;
+      this.button_openFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
+      this.button_openFile.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.button_openFile.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+      this.button_openFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(130)))), ((int)(((byte)(154)))));
+      this.button_openFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_openFile.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_openFile.ForeColor = System.Drawing.Color.White;
+      this.button_openFile.Location = new System.Drawing.Point(420, 270);
+      this.button_openFile.Name = "button_openFile";
+      this.button_openFile.Size = new System.Drawing.Size(112, 38);
+      this.button_openFile.TabIndex = 46;
+      this.button_openFile.Text = "Open File";
+      this.button_openFile.UseVisualStyleBackColor = false;
+      this.button_openFile.Click += new System.EventHandler(this.button_openFile_Click);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
       this.ClientSize = new System.Drawing.Size(915, 562);
-      this.Controls.Add(this.label_openFile);
+      this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_feedback);
       this.Controls.Add(this.label_version);
@@ -339,11 +342,11 @@
         private System.Windows.Forms.Label label_Volume;
         private MB.Controls.ColorSlider colorSlider_volume;
         private System.Windows.Forms.Label label_playlist;
-        private System.Windows.Forms.Label label_openFile;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label_logo;
         private System.Windows.Forms.Label label_version;
         private System.Windows.Forms.Label label_feedback;
+        private System.Windows.Forms.Button button_openFile;
     }
 }
 

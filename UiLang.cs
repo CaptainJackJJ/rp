@@ -33,7 +33,7 @@ namespace RPlayer
     public static string contextMenuChapter;
     public static string contextMenuSnapshot;
     public static string contextMenuPlayerSettings;
-    public static string labelOpenFile;
+    public static string buttonOpenFile;
 
     // FormSettings    
     public static string labelSettings;
@@ -150,7 +150,7 @@ namespace RPlayer
       contextMenuChapter = "Chapter";
       contextMenuSnapshot = "Snapshot";
       contextMenuPlayerSettings = "Player Settings";
-      labelOpenFile = "OpenFile";
+      buttonOpenFile = "Open File";
 
       labelSettings = "Settings";
       labelGeneral = "General";
@@ -249,7 +249,7 @@ Are you still want to delete it?";
       contextMenuChapter = "章节";
       contextMenuSnapshot = "快照";
       contextMenuPlayerSettings = "播放器设置";
-      labelOpenFile = "打开文件";
+      buttonOpenFile = "打开文件";
 
       labelSettings = "设置";
       labelGeneral = "一般";

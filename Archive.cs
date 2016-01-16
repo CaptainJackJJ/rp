@@ -125,8 +125,8 @@ namespace RPlayer
     static private readonly string SettingName_italic = "italic";
     static private readonly string SettingName_overAssOrig = "overAssOrig";
 
-    static private readonly int fontSizeDefault = 28;
-    static private readonly int fontPosDefault = 0;
+    static private readonly int fontSizeDefault = 17;
+    static private readonly int fontPosDefault = 3;
     static private readonly int fontColorDefault = -1;
     static private readonly int fontBorderColorDefault = -16777216;
     static private readonly bool boldDefault = false;

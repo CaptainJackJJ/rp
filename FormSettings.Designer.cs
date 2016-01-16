@@ -45,6 +45,7 @@
       this.label_snapSavePath = new System.Windows.Forms.Label();
       this.label_uiLang = new System.Windows.Forms.Label();
       this.panel_subtitle = new System.Windows.Forms.Panel();
+      this.textBox_notice = new System.Windows.Forms.TextBox();
       this.button_borderColor = new System.Windows.Forms.Button();
       this.button_fontColor = new System.Windows.Forms.Button();
       this.checkBox_italic = new System.Windows.Forms.CheckBox();
@@ -61,7 +62,6 @@
       this.checkBox_addPlayingFolderToPlist = new System.Windows.Forms.CheckBox();
       this.checkBox_updatePlistAfterLaunch = new System.Windows.Forms.CheckBox();
       this.checkBox_deleteFileDirectly = new System.Windows.Forms.CheckBox();
-      this.textBox_notice = new System.Windows.Forms.TextBox();
       this.panel_topBar.SuspendLayout();
       this.panel_general.SuspendLayout();
       this.panel_subtitle.SuspendLayout();
@@ -294,6 +294,22 @@
       this.panel_subtitle.Size = new System.Drawing.Size(422, 495);
       this.panel_subtitle.TabIndex = 7;
       // 
+      // textBox_notice
+      // 
+      this.textBox_notice.BackColor = System.Drawing.SystemColors.WindowFrame;
+      this.textBox_notice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.textBox_notice.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.textBox_notice.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.textBox_notice.ForeColor = System.Drawing.Color.White;
+      this.textBox_notice.Location = new System.Drawing.Point(25, 460);
+      this.textBox_notice.Multiline = true;
+      this.textBox_notice.Name = "textBox_notice";
+      this.textBox_notice.ReadOnly = true;
+      this.textBox_notice.Size = new System.Drawing.Size(368, 22);
+      this.textBox_notice.TabIndex = 45;
+      this.textBox_notice.TabStop = false;
+      this.textBox_notice.Text = "Notice: picture subtitle can not be adjusted";
+      // 
       // button_borderColor
       // 
       this.button_borderColor.BackColor = System.Drawing.Color.DimGray;
@@ -402,10 +418,9 @@
       this.colorSlider_fontSize.KeyPressRespond = true;
       this.colorSlider_fontSize.LargeChange = ((uint)(5u));
       this.colorSlider_fontSize.Location = new System.Drawing.Point(98, 21);
-      this.colorSlider_fontSize.Maximum = 74;
-      this.colorSlider_fontSize.Minimum = 16;
+      this.colorSlider_fontSize.Minimum = 10;
       this.colorSlider_fontSize.MouseEffects = false;
-      this.colorSlider_fontSize.MouseWheelBarPartitions = 58;
+      this.colorSlider_fontSize.MouseWheelBarPartitions = 90;
       this.colorSlider_fontSize.MouseWheelRespond = true;
       this.colorSlider_fontSize.Name = "colorSlider_fontSize";
       this.colorSlider_fontSize.Size = new System.Drawing.Size(303, 10);
@@ -524,22 +539,6 @@
       this.checkBox_deleteFileDirectly.Text = "just delete playlist file without asking";
       this.checkBox_deleteFileDirectly.UseVisualStyleBackColor = true;
       this.checkBox_deleteFileDirectly.CheckedChanged += new System.EventHandler(this.checkBox_deleteFileDirectly_CheckedChanged);
-      // 
-      // textBox_notice
-      // 
-      this.textBox_notice.BackColor = System.Drawing.SystemColors.WindowFrame;
-      this.textBox_notice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.textBox_notice.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.textBox_notice.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.textBox_notice.ForeColor = System.Drawing.Color.White;
-      this.textBox_notice.Location = new System.Drawing.Point(25, 460);
-      this.textBox_notice.Multiline = true;
-      this.textBox_notice.Name = "textBox_notice";
-      this.textBox_notice.ReadOnly = true;
-      this.textBox_notice.Size = new System.Drawing.Size(368, 22);
-      this.textBox_notice.TabIndex = 45;
-      this.textBox_notice.TabStop = false;
-      this.textBox_notice.Text = "Notice: picture subtitle can not be adjusted";
       // 
       // FormSettings
       // 

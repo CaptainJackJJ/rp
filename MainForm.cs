@@ -157,6 +157,8 @@ namespace RPlayer
 
       InitializeComponent();
 
+      label_playWnd.Visible = false;
+
       label_version.Text = m_strAppVersion;
 
       try
@@ -1591,6 +1593,7 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        label_playWnd.Visible = true;
         this.BackColor = Color.FromArgb(255, 0, 0, 0); 
         button_openFile.Hide();
         label_Play.Hide();
@@ -1613,6 +1616,7 @@ namespace RPlayer
       }
       else
       {
+        label_playWnd.Visible = false;
         this.BackColor = Color.FromArgb(255, 66, 75, 92); 
         try
         {

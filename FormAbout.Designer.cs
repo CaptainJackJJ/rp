@@ -83,9 +83,9 @@
       this.label_webSiteShow.ForeColor = System.Drawing.Color.Gold;
       this.label_webSiteShow.Location = new System.Drawing.Point(97, 71);
       this.label_webSiteShow.Name = "label_webSiteShow";
-      this.label_webSiteShow.Size = new System.Drawing.Size(192, 16);
+      this.label_webSiteShow.Size = new System.Drawing.Size(184, 16);
       this.label_webSiteShow.TabIndex = 38;
-      this.label_webSiteShow.Text = "http://rabbitplayer.com";
+      this.label_webSiteShow.Text = "http://rabbitplayer.cn";
       this.label_webSiteShow.Click += new System.EventHandler(this.label_webSiteShow_Click);
       // 
       // label_Close

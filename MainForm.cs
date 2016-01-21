@@ -170,9 +170,14 @@ namespace RPlayer
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         if (args.Length == 0)
-          this.BackColor = Color.FromArgb(255, 66, 75, 92);  
+          this.BackColor = Color.FromArgb(255, 66, 75, 92);
         else
+        {
+          button_openFile.Hide();
+          label_Play.Hide();
+          label_playWnd.Visible = true;
           this.BackColor = Color.FromArgb(255, 0, 0, 0);
+        }
       }
       catch
       {

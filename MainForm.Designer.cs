@@ -161,8 +161,8 @@
       this.label_playWnd.Size = new System.Drawing.Size(911, 454);
       this.label_playWnd.TabIndex = 39;
       this.label_playWnd.Click += new System.EventHandler(this.label_playWnd_Click);
-      this.label_playWnd.DragDrop += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragDrop);
-      this.label_playWnd.DragEnter += new System.Windows.Forms.DragEventHandler(this.label_playWnd_DragEnter);
+      this.label_playWnd.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
+      this.label_playWnd.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
       this.label_playWnd.DoubleClick += new System.EventHandler(this.label_playWnd_DoubleClick);
       this.label_playWnd.MouseEnter += new System.EventHandler(this.label_playWnd_MouseEnter);
       this.label_playWnd.MouseLeave += new System.EventHandler(this.label_playWnd_MouseLeave);
@@ -291,6 +291,7 @@
       // 
       // MainForm
       // 
+      this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
@@ -317,6 +318,8 @@
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.Shown += new System.EventHandler(this.MainForm_Shown);
+      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
+      this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);

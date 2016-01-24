@@ -1470,14 +1470,14 @@ namespace RPlayer
       }
     }
 
-    private void label_playWnd_DragEnter(object sender, DragEventArgs e)
+    private void FileDragEnter(object sender, DragEventArgs e)
     {
       string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
       if(File.Exists(FileList[0]))
         e.Effect = DragDropEffects.Link;
     }
 
-    private void label_playWnd_DragDrop(object sender, DragEventArgs e)
+    private void FileDragDrop(object sender, DragEventArgs e)
     {
       string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
       if (Core.IsPlaying())

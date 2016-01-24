@@ -48,7 +48,7 @@ namespace RPlayer
 
     private void label_webSiteShow_Click(object sender, EventArgs e)
     {
-      System.Diagnostics.Process.Start("http://rabbitplayer.cn/");
+      System.Diagnostics.Process.Start("http://rabbitplayer.com/");
     }
 
     private void label_Close_MouseEnter(object sender, EventArgs e)

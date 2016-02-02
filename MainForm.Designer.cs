@@ -96,50 +96,38 @@
       // label_LeftEdge
       // 
       this.label_LeftEdge.BackColor = System.Drawing.Color.Gray;
-      this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.SizeWE;
+      this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_LeftEdge.Location = new System.Drawing.Point(1, 2);
       this.label_LeftEdge.Name = "label_LeftEdge";
       this.label_LeftEdge.Size = new System.Drawing.Size(1, 596);
       this.label_LeftEdge.TabIndex = 28;
-      this.label_LeftEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label_LeftEdge_MouseDown);
-      this.label_LeftEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_LeftEdge_MouseMove);
-      this.label_LeftEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label_LeftEdge_MouseUp);
       // 
       // label_TopEdge
       // 
       this.label_TopEdge.BackColor = System.Drawing.Color.Gray;
-      this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
+      this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_TopEdge.Location = new System.Drawing.Point(1, 1);
       this.label_TopEdge.Name = "label_TopEdge";
       this.label_TopEdge.Size = new System.Drawing.Size(913, 1);
       this.label_TopEdge.TabIndex = 29;
-      this.label_TopEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label_TopEdge_MouseDown);
-      this.label_TopEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_TopEdge_MouseMove);
-      this.label_TopEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label_TopEdge_MouseUp);
       // 
       // label_RightEdge
       // 
       this.label_RightEdge.BackColor = System.Drawing.Color.Gray;
-      this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.SizeWE;
+      this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_RightEdge.Location = new System.Drawing.Point(913, 2);
       this.label_RightEdge.Name = "label_RightEdge";
       this.label_RightEdge.Size = new System.Drawing.Size(1, 560);
       this.label_RightEdge.TabIndex = 30;
-      this.label_RightEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label_RightEdge_MouseDown);
-      this.label_RightEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_RightEdge_MouseMove);
-      this.label_RightEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label_RightEdge_MouseUp);
       // 
       // label_BottomEdge
       // 
       this.label_BottomEdge.BackColor = System.Drawing.Color.Gray;
-      this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
+      this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_BottomEdge.Location = new System.Drawing.Point(1, 598);
       this.label_BottomEdge.Name = "label_BottomEdge";
       this.label_BottomEdge.Size = new System.Drawing.Size(913, 1);
       this.label_BottomEdge.TabIndex = 31;
-      this.label_BottomEdge.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label_BottomEdge_MouseDown);
-      this.label_BottomEdge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_BottomEdge_MouseMove);
-      this.label_BottomEdge.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label_BottomEdge_MouseUp);
       // 
       // label_settings
       // 

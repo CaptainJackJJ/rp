@@ -43,14 +43,13 @@ namespace RPlayer
     private const int m_nTopBarButtonsWidth = 13;
     private const int m_nRenderToTopBarMargin = 12;
     private const int m_nRenderToBottomBarMargin = 23;
-    private const int m_nCornerSize = 10;
+    private const int m_nResizeableAreaSize = 10;
 
     private const int m_nPlayButtonWidth = 40;
     private const int m_nBottomButtonsWidth = 25;
     private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
 
     private bool m_bMaxed = false;
-    private bool m_bInCorner = false;
     public bool m_bDesktop;
 
     public FormBottomBar m_formBottomBar;
@@ -170,7 +169,9 @@ namespace RPlayer
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
         label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
         if (args.Length == 0)
+        {
           this.BackColor = Color.FromArgb(255, 66, 75, 92);
+        }
         else
         {
           button_openFile.Hide();
@@ -825,16 +826,25 @@ namespace RPlayer
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
     {
-      if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+      if (e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
         m_bRightBottomCornerMouseDown = true;
-      else if (e.Location.X < m_nCornerSize && e.Location.Y < m_nCornerSize)
+      else if (e.Location.X < m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
         m_bLeftTopCornerMouseDown = true;
-      else if (e.Location.X < m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+      else if (e.Location.X < m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
         m_bLeftBottomCornerMouseDown = true;
-      else if (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
+      else if (e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
         m_bRightTopCornerMouseDown = true;
+      else if (e.Location.X < m_nResizeableAreaSize)
+        m_bLeftEdge_MouseDown = true;
+      else if (e.Location.Y < m_nResizeableAreaSize)
+        m_bTopEdge_MouseDown = true;
+      else if (e.Location.X >= this.Size.Width - m_nResizeableAreaSize)
+        m_bRightEdge_MouseDown = true;
+      else if (e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+        m_bBottomEdge_MouseDown = true;
       else if (e.Location.Y < label_playWnd.Location.Y)
         m_bTopBarAreaMouseDown = true;
+    
       m_TopBarAreaMouseDownPos = e.Location;
       m_bMainFormMouseDown = true;
     }
@@ -845,11 +855,19 @@ namespace RPlayer
       if (!label_TopEdge.Visible)
         UpdateEdge();
 
-      m_bTopBarAreaMouseDown = m_bRightBottomCornerMouseDown
-          = m_bLeftTopCornerMouseDown = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = false;
+      m_bTopBarAreaMouseDown = m_bRightBottomCornerMouseDown = m_bLeftTopCornerMouseDown 
+        = m_bLeftBottomCornerMouseDown = m_bRightTopCornerMouseDown = m_bLeftEdge_MouseDown
+        = m_bTopEdge_MouseDown = m_bRightEdge_MouseDown = m_bBottomEdge_MouseDown = false;
     }
 
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
+    {
+      ResizeOrMoveFrom(sender, e);
+
+      ShowResizebaleCursor(e);
+    }
+
+    private void ResizeOrMoveFrom(object sender, MouseEventArgs e)
     {
       if (m_bTopBarAreaMouseDown)
       {
@@ -868,7 +886,7 @@ namespace RPlayer
           xDiff = 0;
         if (this.Size.Height + yDiff < m_nMinMainFormHeight)
           yDiff = 0;
-        if(xDiff != 0 || yDiff != 0)
+        if (xDiff != 0 || yDiff != 0)
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
       }
       else if (m_bLeftTopCornerMouseDown)
@@ -923,27 +941,78 @@ namespace RPlayer
           this.Size = new Size(this.Size.Width + xDiff, this.Size.Height + yDiff);
         }
       }
+      else if (m_bLeftEdge_MouseDown)
+      {
+        Control control = (Control)sender;
 
-      if ((e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
-          ||
-          (e.Location.X < m_nCornerSize && e.Location.Y < m_nCornerSize)
-          )
+        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+        int xDiff = this.Location.X - MouseScreenPoint.X;
+        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
+        {
+          this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
+          this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
+        }
+      }
+      else if (m_bTopEdge_MouseDown)
+      {
+        Control control = (Control)sender;
+        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+        int yDiff = this.Location.Y - MouseScreenPoint.Y;
+        if (this.Size.Height + yDiff > m_nMinMainFormHeight)
+        {
+          this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
+          this.Size = new Size(this.Size.Width, this.Size.Height + yDiff);
+        }
+      }
+      else if (m_bRightEdge_MouseDown)
+      {
+        Control control = (Control)sender;
+
+        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
+        int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
+        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
+          this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
+      }
+      else if (m_bBottomEdge_MouseDown)
+      {
+        Control control = (Control)sender;
+
+        Point MouseScrrenPoint = control.PointToScreen(new Point(e.X, e.Y));
+        int newHeight = MouseScrrenPoint.Y - this.Location.Y;
+        if (newHeight > m_nMinMainFormHeight)
+          this.Size = new Size(this.Size.Width, newHeight);
+      }
+    }
+
+    private void ShowResizebaleCursor(MouseEventArgs e)
+    {
+      if ((e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+      ||
+      (e.Location.X < m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
+      )
       {
         Cursor = Cursors.SizeNWSE;
-        m_bInCorner = true;
       }
-      else if ((e.Location.X < m_nCornerSize && e.Location.Y >= this.Size.Height - m_nCornerSize)
+      else if ((e.Location.X < m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
           ||
-          (e.Location.X >= this.Size.Width - m_nCornerSize && e.Location.Y < m_nCornerSize)
+          (e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
           )
       {
         Cursor = Cursors.SizeNESW;
-        m_bInCorner = true;
       }
-      else if (m_bInCorner)
+      else if (e.Location.X < m_nResizeableAreaSize
+        || e.Location.X >= this.Size.Width - m_nResizeableAreaSize)
+      {
+        Cursor = Cursors.SizeWE;
+      }
+      else if (e.Location.Y < m_nResizeableAreaSize ||
+        e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+      {
+        Cursor = Cursors.SizeNS;
+      }
+      else
       {
         Cursor = Cursors.Arrow;
-        m_bInCorner = false;
       }
     }
 
@@ -1068,111 +1137,6 @@ namespace RPlayer
         label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
       }
       catch { }
-    }
-
-    private void label_LeftEdge_MouseDown(object sender, MouseEventArgs e)
-    {
-      m_bLeftEdge_MouseDown = true;
-    }
-
-    private void label_LeftEdge_MouseMove(object sender, MouseEventArgs e)
-    {
-      if (m_bLeftEdge_MouseDown)
-      {
-        Control control = (Control)sender;
-
-        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-        int xDiff = this.Location.X - MouseScreenPoint.X;
-        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
-        {
-          this.Location = new Point(MouseScreenPoint.X, this.Location.Y);
-          this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
-        }
-      }
-    }
-
-    private void label_LeftEdge_MouseUp(object sender, MouseEventArgs e)
-    {
-      m_bLeftEdge_MouseDown = false;
-      if (!label_TopEdge.Visible)
-        UpdateEdge();
-    }
-
-    private void label_TopEdge_MouseDown(object sender, MouseEventArgs e)
-    {
-      m_bTopEdge_MouseDown = true;
-    }
-
-    private void label_TopEdge_MouseMove(object sender, MouseEventArgs e)
-    {
-      if (m_bTopEdge_MouseDown)
-      {
-        Control control = (Control)sender;
-        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-        int yDiff = this.Location.Y - MouseScreenPoint.Y;
-        if (this.Size.Height + yDiff > m_nMinMainFormHeight)
-        {
-          this.Location = new Point(this.Location.X, MouseScreenPoint.Y);
-          this.Size = new Size(this.Size.Width, this.Size.Height + yDiff);
-        }
-      }
-    }
-
-    private void label_TopEdge_MouseUp(object sender, MouseEventArgs e)
-    {
-      m_bTopEdge_MouseDown = false;
-      if (!label_TopEdge.Visible)
-        UpdateEdge();
-    }
-
-    private void label_RightEdge_MouseDown(object sender, MouseEventArgs e)
-    {
-      m_bRightEdge_MouseDown = true;
-    }
-
-    private void label_RightEdge_MouseMove(object sender, MouseEventArgs e)
-    {
-      if (m_bRightEdge_MouseDown)
-      {
-        Control control = (Control)sender;
-
-        Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
-        int xDiff = MouseScreenPoint.X - (this.Location.X + this.Size.Width);
-        if (this.Size.Width + xDiff > m_nMinMainFormWidth)
-          this.Size = new Size(this.Size.Width + xDiff, this.Size.Height);
-      }
-    }
-
-    private void label_RightEdge_MouseUp(object sender, MouseEventArgs e)
-    {
-      m_bRightEdge_MouseDown = false;
-      if (!label_TopEdge.Visible)
-        UpdateEdge();
-    }
-
-    private void label_BottomEdge_MouseDown(object sender, MouseEventArgs e)
-    {
-      m_bBottomEdge_MouseDown = true;
-    }
-
-    private void label_BottomEdge_MouseMove(object sender, MouseEventArgs e)
-    {
-      if (m_bBottomEdge_MouseDown)
-      {
-        Control control = (Control)sender;
-
-        Point MouseScrrenPoint = control.PointToScreen(new Point(e.X, e.Y));
-        int newHeight = MouseScrrenPoint.Y - this.Location.Y;
-        if (newHeight > m_nMinMainFormHeight)
-          this.Size = new Size(this.Size.Width, newHeight);
-      }
-    }
-
-    private void label_BottomEdge_MouseUp(object sender, MouseEventArgs e)
-    {
-      m_bBottomEdge_MouseDown = false;
-      if (!label_TopEdge.Visible)
-        UpdateEdge();
     }
 
     private void label_Volume_MouseEnter(object sender, EventArgs e)
@@ -1560,16 +1524,16 @@ namespace RPlayer
           nMarginBarToEdge = 2;
 
         m_formBottomBar.Location
-          = new Point(this.Location.X + m_nCornerSize, this.Location.Y + this.Height - m_formBottomBar.Height - nMarginBarToEdge);
+          = new Point(this.Location.X + m_nResizeableAreaSize, this.Location.Y + this.Height - m_formBottomBar.Height - nMarginBarToEdge);
 
         m_formBottomBar.Size
-          = new Size(this.Width - m_nCornerSize * 2, m_formBottomBar.Height);
+          = new Size(this.Width - m_nResizeableAreaSize * 2, m_formBottomBar.Height);
 
         m_formTopBar.Location
-          = new Point(this.Location.X + m_nCornerSize, this.Location.Y + nMarginBarToEdge);
+          = new Point(this.Location.X + m_nResizeableAreaSize, this.Location.Y + nMarginBarToEdge);
 
         m_formTopBar.Size
-          = new Size(this.Width - m_nCornerSize * 2, m_formTopBar.Height);
+          = new Size(this.Width - m_nResizeableAreaSize * 2, m_formTopBar.Height);
 
         m_formSpeedDisplay.Location
           = new Point(this.Location.X + (this.Width - m_formSpeedDisplay.Width) / 2, this.Location.Y + label_playWnd.Location.Y);

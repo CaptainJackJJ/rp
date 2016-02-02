@@ -81,6 +81,7 @@ namespace RPlayer
 
     private bool m_bStopPlayCalled = true;
     private bool m_bPlayingForm = false;
+    private bool m_bPlayed = false;
     private bool m_bPlayerInited = false;
     private string m_strPlayUrlAfterInit = "";
 
@@ -210,7 +211,10 @@ namespace RPlayer
 
       SetUiLange();
 
-      ConfigUiByArchive();
+      if (args.Length == 0)
+        ConfigUiByArchive(true);
+      else
+        ConfigUiByArchive(false);
 
       Cursor.Show();
       m_bCursorShowing = true;
@@ -249,8 +253,12 @@ namespace RPlayer
 
       Archive.mainFormLocX = this.Location.X;
       Archive.mainFormLocY = this.Location.Y;
-      Archive.mainFormWidth = this.Width;
-      Archive.mainFormHeight = this.Height;
+      if (m_bPlayed ||
+        (this.Width != Archive.mainFormWidthDefault || this.Height != Archive.mainFormHeightDefault))
+      {
+        Archive.mainFormWidth = this.Width;
+        Archive.mainFormHeight = this.Height;
+      }
 
       Archive.Save();
 
@@ -437,17 +445,20 @@ namespace RPlayer
 
     private void ConfigByArchive()
     {
-      ConfigUiByArchive();
+      ConfigUiByArchive(false);
       ConfigRpcoreByArchive();
     }
 
-    private void ConfigUiByArchive()
+    private void ConfigUiByArchive(bool bFirstLanuchAndNonPlay)
     {
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
       if (Archive.mainFormLocX >= 0 && Archive.mainFormLocY >= 0)
         this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+      if(bFirstLanuchAndNonPlay)
+        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
+      else
+        this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
       colorSlider_volume.Value = Archive.volume;
       try
@@ -1562,6 +1573,17 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        if (!m_bPlayed)
+        {
+          m_bPlayed = true;
+          if ((this.Width == Archive.mainFormWidthDefault && this.Height == Archive.mainFormHeightDefault)
+            && (Archive.mainFormHeight != Archive.mainFormHeightDefault ||
+            Archive.mainFormWidth != Archive.mainFormWidthDefault))
+          {
+            this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+          }
+        }
+
         label_playWnd.Visible = true;
         this.BackColor = Color.FromArgb(255, 0, 0, 0); 
         button_openFile.Hide();

@@ -13,11 +13,9 @@ using System.Xml;
 
 namespace RPlayer
 {
-  class Updater
+  class AppUpdater : ThreadEx
   {
     private MainForm m_mainForm;
-    private Thread m_thread;
-    private bool m_bStopThread;
     private WebClient m_SetupSelfInfoDownloader;
     private WebClient m_SetupSelfDownloader;
     static readonly private string m_strSetupSelfInfoXmlName = "setupSelfInfo.xml";
@@ -25,14 +23,13 @@ namespace RPlayer
     private string m_strDownloadedSetupSelfInfoUrl;
     static readonly private string m_strSetupSelfName = "RPlayerSetupSelf.exe";
     private string m_strDownloadedSetupSelfUrl;
-    private bool m_bDownloadCompleted;
     private string m_strRemoteSetupSelfVerison;
     private string m_strDownloadedVersion;
 
-    public Updater(MainForm mainForm)
+    public AppUpdater(MainForm mainForm)
     {
       m_mainForm = mainForm;
-      m_bStopThread = m_bDownloadCompleted = false;
+      m_bStopThread = false;
       m_strRemoteSetupSelfVerison = m_strDownloadedVersion = "";
 
       m_SetupSelfInfoDownloader = new WebClient();
@@ -75,10 +72,7 @@ namespace RPlayer
     private void SetupSelfInfoDownloadCompeleted(object sender,AsyncCompletedEventArgs e)
     {
       if (e.Cancelled)
-      {
-        m_bDownloadCompleted = true;
         return;
-      }
       
       string strRemoteSetupUrl = "";
       GetRemoteSetupSelfInfo(out m_strRemoteSetupSelfVerison, out strRemoteSetupUrl);
@@ -88,8 +82,8 @@ namespace RPlayer
         return;
       }
 
-      if (IsNewVersion(m_strRemoteSetupSelfVerison, m_mainForm.m_strAppVersion) &&
-        (m_strDownloadedVersion == "" || IsNewVersion(m_strRemoteSetupSelfVerison, m_strDownloadedVersion)))
+      if (UtilsCommon.IsNewVersion(m_strRemoteSetupSelfVerison, m_mainForm.m_strAppVersion) &&
+        (m_strDownloadedVersion == "" || UtilsCommon.IsNewVersion(m_strRemoteSetupSelfVerison, m_strDownloadedVersion)))
       {
         try
         {
@@ -98,7 +92,6 @@ namespace RPlayer
         catch (Exception ex)
         {
           Core.WriteLog(Core.ELogType.error, "Delete setupSelf fail: " + ex.ToString());
-          m_bDownloadCompleted = true;
           return;
         }
 
@@ -113,45 +106,20 @@ namespace RPlayer
         catch (Exception exc)
         {
           Core.WriteLog(Core.ELogType.error, "Download setupSelf fail: " + exc.ToString());
-          m_bDownloadCompleted = true;
           return;
         }
       }
-      else
-        m_bDownloadCompleted = true;
     }
 
     private void SetupSelfDownloadCompeleted(object sender, AsyncCompletedEventArgs e)
     {
       if (e.Cancelled)
-      {
-        m_bDownloadCompleted = true;
         return;
-      }
 
       AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
-      m_bDownloadCompleted = true;
     }
 
-    public bool IsNewVersion(string strCompared,string strCompareWith)
-    {
-      if (strCompared == "" || strCompareWith == "")
-        MessageBox.Show("IsNewVersion get wrong agru");
-
-      string[] strAarryCompared = strCompared.Split('.');
-      string[] strAarryCompareWith = strCompareWith.Split('.');
-      uint nIndex = 0;
-      foreach(string strComparedItem in strAarryCompared)
-      {
-        if(Convert.ToUInt32(strComparedItem) > Convert.ToUInt32(strAarryCompareWith[nIndex++]))
-        {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    private void ThreadProcess()
+    protected override void ThreadProcess()
     {      
       AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, false, ref m_strDownloadedVersion);
 
@@ -159,7 +127,7 @@ namespace RPlayer
         MessageBox.Show("AppVersion is empty");
 
       // Launch setupSelf.
-      if(m_strDownloadedVersion != "" && IsNewVersion(m_strDownloadedVersion,m_mainForm.m_strAppVersion))
+      if (m_strDownloadedVersion != "" && UtilsCommon.IsNewVersion(m_strDownloadedVersion, m_mainForm.m_strAppVersion))
       {
         Core.WriteLog(Core.ELogType.notice, "Launch setupSelf");
 
@@ -184,70 +152,33 @@ namespace RPlayer
         return;
       }
 
-      bool bDownloadRmoteSetupInfo = true;
-      ulong nSleepTimes = 0;
-      const ulong nSleepMaxTimes = 10 * 60 * 60; // one hour
       while(!m_bStopThread)
       {
-        if(bDownloadRmoteSetupInfo)
+        Core.WriteLog(Core.ELogType.notice, "Download setupSelfInfo xml");
+        try
         {
-          Core.WriteLog(Core.ELogType.notice, "Download setupSelfInfo xml");
+          File.Delete(m_strDownloadedSetupSelfInfoUrl);
 
-          try
-          {
-            File.Delete(m_strDownloadedSetupSelfInfoUrl);
-          }
-          catch (Exception e)
-          {
-            Core.WriteLog(Core.ELogType.error, "Delete setupSelfInfo xml fail: " + e.ToString());
-            continue ;
-          }
-          
-          m_bDownloadCompleted = false;
-
-          try
-          {
-            m_SetupSelfInfoDownloader.DownloadFileAsync(new Uri(m_strSetupSelfInfoRemoteUrl), m_strDownloadedSetupSelfInfoUrl);
-          }
-          catch(Exception e)
-          {
-            Core.WriteLog(Core.ELogType.error, "Download setupSelfInfo xml fail: " + e.ToString());
-            continue;
-          }
-
-          while (!m_bDownloadCompleted)
-          {
-            Thread.Sleep(100);
-          }
-
-          bDownloadRmoteSetupInfo = false;
+          m_SetupSelfInfoDownloader.DownloadFileAsync(new Uri(m_strSetupSelfInfoRemoteUrl), m_strDownloadedSetupSelfInfoUrl);
+        }
+        catch(Exception e)
+        {
+          Core.WriteLog(Core.ELogType.error, "Delete setupSelfInfo xml fail or Download setupSelfInfo xml fail: " + e.ToString());
+          Thread.Sleep(1000 * 60);
           continue;
         }
 
-        Thread.Sleep(100);
-        if (++nSleepTimes > nSleepMaxTimes)
+        try
         {
-          bDownloadRmoteSetupInfo = true;
-          nSleepTimes = 0;
-        }
+          Thread.Sleep(1000 * 60 * 60);
+        }catch (ThreadInterruptedException){}
       }
     }
 
-    public void Start()
-    {
-      m_bStopThread = false;
-      m_thread = new Thread(ThreadProcess);
-      m_thread.Start();
-    }
-
-    public void Stop()
+    protected override void ThreadPrepStop()
     {
       m_SetupSelfDownloader.CancelAsync();
       m_SetupSelfInfoDownloader.CancelAsync();
-      m_bDownloadCompleted = true;
-      m_bStopThread = true;
-      if(m_thread.ThreadState != System.Threading.ThreadState.Unstarted)
-        m_thread.Join();
     }
   }
 }

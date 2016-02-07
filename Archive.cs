@@ -39,6 +39,7 @@ namespace RPlayer
 
   class Archive
   {
+    #region fields
     static private bool bLoaded = false;
     static private string xmlFilePath;
     static private XmlDocument xml = new XmlDocument();
@@ -153,7 +154,7 @@ namespace RPlayer
 
 
     static public Color colorContextMenu = Color.FromArgb(255, 25, 25, 25);
-
+    #endregion
 
     static private string LoadNodeInner(XmlNode nodeSection, string nodeUrl)
     {
@@ -291,7 +292,7 @@ namespace RPlayer
       if (node != null)
       {
         int count = node.ChildNodes.Count;
-        for (int i = count - 1; i >= 0; i--)
+        for (int i = count - 1; i >= 0; --i)
         {
           XmlNode childNode = node.ChildNodes[i];
           HistroyItem item = new HistroyItem();

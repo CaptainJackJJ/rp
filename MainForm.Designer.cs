@@ -47,6 +47,7 @@
       this.label_version = new System.Windows.Forms.Label();
       this.label_feedback = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
+      this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Play
@@ -269,13 +270,25 @@
       this.button_openFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_openFile.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_openFile.ForeColor = System.Drawing.Color.White;
-      this.button_openFile.Location = new System.Drawing.Point(420, 270);
+      this.button_openFile.Location = new System.Drawing.Point(10, 506);
       this.button_openFile.Name = "button_openFile";
       this.button_openFile.Size = new System.Drawing.Size(112, 38);
       this.button_openFile.TabIndex = 46;
       this.button_openFile.Text = "Open File";
       this.button_openFile.UseVisualStyleBackColor = false;
       this.button_openFile.Click += new System.EventHandler(this.button_openFile_Click);
+      // 
+      // label_InfoUpdateNotice
+      // 
+      this.label_InfoUpdateNotice.AutoSize = true;
+      this.label_InfoUpdateNotice.BackColor = System.Drawing.Color.Transparent;
+      this.label_InfoUpdateNotice.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_InfoUpdateNotice.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_InfoUpdateNotice.ForeColor = System.Drawing.Color.White;
+      this.label_InfoUpdateNotice.Location = new System.Drawing.Point(407, 13);
+      this.label_InfoUpdateNotice.Name = "label_InfoUpdateNotice";
+      this.label_InfoUpdateNotice.Size = new System.Drawing.Size(0, 12);
+      this.label_InfoUpdateNotice.TabIndex = 45;
       // 
       // MainForm
       // 
@@ -287,6 +300,7 @@
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_feedback);
+      this.Controls.Add(this.label_InfoUpdateNotice);
       this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
       this.Controls.Add(this.colorSlider_volume);
@@ -338,6 +352,7 @@
         private System.Windows.Forms.Label label_version;
         private System.Windows.Forms.Label label_feedback;
         private System.Windows.Forms.Button button_openFile;
+        private System.Windows.Forms.Label label_InfoUpdateNotice;
     }
 }
 

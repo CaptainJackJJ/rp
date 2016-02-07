@@ -21,6 +21,8 @@ namespace RPlayer
   {
 
     #region properties
+    private InfoSectionUI m_infoSectionTorrentUI;
+    static public string m_strDownloadedFolderUrl;
 
     private bool m_bMainFormMouseDown = false;
     private bool m_bTopBarAreaMouseDown = false;
@@ -104,7 +106,8 @@ namespace RPlayer
     // So add this flag to let Resize and Move method do nothing before constructed.
     private bool m_bConstructed = false;
 
-    private Updater m_updaterApp;
+    private AppUpdater m_updaterApp;
+    private InfoUpdater m_updaterInfo;
 
     #endregion
 
@@ -114,6 +117,8 @@ namespace RPlayer
       Directory.CreateDirectory(m_tempPath);
       m_CoreTempPath = m_tempPath + "\\CoreTemp";
       Directory.CreateDirectory(m_CoreTempPath);
+      m_strDownloadedFolderUrl = m_tempPath + "\\" + GlobalConstants.Common.strDownloadedFolderName;
+      Directory.CreateDirectory(m_strDownloadedFolderUrl);
 
       //------------- only run one instance
       bool bRunning = false;
@@ -165,6 +170,7 @@ namespace RPlayer
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
         label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+        label_Max.Visible = false;
         label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
@@ -210,22 +216,20 @@ namespace RPlayer
       InitContextMenuStrip();
 
       SetUiLange();
-
-      if (args.Length == 0)
-        ConfigUiByArchive(true);
-      else
-        ConfigUiByArchive(false);
+      ConfigUiByArchive();
 
       Cursor.Show();
       m_bCursorShowing = true;
 
-      m_updaterApp = new Updater(this);
-
       m_threadDoSomething = new Thread(ThreadDoSomething);
       m_threadDoSomething.Start();
 
+      InfoLocalXmlHandler.Load(m_tempPath);
+      m_infoSectionTorrentUI = new InfoSectionUI(this);
+
       if (args.Length > 0)
       {
+        m_infoSectionTorrentUI.ShowSection(false);
         StartPlay(args[0]);
       }
 
@@ -241,7 +245,8 @@ namespace RPlayer
         m_threadDoSomething = null;
       }
 
-      m_updaterApp.Stop();
+      m_updaterApp.ThreadStop();
+      m_updaterInfo.ThreadStop();
 
       if (Core.IsPlaying())
         StopPlay();
@@ -253,12 +258,6 @@ namespace RPlayer
 
       Archive.mainFormLocX = this.Location.X;
       Archive.mainFormLocY = this.Location.Y;
-      if (m_bPlayed ||
-        (this.Width != Archive.mainFormWidthDefault || this.Height != Archive.mainFormHeightDefault))
-      {
-        Archive.mainFormWidth = this.Width;
-        Archive.mainFormHeight = this.Height;
-      }
 
       Archive.Save();
 
@@ -274,6 +273,32 @@ namespace RPlayer
         FormRegisterAsk f = new FormRegisterAsk(this);
         f.ShowDialog();
         AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
+      }
+
+      m_updaterApp = new AppUpdater(this);
+      m_updaterApp.ThreadStart();
+
+      m_updaterInfo = new InfoUpdater(this);
+      m_updaterInfo.ThreadStart();
+    }
+
+    delegate void InfoUpdateNoticeDel(string strNotice);
+    public void InfoUpdateNotice(string strNotice)
+    {
+      if (this.InvokeRequired)
+      {
+        InfoUpdateNoticeDel del = new InfoUpdateNoticeDel(InfoUpdateNotice);
+        this.Invoke(del,strNotice);
+      }
+      else
+      {
+        label_InfoUpdateNotice.Text = strNotice;
+        if (strNotice == "")
+        {
+          m_infoSectionTorrentUI.FreshItems();
+          FormNotice f = new FormNotice("下载资源已更新完毕");
+          f.ShowDialog();
+        }
       }
     }
 
@@ -337,8 +362,6 @@ namespace RPlayer
 
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
-
-        m_updaterApp.Start();
       }
     }
 
@@ -445,17 +468,17 @@ namespace RPlayer
 
     private void ConfigByArchive()
     {
-      ConfigUiByArchive(false);
+      ConfigUiByArchive();
       ConfigRpcoreByArchive();
     }
 
-    private void ConfigUiByArchive(bool bFirstLanuchAndNonPlay)
+    private void ConfigUiByArchive()
     {
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
       if (Archive.mainFormLocX >= 0 && Archive.mainFormLocY >= 0)
         this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-      if(bFirstLanuchAndNonPlay)
+      if (!m_bPlayingForm)
         this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
       else
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
@@ -771,6 +794,12 @@ namespace RPlayer
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
+      if (m_bPlayingForm)
+      {
+        Archive.mainFormWidth = this.Width;
+        Archive.mainFormHeight = this.Height;
+      }
+
       if (!m_bConstructed)
         return;
       label_Close.Location =
@@ -788,6 +817,9 @@ namespace RPlayer
       label_feedback.Location =
          new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
                label_settings.Location.Y);
+
+      button_openFile.Location =
+        new Point(10, this.Size.Height - 50);
 
       label_Play.Location =
          new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
@@ -816,23 +848,6 @@ namespace RPlayer
       ChangeSubFormsLocAndSize();
 
       ChangePlayWndSizeInNonDesktop();
-    }
-
-    public void ChangePlayWndSizeInNonDesktop()
-    {
-      if (!m_bDesktop)
-      {
-        int playWndWidth = this.Width - 4;
-        int playWndHeight = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
-        if (Archive.plistShowingInNoneDesktop)
-          playWndWidth -= (m_formPlaylist.Width + 5);
-        label_playWnd.Size = new Size(playWndWidth, playWndHeight);
-        Core.PlayWndResized(playWndWidth, playWndHeight);
-
-        button_openFile.Location =
-          new Point(label_playWnd.Location.X + (int)(this.Width * 0.5 - button_openFile.Width * 0.5),
-            label_playWnd.Location.Y + (int)(playWndHeight * 0.5 - button_openFile.Height * 0.5));
-      }
     }
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -873,20 +888,24 @@ namespace RPlayer
 
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
     {
-      ResizeOrMoveFrom(sender, e);
-
-      ShowResizebaleCursor(e);
-    }
-
-    private void ResizeOrMoveFrom(object sender, MouseEventArgs e)
-    {
       if (m_bTopBarAreaMouseDown)
       {
         int xDiff = e.X - m_TopBarAreaMouseDownPos.X;
         int yDiff = e.Y - m_TopBarAreaMouseDownPos.Y;
         this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
       }
-      else if (m_bRightBottomCornerMouseDown)
+      else if (m_bPlayingForm)
+      {
+        ShowResizebaleCursor(e);
+        ResizeFrom(sender, e);        
+      }
+      else
+        Cursor = Cursors.Arrow;
+    }
+
+    private void ResizeFrom(object sender, MouseEventArgs e)
+    {
+      if (m_bRightBottomCornerMouseDown)
       {
         Control control = (Control)sender;
         Point MouseScreenPoint = control.PointToScreen(new Point(e.X, e.Y));
@@ -995,69 +1014,11 @@ namespace RPlayer
       }
     }
 
-    private void ShowResizebaleCursor(MouseEventArgs e)
-    {
-      if ((e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
-      ||
-      (e.Location.X < m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
-      )
-      {
-        Cursor = Cursors.SizeNWSE;
-      }
-      else if ((e.Location.X < m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
-          ||
-          (e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
-          )
-      {
-        Cursor = Cursors.SizeNESW;
-      }
-      else if (e.Location.X < m_nResizeableAreaSize
-        || e.Location.X >= this.Size.Width - m_nResizeableAreaSize)
-      {
-        Cursor = Cursors.SizeWE;
-      }
-      else if (e.Location.Y < m_nResizeableAreaSize ||
-        e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
-      {
-        Cursor = Cursors.SizeNS;
-      }
-      else
-      {
-        Cursor = Cursors.Arrow;
-      }
-    }
-
     private void MainForm_Move(object sender, EventArgs e)
     {
       if (!m_bConstructed)
         return;
       ChangeSubFormsLocAndSize();
-    }
-
-    private void UpdateEdge()
-    {
-      label_TopEdge.Visible = label_LeftEdge.Visible
-          = label_BottomEdge.Visible = label_RightEdge.Visible = true;
-
-      label_TopEdge.Size
-          = new Size(this.Size.Width - m_nEdgeMargin * 2,
-              label_TopEdge.Size.Height);
-      label_LeftEdge.Size
-          = new Size(label_LeftEdge.Width,
-              this.Size.Height - m_nEdgeMargin * 2 - label_TopEdge.Size.Height * 2);
-      label_BottomEdge.Size
-          = new Size(this.Size.Width - m_nEdgeMargin * 2,
-              label_BottomEdge.Size.Height);
-      label_RightEdge.Size
-          = new Size(label_RightEdge.Width,
-              this.Size.Height - m_nEdgeMargin * 2 - label_TopEdge.Size.Height * 2);
-
-      label_BottomEdge.Location
-          = new Point(label_BottomEdge.Location.X,
-              this.Size.Height - m_nEdgeMargin - label_BottomEdge.Size.Height);
-      label_RightEdge.Location
-          = new Point(this.Size.Width - m_nEdgeMargin - label_RightEdge.Size.Width,
-              label_RightEdge.Location.Y);
     }
 
     private void label_Min_MouseEnter(object sender, EventArgs e)
@@ -1524,6 +1485,77 @@ namespace RPlayer
       label_feedback.ForeColor = Color.White;
     }
 
+    public void ChangePlayWndSizeInNonDesktop()
+    {
+      if (!m_bDesktop)
+      {
+        int playWndWidth = this.Width - 4;
+        int playWndHeight = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
+        if (Archive.plistShowingInNoneDesktop)
+          playWndWidth -= (m_formPlaylist.Width + 5);
+        label_playWnd.Size = new Size(playWndWidth, playWndHeight);
+        Core.PlayWndResized(playWndWidth, playWndHeight);
+      }
+    }
+
+    private void ShowResizebaleCursor(MouseEventArgs e)
+    {
+      if ((e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+      ||
+      (e.Location.X < m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
+      )
+      {
+        Cursor = Cursors.SizeNWSE;
+      }
+      else if ((e.Location.X < m_nResizeableAreaSize && e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+          ||
+          (e.Location.X >= this.Size.Width - m_nResizeableAreaSize && e.Location.Y < m_nResizeableAreaSize)
+          )
+      {
+        Cursor = Cursors.SizeNESW;
+      }
+      else if (e.Location.X < m_nResizeableAreaSize
+        || e.Location.X >= this.Size.Width - m_nResizeableAreaSize)
+      {
+        Cursor = Cursors.SizeWE;
+      }
+      else if (e.Location.Y < m_nResizeableAreaSize ||
+        e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
+      {
+        Cursor = Cursors.SizeNS;
+      }
+      else
+      {
+        Cursor = Cursors.Arrow;
+      }
+    }
+
+    private void UpdateEdge()
+    {
+      label_TopEdge.Visible = label_LeftEdge.Visible
+          = label_BottomEdge.Visible = label_RightEdge.Visible = true;
+
+      label_TopEdge.Size
+          = new Size(this.Size.Width - m_nEdgeMargin * 2,
+              label_TopEdge.Size.Height);
+      label_LeftEdge.Size
+          = new Size(label_LeftEdge.Width,
+              this.Size.Height - m_nEdgeMargin * 2 - label_TopEdge.Size.Height * 2);
+      label_BottomEdge.Size
+          = new Size(this.Size.Width - m_nEdgeMargin * 2,
+              label_BottomEdge.Size.Height);
+      label_RightEdge.Size
+          = new Size(label_RightEdge.Width,
+              this.Size.Height - m_nEdgeMargin * 2 - label_TopEdge.Size.Height * 2);
+
+      label_BottomEdge.Location
+          = new Point(label_BottomEdge.Location.X,
+              this.Size.Height - m_nEdgeMargin - label_BottomEdge.Size.Height);
+      label_RightEdge.Location
+          = new Point(this.Size.Width - m_nEdgeMargin - label_RightEdge.Size.Width,
+              label_RightEdge.Location.Y);
+    }
+
     private void ChangeSubFormsLocAndSize()
     {
       try
@@ -1573,6 +1605,8 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        m_infoSectionTorrentUI.ShowSection(false);
+        this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
         if (!m_bPlayed)
         {
           m_bPlayed = true;
@@ -1584,6 +1618,7 @@ namespace RPlayer
           }
         }
 
+        label_Max.Visible = true;
         label_playWnd.Visible = true;
         this.BackColor = Color.FromArgb(255, 0, 0, 0); 
         button_openFile.Hide();
@@ -1607,6 +1642,10 @@ namespace RPlayer
       }
       else
       {
+        if (this.WindowState == FormWindowState.Maximized)
+          this.WindowState = FormWindowState.Normal;
+        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
+        m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
         this.BackColor = Color.FromArgb(255, 66, 75, 92); 
         try
@@ -1629,6 +1668,7 @@ namespace RPlayer
         }
         catch { }
 
+        label_Max.Visible = false;
         button_openFile.Show();
         label_Play.Show();
         label_Volume.Show();

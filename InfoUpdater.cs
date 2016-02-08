@@ -67,7 +67,7 @@ namespace RPlayer
 
       if (InfoLocalXmlHandler.IsNewVersion(strVersionRemote))
       {
-        m_mainForm.InfoUpdateNotice("下载资源更新中...");
+        m_mainForm.InfoUpdateNotice("电影资源更新中...");
         foreach (XmlNode nodeSection in rootElem.ChildNodes)
         {
           if (m_bStopThread) return;

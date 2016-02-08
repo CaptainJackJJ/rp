@@ -57,7 +57,7 @@
       this.label_notice.Name = "label_notice";
       this.label_notice.Size = new System.Drawing.Size(133, 14);
       this.label_notice.TabIndex = 48;
-      this.label_notice.Text = "下载资源已更新完毕";
+      this.label_notice.Text = "电影资源已更新完毕";
       // 
       // FormNotice
       // 

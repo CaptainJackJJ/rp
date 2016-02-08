@@ -296,7 +296,7 @@ namespace RPlayer
         if (strNotice == "")
         {
           m_infoSectionTorrentUI.FreshItems();
-          FormNotice f = new FormNotice("下载资源已更新完毕");
+          FormNotice f = new FormNotice("电影资源已更新完毕");
           f.ShowDialog();
         }
       }
@@ -1605,6 +1605,7 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        this.BackColor = Color.FromArgb(255, 0, 0, 0);
         m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
         if (!m_bPlayed)
@@ -1620,7 +1621,6 @@ namespace RPlayer
 
         label_Max.Visible = true;
         label_playWnd.Visible = true;
-        this.BackColor = Color.FromArgb(255, 0, 0, 0); 
         button_openFile.Hide();
         label_Play.Hide();
         label_Volume.Hide();

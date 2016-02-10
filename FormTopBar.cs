@@ -144,7 +144,7 @@ namespace RPlayer
 
     private void label_Max_Click(object sender, EventArgs e)
     {
-      m_mainForm.ClickMax();
+      m_mainForm.SwitchDesktopMode(true, false);
     }
 
     private void label_Max_MouseEnter(object sender, EventArgs e)

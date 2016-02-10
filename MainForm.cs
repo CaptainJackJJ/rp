@@ -51,7 +51,6 @@ namespace RPlayer
     private const int m_nBottomButtonsWidth = 25;
     private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
 
-    private bool m_bMaxed = false;
     public bool m_bDesktop;
 
     public FormBottomBar m_formBottomBar;
@@ -169,8 +168,6 @@ namespace RPlayer
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
-        label_Max.Visible = false;
         label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
         label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
@@ -193,7 +190,6 @@ namespace RPlayer
         label_Play.Text = "play";
         label_settings.Text = "settings";        
         label_Close.Text = "close";
-        label_Max.Text = "max";
         label_Min.Text = "min";
         label_playlist.Text = "Plist";
       }
@@ -255,9 +251,6 @@ namespace RPlayer
 
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
-
-      Archive.mainFormLocX = this.Location.X;
-      Archive.mainFormLocY = this.Location.Y;
 
       Archive.Save();
 
@@ -476,8 +469,6 @@ namespace RPlayer
     {
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
-      if (Archive.mainFormLocX >= 0 && Archive.mainFormLocY >= 0)
-        this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
       if (!m_bPlayingForm)
         this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
       else
@@ -794,7 +785,7 @@ namespace RPlayer
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
-      if (m_bPlayingForm)
+      if (m_bPlayingForm && !m_bDesktop)
       {
         Archive.mainFormWidth = this.Width;
         Archive.mainFormHeight = this.Height;
@@ -805,9 +796,6 @@ namespace RPlayer
       label_Close.Location =
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
-      label_Max.Location =
-          new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonsWidth * 2,
-              label_Max.Location.Y);
       label_Min.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
               label_Min.Location.Y);
@@ -1019,6 +1007,11 @@ namespace RPlayer
       if (!m_bConstructed)
         return;
       ChangeSubFormsLocAndSize();
+      if (m_bPlayingForm && !m_bDesktop)
+      {
+        Archive.mainFormLocX = this.Location.X;
+        Archive.mainFormLocY = this.Location.Y;
+      }
     }
 
     private void label_Min_MouseEnter(object sender, EventArgs e)
@@ -1063,50 +1056,6 @@ namespace RPlayer
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-      }
-      catch { }
-    }
-
-    public void ClickMax()
-    {
-      if(m_bDesktop)
-      {
-        SwitchDesktopMode(false,false);
-      }
-      else
-      {
-        if (m_bMaxed)
-        {
-          this.WindowState = FormWindowState.Normal;
-          m_bMaxed = false;
-        }
-        else
-        {
-          this.WindowState = FormWindowState.Maximized;
-          m_bMaxed = true;
-        }
-      }
-    }
-
-    private void label_Max_Click(object sender, EventArgs e)
-    {
-      ClickMax();
-    }
-
-    private void label_Max_MouseEnter(object sender, EventArgs e)
-    {
-      try
-      {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
-      }
-      catch { }
-    }
-
-    private void label_Max_MouseLeave(object sender, EventArgs e)
-    {
-      try
-      {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
       }
       catch { }
     }
@@ -1299,8 +1248,6 @@ namespace RPlayer
       if (m_bDesktop)
       {
         m_bDesktop = true;
-        if (this.WindowState == FormWindowState.Maximized)
-          ChangeSubFormsLocAndSize(); // Manually call it, because main form will not resize, it was max.
         this.WindowState = FormWindowState.Maximized;
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
@@ -1608,6 +1555,7 @@ namespace RPlayer
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+        this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
         if (!m_bPlayed)
         {
           m_bPlayed = true;
@@ -1619,7 +1567,6 @@ namespace RPlayer
           }
         }
 
-        label_Max.Visible = true;
         label_playWnd.Visible = true;
         button_openFile.Hide();
         label_Play.Hide();
@@ -1668,7 +1615,6 @@ namespace RPlayer
         }
         catch { }
 
-        label_Max.Visible = false;
         button_openFile.Show();
         label_Play.Show();
         label_Volume.Show();

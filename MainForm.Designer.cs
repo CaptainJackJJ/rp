@@ -32,7 +32,6 @@
       this.label_Play = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
-      this.label_Max = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_RightEdge = new System.Windows.Forms.Label();
@@ -82,17 +81,6 @@
       this.label_Close.Click += new System.EventHandler(this.label_Close_Click);
       this.label_Close.MouseEnter += new System.EventHandler(this.label_Close_MouseEnter);
       this.label_Close.MouseLeave += new System.EventHandler(this.label_Close_MouseLeave);
-      // 
-      // label_Max
-      // 
-      this.label_Max.BackColor = System.Drawing.Color.Transparent;
-      this.label_Max.Location = new System.Drawing.Point(859, 13);
-      this.label_Max.Name = "label_Max";
-      this.label_Max.Size = new System.Drawing.Size(13, 13);
-      this.label_Max.TabIndex = 27;
-      this.label_Max.Click += new System.EventHandler(this.label_Max_Click);
-      this.label_Max.MouseEnter += new System.EventHandler(this.label_Max_MouseEnter);
-      this.label_Max.MouseLeave += new System.EventHandler(this.label_Max_MouseLeave);
       // 
       // label_LeftEdge
       // 
@@ -310,7 +298,6 @@
       this.Controls.Add(this.label_RightEdge);
       this.Controls.Add(this.label_TopEdge);
       this.Controls.Add(this.label_LeftEdge);
-      this.Controls.Add(this.label_Max);
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_Min);
       this.Controls.Add(this.label_Play);
@@ -337,7 +324,6 @@
         private System.Windows.Forms.Label label_Play;
         private System.Windows.Forms.Label label_Min;
         private System.Windows.Forms.Label label_Close;
-        private System.Windows.Forms.Label label_Max;
         private System.Windows.Forms.Label label_LeftEdge;
         private System.Windows.Forms.Label label_TopEdge;
         private System.Windows.Forms.Label label_RightEdge;

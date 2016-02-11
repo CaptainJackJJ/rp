@@ -44,7 +44,7 @@
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
       this.label_version = new System.Windows.Forms.Label();
-      this.label_feedback = new System.Windows.Forms.Label();
+      this.label_share = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
       this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
       this.SuspendLayout();
@@ -232,21 +232,21 @@
       this.label_version.MouseEnter += new System.EventHandler(this.label_version_MouseEnter);
       this.label_version.MouseLeave += new System.EventHandler(this.label_version_MouseLeave);
       // 
-      // label_feedback
+      // label_share
       // 
-      this.label_feedback.AutoSize = true;
-      this.label_feedback.BackColor = System.Drawing.Color.Transparent;
-      this.label_feedback.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.label_feedback.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_feedback.ForeColor = System.Drawing.Color.White;
-      this.label_feedback.Location = new System.Drawing.Point(674, 13);
-      this.label_feedback.Name = "label_feedback";
-      this.label_feedback.Size = new System.Drawing.Size(61, 12);
-      this.label_feedback.TabIndex = 45;
-      this.label_feedback.Text = "feedback";
-      this.label_feedback.Click += new System.EventHandler(this.label_feedback_Click);
-      this.label_feedback.MouseEnter += new System.EventHandler(this.label_feedback_MouseEnter);
-      this.label_feedback.MouseLeave += new System.EventHandler(this.label_feedback_MouseLeave);
+      this.label_share.AutoSize = true;
+      this.label_share.BackColor = System.Drawing.Color.Transparent;
+      this.label_share.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_share.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_share.ForeColor = System.Drawing.Color.Fuchsia;
+      this.label_share.Location = new System.Drawing.Point(674, 13);
+      this.label_share.Name = "label_share";
+      this.label_share.Size = new System.Drawing.Size(40, 12);
+      this.label_share.TabIndex = 45;
+      this.label_share.Text = "Share";
+      this.label_share.Click += new System.EventHandler(this.label_share_Click);
+      this.label_share.MouseEnter += new System.EventHandler(this.label_share_MouseEnter);
+      this.label_share.MouseLeave += new System.EventHandler(this.label_share_MouseLeave);
       // 
       // button_openFile
       // 
@@ -287,7 +287,7 @@
       this.ClientSize = new System.Drawing.Size(915, 562);
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
-      this.Controls.Add(this.label_feedback);
+      this.Controls.Add(this.label_share);
       this.Controls.Add(this.label_InfoUpdateNotice);
       this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
@@ -336,7 +336,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label_logo;
         private System.Windows.Forms.Label label_version;
-        private System.Windows.Forms.Label label_feedback;
+        private System.Windows.Forms.Label label_share;
         private System.Windows.Forms.Button button_openFile;
         private System.Windows.Forms.Label label_InfoUpdateNotice;
     }

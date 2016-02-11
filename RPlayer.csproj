@@ -62,12 +62,6 @@
     <Compile Include="FormNotice.Designer.cs">
       <DependentUpon>FormNotice.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormFeedback.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormFeedback.Designer.cs">
-      <DependentUpon>FormFeedback.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBottomBar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,9 +178,6 @@
     <Compile Include="UtilsCommon.cs" />
     <EmbeddedResource Include="FormNotice.resx">
       <DependentUpon>FormNotice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormFeedback.resx">
-      <DependentUpon>FormFeedback.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBottomBar.resx">
       <DependentUpon>FormBottomBar.cs</DependentUpon>

@@ -550,9 +550,9 @@ namespace RPlayer
       label_logo.Text = UiLang.rabbitPlayer;
 
       label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
-      label_feedback.Text = UiLang.labelFeedback;
-      label_feedback.Location =
-        new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
+      label_share.Text = UiLang.labelShare;
+      label_share.Location =
+        new Point(label_settings.Location.X - label_share.Width - m_nTopBarButtonsMargin,
             label_settings.Location.Y);
       button_openFile.Text = UiLang.buttonOpenFile;
     }
@@ -802,8 +802,8 @@ namespace RPlayer
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4,
               label_settings.Location.Y);
-      label_feedback.Location =
-         new Point(label_settings.Location.X - label_feedback.Width - m_nTopBarButtonsMargin,
+      label_share.Location =
+         new Point(label_settings.Location.X - label_share.Width - m_nTopBarButtonsMargin,
                label_settings.Location.Y);
 
       button_openFile.Location =
@@ -1416,20 +1416,19 @@ namespace RPlayer
       label_version.ForeColor = Color.White;
     }
 
-    private void label_feedback_Click(object sender, EventArgs e)
+    private void label_share_Click(object sender, EventArgs e)
     {
-      FormFeedback f = new FormFeedback();
-      f.Show();
+      System.Diagnostics.Process.Start("http://rabbitplayer.com/");
     }
 
-    private void label_feedback_MouseEnter(object sender, EventArgs e)
+    private void label_share_MouseEnter(object sender, EventArgs e)
     {
-      label_feedback.ForeColor = Color.DodgerBlue;
+      label_share.ForeColor = Color.DodgerBlue;
     }
 
-    private void label_feedback_MouseLeave(object sender, EventArgs e)
+    private void label_share_MouseLeave(object sender, EventArgs e)
     {
-      label_feedback.ForeColor = Color.White;
+      label_share.ForeColor = Color.Fuchsia;
     }
 
     public void ChangePlayWndSizeInNonDesktop()

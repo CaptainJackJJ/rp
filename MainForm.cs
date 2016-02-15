@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    public InfoLocalXmlHandler m_infoLocalXmlHandler;
     private InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
@@ -93,7 +94,7 @@ namespace RPlayer
     private readonly string m_strRPUpdaterName = "RPUpdater";
     public string m_strAppVersion;
 
-    public string m_tempPath;
+    static public string m_tempPath;
     public string m_CoreTempPath;
     private Thread m_threadDoSomething;
 
@@ -165,33 +166,21 @@ namespace RPlayer
 
       label_version.Text = m_strAppVersion;
 
-      try
+      label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+      label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
+      label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+      label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
+      label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
+      if (args.Length == 0)
       {
-        label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-        label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
-        label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
-        label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
-        label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
-        if (args.Length == 0)
-        {
-          this.BackColor = Color.FromArgb(255, 66, 75, 92);
-        }
-        else
-        {
-          button_openFile.Hide();
-          label_Play.Hide();
-          label_playWnd.Visible = true;
-          this.BackColor = Color.FromArgb(255, 0, 0, 0);
-        }
+        this.BackColor = Color.FromArgb(255, 66, 75, 92);
       }
-      catch
+      else
       {
-        this.BackColor = Color.Gainsboro;
-        label_Play.Text = "play";
-        label_settings.Text = "settings";        
-        label_Close.Text = "close";
-        label_Min.Text = "min";
-        label_playlist.Text = "Plist";
+        button_openFile.Hide();
+        label_Play.Hide();
+        label_playWnd.Visible = true;
+        this.BackColor = Color.FromArgb(255, 0, 0, 0);
       }
      
       UiLang.SetLang(Archive.lang);
@@ -220,8 +209,9 @@ namespace RPlayer
       m_threadDoSomething = new Thread(ThreadDoSomething);
       m_threadDoSomething.Start();
 
-      InfoLocalXmlHandler.Load(m_tempPath);
-      m_infoSectionTorrentUI = new InfoSectionUI(this);
+      m_infoLocalXmlHandler = new InfoLocalXmlHandler();
+      m_infoLocalXmlHandler.Load(m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlLocalName);
+      m_infoSectionTorrentUI = new InfoSectionUI(this, m_infoLocalXmlHandler);
 
       if (args.Length > 0)
       {
@@ -1016,20 +1006,12 @@ namespace RPlayer
 
     private void label_Min_MouseEnter(object sender, EventArgs e)
     {
-      try
-      {
-        label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
-      }
-      catch { }
+      label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\minFocus.png");
     }
 
     private void label_Min_MouseLeave(object sender, EventArgs e)
     {
-      try
-      {
-        label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
-      }
-      catch { }
+      label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
     }
 
     private void label_Min_Click(object sender, EventArgs e)
@@ -1044,20 +1026,12 @@ namespace RPlayer
 
     private void label_Close_MouseEnter(object sender, EventArgs e)
     {
-      try
-      {
-        label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
-      }
-      catch { }
+      label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\closeFocus.png");
     }
 
     private void label_Close_MouseLeave(object sender, EventArgs e)
     {
-      try
-      {
-        label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-      }
-      catch { }
+      label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
     }
 
     private void label_Volume_MouseEnter(object sender, EventArgs e)

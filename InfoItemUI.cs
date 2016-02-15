@@ -11,7 +11,7 @@ namespace RPlayer
 {
   class InfoItemUI
   {
-    private GroupBox m_groupBoxItem;
+    public GroupBox m_groupBoxItem;
     private PictureBox m_PicBoxImage;
     private Label m_labelTitle;
     private Label m_labelDate;
@@ -19,12 +19,19 @@ namespace RPlayer
     private Label m_labelLang;
     private RichTextBox m_textBoxDesc;
     private Button[] m_btnFiles;
+    private bool m_bInfoMore;
 
-    public InfoItemUI(Panel panelSection, int x, int y)
+    public InfoItemUI(Panel panelSection, int x, int y,bool bInfoMore)
     {
+      m_bInfoMore = bInfoMore;
       m_groupBoxItem = new GroupBox();
       m_groupBoxItem.Location = new Point(x, y);
-      m_groupBoxItem.Size = new Size(445, 420);
+      int nHeight;
+      if (!m_bInfoMore)
+        nHeight = 420;
+      else
+        nHeight = 338;
+      m_groupBoxItem.Size = new Size(445, nHeight);
       m_groupBoxItem.Text = "";
 
       m_PicBoxImage = new PictureBox();
@@ -71,15 +78,18 @@ namespace RPlayer
       m_labelLang.TextAlign = ContentAlignment.MiddleLeft;
       m_groupBoxItem.Controls.Add(m_labelLang);
 
-      m_textBoxDesc = new RichTextBox();
-      m_textBoxDesc.BackColor = GlobalConstants.Common.colorMainBG;
-      m_textBoxDesc.BorderStyle = BorderStyle.None;
-      m_textBoxDesc.Font = new Font("SimSun", 9.0f);
-      m_textBoxDesc.ForeColor = colorLableFore;
-      m_textBoxDesc.Location = new Point(7, 337);
-      m_textBoxDesc.Size = new Size(435, 78);
-      m_textBoxDesc.ScrollBars = RichTextBoxScrollBars.None;
-      m_groupBoxItem.Controls.Add(m_textBoxDesc);
+      if (!m_bInfoMore)
+      {
+        m_textBoxDesc = new RichTextBox();
+        m_textBoxDesc.BackColor = GlobalConstants.Common.colorMainBG;
+        m_textBoxDesc.BorderStyle = BorderStyle.None;
+        m_textBoxDesc.Font = new Font("SimSun", 9.0f);
+        m_textBoxDesc.ForeColor = colorLableFore;
+        m_textBoxDesc.Location = new Point(7, 337);
+        m_textBoxDesc.Size = new Size(435, 78);
+        m_textBoxDesc.ScrollBars = RichTextBoxScrollBars.None;
+        m_groupBoxItem.Controls.Add(m_textBoxDesc);
+      }
 
       m_btnFiles = new Button[3];
       for (int i = 0; i < m_btnFiles.Length; ++i)
@@ -103,6 +113,8 @@ namespace RPlayer
 
     public void FreshItem(XmlElement itemElem)
     {
+      m_groupBoxItem.Visible = true;
+
       string strImageName
         = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemImage)[0].Attributes[GlobalConstants.infoXml.strAttrName].InnerText;
 
@@ -115,7 +127,10 @@ namespace RPlayer
       m_labelDate.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemDate)[0].InnerText;
       m_labelCasts.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemCasts)[0].InnerText;
       m_labelLang.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemLang)[0].InnerText;
-      m_textBoxDesc.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemDesc)[0].InnerText;
+      if (!m_bInfoMore)
+      {
+        m_textBoxDesc.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemDesc)[0].InnerText;
+      }
 
       XmlNodeList fileNodeList = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemFile);
 

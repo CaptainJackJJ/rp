@@ -23,7 +23,7 @@ namespace RPlayer
     public InfoUpdater(MainForm mainForm)
     {
       m_mainForm = mainForm;
-      m_strDownloadedInfoRemoteXmlUrl = m_mainForm.m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlRemoteName;
+      m_strDownloadedInfoRemoteXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlRemoteName;
 
       m_InfoRemoteXmlDownloader = new WebClient();
       m_InfoRemoteXmlDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
@@ -77,60 +77,60 @@ namespace RPlayer
       }
       
 
-      if (InfoLocalXmlHandler.IsNewVersion(strVersionRemote))
+      if (m_mainForm.m_infoLocalXmlHandler.IsNewVersion(strVersionRemote))
       {
         try
         {
-          m_mainForm.InfoUpdateNotice("电影资源更新中...");
-          foreach (XmlNode nodeSection in rootElem.ChildNodes)
-          {
-            if (m_bStopThread) return;
-            string strTypeSection = nodeSection.Attributes[GlobalConstants.infoXml.strAttrType].InnerText;
+        m_mainForm.InfoUpdateNotice("电影资源更新中...");
+        foreach (XmlNode nodeSection in rootElem.ChildNodes)
+        {
+          if (m_bStopThread) return;
+          string strTypeSection = nodeSection.Attributes[GlobalConstants.infoXml.strAttrType].InnerText;
             if (strTypeSection == GlobalConstants.infoXml.strTypeValueTorrent)
+          {
+            foreach (XmlNode nodeCategory in nodeSection.ChildNodes)
             {
-              foreach (XmlNode nodeCategory in nodeSection.ChildNodes)
+              if (m_bStopThread) return;
+              foreach (XmlNode nodeItem in nodeCategory.ChildNodes)
               {
                 if (m_bStopThread) return;
-                foreach (XmlNode nodeItem in nodeCategory.ChildNodes)
+                XmlAttribute attrNew = xmlRemote.CreateAttribute(GlobalConstants.infoXml.strAttrNew);
+                bool bNew = false;
+                if (!m_mainForm.m_infoLocalXmlHandler.IsItemExist(nodeItem.Attributes[GlobalConstants.infoXml.strAttrTitle].InnerText))
                 {
-                  if (m_bStopThread) return;
-                  XmlAttribute attrNew = xmlRemote.CreateAttribute(GlobalConstants.infoXml.strAttrNew);
-                  bool bNew = false;
-                  if (!InfoLocalXmlHandler.IsItemExist(nodeItem.Attributes[GlobalConstants.infoXml.strAttrTitle].InnerText))
+                  bNew = true;
+                  foreach (XmlNode node in nodeItem.ChildNodes)
                   {
-                    bNew = true;
-                    foreach (XmlNode node in nodeItem.ChildNodes)
-                    {
-                      if (m_bStopThread) return;
+                    if (m_bStopThread) return;
                       if (node.Name == GlobalConstants.infoXml.strElemImage || node.Name == GlobalConstants.infoXml.strElemFile)
-                      {
-                        string strItemName = node.Attributes[GlobalConstants.infoXml.strAttrName].InnerText;
-                        string strDownloadedUrl = MainForm.m_strDownloadedFolderUrl + "\\" + strItemName;
+                    {
+                      string strItemName = node.Attributes[GlobalConstants.infoXml.strAttrName].InnerText;
+                      string strDownloadedUrl = MainForm.m_strDownloadedFolderUrl + "\\" + strItemName;
                         if (!File.Exists(strDownloadedUrl)) // everythings is unique.(subtitle file append date)
-                        {
-                          string strRemoteUrl = GlobalConstants.Common.strInfoItemFolderRemoteUrl + "\\" + strItemName;
-                          m_bItemDownloadFinished = false;
-                          m_ItemDownloader.DownloadFileAsync(new Uri(strRemoteUrl), strDownloadedUrl);
+                      {
+                        string strRemoteUrl = GlobalConstants.Common.strInfoItemFolderRemoteUrl + "\\" + strItemName;
+                        m_bItemDownloadFinished = false;
+                        m_ItemDownloader.DownloadFileAsync(new Uri(strRemoteUrl), strDownloadedUrl);
 
                           while (!m_bItemDownloadFinished) { Thread.Sleep(100); }
-                        }
                       }
                     }
                   }
-                  attrNew.Value = bNew.ToString();
-                  nodeItem.Attributes.Append(attrNew);
                 }
+                attrNew.Value = bNew.ToString();
+                nodeItem.Attributes.Append(attrNew);
               }
             }
-            else
-            {
-              MessageBox.Show("Only support torrent section");
-            }
           }
-
-          InfoLocalXmlHandler.Replace(xmlRemote);
-          m_mainForm.InfoUpdateNotice("");
+          else
+          {
+            MessageBox.Show("Only support torrent section");
+          }
         }
+
+        m_mainForm.m_infoLocalXmlHandler.Replace(xmlRemote);
+        m_mainForm.InfoUpdateNotice("");
+      }
         catch (Exception ex)
         {
           Core.WriteLog(Core.ELogType.error, "dl info crash: " + ex.ToString());

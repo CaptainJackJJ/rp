@@ -9,15 +9,15 @@ namespace RPlayer
 {
   public class InfoLocalXmlHandler
   {
-    static private string m_strInfoXmlLocalUrl;
-    static public XmlDocument m_xml;
-    static private List<string> m_itemsList;
+    private string m_strInfoXmlLocalUrl;
+    public XmlDocument m_xml;
+    private List<string> m_itemsList;
 
-    static public void Load(string xmlParentDir)
+    public void Load(string xmlUrl)
     {
       m_itemsList = new List<string>();
 
-      m_strInfoXmlLocalUrl = xmlParentDir + "\\" + GlobalConstants.Common.strInfoXmlLocalName;
+      m_strInfoXmlLocalUrl = xmlUrl;
       m_xml = new XmlDocument();
       try
       {
@@ -31,7 +31,7 @@ namespace RPlayer
       FreshItemsList();
     }
 
-    static public void FreshItemsList()
+    public void FreshItemsList()
     {
       if (m_xml == null)
         return;
@@ -57,7 +57,7 @@ namespace RPlayer
       }
     }
 
-    static public bool IsNewVersion(string strVersion)
+    public bool IsNewVersion(string strVersion)
     {
       if (m_xml == null)
         return true;
@@ -66,7 +66,7 @@ namespace RPlayer
       return UtilsCommon.IsNewVersion(strVersion, strLocalVersion);
     }
 
-    static public bool IsItemExist(string strItemTitle)
+    public bool IsItemExist(string strItemTitle)
     {
       if (m_xml == null)
         return false;
@@ -74,7 +74,7 @@ namespace RPlayer
       return m_itemsList.Exists(element => element == strItemTitle);
     }
 
-    static public void Replace(XmlDocument xmlNew)
+    public void Replace(XmlDocument xmlNew)
     {
       m_xml = xmlNew;
       m_xml.Save(m_strInfoXmlLocalUrl);

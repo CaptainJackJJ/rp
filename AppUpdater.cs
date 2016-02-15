@@ -39,8 +39,8 @@ namespace RPlayer
       m_SetupSelfDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
       m_SetupSelfDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfDownloadCompeleted);
 
-      m_strDownloadedSetupSelfInfoUrl = m_mainForm.m_tempPath + "\\" + m_strSetupSelfInfoXmlName;
-      m_strDownloadedSetupSelfUrl = m_mainForm.m_tempPath + "\\" + m_strSetupSelfName;
+      m_strDownloadedSetupSelfInfoUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfInfoXmlName;
+      m_strDownloadedSetupSelfUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfName;
     }
 
     private void GetRemoteSetupSelfInfo(out string strRemoteSetupSelfVerison, out string strUrl)
@@ -96,7 +96,7 @@ namespace RPlayer
         }
 
         m_strDownloadedVersion = "";
-        AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, true, ref m_strDownloadedVersion);
+        AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strDownloadedVersion);
 
         Core.WriteLog(Core.ELogType.notice, "Download setupSelf");
         try
@@ -116,12 +116,12 @@ namespace RPlayer
       if (e.Cancelled)
         return;
 
-      AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
+      AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
     }
 
     protected override void ThreadProcess()
     {      
-      AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, false, ref m_strDownloadedVersion);
+      AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, false, ref m_strDownloadedVersion);
 
       if (m_mainForm.m_strAppVersion == "")
         MessageBox.Show("AppVersion is empty");
@@ -143,7 +143,7 @@ namespace RPlayer
 
           // This will cause download again when run app next time if launch setup failed.
           m_strDownloadedVersion = "";
-          AppShare.SetGetDownloadedSetupSelfVersion(m_mainForm.m_tempPath, true, ref m_strDownloadedVersion);
+          AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strDownloadedVersion);
         }
         catch(Exception e)
         {

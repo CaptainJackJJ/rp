@@ -105,7 +105,12 @@ namespace RPlayer
     {
       string strImageName
         = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemImage)[0].Attributes[GlobalConstants.infoXml.strAttrName].InnerText;
-      m_PicBoxImage.BackgroundImage = Image.FromFile(MainForm.m_strDownloadedFolderUrl + "\\" + strImageName);
+
+      try
+      {
+        m_PicBoxImage.BackgroundImage = Image.FromFile(MainForm.m_strDownloadedFolderUrl + "\\" + strImageName);
+      }
+      catch { }
       m_labelTitle.Text = itemElem.Attributes[GlobalConstants.infoXml.strAttrTitle].InnerText;
       m_labelDate.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemDate)[0].InnerText;
       m_labelCasts.Text = itemElem.GetElementsByTagName(GlobalConstants.infoXml.strElemCasts)[0].InnerText;

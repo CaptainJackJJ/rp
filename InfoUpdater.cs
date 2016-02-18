@@ -19,11 +19,18 @@ namespace RPlayer
     private WebClient m_ItemDownloader;
     string m_strDownloadedInfoRemoteXmlUrl;
     private bool m_bItemDownloadFinished;
+    bool m_bInfoMore;
 
-    public InfoUpdater(MainForm mainForm)
+    public InfoUpdater(MainForm mainForm,bool bInfoMore)
     {
+      m_bInfoMore = bInfoMore;
       m_mainForm = mainForm;
-      m_strDownloadedInfoRemoteXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlRemoteName;
+      string strXmlRemoteName;
+      if (m_bInfoMore)
+        strXmlRemoteName = GlobalConstants.Common.strInfoMoreXmlRemoteName;
+      else
+        strXmlRemoteName = GlobalConstants.Common.strInfoXmlRemoteName;
+      m_strDownloadedInfoRemoteXmlUrl = MainForm.m_tempPath + "\\" + strXmlRemoteName;
 
       m_InfoRemoteXmlDownloader = new WebClient();
       m_InfoRemoteXmlDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);

@@ -12,6 +12,7 @@ namespace RPlayer
     public class Common
     {
       static public readonly string strInfoXmlRemoteName = "infoRemote.xml";
+      static public readonly string strInfoMoreXmlRemoteName = "infoMoreRemote.xml";
       static public readonly string strInfoRemoteXmlUrl = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strInfoXmlRemoteName;
       static public readonly string strInfoXmlLocalName = "infoLocal.xml";
       static public readonly string strInfoMoreXmlLocalName = "infoMoreLocal.xml";

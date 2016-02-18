@@ -70,6 +70,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormNotice";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+      this.TopMost = true;
       this.ResumeLayout(false);
       this.PerformLayout();
 

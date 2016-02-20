@@ -62,8 +62,20 @@ namespace RPlayer
         Core.WriteLog(Core.ELogType.error, "InfoRemoteXmlDownloadCompeleted: " + ex.ToString());
         return;
       }
-      XmlElement rootElem = (XmlElement)xmlRemote.FirstChild;
-      string strVersionRemote = rootElem.Attributes[GlobalConstants.infoXml.strAttrVersion].InnerText;
+      XmlElement rootElem = null;
+      string strVersionRemote = "";
+
+      try 
+      {
+        rootElem = (XmlElement)xmlRemote.FirstChild;
+        strVersionRemote = rootElem.Attributes[GlobalConstants.infoXml.strAttrVersion].InnerText;
+      }
+      catch (Exception ex)
+      {
+        Core.WriteLog(Core.ELogType.error, "remote info xml is wrong: " + ex.ToString());
+        return;
+      }
+      
 
       if (InfoLocalXmlHandler.IsNewVersion(strVersionRemote))
       {

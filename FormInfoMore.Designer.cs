@@ -30,6 +30,7 @@
     {
       this.label_Close = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
+      this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label_Close
@@ -54,20 +55,35 @@
       this.label_Min.MouseEnter += new System.EventHandler(this.label_Min_MouseEnter);
       this.label_Min.MouseLeave += new System.EventHandler(this.label_Min_MouseLeave);
       // 
+      // label_InfoUpdateNotice
+      // 
+      this.label_InfoUpdateNotice.AutoSize = true;
+      this.label_InfoUpdateNotice.BackColor = System.Drawing.Color.Transparent;
+      this.label_InfoUpdateNotice.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_InfoUpdateNotice.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_InfoUpdateNotice.ForeColor = System.Drawing.Color.White;
+      this.label_InfoUpdateNotice.Location = new System.Drawing.Point(12, 10);
+      this.label_InfoUpdateNotice.Name = "label_InfoUpdateNotice";
+      this.label_InfoUpdateNotice.Size = new System.Drawing.Size(0, 12);
+      this.label_InfoUpdateNotice.TabIndex = 46;
+      // 
       // FormInfoMore
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
       this.ClientSize = new System.Drawing.Size(911, 720);
+      this.Controls.Add(this.label_InfoUpdateNotice);
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_Min);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormInfoMore";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "FormInfoMore";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInfoMore_FormClosing);
       this.Shown += new System.EventHandler(this.FormInfoMore_Shown);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -75,5 +91,6 @@
 
     private System.Windows.Forms.Label label_Close;
     private System.Windows.Forms.Label label_Min;
+    private System.Windows.Forms.Label label_InfoUpdateNotice;
   }
 }

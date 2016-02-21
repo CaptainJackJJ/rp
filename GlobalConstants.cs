@@ -13,11 +13,14 @@ namespace RPlayer
     {
       static public readonly string strInfoXmlRemoteName = "infoRemote.xml";
       static public readonly string strInfoMoreXmlRemoteName = "infoMoreRemote.xml";
-      static public readonly string strInfoRemoteXmlUrl = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strInfoXmlRemoteName;
+      //static private readonly string strRemoteHost = "http://downloads.sourceforge.net/project/piraterabbitplayer/";
+      static private readonly string strRemoteHost = "http://rabbitplayer.cn/";
+      static public readonly string strInfoRemoteXmlUrl = strRemoteHost + strInfoXmlRemoteName;
+      static public readonly string strInfoMoreRemoteXmlUrl = strRemoteHost + strInfoMoreXmlRemoteName;
       static public readonly string strInfoXmlLocalName = "infoLocal.xml";
       static public readonly string strInfoMoreXmlLocalName = "infoMoreLocal.xml";
       static public readonly string strDownloadedFolderName = "download";
-      static public readonly string strInfoItemFolderRemoteUrl = "http://downloads.sourceforge.net/project/piraterabbitplayer/info";
+      static public readonly string strInfoItemFolderRemoteUrl = strRemoteHost + "info";
       static public readonly Color colorMainBG = Color.FromArgb(255, 66, 75, 92);
       static public readonly Color colorNormalText = Color.Snow;
       static public readonly Color colorBtnSelected = Color.DodgerBlue;

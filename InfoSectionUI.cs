@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace RPlayer
 {
-  class InfoSectionUI
+  public class InfoSectionUI
   {
     private Panel m_panelSection;
     private Button[] m_buttonCategorys;
@@ -18,7 +18,7 @@ namespace RPlayer
     private string m_strSelectedCateType;
     private Form m_FormOwner;
     private bool m_bInited;
-    FormInfoMore m_formInfoMore;
+    public FormInfoMore m_formInfoMore;
     InfoLocalXmlHandler m_infoLocalXmlHandler;
     private bool m_bInfoMore;
     private Label m_labelUpPage;
@@ -75,7 +75,7 @@ namespace RPlayer
       if ((sender as Button).Text == GlobalConstants.Common.strMoreInfoText)
       {
         if(m_formInfoMore ==  null)
-          m_formInfoMore = new FormInfoMore();
+          m_formInfoMore = new FormInfoMore(m_FormOwner as MainForm);
         m_formInfoMore.Show();
         return;
       }

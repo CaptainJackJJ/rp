@@ -13,9 +13,13 @@ namespace RPlayer
   {
     private InfoSectionUI m_infoSectionTorrentUI;
     private InfoLocalXmlHandler m_infoLocalXmlHandler;
+    private InfoUpdater m_updaterInfo;
+    private MainForm m_mainForm;
 
-    public FormInfoMore()
+    public FormInfoMore(MainForm mForm)
     {
+      m_mainForm = mForm;
+
       InitializeComponent();
 
       m_infoLocalXmlHandler = new InfoLocalXmlHandler();
@@ -29,6 +33,29 @@ namespace RPlayer
       label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
 
       m_infoSectionTorrentUI.ShowSection(true);
+
+      m_updaterInfo = new InfoUpdater(m_mainForm, true, m_infoLocalXmlHandler);
+      m_updaterInfo.ThreadStart();
+    }
+
+    delegate void InfoUpdateNoticeDel(string strNotice);
+    public void InfoUpdateNotice(string strNotice)
+    {
+      if (this.InvokeRequired)
+      {
+        InfoUpdateNoticeDel del = new InfoUpdateNoticeDel(InfoUpdateNotice);
+        this.Invoke(del, strNotice);
+      }
+      else
+      {
+        label_InfoUpdateNotice.Text = strNotice;
+        if (strNotice == "")
+        {
+          m_infoSectionTorrentUI.FreshItems();
+          FormNotice f = new FormNotice("更多电影资源已更新完毕");
+          f.ShowDialog();
+        }
+      }
     }
 
     private void label_Min_Click(object sender, EventArgs e)
@@ -59,6 +86,11 @@ namespace RPlayer
     private void label_Close_MouseLeave(object sender, EventArgs e)
     {
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+    }
+
+    private void FormInfoMore_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      m_updaterInfo.ThreadStop();
     }
   }
 }

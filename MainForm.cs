@@ -22,7 +22,7 @@ namespace RPlayer
 
     #region properties
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
-    private InfoSectionUI m_infoSectionTorrentUI;
+    public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
     private bool m_bMainFormMouseDown = false;
@@ -233,6 +233,8 @@ namespace RPlayer
 
       m_updaterApp.ThreadStop();
       m_updaterInfo.ThreadStop();
+      if (m_infoSectionTorrentUI.m_formInfoMore != null)
+        m_infoSectionTorrentUI.m_formInfoMore.Close();
 
       if (Core.IsPlaying())
         StopPlay();
@@ -261,7 +263,7 @@ namespace RPlayer
       m_updaterApp = new AppUpdater(this);
       m_updaterApp.ThreadStart();
 
-      m_updaterInfo = new InfoUpdater(this);
+      m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       m_updaterInfo.ThreadStart();
     }
 

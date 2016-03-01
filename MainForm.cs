@@ -22,7 +22,7 @@ namespace RPlayer
 
     #region properties
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
-    public InfoSectionUI m_infoSectionTorrentUI;
+    //public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
     private bool m_bMainFormMouseDown = false;
@@ -107,7 +107,7 @@ namespace RPlayer
     private bool m_bConstructed = false;
 
     private AppUpdater m_updaterApp;
-    private InfoUpdater m_updaterInfo;
+    //private InfoUpdater m_updaterInfo;
 
     #endregion
 
@@ -211,11 +211,11 @@ namespace RPlayer
 
       m_infoLocalXmlHandler = new InfoLocalXmlHandler();
       m_infoLocalXmlHandler.Load(m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlLocalName);
-      m_infoSectionTorrentUI = new InfoSectionUI(this, m_infoLocalXmlHandler);
+      //m_infoSectionTorrentUI = new InfoSectionUI(this, m_infoLocalXmlHandler);
 
       if (args.Length > 0)
       {
-        m_infoSectionTorrentUI.ShowSection(false);
+        //m_infoSectionTorrentUI.ShowSection(false);
         StartPlay(args[0]);
       }
 
@@ -232,9 +232,9 @@ namespace RPlayer
       }
 
       m_updaterApp.ThreadStop();
-      m_updaterInfo.ThreadStop();
-      if (m_infoSectionTorrentUI.m_formInfoMore != null)
-        m_infoSectionTorrentUI.m_formInfoMore.Close();
+      //m_updaterInfo.ThreadStop();
+      //if (m_infoSectionTorrentUI.m_formInfoMore != null)
+      //  m_infoSectionTorrentUI.m_formInfoMore.Close();
 
       if (Core.IsPlaying())
         StopPlay();
@@ -263,8 +263,8 @@ namespace RPlayer
       m_updaterApp = new AppUpdater(this);
       m_updaterApp.ThreadStart();
 
-      m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
-      m_updaterInfo.ThreadStart();
+      //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
+      //m_updaterInfo.ThreadStart();
     }
 
     delegate void InfoUpdateNoticeDel(string strNotice);
@@ -280,7 +280,7 @@ namespace RPlayer
         label_InfoUpdateNotice.Text = strNotice;
         if (strNotice == "")
         {
-          m_infoSectionTorrentUI.FreshItems();
+          //m_infoSectionTorrentUI.FreshItems();
           FormNotice f = new FormNotice("电影资源已更新完毕");
           f.ShowDialog();
         }
@@ -1528,7 +1528,7 @@ namespace RPlayer
       if (m_bPlayingForm)
       {
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
-        m_infoSectionTorrentUI.ShowSection(false);
+        //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
         this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
         if (!m_bPlayed)
@@ -1567,7 +1567,7 @@ namespace RPlayer
         if (this.WindowState == FormWindowState.Maximized)
           this.WindowState = FormWindowState.Normal;
         this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
-        m_infoSectionTorrentUI.ShowSection(true);
+        //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
         this.BackColor = Color.FromArgb(255, 66, 75, 92); 
         try

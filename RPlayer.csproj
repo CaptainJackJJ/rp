@@ -182,6 +182,7 @@
     <Compile Include="UiLang.cs" />
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
+    <Compile Include="WebBrowserHandler.cs" />
     <EmbeddedResource Include="FormInfoMore.resx">
       <DependentUpon>FormInfoMore.cs</DependentUpon>
     </EmbeddedResource>

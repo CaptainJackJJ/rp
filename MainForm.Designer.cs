@@ -88,7 +88,7 @@
       this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_LeftEdge.Location = new System.Drawing.Point(1, 2);
       this.label_LeftEdge.Name = "label_LeftEdge";
-      this.label_LeftEdge.Size = new System.Drawing.Size(1, 596);
+      this.label_LeftEdge.Size = new System.Drawing.Size(1, 765);
       this.label_LeftEdge.TabIndex = 28;
       // 
       // label_TopEdge
@@ -97,25 +97,25 @@
       this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_TopEdge.Location = new System.Drawing.Point(1, 1);
       this.label_TopEdge.Name = "label_TopEdge";
-      this.label_TopEdge.Size = new System.Drawing.Size(913, 1);
+      this.label_TopEdge.Size = new System.Drawing.Size(1022, 1);
       this.label_TopEdge.TabIndex = 29;
       // 
       // label_RightEdge
       // 
       this.label_RightEdge.BackColor = System.Drawing.Color.Gray;
       this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_RightEdge.Location = new System.Drawing.Point(913, 2);
+      this.label_RightEdge.Location = new System.Drawing.Point(1022, 2);
       this.label_RightEdge.Name = "label_RightEdge";
-      this.label_RightEdge.Size = new System.Drawing.Size(1, 560);
+      this.label_RightEdge.Size = new System.Drawing.Size(1, 766);
       this.label_RightEdge.TabIndex = 30;
       // 
       // label_BottomEdge
       // 
       this.label_BottomEdge.BackColor = System.Drawing.Color.Gray;
       this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_BottomEdge.Location = new System.Drawing.Point(1, 598);
+      this.label_BottomEdge.Location = new System.Drawing.Point(1, 766);
       this.label_BottomEdge.Name = "label_BottomEdge";
-      this.label_BottomEdge.Size = new System.Drawing.Size(913, 1);
+      this.label_BottomEdge.Size = new System.Drawing.Size(1022, 1);
       this.label_BottomEdge.TabIndex = 31;
       // 
       // label_settings
@@ -169,7 +169,7 @@
       this.colorSlider_volume.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
       this.colorSlider_volume.KeyPressRespond = true;
       this.colorSlider_volume.LargeChange = ((uint)(5u));
-      this.colorSlider_volume.Location = new System.Drawing.Point(728, 526);
+      this.colorSlider_volume.Location = new System.Drawing.Point(728, 691);
       this.colorSlider_volume.MouseEffects = false;
       this.colorSlider_volume.MouseWheelBarPartitions = 100;
       this.colorSlider_volume.MouseWheelRespond = true;
@@ -209,9 +209,8 @@
       this.label_logo.ForeColor = System.Drawing.Color.White;
       this.label_logo.Location = new System.Drawing.Point(21, 6);
       this.label_logo.Name = "label_logo";
-      this.label_logo.Size = new System.Drawing.Size(110, 24);
+      this.label_logo.Size = new System.Drawing.Size(0, 24);
       this.label_logo.TabIndex = 45;
-      this.label_logo.Text = "兔子影音";
       this.label_logo.Click += new System.EventHandler(this.label_logo_Click);
       this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
       this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
@@ -258,7 +257,7 @@
       this.button_openFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_openFile.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_openFile.ForeColor = System.Drawing.Color.White;
-      this.button_openFile.Location = new System.Drawing.Point(10, 506);
+      this.button_openFile.Location = new System.Drawing.Point(10, 671);
       this.button_openFile.Name = "button_openFile";
       this.button_openFile.Size = new System.Drawing.Size(112, 38);
       this.button_openFile.TabIndex = 46;
@@ -284,7 +283,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.ClientSize = new System.Drawing.Size(915, 562);
+      this.ClientSize = new System.Drawing.Size(1024, 768);
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_share);

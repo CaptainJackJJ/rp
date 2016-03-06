@@ -1568,6 +1568,7 @@ namespace RPlayer
         if (this.WindowState == FormWindowState.Maximized)
           this.WindowState = FormWindowState.Normal;
         this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
+        this.Location = new Point(this.Location.X, 3);
         //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
         this.BackColor = Color.FromArgb(255, 66, 75, 92); 

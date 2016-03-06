@@ -22,7 +22,7 @@ namespace RPlayer
 
     #region properties
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
-    //public InfoSectionUI m_infoSectionTorrentUI;
+    public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
     private bool m_bMainFormMouseDown = false;
@@ -1530,7 +1530,8 @@ namespace RPlayer
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-        this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+        if (Archive.mainFormLocX != -1 && Archive.mainFormLocY != -1)
+          this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
         if (!m_bPlayed)
         {
           m_bPlayed = true;

@@ -267,7 +267,7 @@ namespace RPlayer
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 43),label_loading);
-      m_webBrowserHandler.Navigate(false,"http://www.chdw.org/");
+      m_webBrowserHandler.Navigate(false, "http://gaoqing.la/");
       button_dlChina.BackColor = Color.DodgerBlue;
     }
 
@@ -819,7 +819,7 @@ namespace RPlayer
         m_bRightEdge_MouseDown = true;
       else if (e.Location.Y >= this.Size.Height - m_nResizeableAreaSize)
         m_bBottomEdge_MouseDown = true;
-      else if (e.Location.Y < label_playWnd.Location.Y)
+      else 
         m_bTopBarAreaMouseDown = true;
     
       m_TopBarAreaMouseDownPos = e.Location;

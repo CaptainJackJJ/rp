@@ -49,7 +49,7 @@ namespace RPlayer
 
       webBrowser1 = new WebBrowserEx();
       webBrowser1.Location = startPoint;
-      webBrowser1.Size = new Size(1022, 613);
+      webBrowser1.Size = new Size(1022, 617);
       webBrowser1.ScriptErrorsSuppressed = true;
       formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);

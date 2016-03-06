@@ -36,17 +36,18 @@ namespace RPlayer
 
       // set the actual key
       RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
-      int r = (int)Key.GetValue(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe");
-      if (r != RegVal)
-        Key.SetValue(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe", RegVal, RegistryValueKind.DWord);
+      string strProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
+      object value = Key.GetValue(strProcessName);
+      if (value == null || (int)value != RegVal)
+        Key.SetValue(strProcessName, RegVal, RegistryValueKind.DWord);
       Key.Close();
 
       webBrowser1 = new WebBrowser();
       webBrowser1.Location = startPoint;
-      webBrowser1.Size = new Size(1022, 600);
+      webBrowser1.Size = new Size(1022, 619);
       webBrowser1.ScriptErrorsSuppressed = true;
       formMain.Controls.AddRange(new Control[] { webBrowser1 });
-      webBrowser1.Navigate(new Uri("http://www.baidu.com/"));
+      webBrowser1.Navigate(new Uri("http://www.chdw.org//"));
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
     }
 

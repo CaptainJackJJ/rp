@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    private WebBrowserHandler m_webBrowserHandler;
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
     public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
@@ -265,6 +266,8 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
+
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 45));
     }
 
     delegate void InfoUpdateNoticeDel(string strNotice);

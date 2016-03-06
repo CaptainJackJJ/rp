@@ -135,7 +135,7 @@
       this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
       this.label_playWnd.Location = new System.Drawing.Point(2, 39);
       this.label_playWnd.Name = "label_playWnd";
-      this.label_playWnd.Size = new System.Drawing.Size(911, 454);
+      this.label_playWnd.Size = new System.Drawing.Size(1020, 625);
       this.label_playWnd.TabIndex = 39;
       this.label_playWnd.Click += new System.EventHandler(this.label_playWnd_Click);
       this.label_playWnd.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
@@ -283,7 +283,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.ClientSize = new System.Drawing.Size(1024, 768);
+      this.ClientSize = new System.Drawing.Size(1024, 720);
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_share);

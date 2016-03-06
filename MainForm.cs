@@ -1242,9 +1242,10 @@ namespace RPlayer
       }
       else
       {
-        m_bDesktop = false;
-        label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
+        m_bDesktop = false;        
         this.WindowState = FormWindowState.Normal;
+        label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
+        ChangePlayWndSizeInNonDesktop();
         m_formBottomBar.Opacity = 1;
         if (m_bPlayingForm)
           m_formBottomBar.Show();

@@ -22,7 +22,7 @@ namespace RPlayer
 
     #region properties
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
-    public InfoSectionUI m_infoSectionTorrentUI;
+    //public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
     private bool m_bMainFormMouseDown = false;
@@ -461,8 +461,8 @@ namespace RPlayer
     {
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
-      if (Archive.mainFormWidth == -1 || Archive.mainFormHeight == -1)
-        this.WindowState = FormWindowState.Maximized;
+      if (!m_bPlayingForm)
+        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
       else
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
@@ -1531,16 +1531,16 @@ namespace RPlayer
         //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
         this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-        //if (!m_bPlayed)
-        //{
-        //  m_bPlayed = true;
-        //  if ((this.Width == Archive.mainFormWidthDefault && this.Height == Archive.mainFormHeightDefault)
-        //    && (Archive.mainFormHeight != Archive.mainFormHeightDefault ||
-        //    Archive.mainFormWidth != Archive.mainFormWidthDefault))
-        //  {
-        //    this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-        //  }
-        //}
+        if (!m_bPlayed)
+        {
+          m_bPlayed = true;
+          if ((this.Width == Archive.mainFormWidthDefault && this.Height == Archive.mainFormHeightDefault)
+            && (Archive.mainFormHeight != Archive.mainFormHeightDefault ||
+            Archive.mainFormWidth != Archive.mainFormWidthDefault))
+          {
+            this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+          }
+        }
 
         label_playWnd.Visible = true;
         button_openFile.Hide();
@@ -1566,7 +1566,7 @@ namespace RPlayer
       {
         if (this.WindowState == FormWindowState.Maximized)
           this.WindowState = FormWindowState.Normal;
-        //this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
+        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
         //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
         this.BackColor = Color.FromArgb(255, 66, 75, 92); 

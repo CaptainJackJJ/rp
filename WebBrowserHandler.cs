@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Security.Permissions;
 using Microsoft.Win32;
 using System.Windows.Forms;
+using MB.Controls;
 
 namespace RPlayer
 {
@@ -14,9 +15,12 @@ namespace RPlayer
   {
     private WebBrowserEx webBrowser1;
     private Uri m_LastUri;
+    private Label m_LoadingNotice;
 
-    public WebBrowserHandler(MainForm formMain,Point startPoint)
+    public WebBrowserHandler(MainForm formMain, Point startPoint, Label LoadingNotice)
     {
+      m_LoadingNotice = LoadingNotice;
+
       int BrowserVer, RegVal;
 
       // get the installed IE version
@@ -49,6 +53,19 @@ namespace RPlayer
       webBrowser1.ScriptErrorsSuppressed = true;
       formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
+      webBrowser1.ProgressChanged += new WebBrowserProgressChangedEventHandler(ProgressChanged);
+    }
+
+    private void ProgressChanged(Object sender, WebBrowserProgressChangedEventArgs e)
+    {
+      if (e.CurrentProgress < e.MaximumProgress)
+      {
+        m_LoadingNotice.Visible = true;
+      }
+      else
+      {
+        m_LoadingNotice.Visible = false;     
+      }
     }
 
     public void Navigate(bool bLastUri,string url)
@@ -56,7 +73,20 @@ namespace RPlayer
       if (bLastUri)
         webBrowser1.Navigate(m_LastUri);
       else
+      {
+        webBrowser1.Navigate("about:blank");
         webBrowser1.Navigate(new Uri(url));
+      }
+    }
+
+    public void Forward()
+    {
+      webBrowser1.GoForward();
+    }
+
+    public void Back()
+    {
+      webBrowser1.GoBack();
     }
 
     public void Stop()

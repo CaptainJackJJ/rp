@@ -266,9 +266,9 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 42));
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 43),label_loading);
       m_webBrowserHandler.Navigate(false,"http://www.chdw.org/");
+      button_dlChina.BackColor = Color.DodgerBlue;
     }
 
 
@@ -1458,8 +1458,7 @@ namespace RPlayer
       {
         m_webBrowserHandler.Show(false);
         m_webBrowserHandler.Stop();
-        button_download.Visible = false;
-        button_onlineVideo.Visible = false;
+        panel_top.Visible = false;
 
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
@@ -1523,8 +1522,7 @@ namespace RPlayer
 
         m_webBrowserHandler.Navigate(true, "");
         m_webBrowserHandler.Show(true);
-        button_download.Visible = true;
-        button_onlineVideo.Visible = true;
+        panel_top.Visible = true;
       }
     }
 
@@ -1996,12 +1994,48 @@ namespace RPlayer
 
     private void button_download_Click(object sender, EventArgs e)
     {
-      m_webBrowserHandler.Navigate(false,"http://www.chdw.org/");
+      button_dlChina.BackColor = Color.DodgerBlue;
+      button_onlineVideo.BackColor = Color.Transparent;
+      button_dlOversea.BackColor = Color.Transparent;
+      button_subtitle.BackColor = Color.Transparent;
+      m_webBrowserHandler.Navigate(false, "http://gaoqing.la/");
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
     {
+      button_dlChina.BackColor = Color.Transparent;
+      button_onlineVideo.BackColor = Color.DodgerBlue;
+      button_dlOversea.BackColor = Color.Transparent;
+      button_subtitle.BackColor = Color.Transparent;
       m_webBrowserHandler.Navigate(false, "http://www.youku.com/");
+    }
+
+    private void button_dlOversea_Click(object sender, EventArgs e)
+    {
+      button_dlChina.BackColor = Color.Transparent;
+      button_onlineVideo.BackColor = Color.Transparent;
+      button_dlOversea.BackColor = Color.DodgerBlue;
+      button_subtitle.BackColor = Color.Transparent;
+      m_webBrowserHandler.Navigate(false, "http://www.rarbg.to");
+    }
+
+    private void button_subtitle_Click(object sender, EventArgs e)
+    {
+      button_dlChina.BackColor = Color.Transparent;
+      button_onlineVideo.BackColor = Color.Transparent;
+      button_dlOversea.BackColor = Color.Transparent;
+      button_subtitle.BackColor = Color.DodgerBlue;
+      m_webBrowserHandler.Navigate(false, "http://sub.makedie.me/");
+    }
+
+    private void label_back_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Back();
+    }
+
+    private void label_forward_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Forward();
     }
 
   }

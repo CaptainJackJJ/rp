@@ -73,7 +73,7 @@ namespace RPlayer
     static private readonly bool muteDefault = false;
     static private readonly bool plistShowingInNoneDesktopDefault = false;
     static public readonly int mainFormLocXDefault = -1, mainFormLocYDefault = -1,
-      mainFormWidthDefault = 1024, mainFormHeightDefault = 768;
+      mainFormWidthDefault = -1, mainFormHeightDefault = -1;
     static private readonly int speedFFDefault = 2;
     static private readonly int speedRWDefault = -2;
 

@@ -51,6 +51,7 @@
       this.panel_top = new System.Windows.Forms.Panel();
       this.button_subtitle = new System.Windows.Forms.Button();
       this.button_dlOversea = new System.Windows.Forms.Button();
+      this.button_threater = new System.Windows.Forms.Button();
       this.label_forward = new System.Windows.Forms.Label();
       this.label_loading = new System.Windows.Forms.Label();
       this.panel_top.SuspendLayout();
@@ -219,10 +220,10 @@
       // button_openFile
       // 
       this.button_openFile.AutoSize = true;
-      this.button_openFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
+      this.button_openFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(149)))));
       this.button_openFile.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.button_openFile.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-      this.button_openFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(130)))), ((int)(((byte)(154)))));
+      this.button_openFile.FlatAppearance.BorderColor = System.Drawing.Color.SlateBlue;
+      this.button_openFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_openFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_openFile.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_openFile.ForeColor = System.Drawing.Color.White;
@@ -248,13 +249,13 @@
       // 
       // button_onlineVideo
       // 
-      this.button_onlineVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_onlineVideo.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateBlue;
+      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
       this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
-      this.button_onlineVideo.Location = new System.Drawing.Point(382, 0);
+      this.button_onlineVideo.Location = new System.Drawing.Point(455, 0);
       this.button_onlineVideo.Name = "button_onlineVideo";
       this.button_onlineVideo.Size = new System.Drawing.Size(98, 33);
       this.button_onlineVideo.TabIndex = 47;
@@ -264,13 +265,13 @@
       // 
       // button_dlChina
       // 
-      this.button_dlChina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.button_dlChina.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_dlChina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_dlChina.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_dlChina.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateBlue;
+      this.button_dlChina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_dlChina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlChina.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlChina.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina.Location = new System.Drawing.Point(88, 0);
+      this.button_dlChina.Location = new System.Drawing.Point(161, 0);
       this.button_dlChina.Name = "button_dlChina";
       this.button_dlChina.Size = new System.Drawing.Size(98, 33);
       this.button_dlChina.TabIndex = 48;
@@ -285,7 +286,7 @@
       this.label_back.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_back.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_back.ForeColor = System.Drawing.Color.White;
-      this.label_back.Location = new System.Drawing.Point(486, 11);
+      this.label_back.Location = new System.Drawing.Point(559, 11);
       this.label_back.Name = "label_back";
       this.label_back.Size = new System.Drawing.Size(31, 12);
       this.label_back.TabIndex = 45;
@@ -296,25 +297,26 @@
       // 
       this.panel_top.Controls.Add(this.button_subtitle);
       this.panel_top.Controls.Add(this.button_dlOversea);
+      this.panel_top.Controls.Add(this.button_threater);
       this.panel_top.Controls.Add(this.button_dlChina);
       this.panel_top.Controls.Add(this.button_onlineVideo);
       this.panel_top.Controls.Add(this.label_forward);
       this.panel_top.Controls.Add(this.label_loading);
       this.panel_top.Controls.Add(this.label_back);
-      this.panel_top.Location = new System.Drawing.Point(222, 9);
+      this.panel_top.Location = new System.Drawing.Point(214, 9);
       this.panel_top.Name = "panel_top";
-      this.panel_top.Size = new System.Drawing.Size(564, 34);
+      this.panel_top.Size = new System.Drawing.Size(635, 34);
       this.panel_top.TabIndex = 49;
       // 
       // button_subtitle
       // 
-      this.button_subtitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.button_subtitle.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_subtitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_subtitle.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_subtitle.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateBlue;
+      this.button_subtitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_subtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_subtitle.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_subtitle.ForeColor = System.Drawing.Color.White;
-      this.button_subtitle.Location = new System.Drawing.Point(284, 0);
+      this.button_subtitle.Location = new System.Drawing.Point(357, 0);
       this.button_subtitle.Name = "button_subtitle";
       this.button_subtitle.Size = new System.Drawing.Size(98, 33);
       this.button_subtitle.TabIndex = 48;
@@ -324,19 +326,35 @@
       // 
       // button_dlOversea
       // 
-      this.button_dlOversea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
-      this.button_dlOversea.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_dlOversea.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_dlOversea.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_dlOversea.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateBlue;
+      this.button_dlOversea.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_dlOversea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlOversea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlOversea.ForeColor = System.Drawing.Color.White;
-      this.button_dlOversea.Location = new System.Drawing.Point(186, 0);
+      this.button_dlOversea.Location = new System.Drawing.Point(259, 0);
       this.button_dlOversea.Name = "button_dlOversea";
       this.button_dlOversea.Size = new System.Drawing.Size(98, 33);
       this.button_dlOversea.TabIndex = 48;
       this.button_dlOversea.Text = "国外下载";
       this.button_dlOversea.UseVisualStyleBackColor = false;
       this.button_dlOversea.Click += new System.EventHandler(this.button_dlOversea_Click);
+      // 
+      // button_threater
+      // 
+      this.button_threater.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_threater.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateBlue;
+      this.button_threater.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_threater.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_threater.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_threater.ForeColor = System.Drawing.Color.White;
+      this.button_threater.Location = new System.Drawing.Point(63, 0);
+      this.button_threater.Name = "button_threater";
+      this.button_threater.Size = new System.Drawing.Size(98, 33);
+      this.button_threater.TabIndex = 48;
+      this.button_threater.Text = "电影院";
+      this.button_threater.UseVisualStyleBackColor = false;
+      this.button_threater.Click += new System.EventHandler(this.button_threater_Click);
       // 
       // label_forward
       // 
@@ -345,7 +363,7 @@
       this.label_forward.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_forward.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_forward.ForeColor = System.Drawing.Color.White;
-      this.label_forward.Location = new System.Drawing.Point(528, 11);
+      this.label_forward.Location = new System.Drawing.Point(601, 11);
       this.label_forward.Name = "label_forward";
       this.label_forward.Size = new System.Drawing.Size(31, 12);
       this.label_forward.TabIndex = 45;
@@ -359,7 +377,7 @@
       this.label_loading.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_loading.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_loading.ForeColor = System.Drawing.Color.White;
-      this.label_loading.Location = new System.Drawing.Point(3, 12);
+      this.label_loading.Location = new System.Drawing.Point(4, 12);
       this.label_loading.Name = "label_loading";
       this.label_loading.Size = new System.Drawing.Size(65, 12);
       this.label_loading.TabIndex = 45;
@@ -371,7 +389,7 @@
       this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
+      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
       this.Controls.Add(this.panel_top);
       this.Controls.Add(this.button_openFile);
@@ -434,6 +452,7 @@
         private System.Windows.Forms.Button button_dlOversea;
         private System.Windows.Forms.Label label_forward;
         private System.Windows.Forms.Label label_loading;
+        private System.Windows.Forms.Button button_threater;
     }
 }
 

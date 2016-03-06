@@ -169,12 +169,14 @@ namespace RPlayer
 
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
       label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
-      label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
+      label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play1.png");
       label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       if (args.Length == 0)
       {
-        this.BackColor = Color.FromArgb(255, 66, 75, 92);
+        //this.BackColor = Color.FromArgb(255, 66, 75, 92);
+        this.BackColor = Color.FromArgb(255, 99, 180, 251);
+        //this.BackColor = Color.Silver;
       }
       else
       {
@@ -266,9 +268,9 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 43),label_loading);
-      m_webBrowserHandler.Navigate(false, "http://gaoqing.la/");
-      button_dlChina.BackColor = Color.DodgerBlue;
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 43),label_loading);
+      m_webBrowserHandler.Navigate(false, "http://theater.mtime.com/");
+      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
 
@@ -1502,7 +1504,8 @@ namespace RPlayer
         this.Location = new Point(this.Location.X, 3);
         //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
-        this.BackColor = Color.FromArgb(255, 66, 75, 92); 
+        //this.BackColor = Color.FromArgb(255, 66, 75, 92); 
+        this.BackColor = Color.Silver;
         try
         {
           m_formTopBar.Hide();
@@ -1994,37 +1997,41 @@ namespace RPlayer
 
     private void button_download_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = Color.DodgerBlue;
-      button_onlineVideo.BackColor = Color.Transparent;
-      button_dlOversea.BackColor = Color.Transparent;
-      button_subtitle.BackColor = Color.Transparent;
+      button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
+      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
       m_webBrowserHandler.Navigate(false, "http://gaoqing.la/");
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = Color.Transparent;
-      button_onlineVideo.BackColor = Color.DodgerBlue;
-      button_dlOversea.BackColor = Color.Transparent;
-      button_subtitle.BackColor = Color.Transparent;
+      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_onlineVideo.BackColor = Color.FromArgb(255, 199, 80, 80);
+      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
       m_webBrowserHandler.Navigate(false, "http://www.youku.com/");
     }
 
     private void button_dlOversea_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = Color.Transparent;
-      button_onlineVideo.BackColor = Color.Transparent;
-      button_dlOversea.BackColor = Color.DodgerBlue;
-      button_subtitle.BackColor = Color.Transparent;
+      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
+      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
       m_webBrowserHandler.Navigate(false, "http://www.rarbg.to");
     }
 
     private void button_subtitle_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = Color.Transparent;
-      button_onlineVideo.BackColor = Color.Transparent;
-      button_dlOversea.BackColor = Color.Transparent;
-      button_subtitle.BackColor = Color.DodgerBlue;
+      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
       m_webBrowserHandler.Navigate(false, "http://sub.makedie.me/");
     }
 
@@ -2036,6 +2043,16 @@ namespace RPlayer
     private void label_forward_Click(object sender, EventArgs e)
     {
       m_webBrowserHandler.Forward();
+    }
+
+    private void button_threater_Click(object sender, EventArgs e)
+    {
+      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
+      m_webBrowserHandler.Navigate(false, "http://theater.mtime.com/");
     }
 
   }

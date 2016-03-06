@@ -25,6 +25,7 @@ namespace RPlayer
       static public readonly Color colorNormalText = Color.Snow;
       static public readonly Color colorBtnSelected = Color.DodgerBlue;
       static public readonly string strMoreInfoText = "更多";
+      static public readonly Color colorMainBtnBG = Color.MediumPurple;
     }
 
     public class infoXml

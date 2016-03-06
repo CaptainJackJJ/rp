@@ -267,7 +267,7 @@ namespace RPlayer
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
 
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 45));
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 42));
     }
 
     delegate void InfoUpdateNoticeDel(string strNotice);
@@ -469,21 +469,6 @@ namespace RPlayer
       else
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
-      colorSlider_volume.Value = Archive.volume;
-      try
-      {
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-      }
-      catch
-      {
-        if (Archive.mute)
-          label_Volume.Text = "mute";
-        else
-          label_Volume.Text = "volume";
-      }
       if (Archive.plistShowingInNoneDesktop)
       {
         m_formPlaylist.Show();
@@ -715,8 +700,6 @@ namespace RPlayer
     {
       if (Core.IsPlaying())
         m_formBottomBar.TriggerVolumeOnMouseWheel(e);
-      else
-        colorSlider_volume.TriggerOnMouseWheel(e);
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -729,19 +712,6 @@ namespace RPlayer
       if (Core.IsPlaying())
       {
         m_formBottomBar.UpDownVolume(bUp);
-      }
-      else
-      {
-        if (bUp)
-        {
-          if (colorSlider_volume.Value < colorSlider_volume.Maximum)
-            colorSlider_volume.Value++;
-        }
-        else
-        {
-          if (colorSlider_volume.Value > colorSlider_volume.Minimum)
-            colorSlider_volume.Value--;
-        }
       }
     }
 
@@ -811,11 +781,7 @@ namespace RPlayer
 
       const int nLeftBottomBtnsMargin = 10;
       int nPlaylistBtnX = this.Width - nLeftBottomBtnsMargin - m_nBottomButtonsWidth;
-      int nVolumeSliderX 
-        = this.Width - nLeftBottomBtnsMargin * 3 - m_nBottomButtonsWidth * 2 - colorSlider_volume.Width;
       label_playlist.Location = new Point(nPlaylistBtnX, nBottomButtonsY);
-      colorSlider_volume.Location = new Point(nVolumeSliderX,nBottomButtonsY + 7);
-      label_Volume.Location = new Point(colorSlider_volume.Location.X - label_Volume.Width, nBottomButtonsY);
 
       if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown
           || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
@@ -1037,49 +1003,6 @@ namespace RPlayer
     private void label_Close_MouseLeave(object sender, EventArgs e)
     {
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-    }
-
-    private void label_Volume_MouseEnter(object sender, EventArgs e)
-    {
-      try
-      {
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
-      }
-      catch { }
-    }
-
-    private void label_Volume_MouseLeave(object sender, EventArgs e)
-    {
-      try
-      {
-        if (Archive.mute)
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-        else
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-      }
-      catch { }
-    }
-
-    private void label_Volume_Click(object sender, EventArgs e)
-    {
-      try
-      {
-        if (Archive.mute)
-        {
-          Archive.mute = false;
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeFocus.png");
-        }
-        else
-        {
-          Archive.mute = true;
-          label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMuteFocus.png");
-        }
-      }
-      catch { }
-      Core.SetMute(Archive.mute);
     }
 
     private void label_playlist_MouseEnter(object sender, EventArgs e)
@@ -1550,8 +1473,6 @@ namespace RPlayer
         label_playWnd.Visible = true;
         button_openFile.Hide();
         label_Play.Hide();
-        label_Volume.Hide();
-        colorSlider_volume.Hide();
 
         try
         {
@@ -1587,19 +1508,8 @@ namespace RPlayer
           MessageBox.Show(UiLang.msgWndClosedBySfApp);
         }
 
-        try
-        {
-          if (Archive.mute)
-            label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\VolumeMute.png");
-          else
-            label_Volume.Image = Image.FromFile(Application.StartupPath + @"\pic\Volume.png");
-        }
-        catch { }
-
         button_openFile.Show();
         label_Play.Show();
-        label_Volume.Show();
-        colorSlider_volume.Show();
         SwitchDesktopMode(false,false);
 
         label_playWnd.ContextMenuStrip = null;        
@@ -1990,8 +1900,6 @@ namespace RPlayer
       m_bIsPlaying = false;
       ClearContextMenuDynamically();
 
-      colorSlider_volume.Value = Archive.volume;
-
       m_formPlaylist.UpdateListViewHistroy();
 
       this.Activate(); // This will bring player to front.
@@ -2020,12 +1928,6 @@ namespace RPlayer
         return true;
       }
       return false;
-    }
-
-    private void colorSlider_volume_ValueChanged(object sender, EventArgs e)
-    {
-      Archive.volume = colorSlider_volume.Value;
-      Core.SetVolume((float)(Archive.volume * 0.01));
     }
 
     private void timer1_Tick(object sender, EventArgs e)

@@ -38,8 +38,6 @@
       this.label_BottomEdge = new System.Windows.Forms.Label();
       this.label_settings = new System.Windows.Forms.Label();
       this.label_playWnd = new System.Windows.Forms.Label();
-      this.label_Volume = new System.Windows.Forms.Label();
-      this.colorSlider_volume = new MB.Controls.ColorSlider();
       this.label_playlist = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
@@ -144,45 +142,6 @@
       this.label_playWnd.MouseEnter += new System.EventHandler(this.label_playWnd_MouseEnter);
       this.label_playWnd.MouseLeave += new System.EventHandler(this.label_playWnd_MouseLeave);
       this.label_playWnd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label_playWnd_MouseMove);
-      // 
-      // label_Volume
-      // 
-      this.label_Volume.BackColor = System.Drawing.Color.Transparent;
-      this.label_Volume.Location = new System.Drawing.Point(703, 519);
-      this.label_Volume.Name = "label_Volume";
-      this.label_Volume.Size = new System.Drawing.Size(25, 25);
-      this.label_Volume.TabIndex = 36;
-      this.label_Volume.Click += new System.EventHandler(this.label_Volume_Click);
-      this.label_Volume.MouseEnter += new System.EventHandler(this.label_Volume_MouseEnter);
-      this.label_Volume.MouseLeave += new System.EventHandler(this.label_Volume_MouseLeave);
-      // 
-      // colorSlider_volume
-      // 
-      this.colorSlider_volume.BackColor = System.Drawing.Color.Transparent;
-      this.colorSlider_volume.BarInnerColor = System.Drawing.Color.Gray;
-      this.colorSlider_volume.BarOuterColor = System.Drawing.Color.Transparent;
-      this.colorSlider_volume.BarPenColor = System.Drawing.Color.Transparent;
-      this.colorSlider_volume.BorderRoundRectSize = new System.Drawing.Size(1, 1);
-      this.colorSlider_volume.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.colorSlider_volume.DrawFocusRectangle = false;
-      this.colorSlider_volume.ElapsedInnerColor = System.Drawing.Color.RoyalBlue;
-      this.colorSlider_volume.ElapsedOuterColor = System.Drawing.Color.MidnightBlue;
-      this.colorSlider_volume.KeyPressRespond = true;
-      this.colorSlider_volume.LargeChange = ((uint)(5u));
-      this.colorSlider_volume.Location = new System.Drawing.Point(728, 691);
-      this.colorSlider_volume.MouseEffects = false;
-      this.colorSlider_volume.MouseWheelBarPartitions = 100;
-      this.colorSlider_volume.MouseWheelRespond = true;
-      this.colorSlider_volume.Name = "colorSlider_volume";
-      this.colorSlider_volume.Size = new System.Drawing.Size(100, 10);
-      this.colorSlider_volume.SmallChange = ((uint)(1u));
-      this.colorSlider_volume.TabIndex = 37;
-      this.colorSlider_volume.ThumbInnerColor = System.Drawing.Color.White;
-      this.colorSlider_volume.ThumbPenColor = System.Drawing.Color.Transparent;
-      this.colorSlider_volume.ThumbRoundRectSize = new System.Drawing.Size(9, 9);
-      this.colorSlider_volume.ThumbSize = 10;
-      this.colorSlider_volume.Value = 100;
-      this.colorSlider_volume.ValueChanged += new System.EventHandler(this.colorSlider_volume_ValueChanged);
       // 
       // label_playlist
       // 
@@ -290,9 +249,7 @@
       this.Controls.Add(this.label_InfoUpdateNotice);
       this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
-      this.Controls.Add(this.colorSlider_volume);
       this.Controls.Add(this.label_playlist);
-      this.Controls.Add(this.label_Volume);
       this.Controls.Add(this.label_BottomEdge);
       this.Controls.Add(this.label_RightEdge);
       this.Controls.Add(this.label_TopEdge);
@@ -329,8 +286,6 @@
         private System.Windows.Forms.Label label_BottomEdge;
         private System.Windows.Forms.Label label_settings;
         private System.Windows.Forms.Label label_playWnd;
-        private System.Windows.Forms.Label label_Volume;
-        private MB.Controls.ColorSlider colorSlider_volume;
         private System.Windows.Forms.Label label_playlist;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label_logo;

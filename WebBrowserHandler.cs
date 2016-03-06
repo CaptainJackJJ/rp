@@ -12,7 +12,8 @@ namespace RPlayer
   [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
   class WebBrowserHandler
   {
-     private WebBrowser webBrowser1;
+    private WebBrowserEx webBrowser1;
+    private Uri m_LastUri;
 
     public WebBrowserHandler(MainForm formMain,Point startPoint)
     {
@@ -42,13 +43,31 @@ namespace RPlayer
         Key.SetValue(strProcessName, RegVal, RegistryValueKind.DWord);
       Key.Close();
 
-      webBrowser1 = new WebBrowser();
+      webBrowser1 = new WebBrowserEx();
       webBrowser1.Location = startPoint;
       webBrowser1.Size = new Size(1022, 613);
       webBrowser1.ScriptErrorsSuppressed = true;
-      formMain.Controls.AddRange(new Control[] { webBrowser1 });
-      webBrowser1.Navigate(new Uri("http://www.chdw.org//"));
+      formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
+    }
+
+    public void Navigate(bool bLastUri,string url)
+    {
+      if (bLastUri)
+        webBrowser1.Navigate(m_LastUri);
+      else
+        webBrowser1.Navigate(new Uri(url));
+    }
+
+    public void Stop()
+    {
+      m_LastUri = webBrowser1.Url;
+      webBrowser1.Navigate("about:blank");
+    }
+
+    public void Show(bool bShow)
+    {
+      webBrowser1.Visible = bShow;
     }
 
     void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -86,5 +105,9 @@ namespace RPlayer
         ele = ele.Parent;
       }
     }
+  }
+
+  class WebBrowserEx:WebBrowser
+  {
   }
 }

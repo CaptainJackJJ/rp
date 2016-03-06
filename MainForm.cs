@@ -268,7 +268,9 @@ namespace RPlayer
       //m_updaterInfo.ThreadStart();
 
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(1, 42));
+      m_webBrowserHandler.Navigate(false,"http://www.chdw.org/");
     }
+
 
     delegate void InfoUpdateNoticeDel(string strNotice);
     public void InfoUpdateNotice(string strNotice)
@@ -1454,6 +1456,11 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {
+        m_webBrowserHandler.Show(false);
+        m_webBrowserHandler.Stop();
+        button_download.Visible = false;
+        button_onlineVideo.Visible = false;
+
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
@@ -1512,7 +1519,12 @@ namespace RPlayer
         label_Play.Show();
         SwitchDesktopMode(false,false);
 
-        label_playWnd.ContextMenuStrip = null;        
+        label_playWnd.ContextMenuStrip = null;
+
+        m_webBrowserHandler.Navigate(true, "");
+        m_webBrowserHandler.Show(true);
+        button_download.Visible = true;
+        button_onlineVideo.Visible = true;
       }
     }
 
@@ -1980,6 +1992,16 @@ namespace RPlayer
             break;
         }
       }
+    }
+
+    private void button_download_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Navigate(false,"http://www.chdw.org/");
+    }
+
+    private void button_onlineVideo_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Navigate(false, "http://www.youku.com/");
     }
 
   }

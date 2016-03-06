@@ -45,6 +45,8 @@
       this.label_share = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
       this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
+      this.button_onlineVideo = new System.Windows.Forms.Button();
+      this.button_download = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // label_Play
@@ -197,7 +199,7 @@
       this.label_share.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_share.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_share.ForeColor = System.Drawing.Color.Fuchsia;
-      this.label_share.Location = new System.Drawing.Point(674, 13);
+      this.label_share.Location = new System.Drawing.Point(882, 14);
       this.label_share.Name = "label_share";
       this.label_share.Size = new System.Drawing.Size(40, 12);
       this.label_share.TabIndex = 45;
@@ -236,6 +238,38 @@
       this.label_InfoUpdateNotice.Size = new System.Drawing.Size(0, 12);
       this.label_InfoUpdateNotice.TabIndex = 45;
       // 
+      // button_onlineVideo
+      // 
+      this.button_onlineVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
+      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
+      this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
+      this.button_onlineVideo.Location = new System.Drawing.Point(510, 2);
+      this.button_onlineVideo.Name = "button_onlineVideo";
+      this.button_onlineVideo.Size = new System.Drawing.Size(98, 34);
+      this.button_onlineVideo.TabIndex = 47;
+      this.button_onlineVideo.Text = "在线观看";
+      this.button_onlineVideo.UseVisualStyleBackColor = false;
+      this.button_onlineVideo.Click += new System.EventHandler(this.button_onlineVideo_Click);
+      // 
+      // button_download
+      // 
+      this.button_download.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
+      this.button_download.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+      this.button_download.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_download.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_download.ForeColor = System.Drawing.Color.White;
+      this.button_download.Location = new System.Drawing.Point(413, 2);
+      this.button_download.Name = "button_download";
+      this.button_download.Size = new System.Drawing.Size(98, 34);
+      this.button_download.TabIndex = 48;
+      this.button_download.Text = "超清下载";
+      this.button_download.UseVisualStyleBackColor = false;
+      this.button_download.Click += new System.EventHandler(this.button_download_Click);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -243,6 +277,8 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
+      this.Controls.Add(this.button_onlineVideo);
+      this.Controls.Add(this.button_download);
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_share);
@@ -293,6 +329,8 @@
         private System.Windows.Forms.Label label_share;
         private System.Windows.Forms.Button button_openFile;
         private System.Windows.Forms.Label label_InfoUpdateNotice;
+        private System.Windows.Forms.Button button_onlineVideo;
+        private System.Windows.Forms.Button button_download;
     }
 }
 

@@ -26,6 +26,7 @@ namespace RPlayer
       static public readonly Color colorBtnSelected = Color.DodgerBlue;
       static public readonly string strMoreInfoText = "更多";
       static public readonly Color colorMainBtnBG = Color.MediumPurple;
+      static public readonly Color colorMainFormBG = Color.FromArgb(255,84, 175, 254);
     }
 
     public class infoXml

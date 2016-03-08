@@ -169,14 +169,12 @@ namespace RPlayer
 
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
       label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
-      label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play1.png");
+      label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
       label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       if (args.Length == 0)
       {
-        //this.BackColor = Color.FromArgb(255, 66, 75, 92);
-        this.BackColor = Color.FromArgb(255, 99, 180, 251);
-        //this.BackColor = Color.Silver;
+        this.BackColor = GlobalConstants.Common.colorMainFormBG;
       }
       else
       {
@@ -269,7 +267,7 @@ namespace RPlayer
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 43),label_loading);
-      m_webBrowserHandler.Navigate(false, "http://theater.mtime.com/");
+      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
       button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
@@ -1504,8 +1502,7 @@ namespace RPlayer
         this.Location = new Point(this.Location.X, 3);
         //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
-        //this.BackColor = Color.FromArgb(255, 66, 75, 92); 
-        this.BackColor = Color.Silver;
+        this.BackColor = GlobalConstants.Common.colorMainFormBG;
         try
         {
           m_formTopBar.Hide();
@@ -2052,7 +2049,7 @@ namespace RPlayer
       button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
-      m_webBrowserHandler.Navigate(false, "http://theater.mtime.com/");
+      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
     }
 
   }

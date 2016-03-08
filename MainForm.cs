@@ -266,7 +266,7 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 43),label_loading);
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70),label_loading);
       m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
       button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
     }

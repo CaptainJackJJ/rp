@@ -114,15 +114,33 @@ namespace RPlayer
       webBrowser1.Visible = bShow;
     }
 
+    void HideElem(string outerText)
+    {
+      HtmlElementCollection hc = webBrowser1.Document.Body.Children;
+
+      try
+      {
+        HtmlElement he = hc[8].Children[0];
+        if (he.OuterText.Contains(outerText))
+        {
+          he.OuterHtml = "";
+        }
+      }
+      catch{ }
+    }
+
     void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
     {
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
+
       HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
-      // 屏蔽对联浮动广告
       foreach (HtmlElement he in hec)
       {
         he.Style = "display: none;";
       }
+
+      if (e.Url.ToString() == GlobalConstants.Common.strChinaDl)
+        HideElem("站点公告");
     }
 
     void Document_Click(object sender, HtmlElementEventArgs e)

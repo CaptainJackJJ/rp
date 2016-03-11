@@ -2022,7 +2022,7 @@ namespace RPlayer
       button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      m_webBrowserHandler.Navigate(false, "http://gaoqing.la/");
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)

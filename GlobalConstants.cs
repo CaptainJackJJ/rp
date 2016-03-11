@@ -27,6 +27,7 @@ namespace RPlayer
       static public readonly string strMoreInfoText = "更多";
       static public readonly Color colorMainBtnBG = Color.MediumPurple;
       static public readonly Color colorMainFormBG = Color.FromArgb(255,84, 175, 254);
+      static public readonly string strChinaDl = "http://gaoqing.la/";
     }
 
     public class infoXml

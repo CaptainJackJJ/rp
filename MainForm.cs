@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    private bool m_bFirstTimer = true;
     private WebBrowserHandler m_webBrowserHandler;
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
     public InfoSectionUI m_infoSectionTorrentUI;
@@ -238,8 +239,7 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);
-      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);      
       button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
@@ -1959,6 +1959,12 @@ namespace RPlayer
 
     private void timer1_Tick(object sender, EventArgs e)
     {
+      if (m_bFirstTimer)
+      {
+        m_bFirstTimer = false;
+        m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
+      }
+
       if (!m_bConstructed)
         return;
       string url = "";

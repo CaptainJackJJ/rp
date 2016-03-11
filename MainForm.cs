@@ -239,8 +239,8 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);      
-      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);
+      button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1464,7 +1464,6 @@ namespace RPlayer
         button_onlineVideo.Visible = false;
         button_dlOversea.Visible = false;
         button_subtitle.Visible = false;
-        button_threater.Visible = false;
         panel_neck.Visible = false;
 
         label_logo.Visible = false;
@@ -1538,7 +1537,6 @@ namespace RPlayer
         button_onlineVideo.Visible = true;
         button_dlOversea.Visible = true;
         button_subtitle.Visible = true;
-        button_threater.Visible = true;
         panel_neck.Visible = true;
       }
     }
@@ -1962,7 +1960,7 @@ namespace RPlayer
       if (m_bFirstTimer)
       {
         m_bFirstTimer = false;
-        m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
+        m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
       }
 
       if (!m_bConstructed)
@@ -2016,43 +2014,60 @@ namespace RPlayer
     }
 
     private void button_download_Click(object sender, EventArgs e)
-    {
-      button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
-      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
+    {     
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
+      ChangeWebButtonColor(GlobalConstants.Common.strChinaDl);
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
-    {
-      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_onlineVideo.BackColor = Color.FromArgb(255, 199, 80, 80);
-      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      m_webBrowserHandler.Navigate(false, "http://www.youku.com/");
+    {      
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaOnline);
+      ChangeWebButtonColor(GlobalConstants.Common.strChinaOnline);
     }
 
     private void button_dlOversea_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;      
-      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
-      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      m_webBrowserHandler.Navigate(false, "http://www.rarbg.to");
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOverseaDl);
+      ChangeWebButtonColor(GlobalConstants.Common.strOverseaDl);
     }
 
     private void button_subtitle_Click(object sender, EventArgs e)
     {
-      button_threater.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
-      m_webBrowserHandler.Navigate(false, "http://sub.makedie.me/");
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strSubtitle);
+      ChangeWebButtonColor(GlobalConstants.Common.strSubtitle);
+    }
+
+    public void ChangeWebButtonColor(string strWebsite)
+    {
+      if(strWebsite == GlobalConstants.Common.strSubtitle)
+      {
+        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
+      }
+      else if (strWebsite == GlobalConstants.Common.strOverseaDl
+        || strWebsite == GlobalConstants.Common.strOverseaDl + "/index8.php")
+      {
+        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
+      }
+      else if (strWebsite == GlobalConstants.Common.strChinaDl)
+      {
+        button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
+        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;        
+        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      }
+      else if (strWebsite == GlobalConstants.Common.strChinaOnline)
+      {
+        button_onlineVideo.BackColor = Color.FromArgb(255, 199, 80, 80);
+        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      }
     }
 
     private void label_back_Click(object sender, EventArgs e)
@@ -2064,18 +2079,6 @@ namespace RPlayer
     {
       m_webBrowserHandler.Forward();
     }
-
-    private void button_threater_Click(object sender, EventArgs e)
-    {
-      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
-      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
-    }
-
-
 
   }
 

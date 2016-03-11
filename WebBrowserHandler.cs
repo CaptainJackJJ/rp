@@ -16,9 +16,11 @@ namespace RPlayer
     private WebBrowserEx webBrowser1;
     private Uri m_LastUri;
     private Label m_LoadingNotice;
+    private MainForm m_formMain;
 
     public WebBrowserHandler(MainForm formMain, Point startPoint, Label LoadingNotice)
     {
+      m_formMain = formMain;
       m_LoadingNotice = LoadingNotice;
 
       int BrowserVer, RegVal;
@@ -89,15 +91,27 @@ namespace RPlayer
       else
       {
         webBrowser1.Navigate("about:blank");
-        webBrowser1.Navigate(new Uri(url));
+        m_LastUri = new Uri(url);
+        webBrowser1.Navigate(m_LastUri);        
       }
+    }
+
+    private bool IsTopPage()
+    {
+      if (m_LastUri.ToString() == GlobalConstants.Common.strChinaDl
+        || m_LastUri.ToString() == GlobalConstants.Common.strChinaOnline
+        || m_LastUri.ToString() == GlobalConstants.Common.strOverseaDl
+        || m_LastUri.ToString() == GlobalConstants.Common.strSubtitle)
+      { return true; }
+      else
+        return false;
     }
 
     public void Forward()
     {
       webBrowser1.GoForward();
     }
-
+    
     public void Back()
     {
       webBrowser1.GoBack();
@@ -131,12 +145,14 @@ namespace RPlayer
 
     void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
     {
+      m_formMain.ChangeWebButtonColor(e.Url.ToString());
+
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
 
       HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
       foreach (HtmlElement he in hec)
       {
-        he.Style = "display: none;";
+        he.OuterHtml = "";
       }
 
       if (e.Url.ToString() == GlobalConstants.Common.strChinaDl)

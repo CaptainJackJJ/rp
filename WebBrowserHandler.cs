@@ -117,6 +117,12 @@ namespace RPlayer
     void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
     {
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
+      HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
+      // 屏蔽对联浮动广告
+      foreach (HtmlElement he in hec)
+      {
+        he.Style = "display: none;";
+      }
     }
 
     void Document_Click(object sender, HtmlElementEventArgs e)

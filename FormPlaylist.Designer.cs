@@ -223,6 +223,7 @@
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "FormPlaylist";
+      this.Shown += new System.EventHandler(this.FormPlaylist_Shown);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormPlaylist_MouseDown);
       this.MouseLeave += new System.EventHandler(this.FormPlaylist_MouseLeave);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormPlaylist_MouseMove);

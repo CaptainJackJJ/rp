@@ -43,6 +43,10 @@ namespace RPlayer
     {
       m_mainForm = mainForm;
       InitializeComponent();
+    }
+
+    private void FormPlaylist_Shown(object sender, EventArgs e)
+    {
       SetUiLange();
       m_formHistroyDetails = new FormHistroyDetails();
       this.AddOwnedForm(m_formHistroyDetails);

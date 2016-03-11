@@ -41,6 +41,11 @@ namespace RPlayer
     public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
+      m_mainForm = mainForm;      
+    }
+
+    private void FormBottomBar_Shown(object sender, EventArgs e)
+    {
       SetUiLange();
       this.ShowInTaskbar = false;
       try
@@ -66,7 +71,7 @@ namespace RPlayer
         label_desktop.Text = "desktop";
         label_playlist.Text = "plist";
       }
-      m_mainForm = mainForm;
+
       m_formSpeedControl = new FormSpeedControl(this);
       this.AddOwnedForm(m_formSpeedControl);
       m_bConstructed = true;

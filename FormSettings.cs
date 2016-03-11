@@ -23,15 +23,19 @@ namespace RPlayer
         {
           m_mainForm = mainForm;
             InitializeComponent();
-            SetUiLange();
-            try
-            {
-                label_settingsClose.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-            }
-            catch
-            {
-                label_settingsClose.Text = "close";
-            }
+        }
+
+        private void FormSettings_Shown(object sender, EventArgs e)
+        {
+          SetUiLange();
+          try
+          {
+            label_settingsClose.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+          }
+          catch
+          {
+            label_settingsClose.Text = "close";
+          }
         }
 
         public void ConfigByArchive()

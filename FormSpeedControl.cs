@@ -18,11 +18,15 @@ namespace RPlayer
     {
       m_formBottomBar = formBottomBar;
       InitializeComponent();
+    }
+
+    private void FormSpeedControl_Shown(object sender, EventArgs e)
+    {
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
       }
-      catch{}
+      catch { }
     }
 
     public void ShowMe(bool bFF)

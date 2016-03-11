@@ -45,18 +45,16 @@
       this.label_share = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
       this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
-      this.button_onlineVideo = new System.Windows.Forms.Button();
-      this.button_dlChina = new System.Windows.Forms.Button();
       this.label_back = new System.Windows.Forms.Label();
-      this.panel_top = new System.Windows.Forms.Panel();
-      this.button_subtitle = new System.Windows.Forms.Button();
-      this.button_dlOversea = new System.Windows.Forms.Button();
-      this.button_threater = new System.Windows.Forms.Button();
       this.label_forward = new System.Windows.Forms.Label();
       this.label_loading = new System.Windows.Forms.Label();
-      this.panel1 = new System.Windows.Forms.Panel();
-      this.panel_top.SuspendLayout();
-      this.panel1.SuspendLayout();
+      this.panel_neck = new System.Windows.Forms.Panel();
+      this.button_onlineVideo = new System.Windows.Forms.Button();
+      this.button_dlChina = new System.Windows.Forms.Button();
+      this.button_threater = new System.Windows.Forms.Button();
+      this.button_dlOversea = new System.Windows.Forms.Button();
+      this.button_subtitle = new System.Windows.Forms.Button();
+      this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
       // label_Play
@@ -249,38 +247,6 @@
       this.label_InfoUpdateNotice.Size = new System.Drawing.Size(0, 12);
       this.label_InfoUpdateNotice.TabIndex = 45;
       // 
-      // button_onlineVideo
-      // 
-      this.button_onlineVideo.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
-      this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
-      this.button_onlineVideo.Location = new System.Drawing.Point(405, 0);
-      this.button_onlineVideo.Name = "button_onlineVideo";
-      this.button_onlineVideo.Size = new System.Drawing.Size(98, 40);
-      this.button_onlineVideo.TabIndex = 47;
-      this.button_onlineVideo.Text = "在线观看";
-      this.button_onlineVideo.UseVisualStyleBackColor = false;
-      this.button_onlineVideo.Click += new System.EventHandler(this.button_onlineVideo_Click);
-      // 
-      // button_dlChina
-      // 
-      this.button_dlChina.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_dlChina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_dlChina.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_dlChina.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina.Location = new System.Drawing.Point(111, 0);
-      this.button_dlChina.Name = "button_dlChina";
-      this.button_dlChina.Size = new System.Drawing.Size(98, 40);
-      this.button_dlChina.TabIndex = 48;
-      this.button_dlChina.Text = "国内下载";
-      this.button_dlChina.UseVisualStyleBackColor = false;
-      this.button_dlChina.Click += new System.EventHandler(this.button_download_Click);
-      // 
       // label_back
       // 
       this.label_back.AutoSize = true;
@@ -294,67 +260,6 @@
       this.label_back.TabIndex = 45;
       this.label_back.Text = "返回";
       this.label_back.Click += new System.EventHandler(this.label_back_Click);
-      // 
-      // panel_top
-      // 
-      this.panel_top.BackColor = System.Drawing.Color.Transparent;
-      this.panel_top.Controls.Add(this.button_subtitle);
-      this.panel_top.Controls.Add(this.button_dlOversea);
-      this.panel_top.Controls.Add(this.button_threater);
-      this.panel_top.Controls.Add(this.button_dlChina);
-      this.panel_top.Controls.Add(this.button_onlineVideo);
-      this.panel_top.Location = new System.Drawing.Point(254, 2);
-      this.panel_top.Name = "panel_top";
-      this.panel_top.Size = new System.Drawing.Size(516, 43);
-      this.panel_top.TabIndex = 49;
-      // 
-      // button_subtitle
-      // 
-      this.button_subtitle.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_subtitle.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_subtitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_subtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_subtitle.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_subtitle.ForeColor = System.Drawing.Color.White;
-      this.button_subtitle.Location = new System.Drawing.Point(307, 0);
-      this.button_subtitle.Name = "button_subtitle";
-      this.button_subtitle.Size = new System.Drawing.Size(98, 40);
-      this.button_subtitle.TabIndex = 48;
-      this.button_subtitle.Text = "字幕下载";
-      this.button_subtitle.UseVisualStyleBackColor = false;
-      this.button_subtitle.Click += new System.EventHandler(this.button_subtitle_Click);
-      // 
-      // button_dlOversea
-      // 
-      this.button_dlOversea.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_dlOversea.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_dlOversea.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_dlOversea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_dlOversea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_dlOversea.ForeColor = System.Drawing.Color.White;
-      this.button_dlOversea.Location = new System.Drawing.Point(209, 0);
-      this.button_dlOversea.Name = "button_dlOversea";
-      this.button_dlOversea.Size = new System.Drawing.Size(98, 40);
-      this.button_dlOversea.TabIndex = 48;
-      this.button_dlOversea.Text = "国外下载";
-      this.button_dlOversea.UseVisualStyleBackColor = false;
-      this.button_dlOversea.Click += new System.EventHandler(this.button_dlOversea_Click);
-      // 
-      // button_threater
-      // 
-      this.button_threater.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_threater.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_threater.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_threater.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_threater.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_threater.ForeColor = System.Drawing.Color.White;
-      this.button_threater.Location = new System.Drawing.Point(13, 0);
-      this.button_threater.Name = "button_threater";
-      this.button_threater.Size = new System.Drawing.Size(98, 40);
-      this.button_threater.TabIndex = 48;
-      this.button_threater.Text = "电影院";
-      this.button_threater.UseVisualStyleBackColor = false;
-      this.button_threater.Click += new System.EventHandler(this.button_threater_Click);
       // 
       // label_forward
       // 
@@ -384,16 +289,97 @@
       this.label_loading.Text = "...";
       this.label_loading.Visible = false;
       // 
-      // panel1
+      // panel_neck
       // 
-      this.panel1.BackColor = System.Drawing.Color.MintCream;
-      this.panel1.Controls.Add(this.label_loading);
-      this.panel1.Controls.Add(this.label_back);
-      this.panel1.Controls.Add(this.label_forward);
-      this.panel1.Location = new System.Drawing.Point(7, 48);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1010, 23);
-      this.panel1.TabIndex = 50;
+      this.panel_neck.BackColor = System.Drawing.Color.MintCream;
+      this.panel_neck.Controls.Add(this.label_loading);
+      this.panel_neck.Controls.Add(this.label_back);
+      this.panel_neck.Controls.Add(this.label_forward);
+      this.panel_neck.Location = new System.Drawing.Point(7, 48);
+      this.panel_neck.Name = "panel_neck";
+      this.panel_neck.Size = new System.Drawing.Size(1010, 23);
+      this.panel_neck.TabIndex = 50;
+      this.panel_neck.Visible = false;
+      // 
+      // button_onlineVideo
+      // 
+      this.button_onlineVideo.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
+      this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
+      this.button_onlineVideo.Location = new System.Drawing.Point(656, 1);
+      this.button_onlineVideo.Name = "button_onlineVideo";
+      this.button_onlineVideo.Size = new System.Drawing.Size(98, 40);
+      this.button_onlineVideo.TabIndex = 47;
+      this.button_onlineVideo.Text = "在线观看";
+      this.button_onlineVideo.UseVisualStyleBackColor = false;
+      this.button_onlineVideo.Click += new System.EventHandler(this.button_onlineVideo_Click);
+      // 
+      // button_dlChina
+      // 
+      this.button_dlChina.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_dlChina.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_dlChina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_dlChina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_dlChina.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_dlChina.ForeColor = System.Drawing.Color.White;
+      this.button_dlChina.Location = new System.Drawing.Point(362, 1);
+      this.button_dlChina.Name = "button_dlChina";
+      this.button_dlChina.Size = new System.Drawing.Size(98, 40);
+      this.button_dlChina.TabIndex = 48;
+      this.button_dlChina.Text = "国内下载";
+      this.button_dlChina.UseVisualStyleBackColor = false;
+      this.button_dlChina.Click += new System.EventHandler(this.button_download_Click);
+      // 
+      // button_threater
+      // 
+      this.button_threater.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_threater.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_threater.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_threater.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_threater.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_threater.ForeColor = System.Drawing.Color.White;
+      this.button_threater.Location = new System.Drawing.Point(264, 1);
+      this.button_threater.Name = "button_threater";
+      this.button_threater.Size = new System.Drawing.Size(98, 40);
+      this.button_threater.TabIndex = 48;
+      this.button_threater.Text = "电影院";
+      this.button_threater.UseVisualStyleBackColor = false;
+      this.button_threater.Click += new System.EventHandler(this.button_threater_Click);
+      // 
+      // button_dlOversea
+      // 
+      this.button_dlOversea.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_dlOversea.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_dlOversea.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_dlOversea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_dlOversea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_dlOversea.ForeColor = System.Drawing.Color.White;
+      this.button_dlOversea.Location = new System.Drawing.Point(460, 1);
+      this.button_dlOversea.Name = "button_dlOversea";
+      this.button_dlOversea.Size = new System.Drawing.Size(98, 40);
+      this.button_dlOversea.TabIndex = 48;
+      this.button_dlOversea.Text = "国外下载";
+      this.button_dlOversea.UseVisualStyleBackColor = false;
+      this.button_dlOversea.Click += new System.EventHandler(this.button_dlOversea_Click);
+      // 
+      // button_subtitle
+      // 
+      this.button_subtitle.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_subtitle.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_subtitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_subtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_subtitle.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_subtitle.ForeColor = System.Drawing.Color.White;
+      this.button_subtitle.Location = new System.Drawing.Point(558, 1);
+      this.button_subtitle.Name = "button_subtitle";
+      this.button_subtitle.Size = new System.Drawing.Size(98, 40);
+      this.button_subtitle.TabIndex = 48;
+      this.button_subtitle.Text = "字幕下载";
+      this.button_subtitle.UseVisualStyleBackColor = false;
+      this.button_subtitle.Click += new System.EventHandler(this.button_subtitle_Click);
       // 
       // MainForm
       // 
@@ -402,9 +388,13 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
-      this.Controls.Add(this.panel1);
-      this.Controls.Add(this.panel_top);
+      this.Controls.Add(this.button_subtitle);
+      this.Controls.Add(this.panel_neck);
+      this.Controls.Add(this.button_dlOversea);
+      this.Controls.Add(this.button_threater);
+      this.Controls.Add(this.button_dlChina);
       this.Controls.Add(this.button_openFile);
+      this.Controls.Add(this.button_onlineVideo);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_share);
       this.Controls.Add(this.label_InfoUpdateNotice);
@@ -431,9 +421,8 @@
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
       this.Move += new System.EventHandler(this.MainForm_Move);
       this.Resize += new System.EventHandler(this.MainForm_Resize);
-      this.panel_top.ResumeLayout(false);
-      this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
+      this.panel_neck.ResumeLayout(false);
+      this.panel_neck.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -457,16 +446,15 @@
         private System.Windows.Forms.Label label_share;
         private System.Windows.Forms.Button button_openFile;
         private System.Windows.Forms.Label label_InfoUpdateNotice;
-        private System.Windows.Forms.Button button_onlineVideo;
-        private System.Windows.Forms.Button button_dlChina;
         private System.Windows.Forms.Label label_back;
-        private System.Windows.Forms.Panel panel_top;
-        private System.Windows.Forms.Button button_subtitle;
-        private System.Windows.Forms.Button button_dlOversea;
         private System.Windows.Forms.Label label_forward;
         private System.Windows.Forms.Label label_loading;
+        private System.Windows.Forms.Panel panel_neck;
+        private System.Windows.Forms.Button button_onlineVideo;
+        private System.Windows.Forms.Button button_dlChina;
         private System.Windows.Forms.Button button_threater;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button_dlOversea;
+        private System.Windows.Forms.Button button_subtitle;
     }
 }
 

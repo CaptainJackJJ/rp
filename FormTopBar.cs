@@ -18,10 +18,15 @@ namespace RPlayer
     private bool m_bFormMouseDown = false;
 
     public FormTopBar(MainForm mainForm)
-    {     
+    {
+      m_mainForm = mainForm;
       InitializeComponent();      
-      SetUiLange();
       this.ShowInTaskbar = false;
+    }
+
+    private void FormTopBar_Shown(object sender, EventArgs e)
+    {
+      SetUiLange();
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
@@ -37,7 +42,7 @@ namespace RPlayer
         label_Max.Text = "max";
         label_Min.Text = "min";
       }
-      m_mainForm = mainForm;
+
       label_version.Text = m_mainForm.m_strAppVersion;
     }
 

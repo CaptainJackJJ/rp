@@ -1458,7 +1458,12 @@ namespace RPlayer
       {
         m_webBrowserHandler.Show(false);
         m_webBrowserHandler.Stop();
-        panel_top.Visible = false;
+        button_dlChina.Visible = false;
+        button_onlineVideo.Visible = false;
+        button_dlOversea.Visible = false;
+        button_subtitle.Visible = false;
+        button_threater.Visible = false;
+        panel_neck.Visible = false;
 
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
@@ -1522,7 +1527,13 @@ namespace RPlayer
 
         m_webBrowserHandler.Navigate(true, "");
         m_webBrowserHandler.Show(true);
-        panel_top.Visible = true;
+
+        button_dlChina.Visible = true;
+        button_onlineVideo.Visible = true;
+        button_dlOversea.Visible = true;
+        button_subtitle.Visible = true;
+        button_threater.Visible = true;
+        panel_neck.Visible = true;
       }
     }
 

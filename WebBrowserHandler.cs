@@ -54,6 +54,12 @@ namespace RPlayer
       formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
       webBrowser1.ProgressChanged += new WebBrowserProgressChangedEventHandler(ProgressChanged);
+      webBrowser1.NewWindow += webBrowser1_NewWindow;
+    }
+
+    void webBrowser1_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      e.Cancel = true;
     }
 
     public void Focus()

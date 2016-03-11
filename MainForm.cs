@@ -1465,6 +1465,8 @@ namespace RPlayer
         button_threater.Visible = false;
         panel_neck.Visible = false;
 
+        label_logo.Visible = false;
+        label_version.Visible = false;
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
@@ -1498,7 +1500,6 @@ namespace RPlayer
         }
 
         label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
-        this.BackgroundImage = null;
       }
       else
       {
@@ -1509,6 +1510,8 @@ namespace RPlayer
         //m_infoSectionTorrentUI.ShowSection(true);
         label_playWnd.Visible = false;
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
+        label_logo.Visible = true;
+        label_version.Visible = true;
         try
         {
           m_formTopBar.Hide();

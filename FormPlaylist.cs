@@ -43,17 +43,19 @@ namespace RPlayer
     {
       m_mainForm = mainForm;
       InitializeComponent();
-    }
 
-    private void FormPlaylist_Load(object sender, EventArgs e)
-    {
-      SetUiLange();
       m_formHistroyDetails = new FormHistroyDetails();
       this.AddOwnedForm(m_formHistroyDetails);
       m_formPlistFileDetails = new FormPlistFileDetails();
       this.AddOwnedForm(m_formPlistFileDetails);
       m_formPlistFolderDetails = new FormPlistFolderDetails();
       this.AddOwnedForm(m_formPlistFolderDetails);
+    }
+
+    private void FormPlaylist_Load(object sender, EventArgs e)
+    {
+      SetUiLange();
+      
       InitContextMenuStrip();
 
       m_bConstructed = true;

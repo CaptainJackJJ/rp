@@ -41,7 +41,9 @@ namespace RPlayer
     public FormBottomBar(MainForm mainForm)
     {
       InitializeComponent();
-      m_mainForm = mainForm;      
+      m_mainForm = mainForm;
+      m_formSpeedControl = new FormSpeedControl(this);
+      this.AddOwnedForm(m_formSpeedControl);
     }
 
     private void FormBottomBar_Load(object sender, EventArgs e)
@@ -71,9 +73,7 @@ namespace RPlayer
         label_desktop.Text = "desktop";
         label_playlist.Text = "plist";
       }
-
-      m_formSpeedControl = new FormSpeedControl(this);
-      this.AddOwnedForm(m_formSpeedControl);
+      
       m_bConstructed = true;
       this.OnResize(EventArgs.Empty);
     }

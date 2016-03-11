@@ -45,7 +45,7 @@ namespace RPlayer
       InitializeComponent();
     }
 
-    private void FormPlaylist_Shown(object sender, EventArgs e)
+    private void FormPlaylist_Load(object sender, EventArgs e)
     {
       SetUiLange();
       m_formHistroyDetails = new FormHistroyDetails();

@@ -560,7 +560,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormSettings";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Shown += new System.EventHandler(this.FormSettings_Shown);
+      this.Load += new System.EventHandler(this.FormSettings_Load);
       this.panel_topBar.ResumeLayout(false);
       this.panel_topBar.PerformLayout();
       this.panel_general.ResumeLayout(false);

@@ -165,7 +165,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormTopBar";
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-      this.Shown += new System.EventHandler(this.FormTopBar_Shown);
+      this.Load += new System.EventHandler(this.FormTopBar_Load);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormTopBar_MouseUp);

@@ -256,7 +256,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormBottomBar";
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-      this.Shown += new System.EventHandler(this.FormBottomBar_Shown);
+      this.Load += new System.EventHandler(this.FormBottomBar_Load);
       this.Move += new System.EventHandler(this.FormBottomBar_Move);
       this.Resize += new System.EventHandler(this.FormBottomBar_Resize);
       this.ResumeLayout(false);

@@ -372,7 +372,7 @@
       this.Opacity = 0.9D;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-      this.Shown += new System.EventHandler(this.FormSpeedControl_Shown);
+      this.Load += new System.EventHandler(this.FormSpeedControl_Load);
       this.ResumeLayout(false);
       this.PerformLayout();
 

@@ -25,7 +25,7 @@ namespace RPlayer
             InitializeComponent();
         }
 
-        private void FormSettings_Shown(object sender, EventArgs e)
+        private void FormSettings_Load(object sender, EventArgs e)
         {
           SetUiLange();
           try

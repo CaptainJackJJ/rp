@@ -24,7 +24,7 @@ namespace RPlayer
       this.ShowInTaskbar = false;
     }
 
-    private void FormTopBar_Shown(object sender, EventArgs e)
+    private void FormTopBar_Load(object sender, EventArgs e)
     {
       SetUiLange();
       try
@@ -255,5 +255,7 @@ namespace RPlayer
     {
       label_version.ForeColor = Color.White;
     }
+
+
   }
 }

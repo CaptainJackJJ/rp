@@ -141,7 +141,7 @@
       // 
       this.label_playWnd.AllowDrop = true;
       this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
-      this.label_playWnd.Location = new System.Drawing.Point(2, 70);
+      this.label_playWnd.Location = new System.Drawing.Point(2, 73);
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(1020, 586);
       this.label_playWnd.TabIndex = 39;
@@ -299,7 +299,6 @@
       this.panel_neck.Name = "panel_neck";
       this.panel_neck.Size = new System.Drawing.Size(1010, 23);
       this.panel_neck.TabIndex = 50;
-      this.panel_neck.Visible = false;
       // 
       // button_onlineVideo
       // 
@@ -413,7 +412,7 @@
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-      this.Shown += new System.EventHandler(this.MainForm_Shown);
+      this.Load += new System.EventHandler(this.MainForm_Load);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
       this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);

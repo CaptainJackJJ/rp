@@ -224,6 +224,25 @@ namespace RPlayer
       this.OnResize(EventArgs.Empty);
     }
 
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+      if (AppShare.SetGetFirstTimeRun(m_tempPath, false)) // first time run
+      {
+        FormRegisterAsk f = new FormRegisterAsk(this);
+        f.ShowDialog();
+        AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
+      }
+
+      m_updaterApp = new AppUpdater(this);
+      m_updaterApp.ThreadStart();
+
+      //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
+      //m_updaterInfo.ThreadStart();
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);
+      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
+      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
+    }
+
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       if (m_threadDoSomething != null && m_threadDoSomething.IsAlive)
@@ -250,25 +269,6 @@ namespace RPlayer
       bool bRunning = false;
       if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
         MessageBox.Show("Can not find AppShare xml");
-    }
-
-    private void MainForm_Shown(object sender, EventArgs e)
-    {
-      if(AppShare.SetGetFirstTimeRun(m_tempPath,false)) // first time run
-      {
-        FormRegisterAsk f = new FormRegisterAsk(this);
-        f.ShowDialog();
-        AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
-      }
-
-      m_updaterApp = new AppUpdater(this);
-      m_updaterApp.ThreadStart();
-
-      //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
-      //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70),label_loading);
-      m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
-      button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
 
@@ -1082,7 +1082,7 @@ namespace RPlayer
       {
         m_formSettings.ShowForm(settingType);
       }
-      catch
+      catch(Exception e)
       {
         Core.WriteLog(Core.ELogType.error, "settings form is closed by antivirus");
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
@@ -1481,6 +1481,7 @@ namespace RPlayer
           }
         }
 
+        label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
         label_playWnd.Visible = true;
         button_openFile.Hide();
         label_Play.Hide();
@@ -2025,7 +2026,7 @@ namespace RPlayer
 
     private void button_dlOversea_Click(object sender, EventArgs e)
     {
-      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;      
       button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
       button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
@@ -2062,6 +2063,8 @@ namespace RPlayer
       button_threater.BackColor = Color.FromArgb(255, 199, 80, 80);
       m_webBrowserHandler.Navigate(false, "http://www.mtime.com/");
     }
+
+
 
   }
 

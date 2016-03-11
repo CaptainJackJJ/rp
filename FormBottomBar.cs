@@ -44,7 +44,7 @@ namespace RPlayer
       m_mainForm = mainForm;      
     }
 
-    private void FormBottomBar_Shown(object sender, EventArgs e)
+    private void FormBottomBar_Load(object sender, EventArgs e)
     {
       SetUiLange();
       this.ShowInTaskbar = false;

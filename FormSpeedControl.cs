@@ -20,7 +20,7 @@ namespace RPlayer
       InitializeComponent();
     }
 
-    private void FormSpeedControl_Shown(object sender, EventArgs e)
+    private void FormSpeedControl_Load(object sender, EventArgs e)
     {
       try
       {

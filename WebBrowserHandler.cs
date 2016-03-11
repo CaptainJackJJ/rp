@@ -56,6 +56,14 @@ namespace RPlayer
       webBrowser1.ProgressChanged += new WebBrowserProgressChangedEventHandler(ProgressChanged);
     }
 
+    public void Focus()
+    {
+      if(webBrowser1 != null && webBrowser1.Document != null)
+      {
+        webBrowser1.Document.Focus();
+      }
+    }
+
     private void ProgressChanged(Object sender, WebBrowserProgressChangedEventArgs e)
     {
       if (e.CurrentProgress < e.MaximumProgress)

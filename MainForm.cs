@@ -702,6 +702,8 @@ namespace RPlayer
     {
       if (Core.IsPlaying())
         m_formBottomBar.TriggerVolumeOnMouseWheel(e);
+      else
+        m_webBrowserHandler.Focus();
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)

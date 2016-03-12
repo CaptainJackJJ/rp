@@ -61,12 +61,12 @@ namespace RPlayer
 
     void webBrowser1_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      e.Cancel = true;
+      //e.Cancel = true;
     }
 
     public void Focus()
     {
-      if(webBrowser1 != null && webBrowser1.Document != null)
+      if (webBrowser1 != null && webBrowser1.Document != null && !webBrowser1.Document.Focused)
       {
         webBrowser1.Document.Focus();
       }

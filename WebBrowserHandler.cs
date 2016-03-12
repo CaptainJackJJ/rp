@@ -155,6 +155,15 @@ namespace RPlayer
         he.OuterHtml = "";
       }
 
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
+      {
+        HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
+        if (he1 != null)
+        {
+          he1.OuterHtml = "";
+        }
+      }
+
       if (e.Url.ToString() == GlobalConstants.Common.strChinaDl)
         HideElem("站点公告");
     }

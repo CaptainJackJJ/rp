@@ -158,13 +158,30 @@ namespace RPlayer
         he.OuterHtml = "";
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
+      if (e.Url.ToString().Contains("http://www.xiagaoqing.com"))
       {
+        try
+        {// for http://www.xiagaoqing.com/
+          HtmlElementCollection hec2 = webBrowser1.Document.Body.Children;
+          hec2[5].Children[1].Style = "display: none;";
+          hec2[8].Style = "display: none;";
+        }
+        catch { }
+      }
+
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
+      {       
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)
         {
           he1.Style = "display: none;";
         }
+        he1 = webBrowser1.Document.GetElementById("topbar"); 
+        if (he1 != null)
+        {
+          if (he1.Parent != null && he1.Parent.Parent != null)
+            he1.Parent.Parent.Style = "display: none;";
+        }        
       }
 
       if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))

@@ -58,9 +58,13 @@ namespace RPlayer
     }
 
     void webBrowser1_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-      if(!(sender as WebBrowser).StatusText.Contains("magnet"))
-        e.Cancel = true;
+    { 
+      e.Cancel = true;
+
+      string strStatusText = (sender as WebBrowser).StatusText;
+      if(strStatusText.Contains("magnet") 
+        || strStatusText.Contains("http://sub.makedie.me/"))
+          webBrowser1.Navigate(strStatusText);
     }
 
     public void Focus()
@@ -159,7 +163,7 @@ namespace RPlayer
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)
         {
-          he1.OuterHtml = "";
+          he1.Style = "display: none;";
         }
       }
 

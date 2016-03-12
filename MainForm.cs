@@ -245,6 +245,8 @@ namespace RPlayer
       //m_updaterInfo.ThreadStart();
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70));
       button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
+
+      label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

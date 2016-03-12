@@ -18,10 +18,9 @@ namespace RPlayer
     private Label m_LoadingNotice;
     private MainForm m_formMain;
 
-    public WebBrowserHandler(MainForm formMain, Point startPoint, Label LoadingNotice)
+    public WebBrowserHandler(MainForm formMain, Point startPoint)
     {
       m_formMain = formMain;
-      m_LoadingNotice = LoadingNotice;
 
       int BrowserVer, RegVal;
 
@@ -76,11 +75,11 @@ namespace RPlayer
     {
       if (e.CurrentProgress < e.MaximumProgress)
       {
-        m_LoadingNotice.Visible = true;
+        m_formMain.m_bShowLoading = true;
       }
       else
       {
-        m_LoadingNotice.Visible = false;     
+        m_formMain.m_bShowLoading = false;     
       }
     }
 

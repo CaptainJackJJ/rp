@@ -140,7 +140,7 @@
       // 
       this.label_playWnd.AllowDrop = true;
       this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
-      this.label_playWnd.Location = new System.Drawing.Point(2, 73);
+      this.label_playWnd.Location = new System.Drawing.Point(2, 46);
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(1020, 586);
       this.label_playWnd.TabIndex = 39;
@@ -166,13 +166,14 @@
       // timer1
       // 
       this.timer1.Enabled = true;
+      this.timer1.Interval = 200;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // label_logo
       // 
       this.label_logo.AutoSize = true;
       this.label_logo.BackColor = System.Drawing.Color.Transparent;
-      this.label_logo.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_logo.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_logo.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_logo.ForeColor = System.Drawing.Color.White;
       this.label_logo.Location = new System.Drawing.Point(21, 6);
@@ -187,7 +188,7 @@
       // 
       this.label_version.AutoSize = true;
       this.label_version.BackColor = System.Drawing.Color.Transparent;
-      this.label_version.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_version.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_version.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_version.ForeColor = System.Drawing.Color.White;
       this.label_version.Location = new System.Drawing.Point(135, 18);
@@ -220,9 +221,9 @@
       // 
       this.button_openFile.AutoSize = true;
       this.button_openFile.BackColor = System.Drawing.Color.Transparent;
-      this.button_openFile.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.button_openFile.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.button_openFile.FlatAppearance.BorderColor = System.Drawing.Color.GhostWhite;
-      this.button_openFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
+      this.button_openFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_openFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_openFile.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_openFile.ForeColor = System.Drawing.Color.White;
@@ -248,45 +249,43 @@
       // 
       // label_back
       // 
-      this.label_back.AutoSize = true;
       this.label_back.BackColor = System.Drawing.Color.Transparent;
-      this.label_back.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_back.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_back.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_back.ForeColor = System.Drawing.Color.DimGray;
-      this.label_back.Location = new System.Drawing.Point(451, 5);
+      this.label_back.Location = new System.Drawing.Point(435, 0);
       this.label_back.Name = "label_back";
-      this.label_back.Size = new System.Drawing.Size(31, 12);
+      this.label_back.Size = new System.Drawing.Size(23, 23);
       this.label_back.TabIndex = 45;
-      this.label_back.Text = "返回";
       this.label_back.Click += new System.EventHandler(this.label_back_Click);
+      this.label_back.MouseEnter += new System.EventHandler(this.label_back_MouseEnter);
+      this.label_back.MouseLeave += new System.EventHandler(this.label_back_MouseLeave);
       // 
       // label_forward
       // 
-      this.label_forward.AutoSize = true;
       this.label_forward.BackColor = System.Drawing.Color.Transparent;
-      this.label_forward.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_forward.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_forward.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_forward.ForeColor = System.Drawing.Color.DimGray;
-      this.label_forward.Location = new System.Drawing.Point(535, 6);
+      this.label_forward.Location = new System.Drawing.Point(556, 0);
       this.label_forward.Name = "label_forward";
-      this.label_forward.Size = new System.Drawing.Size(31, 12);
+      this.label_forward.Size = new System.Drawing.Size(23, 23);
       this.label_forward.TabIndex = 45;
-      this.label_forward.Text = "前进";
       this.label_forward.Click += new System.EventHandler(this.label_forward_Click);
+      this.label_forward.MouseEnter += new System.EventHandler(this.label_forward_MouseEnter);
+      this.label_forward.MouseLeave += new System.EventHandler(this.label_forward_MouseLeave);
       // 
       // label_loading
       // 
-      this.label_loading.AutoSize = true;
       this.label_loading.BackColor = System.Drawing.Color.Transparent;
       this.label_loading.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_loading.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_loading.ForeColor = System.Drawing.Color.DimGray;
-      this.label_loading.Location = new System.Drawing.Point(494, 5);
+      this.label_loading.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_loading.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.label_loading.Location = new System.Drawing.Point(470, 4);
       this.label_loading.Name = "label_loading";
-      this.label_loading.Size = new System.Drawing.Size(26, 12);
+      this.label_loading.Size = new System.Drawing.Size(72, 25);
       this.label_loading.TabIndex = 45;
-      this.label_loading.Text = "...";
-      this.label_loading.Visible = false;
+      this.label_loading.Text = "一一一";
       // 
       // panel_neck
       // 
@@ -323,7 +322,7 @@
       this.button_dlChina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlChina.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlChina.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina.Location = new System.Drawing.Point(317, 1);
+      this.button_dlChina.Location = new System.Drawing.Point(318, 1);
       this.button_dlChina.Name = "button_dlChina";
       this.button_dlChina.Size = new System.Drawing.Size(98, 40);
       this.button_dlChina.TabIndex = 48;
@@ -403,7 +402,6 @@
       this.Move += new System.EventHandler(this.MainForm_Move);
       this.Resize += new System.EventHandler(this.MainForm_Resize);
       this.panel_neck.ResumeLayout(false);
-      this.panel_neck.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 

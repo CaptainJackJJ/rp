@@ -21,6 +21,8 @@ namespace RPlayer
   {
 
     #region properties
+    private int m_nTimes = -1;
+    public bool m_bShowLoading = false;
     private bool m_bFirstTimer = true;
     private WebBrowserHandler m_webBrowserHandler;
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
@@ -173,6 +175,8 @@ namespace RPlayer
       label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
       label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
+      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
+      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
       if (args.Length == 0)
       {
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
@@ -239,7 +243,7 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70), label_loading);
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70));
       button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
     }
 
@@ -1963,6 +1967,32 @@ namespace RPlayer
         m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
       }
 
+      if (m_bShowLoading)
+      {
+        ++m_nTimes;
+        switch (m_nTimes)
+        {
+          case -1:
+            label_loading.Text = "";
+            break;
+          case 0:
+            label_loading.Text = "一";
+            break;
+          case 1:
+            label_loading.Text = "一一";
+            break;
+          case 2:
+            label_loading.Text = "一一一";
+            m_nTimes = -2;
+            break;
+        }
+      }
+      else
+      {
+        label_loading.Text = "";
+        m_nTimes = -1;
+      }
+
       if (!m_bConstructed)
         return;
       string url = "";
@@ -2078,6 +2108,27 @@ namespace RPlayer
     private void label_forward_Click(object sender, EventArgs e)
     {
       m_webBrowserHandler.Forward();
+    }
+
+    private void label_back_MouseEnter(object sender, EventArgs e)
+    {
+      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\backFocus.png");
+      
+    }
+
+    private void label_back_MouseLeave(object sender, EventArgs e)
+    {
+      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
+    }
+
+    private void label_forward_MouseEnter(object sender, EventArgs e)
+    {
+      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forwardFocus.png");
+    }
+
+    private void label_forward_MouseLeave(object sender, EventArgs e)
+    {
+      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
     }
 
   }

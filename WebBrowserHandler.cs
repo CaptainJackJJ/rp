@@ -15,7 +15,6 @@ namespace RPlayer
   {
     private WebBrowserEx webBrowser1;
     private Uri m_LastUri;
-    private Label m_LoadingNotice;
     private MainForm m_formMain;
 
     public WebBrowserHandler(MainForm formMain, Point startPoint)
@@ -60,7 +59,8 @@ namespace RPlayer
 
     void webBrowser1_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      //e.Cancel = true;
+      if(!(sender as WebBrowser).StatusText.Contains("magnet"))
+        e.Cancel = true;
     }
 
     public void Focus()

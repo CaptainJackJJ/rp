@@ -368,6 +368,10 @@ namespace RPlayer
 
     public void MarkPlayingPlist(PlaylistFolder plistFolder, PlaylistFile plistFile)
     {
+      if (treeView_playlist.Nodes != null)
+      {
+        UpdatePlayListView(true, "");
+      }
       foreach (TreeNode nodeFolder in treeView_playlist.Nodes)
       {
         if (((PlaylistFolder)(nodeFolder.Tag) == plistFolder))

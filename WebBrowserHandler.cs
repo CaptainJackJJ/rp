@@ -164,7 +164,7 @@ namespace RPlayer
         }
       }
 
-      if (e.Url.ToString() == GlobalConstants.Common.strChinaDl)
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
         HideElem("站点公告");
     }
 

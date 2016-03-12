@@ -145,6 +145,10 @@ namespace RPlayer
     public void ConfigByArchive()
     {
       this.Size = new Size(Archive.formPlistWidth, Archive.formPlistHeight);
+      if (Archive.selectedPListBtn != Archive.enumSelectedPListBtn.playlist)
+        SwitchListView(Archive.enumSelectedPListBtn.playlist);
+      else
+        SwitchListView(Archive.enumSelectedPListBtn.histroy);
       SwitchListView(Archive.selectedPListBtn);
     }
 

@@ -11,6 +11,13 @@ using System.IO;
 using CoreWrapper;
 using System.Xml;
 
+using OpenPop.Mime;
+using OpenPop.Mime.Header;
+using OpenPop.Pop3;
+using OpenPop.Pop3.Exceptions;
+using OpenPop.Common.Logging;
+using Message = OpenPop.Mime.Message;
+
 namespace RPlayer
 {
   class AppUpdater : ThreadEx
@@ -18,14 +25,14 @@ namespace RPlayer
     private MainForm m_mainForm;
     private WebClient m_SetupSelfInfoDownloader;
     private WebClient m_SetupSelfDownloader;
-    static readonly private string m_strSetupSelfInfoXmlName = "setupSelfInfo.xml";
-    static readonly private string m_strSetupSelfInfoRemoteUrl = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + m_strSetupSelfInfoXmlName;
     private string m_strDownloadedSetupSelfInfoUrl;
     static readonly private string m_strSetupSelfName = "RPlayerSetupSelf.exe";
     private string m_strDownloadedSetupSelfUrl;
     private string m_strRemoteSetupSelfVerison;
     private string m_strDownloadedVersion;
-
+    private string m_strDlEmail,m_strDlCode;    
+    private Thread m_DlSelfThread;
+    
     public AppUpdater(MainForm mainForm)
     {
       m_mainForm = mainForm;
@@ -35,17 +42,18 @@ namespace RPlayer
       m_SetupSelfInfoDownloader = new WebClient();
       m_SetupSelfInfoDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
       m_SetupSelfInfoDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfInfoDownloadCompeleted);
-      m_SetupSelfDownloader = new WebClient();
-      m_SetupSelfDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
-      m_SetupSelfDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfDownloadCompeleted);
+      //m_SetupSelfDownloader = new WebClient();
+      //m_SetupSelfDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
+      //m_SetupSelfDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfDownloadCompeleted);
 
-      m_strDownloadedSetupSelfInfoUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfInfoXmlName;
+      m_strDownloadedSetupSelfInfoUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strSetupSelfInfoXmlName;
       m_strDownloadedSetupSelfUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfName;
     }
 
-    private void GetRemoteSetupSelfInfo(out string strRemoteSetupSelfVerison, out string strUrl)
+    private void GetRemoteSetupSelfInfo(out string strRemoteSetupSelfVerison, out string strUrl, 
+      out string strEmail, out string strCode)
     {
-      strRemoteSetupSelfVerison = strUrl = "";
+      strRemoteSetupSelfVerison = strUrl = strEmail = strCode = "";
 
       XmlDocument xml = new XmlDocument();
       try
@@ -63,10 +71,81 @@ namespace RPlayer
       {
         strUrl = node.InnerText;
         strRemoteSetupSelfVerison = node.Attributes["verison"].Value;
+      }
+
+      node = xml.SelectSingleNode("/setupSelfInfo/ec");
+      if (node != null)
+      {
+        strEmail = node.InnerText;
+        strCode = node.Attributes["c"].Value;
         return;
       }
 
       Core.WriteLog(Core.ELogType.error, "read SetupSelfInfo xml fail");
+    }
+
+    private void DlSetupSelfProcess()
+    {      
+      Pop3Client pop3Client = new Pop3Client();
+      while (!m_bStopThread)
+      {
+        try
+        {
+          if (pop3Client.Connected)
+            pop3Client.Disconnect();
+          pop3Client.Connect("pop.qq.com", 995, true);
+          pop3Client.Authenticate(m_strDlEmail + "@qq.com", m_strDlCode);
+          int count = pop3Client.GetMessageCount();
+
+          int success = 0;
+          int fail = 0;
+          for (int i = count; i >= 1; --i)
+          {
+            if (m_bStopThread)
+              return;
+
+            try
+            {
+              Message message = pop3Client.GetMessage(i);
+
+              List<MessagePart> attachments = message.FindAllAttachments();
+              foreach (MessagePart attachment in attachments)
+              {
+                if (attachment.FileName == "RPlayerSetupSelf.txt")
+                {
+                  // Now we want to save the attachment
+                 FileInfo file = new FileInfo(m_strDownloadedSetupSelfUrl);
+
+                  // Lets try to save to the file
+                  try
+                  {
+                    attachment.Save(file);
+                    AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
+                    return;
+                  }
+                  catch {}
+                }
+              }
+
+              success++;
+            }
+            catch (Exception e)
+            {
+              fail++;
+            }
+          }
+        }
+        catch
+        {
+          continue;
+        }
+      }
+    }
+
+    private void DlSetupSelf()
+    {
+      m_DlSelfThread = new Thread(DlSetupSelfProcess);
+      m_DlSelfThread.Start();
     }
 
     private void SetupSelfInfoDownloadCompeleted(object sender,AsyncCompletedEventArgs e)
@@ -75,7 +154,7 @@ namespace RPlayer
         return;
       
       string strRemoteSetupUrl = "";
-      GetRemoteSetupSelfInfo(out m_strRemoteSetupSelfVerison, out strRemoteSetupUrl);
+      GetRemoteSetupSelfInfo(out m_strRemoteSetupSelfVerison, out strRemoteSetupUrl, out m_strDlEmail,out m_strDlCode);
       if(m_strRemoteSetupSelfVerison == "" || strRemoteSetupUrl == "")
       {
         Core.WriteLog(Core.ELogType.error, "SetupSelf verison or url is empty");
@@ -101,7 +180,7 @@ namespace RPlayer
         Core.WriteLog(Core.ELogType.notice, "Download setupSelf");
         try
         {
-          m_SetupSelfDownloader.DownloadFileAsync(new Uri(strRemoteSetupUrl), m_strDownloadedSetupSelfUrl);
+          DlSetupSelf();
         }
         catch (Exception exc)
         {
@@ -111,13 +190,13 @@ namespace RPlayer
       }
     }
 
-    private void SetupSelfDownloadCompeleted(object sender, AsyncCompletedEventArgs e)
-    {
-      if (e.Cancelled)
-        return;
+    //private void SetupSelfDownloadCompeleted(object sender, AsyncCompletedEventArgs e)
+    //{
+    //  if (e.Cancelled)
+    //    return;
 
-      AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
-    }
+    //  AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
+    //}
 
     protected override void ThreadProcess()
     {      
@@ -159,7 +238,8 @@ namespace RPlayer
         {
           File.Delete(m_strDownloadedSetupSelfInfoUrl);
 
-          m_SetupSelfInfoDownloader.DownloadFileAsync(new Uri(m_strSetupSelfInfoRemoteUrl), m_strDownloadedSetupSelfInfoUrl);
+          Uri uri = new Uri(GlobalConstants.Common.strSetupSelfInfoRemoteUrl);
+          m_SetupSelfInfoDownloader.DownloadFileAsync(uri, m_strDownloadedSetupSelfInfoUrl);
         }
         catch(Exception e)
         {
@@ -177,7 +257,8 @@ namespace RPlayer
 
     protected override void ThreadPrepStop()
     {
-      m_SetupSelfDownloader.CancelAsync();
+      //m_SetupSelfDownloader.CancelAsync();
+      m_DlSelfThread.Abort();
       m_SetupSelfInfoDownloader.CancelAsync();
     }
   }

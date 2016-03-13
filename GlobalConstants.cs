@@ -13,14 +13,14 @@ namespace RPlayer
     {
       static public readonly string strInfoXmlRemoteName = "infoRemote.xml";
       static public readonly string strInfoMoreXmlRemoteName = "infoMoreRemote.xml";
-      //static private readonly string strRemoteHost = "http://downloads.sourceforge.net/project/piraterabbitplayer/";
-      static private readonly string strRemoteHost = "http://rabbitplayer.cn/";
-      static public readonly string strInfoRemoteXmlUrl = strRemoteHost + strInfoXmlRemoteName;
-      static public readonly string strInfoMoreRemoteXmlUrl = strRemoteHost + strInfoMoreXmlRemoteName;
+      //static private readonly string strInfoRemoteHost = "http://downloads.sourceforge.net/project/piraterabbitplayer/";
+      static private readonly string strInfoRemoteHost = "http://rabbitplayer.cn/";
+      static public readonly string strInfoRemoteXmlUrl = strInfoRemoteHost + strInfoXmlRemoteName;
+      static public readonly string strInfoMoreRemoteXmlUrl = strInfoRemoteHost + strInfoMoreXmlRemoteName;
       static public readonly string strInfoXmlLocalName = "infoLocal.xml";
       static public readonly string strInfoMoreXmlLocalName = "infoMoreLocal.xml";
       static public readonly string strDownloadedFolderName = "download";
-      static public readonly string strInfoItemFolderRemoteUrl = strRemoteHost + "info";
+      static public readonly string strInfoItemFolderRemoteUrl = strInfoRemoteHost + "info";
       static public readonly Color colorMainBG = Color.FromArgb(255, 66, 75, 92);
       static public readonly Color colorNormalText = Color.Snow;
       static public readonly Color colorBtnSelected = Color.DodgerBlue;
@@ -31,7 +31,9 @@ namespace RPlayer
       static public readonly string strChinaOnline = "http://www.youku.com/";
       static public readonly string strOverseaDl = "http://www.rarbg.to";
       static public readonly string strSubtitle = "http://sub.makedie.me/";
-      static public readonly string strOfficalWebsite = "http://rabbitplayer.com/";
+      static public readonly string strOfficalWebsite = "http://rabbitplayer.cn/";
+      static public readonly string strSetupSelfInfoXmlName = "setupSelfInfo.xml";
+      static public readonly string strSetupSelfInfoRemoteUrl = "http://rabbitplayer.cn/" + strSetupSelfInfoXmlName;
     }
 
     public class infoXml

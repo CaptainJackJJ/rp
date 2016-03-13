@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ColorSlider\ColorSlider\bin\Release\ColorSlider.dll</HintPath>
     </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\OpenPop.NET 2.0.5\test application\OpenPop.dll</HintPath>
+    </Reference>
     <Reference Include="RpCoreWrapper, Version=1.0.5838.19029, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RpCoreWrapper\Release\RpCoreWrapper.dll</HintPath>

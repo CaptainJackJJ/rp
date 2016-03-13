@@ -35,9 +35,9 @@
       // 
       // button_notAllow
       // 
-      this.button_notAllow.BackColor = System.Drawing.Color.SlateGray;
-      this.button_notAllow.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_notAllow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_notAllow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.button_notAllow.FlatAppearance.BorderColor = System.Drawing.Color.White;
+      this.button_notAllow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_notAllow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_notAllow.ForeColor = System.Drawing.Color.White;
       this.button_notAllow.Location = new System.Drawing.Point(178, 188);
@@ -50,9 +50,9 @@
       // 
       // button_allow
       // 
-      this.button_allow.BackColor = System.Drawing.Color.SlateGray;
-      this.button_allow.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-      this.button_allow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+      this.button_allow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.button_allow.FlatAppearance.BorderColor = System.Drawing.Color.White;
+      this.button_allow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_allow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_allow.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_allow.ForeColor = System.Drawing.Color.White;
@@ -66,16 +66,16 @@
       // 
       // richTextBox_description
       // 
-      this.richTextBox_description.BackColor = System.Drawing.Color.SlateGray;
+      this.richTextBox_description.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.richTextBox_description.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.richTextBox_description.Cursor = System.Windows.Forms.Cursors.Default;
       this.richTextBox_description.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.richTextBox_description.ForeColor = System.Drawing.SystemColors.Info;
-      this.richTextBox_description.Location = new System.Drawing.Point(13, 12);
+      this.richTextBox_description.Location = new System.Drawing.Point(13, 21);
       this.richTextBox_description.Name = "richTextBox_description";
       this.richTextBox_description.ReadOnly = true;
       this.richTextBox_description.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-      this.richTextBox_description.Size = new System.Drawing.Size(284, 170);
+      this.richTextBox_description.Size = new System.Drawing.Size(284, 158);
       this.richTextBox_description.TabIndex = 42;
       this.richTextBox_description.Text = "\n\nDo you want to set RabbitPlayer as default media player.\n\nSome SecuritySoftware" +
     " may ask your permisson agian.";
@@ -84,7 +84,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.SlateGray;
+      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(309, 222);
       this.Controls.Add(this.richTextBox_description);
       this.Controls.Add(this.button_notAllow);

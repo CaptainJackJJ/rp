@@ -11,7 +11,7 @@ using MB.Controls;
 namespace RPlayer
 {
   [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-  class WebBrowserHandler
+  public class WebBrowserHandler
   {
     private WebBrowserEx webBrowser1;
     private Uri m_LastUri;
@@ -58,13 +58,20 @@ namespace RPlayer
     }
 
     void webBrowser1_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
-    { 
-      e.Cancel = true;
+    {
+      WebBrowser wb = (sender as WebBrowser);
+      string strStatusText = wb.StatusText;
 
-      string strStatusText = (sender as WebBrowser).StatusText;
-      if(strStatusText.Contains("magnet") 
+      if (strStatusText.Contains(GlobalConstants.Common.strOfficalWebsite)) // for share
+        e.Cancel = false;
+      else
+        e.Cancel = true;
+      
+      if (strStatusText.Contains("magnet")
         || strStatusText.Contains("http://sub.makedie.me/"))
-          webBrowser1.Navigate(strStatusText);
+      {
+        webBrowser1.Navigate(strStatusText);
+      }
     }
 
     public void Focus()
@@ -89,6 +96,13 @@ namespace RPlayer
 
     public void Navigate(bool bLastUri,string url)
     {
+      if (m_formMain.m_bNeedShared && url != GlobalConstants.Common.strOfficalWebsite)
+      {
+        FormAskShare f = new FormAskShare(m_formMain);
+        f.ShowDialog();
+        return;
+      }
+
       if (bLastUri)
         webBrowser1.Navigate(m_LastUri);
       else
@@ -152,10 +166,13 @@ namespace RPlayer
 
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
 
-      HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
-      foreach (HtmlElement he in hec)
+      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
       {
-        he.OuterHtml = "";
+        HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
+        foreach (HtmlElement he in hec)
+        {
+          he.OuterHtml = "";
+        }
       }
 
       if (e.Url.ToString().Contains("http://www.xiagaoqing.com"))
@@ -209,11 +226,13 @@ namespace RPlayer
           // Use this to make it navigate to the new URL on the current browser/tab
           ele.SetAttribute("target", "_self");
 
-          string strTarget = ele.GetAttribute("target");
-          string strCla = ele.GetAttribute("title");
-
-          //if (strTarget == "_self" && strCla == "分享到QQ空间")
-          //  m_Shared = true;
+          string strUrl = ele.Document.Url.ToString();
+          if (strUrl.Contains(GlobalConstants.Common.strOfficalWebsite)
+            && !ele.OuterHtml.Contains("downBtn"))
+          {
+            m_formMain.m_bNeedShared = false;
+            AppShare.SetGetShared(MainForm.m_tempPath, true);
+          }
         }
         ele = ele.Parent;
       }

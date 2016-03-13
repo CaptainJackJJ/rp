@@ -62,6 +62,12 @@
     <Compile Include="FormInfoMore.Designer.cs">
       <DependentUpon>FormInfoMore.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAskShare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAskShare.Designer.cs">
+      <DependentUpon>FormAskShare.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormNotice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,9 +188,14 @@
     <Compile Include="UiLang.cs" />
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
-    <Compile Include="WebBrowserHandler.cs" />
+    <Compile Include="WebBrowserHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="FormInfoMore.resx">
       <DependentUpon>FormInfoMore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAskShare.resx">
+      <DependentUpon>FormAskShare.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNotice.resx">
       <DependentUpon>FormNotice.cs</DependentUpon>

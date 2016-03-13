@@ -31,6 +31,7 @@ namespace RPlayer
       static public readonly string strChinaOnline = "http://www.youku.com/";
       static public readonly string strOverseaDl = "http://www.rarbg.to";
       static public readonly string strSubtitle = "http://sub.makedie.me/";
+      static public readonly string strOfficalWebsite = "http://rabbitplayer.com/";
     }
 
     public class infoXml

@@ -10,12 +10,23 @@ namespace RPlayer
 {
   class AppShare
   {
+    #region fields
     static readonly private string m_strXmlFileName = "appShare.xml";
     static private string m_strXmlFileUrl;
     static readonly private string m_strNodeNameRoot = "/appShare";
+
     static readonly private string m_strNodeNameDownloadedSetupsSelfVersion = "downloadedSetupSelfVersion";
     static readonly private string m_strNodeUrlDownloadedSetupSelfVersion 
       = m_strNodeNameRoot + "/" + m_strNodeNameDownloadedSetupsSelfVersion;
+
+    static readonly private string m_strNodeNameLaunchTimes = "LaunchTimes";
+    static readonly private string m_strNodeUrlLaunchTimes
+      = m_strNodeNameRoot + "/" + m_strNodeNameLaunchTimes;
+
+    static readonly private string m_strNodeNameShared = "Shared";
+    static readonly private string m_strNodeUrlShared
+      = m_strNodeNameRoot + "/" + m_strNodeNameShared;
+    #endregion
 
     static private void GetNode(XmlDocument xml,string nodeUrl, out XmlNode node)
     {
@@ -35,7 +46,8 @@ namespace RPlayer
       node = xml.SelectSingleNode(nodeUrl);
       if(node == null)
       {
-        if(nodeUrl == "/appShare/appRunning")
+        #region AddDefault
+        if (nodeUrl == "/appShare/appRunning")
         {
           node = xml.CreateElement("appRunning");
           nodeAppShare.AppendChild(node);
@@ -65,6 +77,64 @@ namespace RPlayer
           nodeAppShare.AppendChild(node);
           node.InnerText = "";
         }
+        else if (nodeUrl == m_strNodeUrlLaunchTimes)
+        {
+          node = xml.CreateElement(m_strNodeNameLaunchTimes);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "1";
+        }
+        else if (nodeUrl == m_strNodeUrlShared)
+        {
+          node = xml.CreateElement(m_strNodeNameShared);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "False";
+        }
+        #endregion
+      }
+    }
+
+    static public bool SetGetShared(string xmlPath, bool bSet)
+    {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, m_strNodeUrlShared, out node);
+      if (bSet)
+      {
+        node.InnerText = "True";
+
+        try
+        {
+          xml.Save(m_strXmlFileUrl);
+        }
+        catch { }
+      }
+      else
+      {
+        return Convert.ToBoolean(node.InnerText);
+      }
+      return false;
+    }
+
+    static public void SetGetLaunchTimes(string xmlPath, bool bSet, ref UInt64 times)
+    {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, m_strNodeUrlLaunchTimes, out node);
+      if (bSet)
+      {
+        node.InnerText = times.ToString();
+
+        try
+        {
+          xml.Save(m_strXmlFileUrl);
+        }
+        catch { }
+      }
+      else
+      {
+        times = Convert.ToUInt64(node.InnerText);
       }
     }
 

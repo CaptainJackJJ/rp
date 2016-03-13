@@ -21,10 +21,11 @@ namespace RPlayer
   {
 
     #region properties
+    public bool m_bNeedShared = false;
     private int m_nTimes = -1;
     public bool m_bShowLoading = false;
     private bool m_bFirstTimer = true;
-    private WebBrowserHandler m_webBrowserHandler;
+    public WebBrowserHandler m_webBrowserHandler;
     public InfoLocalXmlHandler m_infoLocalXmlHandler;
     public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
@@ -1966,6 +1967,18 @@ namespace RPlayer
       if (m_bFirstTimer)
       {
         m_bFirstTimer = false;
+
+        UInt64 nLanuchTimes = 1;
+        AppShare.SetGetLaunchTimes(m_tempPath, false, ref nLanuchTimes);        
+        if (nLanuchTimes > 5)
+        {
+          bool bShared = AppShare.SetGetShared(m_tempPath, false);
+          if (!bShared)
+            m_bNeedShared = true;
+        }
+        UInt64 times = nLanuchTimes + 1;
+        AppShare.SetGetLaunchTimes(m_tempPath, true, ref times);
+
         m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
       }
 

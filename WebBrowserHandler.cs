@@ -154,26 +154,30 @@ namespace RPlayer
         HtmlElement he = hc[8].Children[0];
         if (he.OuterText.Contains(outerText))
         {
-          he.OuterHtml = "";
+          he.Style = "display: none;";
+          //he.OuterHtml = "";
         }
       }
       catch{ }
     }
 
+    void HideElemById(string id)
+    {
+      HtmlElement he1 = webBrowser1.Document.GetElementById(id);
+      if (he1 != null)
+      {
+        he1.Style = "display: none;";
+      }
+    }
+
     void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
     {
+      if (e.Url.ToString() == "about:blank")
+        return;
+
       m_formMain.ChangeWebButtonColor(e.Url.ToString());
 
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
-
-      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
-      {
-        HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
-        foreach (HtmlElement he in hec)
-        {
-          he.OuterHtml = "";
-        }
-      }
 
       if (e.Url.ToString().Contains("http://www.xiagaoqing.com"))
       {
@@ -186,23 +190,65 @@ namespace RPlayer
         catch { }
       }
 
+      if (e.Url.ToString().Contains("http://www.chdw.org/"))
+      {
+        HideElemById("masthead");
+        //this.webBrowser1.Document.Body.Style = "zoom:1.4";
+        //try
+        //{
+        //  HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("img");
+        //  foreach (HtmlElement he in hec)
+        //  {
+        //    if (he.OuterHtml.Contains("http://www.chdw.org/wp-content/themes/begin/img/logo.png"))
+        //    {
+        //      he.Style = "display: none;";
+        //      break;
+        //    }
+        //  }
+        //}
+        //catch { }
+      }
+
       if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
-      {       
+      {
+        HideElemById("advert-1");
+        HideElemById("advert-2");
+        HideElemById("advert-3");
+        HideElemById("advert-4");
+        HideElemById("links");
+        HideElemById("colophon");
+        //HideElemById("social");
+        HideElemById("shang");
+        HideElemById("respond");
+        HideElemById("search-3");
+
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)
         {
-          he1.Style = "display: none;";
+          if (!e.Url.ToString().Contains("http://www.chdw.org/"))
+            he1.Style = "display: none;";
         }
+
         he1 = webBrowser1.Document.GetElementById("topbar"); 
         if (he1 != null)
         {
           if (he1.Parent != null && he1.Parent.Parent != null)
             he1.Parent.Parent.Style = "display: none;";
-        }        
+        }
+
       }
 
       if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
         HideElem("站点公告");
+
+      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
+      {
+        HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
+        foreach (HtmlElement he in hec)
+        {
+          he.OuterHtml = "";
+        }
+      }
     }
 
     void Document_Click(object sender, HtmlElementEventArgs e)
@@ -224,7 +270,9 @@ namespace RPlayer
 
           // METHOD-2
           // Use this to make it navigate to the new URL on the current browser/tab
-          ele.SetAttribute("target", "_self");
+
+          if (ele.OuterText != "种子下载") // for http://www.chdw.org/
+            ele.SetAttribute("target", "_self");
 
           string strUrl = ele.Document.Url.ToString();
           if (strUrl.Contains(GlobalConstants.Common.strOfficalWebsite)

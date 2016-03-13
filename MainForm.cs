@@ -232,13 +232,6 @@ namespace RPlayer
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-      if (AppShare.SetGetFirstTimeRun(m_tempPath, false)) // first time run
-      {
-        FormRegisterAsk f = new FormRegisterAsk(this);
-        f.ShowDialog();
-        AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
-      }
-
       m_updaterApp = new AppUpdater(this);
       m_updaterApp.ThreadStart();
 
@@ -248,6 +241,8 @@ namespace RPlayer
       button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
+
+      timer1.Enabled = true;
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1967,6 +1962,13 @@ namespace RPlayer
       if (m_bFirstTimer)
       {
         m_bFirstTimer = false;
+
+        if (AppShare.SetGetFirstTimeRun(m_tempPath, false)) // first time run
+        {
+          FormRegisterAsk f = new FormRegisterAsk(this);
+          f.Show();
+          AppShare.SetGetFirstTimeRun(m_tempPath, true); // set first time run to NO
+        }
 
         UInt64 nLanuchTimes = 1;
         AppShare.SetGetLaunchTimes(m_tempPath, false, ref nLanuchTimes);        

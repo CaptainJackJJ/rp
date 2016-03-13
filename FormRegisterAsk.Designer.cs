@@ -92,6 +92,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "FormRegisterAsk";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.TopMost = true;
       this.ResumeLayout(false);
 
     }

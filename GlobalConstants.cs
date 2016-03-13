@@ -34,6 +34,9 @@ namespace RPlayer
       static public readonly string strOfficalWebsite = "http://rabbitplayer.cn/";
       static public readonly string strSetupSelfInfoXmlName = "setupSelfInfo.xml";
       static public readonly string strSetupSelfInfoRemoteUrl = "http://rabbitplayer.cn/" + strSetupSelfInfoXmlName;
+      static public readonly string strLaunchTimesXmlName = "LaunchTimes.xml";
+      static public readonly string strLaunchTimesRemoteUrl 
+        = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strLaunchTimesXmlName;
     }
 
     public class infoXml

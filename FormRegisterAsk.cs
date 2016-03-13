@@ -25,7 +25,7 @@ namespace RPlayer
       {
         button_allow.Text = "好的";
         button_notAllow.Text = "稍后";
-        richTextBox_description.Text = @"亲，将兔子影音设为默认播放器吧？设置后双击视频文件即可自动播放。
+        richTextBox_description.Text = @"亲，将兔子影音设为默认播放器吧！设置后双击视频文件即可自动播放。
 
 或者您可稍后在本软件的“设置->一般”中选择“设置为系统默认播放器”。
 

@@ -136,9 +136,9 @@ namespace RPlayer
             if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
             {
               MessageBox.Show("Can not find AppShare xml");
-            }
-            this.Close();
+            }            
           }
+          this.Close();
         }
         else
         {

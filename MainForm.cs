@@ -26,7 +26,7 @@ namespace RPlayer
     public bool m_bShowLoading = false;
     private bool m_bFirstTimer = true;
     public WebBrowserHandler m_webBrowserHandler;
-    public InfoLocalXmlHandler m_infoLocalXmlHandler;
+    //public InfoLocalXmlHandler m_infoLocalXmlHandler;
     public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
 
@@ -213,11 +213,8 @@ namespace RPlayer
       Cursor.Show();
       m_bCursorShowing = true;
 
-      m_threadDoSomething = new Thread(ThreadDoSomething);
-      m_threadDoSomething.Start();
-
-      m_infoLocalXmlHandler = new InfoLocalXmlHandler();
-      m_infoLocalXmlHandler.Load(m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlLocalName);
+      //m_infoLocalXmlHandler = new InfoLocalXmlHandler();
+      //m_infoLocalXmlHandler.Load(m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlLocalName);
       //m_infoSectionTorrentUI = new InfoSectionUI(this, m_infoLocalXmlHandler);
 
       if (args.Length > 0)
@@ -232,6 +229,9 @@ namespace RPlayer
 
     private void MainForm_Load(object sender, EventArgs e)
     {
+      m_threadDoSomething = new Thread(ThreadDoSomething);
+      m_threadDoSomething.Start();
+
       m_updaterApp = new AppUpdater(this);
       m_updaterApp.ThreadStart();
 

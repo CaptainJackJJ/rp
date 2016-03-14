@@ -23,11 +23,7 @@ namespace RPlayer
       ThreadPrepStop();
 
       m_bStopThread = true;
-      if (m_thread.ThreadState != System.Threading.ThreadState.Unstarted)
-      {
-        m_thread.Interrupt();
-        m_thread.Join();
-      }
+      m_thread.Abort();
     }
 
     protected virtual void ThreadPrepStop(){ }

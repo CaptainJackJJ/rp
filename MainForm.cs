@@ -136,9 +136,9 @@ namespace RPlayer
             if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
             {
               MessageBox.Show("Can not find AppShare xml");
-            }            
-          }
-          this.Close();
+            }
+            this.Close();
+          }          
         }
         else
         {
@@ -238,7 +238,7 @@ namespace RPlayer
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70));
-      button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
+      button_dlChina1.BackColor = Color.FromArgb(255, 199, 80, 80);
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
 
@@ -1462,7 +1462,7 @@ namespace RPlayer
       {
         m_webBrowserHandler.Show(false);
         m_webBrowserHandler.Stop();
-        button_dlChina.Visible = false;
+        button_dlChina1.Visible = false;
         button_onlineVideo.Visible = false;
         button_dlOversea.Visible = false;
         button_subtitle.Visible = false;
@@ -1535,7 +1535,7 @@ namespace RPlayer
         m_webBrowserHandler.Navigate(true, "");
         m_webBrowserHandler.Show(true);
 
-        button_dlChina.Visible = true;
+        button_dlChina1.Visible = true;
         button_onlineVideo.Visible = true;
         button_dlOversea.Visible = true;
         button_subtitle.Visible = true;
@@ -1981,7 +1981,7 @@ namespace RPlayer
         UInt64 times = nLanuchTimes + 1;
         AppShare.SetGetLaunchTimes(m_tempPath, true, ref times);
 
-        m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
+        m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
       }
 
       if (m_bShowLoading)
@@ -2060,10 +2060,10 @@ namespace RPlayer
       }
     }
 
-    private void button_download_Click(object sender, EventArgs e)
+    private void button_dlChina1_Click(object sender, EventArgs e)
     {     
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl);
-      ChangeWebButtonColor(GlobalConstants.Common.strChinaDl);
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
+      ChangeWebButtonColor(GlobalConstants.Common.strChinaDl1);
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
@@ -2086,34 +2086,37 @@ namespace RPlayer
 
     public void ChangeWebButtonColor(string strWebsite)
     {
-      if(strWebsite == GlobalConstants.Common.strSubtitle)
+      button_dlChina1.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlChina2.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlChina3.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
+      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+
+      if (strWebsite == GlobalConstants.Common.strChinaDl1)
       {
-        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
+        button_dlChina1.BackColor = Color.FromArgb(255, 199, 80, 80);
+      }
+      else if (strWebsite == GlobalConstants.Common.strChinaDl2)
+      {
+        button_dlChina2.BackColor = Color.FromArgb(255, 199, 80, 80);
+      }
+      else if (strWebsite == GlobalConstants.Common.strChinaDl3)
+      {
+        button_dlChina3.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
       else if (strWebsite == GlobalConstants.Common.strOverseaDl
-        || strWebsite == GlobalConstants.Common.strOverseaDl + "/index8.php")
+              || strWebsite == GlobalConstants.Common.strOverseaDl + "/index8.php")
       {
-        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
         button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
-      else if (strWebsite == GlobalConstants.Common.strChinaDl)
+      else if(strWebsite == GlobalConstants.Common.strSubtitle)
       {
-        button_dlChina.BackColor = Color.FromArgb(255, 199, 80, 80);
-        button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;        
-        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      }
+        button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
+      }      
       else if (strWebsite == GlobalConstants.Common.strChinaOnline)
       {
         button_onlineVideo.BackColor = Color.FromArgb(255, 199, 80, 80);
-        button_dlChina.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-        button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
       }
     }
 
@@ -2146,6 +2149,18 @@ namespace RPlayer
     private void label_forward_MouseLeave(object sender, EventArgs e)
     {
       label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
+    }
+
+    private void button_dlChina2_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl2);
+      ChangeWebButtonColor(GlobalConstants.Common.strChinaDl2);
+    }
+
+    private void button_dlChina3_Click(object sender, EventArgs e)
+    {
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl3);
+      ChangeWebButtonColor(GlobalConstants.Common.strChinaDl3);
     }
 
   }

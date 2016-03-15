@@ -115,7 +115,7 @@ namespace RPlayer
 
     private bool IsTopPage()
     {
-      if (m_LastUri.ToString() == GlobalConstants.Common.strChinaDl
+      if (m_LastUri.ToString() == GlobalConstants.Common.strChinaDl1
         || m_LastUri.ToString() == GlobalConstants.Common.strChinaOnline
         || m_LastUri.ToString() == GlobalConstants.Common.strOverseaDl
         || m_LastUri.ToString() == GlobalConstants.Common.strSubtitle)
@@ -209,7 +209,7 @@ namespace RPlayer
         //catch { }
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1))
       {
         HideElemById("advert-1");
         HideElemById("advert-2");
@@ -238,7 +238,7 @@ namespace RPlayer
 
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl))
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1))
         HideElem("站点公告");
 
       if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)

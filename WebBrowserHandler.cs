@@ -242,7 +242,7 @@ namespace RPlayer
         }
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1))
+      if (e.Url.ToString().Contains("http://gaoqing.la/"))
         HideElem("站点公告");
 
       if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)

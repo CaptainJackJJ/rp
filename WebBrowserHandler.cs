@@ -227,7 +227,6 @@ namespace RPlayer
         HideElemById("head");
         HideElemById("footer");
 
-
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)
         {

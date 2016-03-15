@@ -768,10 +768,10 @@ namespace RPlayer
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
       label_Min.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonsWidth * 2,
               label_Min.Location.Y);
       label_settings.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
               label_settings.Location.Y);
       label_share.Location =
          new Point(label_settings.Location.X - label_share.Width - m_nTopBarButtonsMargin,

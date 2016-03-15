@@ -207,13 +207,12 @@
       this.label_share.BackColor = System.Drawing.Color.Transparent;
       this.label_share.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_share.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_share.ForeColor = System.Drawing.Color.Fuchsia;
+      this.label_share.ForeColor = System.Drawing.Color.White;
       this.label_share.Location = new System.Drawing.Point(882, 14);
       this.label_share.Name = "label_share";
       this.label_share.Size = new System.Drawing.Size(40, 12);
       this.label_share.TabIndex = 45;
       this.label_share.Text = "Share";
-      this.label_share.Visible = false;
       this.label_share.Click += new System.EventHandler(this.label_share_Click);
       this.label_share.MouseEnter += new System.EventHandler(this.label_share_MouseEnter);
       this.label_share.MouseLeave += new System.EventHandler(this.label_share_MouseLeave);
@@ -307,9 +306,9 @@
       this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
       this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
-      this.button_onlineVideo.Location = new System.Drawing.Point(708, 3);
+      this.button_onlineVideo.Location = new System.Drawing.Point(719, 2);
       this.button_onlineVideo.Name = "button_onlineVideo";
-      this.button_onlineVideo.Size = new System.Drawing.Size(98, 40);
+      this.button_onlineVideo.Size = new System.Drawing.Size(103, 40);
       this.button_onlineVideo.TabIndex = 47;
       this.button_onlineVideo.Text = "在线观看";
       this.button_onlineVideo.UseVisualStyleBackColor = false;
@@ -323,7 +322,7 @@
       this.button_dlChina1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlChina1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlChina1.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina1.Location = new System.Drawing.Point(203, 3);
+      this.button_dlChina1.Location = new System.Drawing.Point(204, 2);
       this.button_dlChina1.Name = "button_dlChina1";
       this.button_dlChina1.Size = new System.Drawing.Size(103, 40);
       this.button_dlChina1.TabIndex = 48;
@@ -339,9 +338,9 @@
       this.button_dlOversea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlOversea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlOversea.ForeColor = System.Drawing.Color.White;
-      this.button_dlOversea.Location = new System.Drawing.Point(512, 3);
+      this.button_dlOversea.Location = new System.Drawing.Point(513, 2);
       this.button_dlOversea.Name = "button_dlOversea";
-      this.button_dlOversea.Size = new System.Drawing.Size(98, 40);
+      this.button_dlOversea.Size = new System.Drawing.Size(103, 40);
       this.button_dlOversea.TabIndex = 48;
       this.button_dlOversea.Text = "国外下载";
       this.button_dlOversea.UseVisualStyleBackColor = false;
@@ -355,9 +354,9 @@
       this.button_subtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_subtitle.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_subtitle.ForeColor = System.Drawing.Color.White;
-      this.button_subtitle.Location = new System.Drawing.Point(610, 3);
+      this.button_subtitle.Location = new System.Drawing.Point(616, 2);
       this.button_subtitle.Name = "button_subtitle";
-      this.button_subtitle.Size = new System.Drawing.Size(98, 40);
+      this.button_subtitle.Size = new System.Drawing.Size(103, 40);
       this.button_subtitle.TabIndex = 48;
       this.button_subtitle.Text = "字幕下载";
       this.button_subtitle.UseVisualStyleBackColor = false;
@@ -371,7 +370,7 @@
       this.button_dlChina2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlChina2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlChina2.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina2.Location = new System.Drawing.Point(306, 3);
+      this.button_dlChina2.Location = new System.Drawing.Point(307, 2);
       this.button_dlChina2.Name = "button_dlChina2";
       this.button_dlChina2.Size = new System.Drawing.Size(103, 40);
       this.button_dlChina2.TabIndex = 48;
@@ -387,7 +386,7 @@
       this.button_dlChina3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_dlChina3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_dlChina3.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina3.Location = new System.Drawing.Point(409, 3);
+      this.button_dlChina3.Location = new System.Drawing.Point(410, 2);
       this.button_dlChina3.Name = "button_dlChina3";
       this.button_dlChina3.Size = new System.Drawing.Size(103, 40);
       this.button_dlChina3.TabIndex = 48;

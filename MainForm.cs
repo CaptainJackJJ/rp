@@ -1327,7 +1327,7 @@ namespace RPlayer
 
     private void label_share_Click(object sender, EventArgs e)
     {
-      System.Diagnostics.Process.Start("http://rabbitplayer.com/");
+      m_webBrowserHandler.Navigate(false, "http://rabbitplayer.com/");
     }
 
     private void label_share_MouseEnter(object sender, EventArgs e)
@@ -1337,7 +1337,7 @@ namespace RPlayer
 
     private void label_share_MouseLeave(object sender, EventArgs e)
     {
-      label_share.ForeColor = Color.Fuchsia;
+      label_share.ForeColor = Color.White;
     }
 
     public void ChangePlayWndSizeInNonDesktop()
@@ -1463,6 +1463,8 @@ namespace RPlayer
         m_webBrowserHandler.Show(false);
         m_webBrowserHandler.Stop();
         button_dlChina1.Visible = false;
+        button_dlChina2.Visible = false;
+        button_dlChina3.Visible = false;
         button_onlineVideo.Visible = false;
         button_dlOversea.Visible = false;
         button_subtitle.Visible = false;
@@ -1536,6 +1538,8 @@ namespace RPlayer
         m_webBrowserHandler.Show(true);
 
         button_dlChina1.Visible = true;
+        button_dlChina2.Visible = true;
+        button_dlChina3.Visible = true;
         button_onlineVideo.Visible = true;
         button_dlOversea.Visible = true;
         button_subtitle.Visible = true;

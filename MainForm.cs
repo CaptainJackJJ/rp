@@ -1327,7 +1327,7 @@ namespace RPlayer
 
     private void label_share_Click(object sender, EventArgs e)
     {
-      m_webBrowserHandler.Navigate(false, "http://rabbitplayer.com/");
+      m_webBrowserHandler.Navigate(false, "http://rabbitplayer.cn/");
     }
 
     private void label_share_MouseEnter(object sender, EventArgs e)

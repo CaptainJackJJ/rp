@@ -240,7 +240,6 @@ namespace RPlayer
           if (he1.Parent != null && he1.Parent.Parent != null)
             he1.Parent.Parent.Style = "display: none;";
         }
-
       }
 
       if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1))

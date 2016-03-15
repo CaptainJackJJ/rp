@@ -62,7 +62,8 @@ namespace RPlayer
       WebBrowser wb = (sender as WebBrowser);
       string strStatusText = wb.StatusText;
 
-      if (strStatusText.Contains(GlobalConstants.Common.strOfficalWebsite)) // for share
+      if (strStatusText.Contains(GlobalConstants.Common.strOfficalWebsite)// for share
+        || strStatusText.Contains("www.chdw.org")) // for torrent wei.yuan share
         e.Cancel = false;
       else
         e.Cancel = true;
@@ -209,7 +210,9 @@ namespace RPlayer
         //catch { }
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1))
+      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1)
+        || e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl2)
+        || e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl3))
       {
         HideElemById("advert-1");
         HideElemById("advert-2");
@@ -221,6 +224,9 @@ namespace RPlayer
         HideElemById("shang");
         HideElemById("respond");
         HideElemById("search-3");
+        HideElemById("head");
+        HideElemById("footer");
+
 
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)

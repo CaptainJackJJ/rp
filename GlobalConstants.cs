@@ -29,7 +29,7 @@ namespace RPlayer
       static public readonly Color colorMainFormBG = Color.FromArgb(255,84, 175, 254);
       static public readonly string strChinaDl1 = "http://gaoqing.la/";
       static public readonly string strChinaDl2 = "http://www.chdw.org/";
-      static public readonly string strChinaDl3 = "http://www.chdw.org/";
+      static public readonly string strChinaDl3 = "http://www.xiagaoqing.com/";
       static public readonly string strChinaOnline = "http://www.youku.com/";
       static public readonly string strOverseaDl = "http://www.rarbg.to";
       static public readonly string strSubtitle = "http://sub.makedie.me/";

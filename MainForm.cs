@@ -2084,7 +2084,7 @@ namespace RPlayer
       ChangeWebButtonColor(GlobalConstants.Common.strSubtitle);
     }
 
-    public void ChangeWebButtonColor(string strWebsite)
+    private void ResetWebButtonColor()
     {
       button_dlChina1.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_dlChina2.BackColor = GlobalConstants.Common.colorMainBtnBG;
@@ -2092,30 +2092,39 @@ namespace RPlayer
       button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
       button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
+    }
 
+    public void ChangeWebButtonColor(string strWebsite)
+    {
       if (strWebsite == GlobalConstants.Common.strChinaDl1)
       {
+        ResetWebButtonColor();
         button_dlChina1.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
       else if (strWebsite == GlobalConstants.Common.strChinaDl2)
       {
+        ResetWebButtonColor();
         button_dlChina2.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
       else if (strWebsite == GlobalConstants.Common.strChinaDl3)
       {
+        ResetWebButtonColor();
         button_dlChina3.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
       else if (strWebsite == GlobalConstants.Common.strOverseaDl
               || strWebsite == GlobalConstants.Common.strOverseaDl + "/index8.php")
       {
+        ResetWebButtonColor();
         button_dlOversea.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
       else if(strWebsite == GlobalConstants.Common.strSubtitle)
       {
+        ResetWebButtonColor();
         button_subtitle.BackColor = Color.FromArgb(255, 199, 80, 80);
       }      
       else if (strWebsite == GlobalConstants.Common.strChinaOnline)
       {
+        ResetWebButtonColor();
         button_onlineVideo.BackColor = Color.FromArgb(255, 199, 80, 80);
       }
     }

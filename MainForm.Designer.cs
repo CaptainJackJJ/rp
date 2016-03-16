@@ -215,7 +215,7 @@
       this.button_openFile.Name = "button_openFile";
       this.button_openFile.Size = new System.Drawing.Size(112, 38);
       this.button_openFile.TabIndex = 46;
-      this.button_openFile.Text = "Open File";
+      this.button_openFile.Text = "打开文件";
       this.button_openFile.UseVisualStyleBackColor = false;
       this.button_openFile.Click += new System.EventHandler(this.button_openFile_Click);
       // 

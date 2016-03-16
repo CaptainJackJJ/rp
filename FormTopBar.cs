@@ -42,8 +42,6 @@ namespace RPlayer
         label_Max.Text = "max";
         label_Min.Text = "min";
       }
-
-      label_version.Text = m_mainForm.m_strAppVersion;
     }
 
     public void SetAllUiLange()
@@ -54,7 +52,6 @@ namespace RPlayer
     private void SetUiLange()
     {
       label_logo.Text = UiLang.rabbitPlayer;
-      label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -227,7 +224,8 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      m_mainForm.ShowFormAbout();
+      FormChangeLog f = new FormChangeLog();
+      f.Show();
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)
@@ -239,23 +237,5 @@ namespace RPlayer
     {
       label_logo.ForeColor = Color.White;
     }
-
-    private void label_version_Click(object sender, EventArgs e)
-    {
-      FormChangeLog f = new FormChangeLog();
-      f.Show();
-    }
-
-    private void label_version_MouseEnter(object sender, EventArgs e)
-    {
-      label_version.ForeColor = Color.Gold;
-    }
-
-    private void label_version_MouseLeave(object sender, EventArgs e)
-    {
-      label_version.ForeColor = Color.White;
-    }
-
-
   }
 }

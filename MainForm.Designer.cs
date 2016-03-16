@@ -41,7 +41,6 @@
       this.label_playlist = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.label_logo = new System.Windows.Forms.Label();
-      this.label_version = new System.Windows.Forms.Label();
       this.label_share = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
       this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
@@ -185,22 +184,6 @@
       this.label_logo.Click += new System.EventHandler(this.label_logo_Click);
       this.label_logo.MouseEnter += new System.EventHandler(this.label_logo_MouseEnter);
       this.label_logo.MouseLeave += new System.EventHandler(this.label_logo_MouseLeave);
-      // 
-      // label_version
-      // 
-      this.label_version.AutoSize = true;
-      this.label_version.BackColor = System.Drawing.Color.Transparent;
-      this.label_version.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_version.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_version.ForeColor = System.Drawing.Color.White;
-      this.label_version.Location = new System.Drawing.Point(135, 18);
-      this.label_version.Name = "label_version";
-      this.label_version.Size = new System.Drawing.Size(40, 12);
-      this.label_version.TabIndex = 45;
-      this.label_version.Text = "1.0.0";
-      this.label_version.Click += new System.EventHandler(this.label_version_Click);
-      this.label_version.MouseEnter += new System.EventHandler(this.label_version_MouseEnter);
-      this.label_version.MouseLeave += new System.EventHandler(this.label_version_MouseLeave);
       // 
       // label_share
       // 
@@ -430,7 +413,6 @@
       this.Controls.Add(this.label_help);
       this.Controls.Add(this.label_share);
       this.Controls.Add(this.label_InfoUpdateNotice);
-      this.Controls.Add(this.label_version);
       this.Controls.Add(this.label_logo);
       this.Controls.Add(this.label_playlist);
       this.Controls.Add(this.label_BottomEdge);
@@ -473,7 +455,6 @@
         private System.Windows.Forms.Label label_playlist;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label_logo;
-        private System.Windows.Forms.Label label_version;
         private System.Windows.Forms.Label label_share;
         private System.Windows.Forms.Button button_openFile;
         private System.Windows.Forms.Label label_InfoUpdateNotice;

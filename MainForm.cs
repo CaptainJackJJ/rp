@@ -160,9 +160,7 @@ namespace RPlayer
       InitializeComponent();
 
       label_playWnd.Visible = false;
-
-      label_version.Text = m_strAppVersion;
-
+      
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
       label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
       label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
@@ -521,7 +519,6 @@ namespace RPlayer
       }
       label_logo.Text = UiLang.rabbitPlayer;
 
-      label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
       //label_help.Location =
       //  new Point(label_settings.Location.X - label_help.Width - m_nTopBarButtonsMargin / 2,
       //      label_playlist.Location.Y);
@@ -1284,7 +1281,8 @@ namespace RPlayer
 
     private void label_logo_Click(object sender, EventArgs e)
     {
-      ShowFormAbout();
+      FormChangeLog f = new FormChangeLog();
+      f.Show();
     }
 
     private void label_logo_MouseEnter(object sender, EventArgs e)
@@ -1295,28 +1293,6 @@ namespace RPlayer
     private void label_logo_MouseLeave(object sender, EventArgs e)
     {
       label_logo.ForeColor = Color.White;
-    }
-
-    public void ShowFormAbout()
-    {
-      FormAbout f = new FormAbout();
-      f.ShowForm(m_strAppVersion);
-    }
-
-    private void label_version_Click(object sender, EventArgs e)
-    {
-      FormChangeLog f = new FormChangeLog();
-      f.Show();
-    }
-
-    private void label_version_MouseEnter(object sender, EventArgs e)
-    {
-      label_version.ForeColor = Color.Gold;
-    }
-
-    private void label_version_MouseLeave(object sender, EventArgs e)
-    {
-      label_version.ForeColor = Color.White;
     }
 
     private void label_share_Click(object sender, EventArgs e)
@@ -1465,7 +1441,6 @@ namespace RPlayer
         panel_neck.Visible = false;
 
         label_logo.Visible = false;
-        label_version.Visible = false;
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //m_infoSectionTorrentUI.ShowSection(false);
         this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
@@ -1510,7 +1485,6 @@ namespace RPlayer
         label_playWnd.Visible = false;
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
         label_logo.Visible = true;
-        label_version.Visible = true;
         try
         {
           m_formTopBar.Hide();

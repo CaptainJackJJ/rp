@@ -35,12 +35,6 @@ namespace RPlayer
         if (Archive.lang == "中文")
         {
           label_changeLog.Text = "版本历史";
-
-          richTextBox_thanks.Text =
-@"
-谢谢您陪伴着兔子影音成长。
-
-我会更加努力的修复bug、添加新功能，带给您更好的播放器。";
         }
 
         try

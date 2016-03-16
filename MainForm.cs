@@ -2151,7 +2151,8 @@ namespace RPlayer
 
     private void label_help_Click(object sender, EventArgs e)
     {
-
+      FormHelp f = new FormHelp();
+      f.Show();
     }
 
     private void label_help_MouseEnter(object sender, EventArgs e)

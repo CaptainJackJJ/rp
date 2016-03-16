@@ -55,6 +55,7 @@
       this.button_subtitle = new System.Windows.Forms.Button();
       this.button_dlChina2 = new System.Windows.Forms.Button();
       this.button_dlChina3 = new System.Windows.Forms.Button();
+      this.label_help = new System.Windows.Forms.Label();
       this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -177,7 +178,7 @@
       this.label_logo.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_logo.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_logo.ForeColor = System.Drawing.Color.White;
-      this.label_logo.Location = new System.Drawing.Point(21, 6);
+      this.label_logo.Location = new System.Drawing.Point(10, 6);
       this.label_logo.Name = "label_logo";
       this.label_logo.Size = new System.Drawing.Size(0, 24);
       this.label_logo.TabIndex = 45;
@@ -205,14 +206,14 @@
       // 
       this.label_share.AutoSize = true;
       this.label_share.BackColor = System.Drawing.Color.Transparent;
-      this.label_share.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_share.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_share.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_share.ForeColor = System.Drawing.Color.White;
-      this.label_share.Location = new System.Drawing.Point(882, 14);
+      this.label_share.Location = new System.Drawing.Point(897, 683);
       this.label_share.Name = "label_share";
-      this.label_share.Size = new System.Drawing.Size(40, 12);
+      this.label_share.Size = new System.Drawing.Size(31, 12);
       this.label_share.TabIndex = 45;
-      this.label_share.Text = "Share";
+      this.label_share.Text = "分享";
       this.label_share.Click += new System.EventHandler(this.label_share_Click);
       this.label_share.MouseEnter += new System.EventHandler(this.label_share_MouseEnter);
       this.label_share.MouseLeave += new System.EventHandler(this.label_share_MouseLeave);
@@ -394,6 +395,22 @@
       this.button_dlChina3.UseVisualStyleBackColor = false;
       this.button_dlChina3.Click += new System.EventHandler(this.button_dlChina3_Click);
       // 
+      // label_help
+      // 
+      this.label_help.AutoSize = true;
+      this.label_help.BackColor = System.Drawing.Color.Transparent;
+      this.label_help.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_help.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_help.ForeColor = System.Drawing.Color.White;
+      this.label_help.Location = new System.Drawing.Point(941, 683);
+      this.label_help.Name = "label_help";
+      this.label_help.Size = new System.Drawing.Size(31, 12);
+      this.label_help.TabIndex = 45;
+      this.label_help.Text = "求助";
+      this.label_help.Click += new System.EventHandler(this.label_help_Click);
+      this.label_help.MouseEnter += new System.EventHandler(this.label_help_MouseEnter);
+      this.label_help.MouseLeave += new System.EventHandler(this.label_help_MouseLeave);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -410,6 +427,7 @@
       this.Controls.Add(this.button_openFile);
       this.Controls.Add(this.button_onlineVideo);
       this.Controls.Add(this.label_playWnd);
+      this.Controls.Add(this.label_help);
       this.Controls.Add(this.label_share);
       this.Controls.Add(this.label_InfoUpdateNotice);
       this.Controls.Add(this.label_version);
@@ -469,6 +487,7 @@
         private System.Windows.Forms.Button button_subtitle;
         private System.Windows.Forms.Button button_dlChina2;
         private System.Windows.Forms.Button button_dlChina3;
+        private System.Windows.Forms.Label label_help;
     }
 }
 

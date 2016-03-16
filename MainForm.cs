@@ -522,11 +522,14 @@ namespace RPlayer
       label_logo.Text = UiLang.rabbitPlayer;
 
       label_version.Location = new Point(label_logo.Location.X + label_logo.Width, 18);
-      label_share.Text = UiLang.labelShare;
-      label_share.Location =
-        new Point(label_settings.Location.X - label_share.Width - m_nTopBarButtonsMargin,
-            label_settings.Location.Y);
-      button_openFile.Text = UiLang.buttonOpenFile;
+      //label_help.Location =
+      //  new Point(label_settings.Location.X - label_help.Width - m_nTopBarButtonsMargin / 2,
+      //      label_playlist.Location.Y);
+      //label_share.Text = UiLang.labelShare;
+      //label_share.Location =
+      //  new Point(label_help.Location.X - label_share.Width - m_nTopBarButtonsMargin / 2,
+      //      label_playlist.Location.Y);
+      //button_openFile.Text = UiLang.buttonOpenFile;
     }
 
     private void InitContextMenuStrip()
@@ -761,9 +764,12 @@ namespace RPlayer
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
               label_settings.Location.Y);
-      label_share.Location =
-         new Point(label_settings.Location.X - label_share.Width - m_nTopBarButtonsMargin,
-               label_settings.Location.Y);
+      //label_help.Location =
+      //  new Point(label_settings.Location.X - label_help.Width - m_nTopBarButtonsMargin / 2,
+      //      label_settings.Location.Y);
+      //label_share.Location =
+      //   new Point(label_help.Location.X - label_share.Width - m_nTopBarButtonsMargin / 2,
+      //         label_settings.Location.Y);
 
       button_openFile.Location =
         new Point(10, this.Size.Height - 50);
@@ -2162,6 +2168,21 @@ namespace RPlayer
     {
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl3);
       ChangeWebButtonColor(GlobalConstants.Common.strChinaDl3);
+    }
+
+    private void label_help_MouseLeave(object sender, EventArgs e)
+    {
+      label_help.ForeColor = Color.White;
+    }
+
+    private void label_help_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void label_help_MouseEnter(object sender, EventArgs e)
+    {
+      label_help.ForeColor = Color.DodgerBlue;
     }
 
   }

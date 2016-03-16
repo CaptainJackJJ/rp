@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    private Mutex m_mutexOneInstance;
     public bool m_bNeedShared = false;
     private int m_nTimes = -1;
     public bool m_bShowLoading = false;
@@ -126,37 +127,28 @@ namespace RPlayer
       Directory.CreateDirectory(m_strDownloadedFolderUrl);
 
       //------------- only run one instance
-      bool bRunning = false;
-      if (AppShare.SetGetAppIsRunning(m_tempPath, false, ref bRunning))
+      bool createdNew = true;
+      m_mutexOneInstance = new Mutex(true, "RPlayer", out createdNew);
+
+      if (!createdNew)
       {
-        if (bRunning)
+        if (args.Length > 0)
         {
-          if (args.Length > 0)
+          if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
           {
-            if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
-            {
-              MessageBox.Show("Can not find AppShare xml");
-            }
-            this.Close();
-          }          
+            MessageBox.Show("Can not find AppShare xml");
+          }
         }
-        else
-        {
-          bRunning = true;
-          AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning);
-        }
+        this.Close();
       }
-      else
-      {
-        MessageBox.Show("Can not find AppShare xml");
-      }
+
+      // ************* only run one instance
 
       if (!Archive.Load(m_tempPath))
       {
         MessageBox.Show("Can not find settings xml");
         return;
       }
-      // ************* only run one instance
 
       m_strAppVersion = GetAppVersion();
       if (m_strAppVersion == "")
@@ -267,10 +259,6 @@ namespace RPlayer
         SwitchDesktopMode(false, false);
 
       Archive.Save();
-
-      bool bRunning = false;
-      if (!AppShare.SetGetAppIsRunning(m_tempPath, true, ref bRunning))
-        MessageBox.Show("Can not find AppShare xml");
     }
 
 

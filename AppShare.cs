@@ -47,19 +47,13 @@ namespace RPlayer
       if(node == null)
       {
         #region AddDefault
-        if (nodeUrl == "/appShare/appRunning")
-        {
-          node = xml.CreateElement("appRunning");
-          nodeAppShare.AppendChild(node);
-          node.InnerText = "False";
-        }
         //if (nodeUrl == "/appShare/allowAutoRunRPUdater")
         //{
           //node = xml.CreateElement("allowAutoRunRPUdater");
           //nodeAppShare.AppendChild(node);
           //node.InnerText = "True";
         //}
-        else if (nodeUrl == "/appShare/firstTimeRun")
+        if (nodeUrl == "/appShare/firstTimeRun")
         {
           node = xml.CreateElement("firstTimeRun");
           nodeAppShare.AppendChild(node);
@@ -202,26 +196,6 @@ namespace RPlayer
     //  }
     //  return allow;
     //}
-
-    static public bool SetGetAppIsRunning(string xmlPath, bool bSet, ref bool bRunning)
-    {
-      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
-      XmlDocument xml = new XmlDocument();
-      XmlNode node;
-      GetNode(xml, "/appShare/appRunning", out node);
-      if (bSet)
-      {
-        node.InnerText = bRunning.ToString();
-        try
-        {
-          xml.Save(m_strXmlFileUrl);
-        }
-        catch{}
-      }
-      else
-        bRunning = Convert.ToBoolean(node.InnerText);
-      return true;
-    }
 
     static public bool SetGetNewUrl(string xmlPath,bool bSet,ref string url)
     {

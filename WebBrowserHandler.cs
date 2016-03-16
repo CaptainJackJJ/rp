@@ -39,6 +39,13 @@ namespace RPlayer
       else
         RegVal = 7000;
 
+      if(RegVal > 8888)
+      {
+        GlobalConstants.Common.strChinaDl1 = "http://www.chdw.org/";
+        GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
+        GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
+      }
+
       // set the actual key
       RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
       string strProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
@@ -153,7 +160,7 @@ namespace RPlayer
       try
       {
         HtmlElement he = hc[8].Children[0];
-        if (he.OuterText.Contains(outerText))
+        if (he.OuterHtml.Contains(outerText))
         {
           he.Style = "display: none;";
           //he.OuterHtml = "";

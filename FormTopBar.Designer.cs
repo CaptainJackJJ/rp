@@ -122,7 +122,7 @@
       this.label_logo.Cursor = System.Windows.Forms.Cursors.Hand;
       this.label_logo.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_logo.ForeColor = System.Drawing.Color.White;
-      this.label_logo.Location = new System.Drawing.Point(12, 6);
+      this.label_logo.Location = new System.Drawing.Point(4, 6);
       this.label_logo.Name = "label_logo";
       this.label_logo.Size = new System.Drawing.Size(166, 24);
       this.label_logo.TabIndex = 44;

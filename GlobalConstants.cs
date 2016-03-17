@@ -39,6 +39,9 @@ namespace RPlayer
       static public readonly string strLaunchTimesXmlName = "LaunchTimes.xml";
       static public readonly string strLaunchTimesRemoteUrl 
         = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strLaunchTimesXmlName;
+      static public readonly string strAppUpdateTimesXmlName = "AppUpdateTimes.xml";
+      static public readonly string strAppUpdateTimesRemoteUrl
+        = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strAppUpdateTimesXmlName;
     }
 
     public class infoXml

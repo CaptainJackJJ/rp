@@ -25,6 +25,7 @@ namespace RPlayer
     private MainForm m_mainForm;
     private WebClient m_SetupSelfInfoDownloader;
     private WebClient m_LanuchTimesDownloader;
+    private WebClient m_AppUpdateTimesXmlDownloader;
     private string m_strDownloadedSetupSelfInfoUrl;
     static readonly private string m_strSetupSelfName = "RPlayerSetupSelf.exe";
     private string m_strDownloadedSetupSelfUrl;
@@ -32,7 +33,8 @@ namespace RPlayer
     private string m_strDownloadedVersion;
     private string m_strDlEmail,m_strDlCode;    
     private Thread m_DlSelfThread;
-    private string m_strDownloadedLaunchTimesXmlUrl;
+    private string m_strDlLaunchTimesXmlUrl;
+    private string m_strDlAppUpdateTimesXmlUrl;
     
     public AppUpdater(MainForm mainForm)
     {
@@ -45,10 +47,13 @@ namespace RPlayer
       m_SetupSelfInfoDownloader.DownloadFileCompleted += new AsyncCompletedEventHandler(SetupSelfInfoDownloadCompeleted);
       m_LanuchTimesDownloader = new WebClient();
       m_LanuchTimesDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);
-     
+      m_AppUpdateTimesXmlDownloader = new WebClient();
+      m_AppUpdateTimesXmlDownloader.Headers.Add("user-agent", m_mainForm.m_strAppVersion);   
+  
       m_strDownloadedSetupSelfInfoUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strSetupSelfInfoXmlName;
       m_strDownloadedSetupSelfUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfName;
-      m_strDownloadedLaunchTimesXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strLaunchTimesXmlName;
+      m_strDlLaunchTimesXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strLaunchTimesXmlName;
+      m_strDlAppUpdateTimesXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strAppUpdateTimesXmlName;
     }
 
     private void GetRemoteSetupSelfInfo(out string strRemoteSetupSelfVerison, out string strUrl, 
@@ -122,6 +127,7 @@ namespace RPlayer
                   {
                     attachment.Save(file);
                     AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
+                    DlAppUpdateTimesXml();
                     return;
                   }
                   catch {}
@@ -195,15 +201,30 @@ namespace RPlayer
     {
       try
       {
-        File.Delete(m_strDownloadedLaunchTimesXmlUrl);
+        File.Delete(m_strDlLaunchTimesXmlUrl);
         Uri uri = new Uri(GlobalConstants.Common.strLaunchTimesRemoteUrl);
-        m_LanuchTimesDownloader.DownloadFileAsync(uri, m_strDownloadedLaunchTimesXmlUrl);
+        m_LanuchTimesDownloader.DownloadFileAsync(uri, m_strDlLaunchTimesXmlUrl);
       }
       catch (Exception e)
       {
         Core.WriteLog(Core.ELogType.error, "DlLaunchTimesXml fail: " + e.ToString());
       }
     }
+
+    private void DlAppUpdateTimesXml()
+    {
+      try
+      {
+        File.Delete(m_strDlAppUpdateTimesXmlUrl);
+        Uri uri = new Uri(GlobalConstants.Common.strAppUpdateTimesRemoteUrl);
+        m_AppUpdateTimesXmlDownloader.DownloadFileAsync(uri, m_strDlAppUpdateTimesXmlUrl);
+      }
+      catch (Exception e)
+      {
+        Core.WriteLog(Core.ELogType.error, "DlAppUpdateTimesXml fail: " + e.ToString());
+      }
+    }
+    
 
     protected override void ThreadProcess()
     {

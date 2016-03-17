@@ -43,6 +43,7 @@
       this.label_FF = new System.Windows.Forms.Label();
       this.timer_updateProcessBar = new System.Windows.Forms.Timer(this.components);
       this.label_playlist = new System.Windows.Forms.Label();
+      this.label_back = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // colorSlider_volume
@@ -234,12 +235,29 @@
       this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
       this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);
       // 
+      // label_back
+      // 
+      this.label_back.AutoSize = true;
+      this.label_back.BackColor = System.Drawing.Color.Transparent;
+      this.label_back.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.label_back.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_back.ForeColor = System.Drawing.Color.White;
+      this.label_back.Location = new System.Drawing.Point(-1, 26);
+      this.label_back.Name = "label_back";
+      this.label_back.Size = new System.Drawing.Size(51, 20);
+      this.label_back.TabIndex = 51;
+      this.label_back.Text = "返回";
+      this.label_back.Click += new System.EventHandler(this.label_back_Click);
+      this.label_back.MouseEnter += new System.EventHandler(this.label_back_MouseEnter);
+      this.label_back.MouseLeave += new System.EventHandler(this.label_back_MouseLeave);
+      // 
       // FormBottomBar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(915, 65);
+      this.Controls.Add(this.label_back);
       this.Controls.Add(this.label_playlist);
       this.Controls.Add(this.label_FF);
       this.Controls.Add(this.label_FB);
@@ -280,5 +298,6 @@
     private System.Windows.Forms.Label label_FF;
     private System.Windows.Forms.Timer timer_updateProcessBar;
     private System.Windows.Forms.Label label_playlist;
+    private System.Windows.Forms.Label label_back;
   }
 }

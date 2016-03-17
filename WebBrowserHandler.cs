@@ -13,7 +13,7 @@ namespace RPlayer
   [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
   public class WebBrowserHandler
   {
-    private WebBrowserEx webBrowser1;
+    private WebBrowser webBrowser1;
     private Uri m_LastUri;
     private MainForm m_formMain;
 
@@ -45,6 +45,12 @@ namespace RPlayer
         GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
         GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
       }
+      else
+      {
+        GlobalConstants.Common.strChinaDl1 = "http://www.xiagaoqing.com/";
+        GlobalConstants.Common.strChinaDl2 = "http://www.chdw.org/";
+        GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
+      }
 
       // set the actual key
       RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
@@ -54,7 +60,7 @@ namespace RPlayer
         Key.SetValue(strProcessName, RegVal, RegistryValueKind.DWord);
       Key.Close();
 
-      webBrowser1 = new WebBrowserEx();
+      webBrowser1 = new WebBrowser();
       webBrowser1.Location = startPoint;
       webBrowser1.Size = new Size(1010, 590);
       webBrowser1.ScriptErrorsSuppressed = true;
@@ -296,9 +302,5 @@ namespace RPlayer
         ele = ele.Parent;
       }
     }
-  }
-
-  class WebBrowserEx:WebBrowser
-  {
   }
 }

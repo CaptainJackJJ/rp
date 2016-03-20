@@ -40,9 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ColorSlider\ColorSlider\bin\Release\ColorSlider.dll</HintPath>
     </Reference>
-    <Reference Include="OpenPop">
-      <HintPath>..\OpenPop.NET 2.0.5\test application\OpenPop.dll</HintPath>
-    </Reference>
     <Reference Include="RpCoreWrapper, Version=1.0.5838.19029, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RpCoreWrapper\Release\RpCoreWrapper.dll</HintPath>
@@ -184,6 +181,49 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenPop\Common\Logging\DefaultLogger.cs" />
+    <Compile Include="OpenPop\Common\Logging\DiagnosticsLogger.cs" />
+    <Compile Include="OpenPop\Common\Logging\FileLogger.cs" />
+    <Compile Include="OpenPop\Common\Logging\ILog.cs" />
+    <Compile Include="OpenPop\Common\StreamUtility.cs" />
+    <Compile Include="OpenPop\Mime\Decode\Base64.cs" />
+    <Compile Include="OpenPop\Mime\Decode\EncodedWord.cs" />
+    <Compile Include="OpenPop\Mime\Decode\EncodingFinder.cs" />
+    <Compile Include="OpenPop\Mime\Decode\QuotedPrintable.cs" />
+    <Compile Include="OpenPop\Mime\Decode\Rfc2231Decoder.cs" />
+    <Compile Include="OpenPop\Mime\Decode\Rfc2822DateTime.cs" />
+    <Compile Include="OpenPop\Mime\Decode\SizeParser.cs" />
+    <Compile Include="OpenPop\Mime\Decode\Utility.cs" />
+    <Compile Include="OpenPop\Mime\Header\ContentTransferEncoding.cs" />
+    <Compile Include="OpenPop\Mime\Header\HeaderExtractor.cs" />
+    <Compile Include="OpenPop\Mime\Header\HeaderFieldParser.cs" />
+    <Compile Include="OpenPop\Mime\Header\MessageHeader.cs" />
+    <Compile Include="OpenPop\Mime\Header\Received.cs" />
+    <Compile Include="OpenPop\Mime\Header\RfcMailAddress.cs" />
+    <Compile Include="OpenPop\Mime\Message.cs" />
+    <Compile Include="OpenPop\Mime\MessagePart.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\AnswerMessageTraverser.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\AttachmentFinder.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\FindAllMessagePartsWithMediaType.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\FindFirstMessagePartWithMediaType.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\IAnswerMessageTraverser.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\IQuestionAnswerMessageTraverser.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\MultipleMessagePartFinder.cs" />
+    <Compile Include="OpenPop\Mime\Traverse\TextVersionFinder.cs" />
+    <Compile Include="OpenPop\Pop3\Apop.cs" />
+    <Compile Include="OpenPop\Pop3\AuthenticationMethod.cs" />
+    <Compile Include="OpenPop\Pop3\ConnectionState.cs" />
+    <Compile Include="OpenPop\Pop3\CramMd5.cs" />
+    <Compile Include="OpenPop\Pop3\Disposable.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\InvalidLoginException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\InvalidUseException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\LoginDelayException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\PopClientException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\PopServerException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\PopServerLockedException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\PopServerNotAvailableException.cs" />
+    <Compile Include="OpenPop\Pop3\Exceptions\PopServerNotFoundException.cs" />
+    <Compile Include="OpenPop\Pop3\Pop3Client.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Archive.cs" />
@@ -191,9 +231,7 @@
     <Compile Include="UiLang.cs" />
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
-    <Compile Include="WebBrowserHandler.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="WebBrowserHandler.cs" />
     <EmbeddedResource Include="FormHelp.resx">
       <DependentUpon>FormHelp.cs</DependentUpon>
     </EmbeddedResource>

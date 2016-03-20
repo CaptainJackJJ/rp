@@ -198,7 +198,6 @@ namespace RPlayer
       InitContextMenuStrip();
 
       SetUiLange();
-      ConfigUiByArchive();
 
       Cursor.Show();
       m_bCursorShowing = true;
@@ -215,6 +214,8 @@ namespace RPlayer
 
       m_bConstructed = true;
       this.OnResize(EventArgs.Empty);
+
+      ConfigUiByArchive();
     }
 
     private void MainForm_Load(object sender, EventArgs e)

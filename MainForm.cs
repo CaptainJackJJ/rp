@@ -1412,7 +1412,7 @@ namespace RPlayer
 
         m_formPlaylist.Location
          = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
-           this.Location.Y + label_playWnd.Location.Y + 1);
+           this.Location.Y + label_Close.Size.Height * 3 + 1);
 
         m_formPlaylist.Size
           = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);

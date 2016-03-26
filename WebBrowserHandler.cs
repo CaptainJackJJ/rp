@@ -14,7 +14,7 @@ namespace RPlayer
   public class WebBrowserHandler
   {
     private WebBrowser webBrowser1;
-    private Uri m_LastUri;
+    private Uri m_LastUri = null;
     private MainForm m_formMain;
 
     public WebBrowserHandler(MainForm formMain, Point startPoint)
@@ -118,12 +118,16 @@ namespace RPlayer
       }
 
       if (bLastUri)
+      {
+        if (m_LastUri == null)
+          m_LastUri = new Uri(GlobalConstants.Common.strChinaDl1);
         webBrowser1.Navigate(m_LastUri);
+      }
       else
       {
         webBrowser1.Navigate("about:blank");
         m_LastUri = new Uri(url);
-        webBrowser1.Navigate(m_LastUri);        
+        webBrowser1.Navigate(m_LastUri);
       }
     }
 

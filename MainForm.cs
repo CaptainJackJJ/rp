@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    private bool m_bHasArgus = false;
     private Mutex m_mutexOneInstance;
     public bool m_bNeedShared = false;
     private int m_nTimes = -1;
@@ -119,6 +120,9 @@ namespace RPlayer
 
     public MainForm(string[] args)
     {
+      if (args.Length > 0)
+        m_bHasArgus = true;
+
       m_tempPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + m_strAppName;
       Directory.CreateDirectory(m_tempPath);
       m_CoreTempPath = m_tempPath + "\\CoreTemp";
@@ -132,7 +136,7 @@ namespace RPlayer
 
       if (!createdNew)
       {
-        if (args.Length > 0)
+        if (m_bHasArgus)
         {
           if (!AppShare.SetGetNewUrl(m_tempPath, true, ref args[0]))
           {
@@ -168,7 +172,7 @@ namespace RPlayer
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
       label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
-      if (args.Length == 0)
+      if (!m_bHasArgus)
       {
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
       }
@@ -206,7 +210,7 @@ namespace RPlayer
       //m_infoLocalXmlHandler.Load(m_tempPath + "\\" + GlobalConstants.Common.strInfoXmlLocalName);
       //m_infoSectionTorrentUI = new InfoSectionUI(this, m_infoLocalXmlHandler);
 
-      if (args.Length > 0)
+      if (m_bHasArgus)
       {
         //m_infoSectionTorrentUI.ShowSection(false);
         StartPlay(args[0]);
@@ -234,6 +238,9 @@ namespace RPlayer
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
 
       timer1.Enabled = true;
+
+      if (m_bHasArgus)
+        SwitchPlayingForm(true);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1955,7 +1962,8 @@ namespace RPlayer
         UInt64 times = nLanuchTimes + 1;
         AppShare.SetGetLaunchTimes(m_tempPath, true, ref times);
 
-        m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
+        if (!m_bHasArgus)
+          m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
       }
 
       if (m_bShowLoading)

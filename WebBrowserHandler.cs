@@ -39,18 +39,18 @@ namespace RPlayer
       else
         RegVal = 7000;
 
-      if(RegVal > 8888)
-      {
-        GlobalConstants.Common.strChinaDl1 = "http://www.chdw.org/";
-        GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
-        GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
-      }
-      else
-      {
+      //if(RegVal > 8888)
+      //{
+      //  GlobalConstants.Common.strChinaDl1 = "http://www.chdw.org/";
+      //  GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
+      //  GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
+      //}
+      //else
+      //{
         GlobalConstants.Common.strChinaDl1 = "http://www.xiagaoqing.com/";
         GlobalConstants.Common.strChinaDl2 = "http://www.chdw.org/";
         GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
-      }
+      //}
 
       // set the actual key
       RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
@@ -76,7 +76,7 @@ namespace RPlayer
       string strStatusText = wb.StatusText;
 
       if (strStatusText.Contains(GlobalConstants.Common.strOfficalWebsite)// for share
-        || strStatusText.Contains("www.chdw.org")) // for torrent wei.yuan share
+        || strStatusText.Contains("www.chdw.org") || strStatusText.Contains("pan.baidu.com")) // for torrent wei.yuan share
         e.Cancel = false;
       else
         e.Cancel = true;
@@ -227,9 +227,7 @@ namespace RPlayer
         //catch { }
       }
 
-      if (e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl1)
-        || e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl2)
-        || e.Url.ToString().Contains(GlobalConstants.Common.strChinaDl3))
+      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
       {
         HideElemById("advert-1");
         HideElemById("advert-2");
@@ -257,10 +255,9 @@ namespace RPlayer
           if (he1.Parent != null && he1.Parent.Parent != null)
             he1.Parent.Parent.Style = "display: none;";
         }
-      }
 
-      if (e.Url.ToString().Contains("http://gaoqing.la/"))
         HideElem("站点公告");
+      }        
 
       if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
       {

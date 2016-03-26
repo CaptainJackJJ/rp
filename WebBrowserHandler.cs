@@ -75,7 +75,7 @@ namespace RPlayer
       WebBrowser wb = (sender as WebBrowser);
       string strStatusText = wb.StatusText;
 
-      if (strStatusText.Contains(GlobalConstants.Common.strOfficalWebsite)// for share
+      if (strStatusText.Contains("rabbitplayer") || strStatusText.Contains("prplayer")// for share
         || strStatusText.Contains("www.chdw.org") || strStatusText.Contains("pan.baidu.com")) // for torrent wei.yuan share
         e.Cancel = false;
       else
@@ -110,7 +110,7 @@ namespace RPlayer
 
     public void Navigate(bool bLastUri,string url)
     {
-      if (m_formMain.m_bNeedShared && url != GlobalConstants.Common.strOfficalWebsite)
+      if (m_formMain.m_bNeedShared && !(url.Contains("rabbitplayer") || url.Contains("prplayer")))
       {
         FormAskShare f = new FormAskShare(m_formMain);
         f.ShowDialog();
@@ -227,7 +227,7 @@ namespace RPlayer
         //catch { }
       }
 
-      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
+      if (!(e.Url.ToString().Contains("rabbitplayer") || e.Url.ToString().Contains("prplayer")))
       {
         HideElemById("advert-1");
         HideElemById("advert-2");
@@ -257,16 +257,13 @@ namespace RPlayer
         }
 
         HideElem("站点公告");
-      }        
 
-      if (e.Url.ToString() != GlobalConstants.Common.strOfficalWebsite)
-      {
         HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
         foreach (HtmlElement he in hec)
         {
           he.OuterHtml = "";
         }
-      }
+      }   
     }
 
     void Document_Click(object sender, HtmlElementEventArgs e)
@@ -293,7 +290,7 @@ namespace RPlayer
             ele.SetAttribute("target", "_self");
 
           string strUrl = ele.Document.Url.ToString();
-          if (strUrl.Contains(GlobalConstants.Common.strOfficalWebsite)
+          if ((strUrl.Contains("rabbitplayer") || strUrl.Contains("prplayer"))
             && !ele.OuterHtml.Contains("downBtn"))
           {
             m_formMain.m_bNeedShared = false;

@@ -128,6 +128,7 @@ namespace RPlayer
                     attachment.Save(file);
                     AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strRemoteSetupSelfVerison);
                     DlAppUpdateTimesXml();
+                    LauchSetupSelf();
                     return;
                   }
                   catch {}
@@ -225,11 +226,8 @@ namespace RPlayer
       }
     }
     
-
-    protected override void ThreadProcess()
+    private bool LauchSetupSelf()
     {
-      DlLaunchTimesXml();
-
       AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, false, ref m_strDownloadedVersion);
 
       if (m_mainForm.m_strAppVersion == "")
@@ -254,12 +252,23 @@ namespace RPlayer
           m_strDownloadedVersion = "";
           AppShare.SetGetDownloadedSetupSelfVersion(MainForm.m_tempPath, true, ref m_strDownloadedVersion);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
           Core.WriteLog(Core.ELogType.error, "lauch setupSelf fail: " + e.ToString());
+          MessageBox.Show("自启动失败");
+          return false;
         }
-        return;
+        return true;
       }
+      return false;
+    }
+
+    protected override void ThreadProcess()
+    {
+      DlLaunchTimesXml();
+
+      if (LauchSetupSelf())
+        return;
 
       while(!m_bStopThread)
       {

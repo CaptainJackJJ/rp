@@ -40,7 +40,7 @@
       this.button_ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_ok.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_ok.ForeColor = System.Drawing.Color.White;
-      this.button_ok.Location = new System.Drawing.Point(83, 73);
+      this.button_ok.Location = new System.Drawing.Point(95, 73);
       this.button_ok.Name = "button_ok";
       this.button_ok.Size = new System.Drawing.Size(95, 23);
       this.button_ok.TabIndex = 40;

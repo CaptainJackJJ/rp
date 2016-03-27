@@ -317,9 +317,9 @@
       this.button_borderColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
       this.button_borderColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_borderColor.ForeColor = System.Drawing.Color.White;
-      this.button_borderColor.Location = new System.Drawing.Point(126, 87);
+      this.button_borderColor.Location = new System.Drawing.Point(126, 83);
       this.button_borderColor.Name = "button_borderColor";
-      this.button_borderColor.Size = new System.Drawing.Size(75, 23);
+      this.button_borderColor.Size = new System.Drawing.Size(95, 27);
       this.button_borderColor.TabIndex = 40;
       this.button_borderColor.Text = "Border Color";
       this.button_borderColor.UseVisualStyleBackColor = false;
@@ -332,9 +332,9 @@
       this.button_fontColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
       this.button_fontColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_fontColor.ForeColor = System.Drawing.Color.White;
-      this.button_fontColor.Location = new System.Drawing.Point(25, 87);
+      this.button_fontColor.Location = new System.Drawing.Point(25, 83);
       this.button_fontColor.Name = "button_fontColor";
-      this.button_fontColor.Size = new System.Drawing.Size(75, 23);
+      this.button_fontColor.Size = new System.Drawing.Size(95, 27);
       this.button_fontColor.TabIndex = 40;
       this.button_fontColor.Text = "Font Color";
       this.button_fontColor.UseVisualStyleBackColor = false;
@@ -542,8 +542,7 @@
       // 
       // FormSettings
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
       this.Controls.Add(this.panel_subtitle);

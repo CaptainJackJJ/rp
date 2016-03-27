@@ -20,7 +20,7 @@ namespace RPlayer
     private const int m_nBottomButtonsMargin = 15;
     private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
     private const int m_nPlayProcessToPlayBtnYMargin = 5;
-    private const int m_nPlayProcessXMargin = 80;
+    private const int m_nPlayProcessXMargin = 90;
 
     private const int m_nStopBtnXMarginToPlay = -(m_nBottomButtonsMargin * 3 + m_nBottomButtonsWidth * 3);
     private const int m_nFBBtnXMarginToPlay = -(m_nBottomButtonsMargin + m_nBottomButtonsWidth);

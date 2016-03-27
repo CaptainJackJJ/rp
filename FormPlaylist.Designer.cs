@@ -28,10 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "av2.mkv                                                                          " +
                 "                "}, -1, System.Drawing.Color.DodgerBlue, System.Drawing.Color.DimGray, null);
-      System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+      System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "av3.iso"}, -1, System.Drawing.Color.YellowGreen, System.Drawing.Color.DimGray, null);
       this.label_TopEdge = new System.Windows.Forms.Label();
       this.label_LeftEdge = new System.Windows.Forms.Label();
@@ -84,9 +84,9 @@
       this.button_playlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_playlist.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_playlist.ForeColor = System.Drawing.Color.White;
-      this.button_playlist.Location = new System.Drawing.Point(10, 10);
+      this.button_playlist.Location = new System.Drawing.Point(10, 7);
       this.button_playlist.Name = "button_playlist";
-      this.button_playlist.Size = new System.Drawing.Size(75, 23);
+      this.button_playlist.Size = new System.Drawing.Size(80, 25);
       this.button_playlist.TabIndex = 33;
       this.button_playlist.Text = "Playlist";
       this.button_playlist.UseVisualStyleBackColor = false;
@@ -99,9 +99,9 @@
       this.button_histroy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
       this.button_histroy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_histroy.ForeColor = System.Drawing.Color.White;
-      this.button_histroy.Location = new System.Drawing.Point(84, 10);
+      this.button_histroy.Location = new System.Drawing.Point(89, 7);
       this.button_histroy.Name = "button_histroy";
-      this.button_histroy.Size = new System.Drawing.Size(75, 23);
+      this.button_histroy.Size = new System.Drawing.Size(80, 25);
       this.button_histroy.TabIndex = 33;
       this.button_histroy.Text = "histroy";
       this.button_histroy.UseVisualStyleBackColor = false;
@@ -114,7 +114,7 @@
       this.comboBox_repeat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboBox_repeat.ForeColor = System.Drawing.Color.White;
       this.comboBox_repeat.FormattingEnabled = true;
-      this.comboBox_repeat.Location = new System.Drawing.Point(61, 403);
+      this.comboBox_repeat.Location = new System.Drawing.Point(65, 403);
       this.comboBox_repeat.Name = "comboBox_repeat";
       this.comboBox_repeat.Size = new System.Drawing.Size(126, 20);
       this.comboBox_repeat.TabIndex = 35;
@@ -125,7 +125,7 @@
       this.label_repeat.AutoSize = true;
       this.label_repeat.BackColor = System.Drawing.Color.Transparent;
       this.label_repeat.ForeColor = System.Drawing.Color.White;
-      this.label_repeat.Location = new System.Drawing.Point(10, 406);
+      this.label_repeat.Location = new System.Drawing.Point(1, 406);
       this.label_repeat.Name = "label_repeat";
       this.label_repeat.Size = new System.Drawing.Size(41, 12);
       this.label_repeat.TabIndex = 34;
@@ -136,7 +136,7 @@
       this.label_sortBy.AutoSize = true;
       this.label_sortBy.BackColor = System.Drawing.Color.Transparent;
       this.label_sortBy.ForeColor = System.Drawing.Color.White;
-      this.label_sortBy.Location = new System.Drawing.Point(10, 432);
+      this.label_sortBy.Location = new System.Drawing.Point(1, 432);
       this.label_sortBy.Name = "label_sortBy";
       this.label_sortBy.Size = new System.Drawing.Size(47, 12);
       this.label_sortBy.TabIndex = 34;
@@ -149,7 +149,7 @@
       this.comboBox_sort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboBox_sort.ForeColor = System.Drawing.Color.White;
       this.comboBox_sort.FormattingEnabled = true;
-      this.comboBox_sort.Location = new System.Drawing.Point(61, 429);
+      this.comboBox_sort.Location = new System.Drawing.Point(65, 429);
       this.comboBox_sort.Name = "comboBox_sort";
       this.comboBox_sort.Size = new System.Drawing.Size(126, 20);
       this.comboBox_sort.TabIndex = 35;
@@ -161,8 +161,8 @@
       this.listView_histroy.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.listView_histroy.ForeColor = System.Drawing.Color.White;
       this.listView_histroy.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem9,
+            listViewItem10});
       this.listView_histroy.Location = new System.Drawing.Point(10, 33);
       this.listView_histroy.Name = "listView_histroy";
       this.listView_histroy.Size = new System.Drawing.Size(177, 362);
@@ -201,8 +201,7 @@
       // 
       // FormPlaylist
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(75)))), ((int)(((byte)(92)))));
       this.ClientSize = new System.Drawing.Size(193, 454);
       this.Controls.Add(this.treeView_playlist);

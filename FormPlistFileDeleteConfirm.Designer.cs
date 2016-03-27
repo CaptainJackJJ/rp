@@ -94,8 +94,7 @@
       // 
       // FormPlistFileDeleteConfirm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.DimGray;
       this.ClientSize = new System.Drawing.Size(347, 149);
       this.Controls.Add(this.checkBox_deleteDirectly);

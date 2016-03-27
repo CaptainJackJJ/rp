@@ -84,8 +84,7 @@
       // 
       // FormPlistFolderDetails
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.SlateGray;
       this.ClientSize = new System.Drawing.Size(225, 115);
       this.Controls.Add(this.textBox_url);

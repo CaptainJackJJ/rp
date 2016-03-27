@@ -61,8 +61,7 @@
       // 
       // FormNotice
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.SlateGray;
       this.ClientSize = new System.Drawing.Size(189, 80);
       this.Controls.Add(this.label_notice);

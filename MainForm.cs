@@ -1972,16 +1972,16 @@ namespace RPlayer
         switch (m_nTimes)
         {
           case -1:
-            label_loading.Text = "";
+            label_loading.Text = "加载中";
             break;
           case 0:
-            label_loading.Text = "一";
+            label_loading.Text = "加载中.";
             break;
           case 1:
-            label_loading.Text = "一一";
+            label_loading.Text = "加载中..";
             break;
           case 2:
-            label_loading.Text = "一一一";
+            label_loading.Text = "加载中...";
             m_nTimes = -2;
             break;
         }

@@ -263,13 +263,15 @@
       // 
       this.label_loading.BackColor = System.Drawing.Color.Transparent;
       this.label_loading.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_loading.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.label_loading.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.label_loading.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
-      this.label_loading.Location = new System.Drawing.Point(470, 4);
+      this.label_loading.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.label_loading.Location = new System.Drawing.Point(487, 3);
       this.label_loading.Name = "label_loading";
-      this.label_loading.Size = new System.Drawing.Size(72, 25);
+      this.label_loading.Size = new System.Drawing.Size(62, 19);
       this.label_loading.TabIndex = 45;
-      this.label_loading.Text = "一一一";
+      this.label_loading.Text = "加载中...";
+      this.label_loading.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // panel_neck
       // 

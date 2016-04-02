@@ -21,7 +21,7 @@ namespace RPlayer
       if (Archive.lang == "中文")
       {
         button_ok.Text = "好的";
-        richTextBox_notice.Text = "感谢您使用兔子影音。软件已升级至最新版V" + verison + "，几秒钟后将会自动重启。";
+        richTextBox_notice.Text = "感谢您使用海盗兔影音。软件已升级至最新版V" + verison + "，几秒钟后将会自动重启。";
       }
       else
       {

@@ -61,7 +61,7 @@
       this.richTextBox_notice.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
       this.richTextBox_notice.Size = new System.Drawing.Size(260, 58);
       this.richTextBox_notice.TabIndex = 42;
-      this.richTextBox_notice.Text = "感谢您使用兔子影音。软件已更新至最新版V1.1.12，几秒钟后将会自动重启。";
+      this.richTextBox_notice.Text = "感谢您使用海盗兔影音。软件已更新至最新版V1.1.12，几秒钟后将会自动重启。";
       // 
       // FormUpdateNoticy
       // 

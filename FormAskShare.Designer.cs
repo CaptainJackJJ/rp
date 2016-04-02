@@ -45,7 +45,7 @@
       this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
       this.richTextBox_changeLog.Size = new System.Drawing.Size(345, 82);
       this.richTextBox_changeLog.TabIndex = 48;
-      this.richTextBox_changeLog.Text = "亲，试用期已过，需要30元购买使用权。\n但由于兔子影音还处于推广阶段，只要\n你分享给好友，就可以免费终身使用！";
+      this.richTextBox_changeLog.Text = "亲，试用期已过，需要30元购买使用权。\n但由于海盗兔影音还处于推广阶段，只要\n你分享给好友，就可以免费终身使用！";
       // 
       // button_share
       // 

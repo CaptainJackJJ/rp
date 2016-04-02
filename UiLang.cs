@@ -225,7 +225,7 @@ Are you still want to delete it?";
 
     private static void SetChinese()
     {
-      rabbitPlayer = "兔子影音";
+      rabbitPlayer = "海盗兔影音";
       yes = "是的";
       no = "不了";
       pathNotFound = "无法找到该源。它可能已被删除或改名或移动... 源路径为：";
@@ -234,10 +234,10 @@ Are you still want to delete it?";
       btnBrowse = "浏览";
       msgAnotherProcessUsingTheFile = "另外一个软件正在使用该文件，所以无法删除它";
       msgCannotPlay = "无法播放该文件";
-      msgWndClosedBySfApp = "您电脑上的安全软件错误的屏蔽了兔子影音的子窗体，例如360安全卫士。"
-        + "您可以打开它的360弹窗拦截器，设置为不拦截兔子影音的窗体!";
+      msgWndClosedBySfApp = "您电脑上的安全软件错误的屏蔽了海盗兔影音的子窗体，例如360安全卫士。"
+        + "您可以打开它的360弹窗拦截器，设置为不拦截海盗兔影音的窗体!";
       msgSetAsDefaultFailed = "无法注册为默认播放器。一般是由于一些安全软件导致的。"
-        + "如果您想让兔子影音成为您的默认播放器，请重新打开本软件，并且当您的安全软件询问您是否允许兔子影音修改"
+        + "如果您想让海盗兔影音成为您的默认播放器，请重新打开本软件，并且当您的安全软件询问您是否允许海盗兔影音修改"
         + "注册表时，您选择允许所有操作。";
       labelShare = "分享";
 

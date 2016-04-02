@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChangeLog));
       this.label_changeLog = new System.Windows.Forms.Label();
       this.label_settingsClose = new System.Windows.Forms.Label();
       this.panel_topBar = new System.Windows.Forms.Panel();
@@ -95,8 +96,10 @@
       this.Controls.Add(this.richTextBox_changeLog);
       this.Controls.Add(this.panel_topBar);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormChangeLog";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Text = "版本历史";
       this.Shown += new System.EventHandler(this.FormChangeLog_Shown);
       this.panel_topBar.ResumeLayout(false);
       this.panel_topBar.PerformLayout();

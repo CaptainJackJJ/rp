@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAskShare));
       this.richTextBox_changeLog = new System.Windows.Forms.RichTextBox();
       this.button_share = new System.Windows.Forms.Button();
       this.SuspendLayout();
@@ -73,8 +74,10 @@
       this.Controls.Add(this.button_share);
       this.Controls.Add(this.richTextBox_changeLog);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormAskShare";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+      this.Text = "提示";
       this.TopMost = true;
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAskShare_FormClosing);
       this.ResumeLayout(false);

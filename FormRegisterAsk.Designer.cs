@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegisterAsk));
       this.button_notAllow = new System.Windows.Forms.Button();
       this.button_allow = new System.Windows.Forms.Button();
       this.richTextBox_description = new System.Windows.Forms.RichTextBox();
@@ -89,8 +90,10 @@
       this.Controls.Add(this.button_notAllow);
       this.Controls.Add(this.button_allow);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormRegisterAsk";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Text = "提示";
       this.TopMost = true;
       this.ResumeLayout(false);
 

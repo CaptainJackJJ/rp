@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUpdateNoticy));
       this.button_ok = new System.Windows.Forms.Button();
       this.richTextBox_notice = new System.Windows.Forms.RichTextBox();
       this.SuspendLayout();
@@ -71,8 +72,10 @@
       this.Controls.Add(this.richTextBox_notice);
       this.Controls.Add(this.button_ok);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormUpdateNoticy";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Text = "升级提示";
       this.TopMost = true;
       this.ResumeLayout(false);
 

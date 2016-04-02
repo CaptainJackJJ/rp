@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.label_Play = new System.Windows.Forms.Label();
       this.label_Min = new System.Windows.Forms.Label();
       this.label_Close = new System.Windows.Forms.Label();
@@ -425,8 +426,10 @@
       this.Controls.Add(this.label_Play);
       this.Controls.Add(this.label_settings);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Text = "海盗兔影音";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);

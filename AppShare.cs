@@ -26,6 +26,10 @@ namespace RPlayer
     static readonly private string m_strNodeNameShared = "Shared";
     static readonly private string m_strNodeUrlShared
       = m_strNodeNameRoot + "/" + m_strNodeNameShared;
+
+    static readonly private string m_strNodeNameIsFirstOpenFile = "IsFirstOpenFile";
+    static readonly private string m_strNodeUrlIsFirstOpenFile
+      = m_strNodeNameRoot + "/" + m_strNodeNameIsFirstOpenFile;
     #endregion
 
     static private void GetNode(XmlDocument xml,string nodeUrl, out XmlNode node)
@@ -83,8 +87,37 @@ namespace RPlayer
           nodeAppShare.AppendChild(node);
           node.InnerText = "False";
         }
+        else if (nodeUrl == m_strNodeUrlIsFirstOpenFile)
+        {
+          node = xml.CreateElement(m_strNodeNameIsFirstOpenFile);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "True";
+        }
         #endregion
       }
+    }
+
+    static public bool SetGetIsFirstOpenFile(string xmlPath, bool bSet)
+    {
+      m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
+      XmlDocument xml = new XmlDocument();
+      XmlNode node;
+      GetNode(xml, m_strNodeUrlIsFirstOpenFile, out node);
+      if (bSet)
+      {
+        node.InnerText = "False";
+
+        try
+        {
+          xml.Save(m_strXmlFileUrl);
+        }
+        catch { }
+      }
+      else
+      {
+        return Convert.ToBoolean(node.InnerText);
+      }
+      return true;
     }
 
     static public bool SetGetShared(string xmlPath, bool bSet)

@@ -1133,6 +1133,12 @@ namespace RPlayer
     {
       OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
+      if(AppShare.SetGetIsFirstOpenFile(m_tempPath, false))
+      {
+        openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        AppShare.SetGetIsFirstOpenFile(m_tempPath, true);
+      }
+
       openFileDialog1.Filter = "All files (*.*)|*.*";
       openFileDialog1.FilterIndex = 1;
       openFileDialog1.RestoreDirectory = true;

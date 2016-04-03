@@ -234,7 +234,7 @@ namespace RPlayer
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
       m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70));
-      button_localPlay.BackColor = Color.FromArgb(255, 199, 80, 80);
+      button_localPlay.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
 

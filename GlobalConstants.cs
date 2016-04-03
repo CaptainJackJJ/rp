@@ -42,7 +42,7 @@ namespace RPlayer
       static public readonly string strAppUpdateTimesXmlName = "AppUpdateTimes.xml";
       static public readonly string strAppUpdateTimesRemoteUrl
         = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strAppUpdateTimesXmlName;
-      static public readonly Color colorSelectedNavBtn = Color.FromArgb(255, 199, 80, 80);
+      static public readonly Color colorSelectedNavBtn = Color.DarkSalmon;
     }
 
     public class infoXml

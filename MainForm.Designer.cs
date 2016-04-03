@@ -375,7 +375,7 @@
       // 
       // button_localPlay
       // 
-      this.button_localPlay.BackColor = System.Drawing.Color.MediumPurple;
+      this.button_localPlay.BackColor = System.Drawing.Color.IndianRed;
       this.button_localPlay.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
       this.button_localPlay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
       this.button_localPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

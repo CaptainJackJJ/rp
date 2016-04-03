@@ -1423,9 +1423,13 @@ namespace RPlayer
         m_formVolumeDisplay.Location
           = new Point(this.Location.X + 20, m_formTopBar.Location.Y + m_formTopBar.Height);
 
+        int yFactor = 7;
+        if (m_bIsPlaying)
+          yFactor = 0;
+
         m_formPlaylist.Location
          = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
-           this.Location.Y + label_Close.Size.Height * 3 + 1);
+           this.Location.Y + label_Close.Size.Height * 3 + 1 + yFactor);
 
         m_formPlaylist.Size
           = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
@@ -1445,7 +1449,15 @@ namespace RPlayer
     }
 
     private void ShowPlayingUIs(bool bPlaying)
-    {    
+    {
+      Color colorEdge = Color.RoyalBlue;
+      if(bPlaying)
+      {
+        colorEdge = Color.Gray;
+      }
+      label_TopEdge.BackColor = label_BottomEdge.BackColor = label_RightEdge.BackColor
+          = label_LeftEdge.BackColor = colorEdge;
+
       button_dlChina1.Visible = !bPlaying;
       button_dlChina2.Visible = !bPlaying;
       button_localPlay.Visible = !bPlaying;

@@ -96,39 +96,43 @@
       // 
       // label_LeftEdge
       // 
-      this.label_LeftEdge.BackColor = System.Drawing.Color.Gray;
+      this.label_LeftEdge.BackColor = System.Drawing.Color.RoyalBlue;
       this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_LeftEdge.Location = new System.Drawing.Point(1, 2);
       this.label_LeftEdge.Name = "label_LeftEdge";
       this.label_LeftEdge.Size = new System.Drawing.Size(1, 765);
       this.label_LeftEdge.TabIndex = 28;
+      this.label_LeftEdge.Visible = false;
       // 
       // label_TopEdge
       // 
-      this.label_TopEdge.BackColor = System.Drawing.Color.Gray;
+      this.label_TopEdge.BackColor = System.Drawing.Color.RoyalBlue;
       this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_TopEdge.Location = new System.Drawing.Point(1, 1);
       this.label_TopEdge.Name = "label_TopEdge";
       this.label_TopEdge.Size = new System.Drawing.Size(1022, 1);
       this.label_TopEdge.TabIndex = 29;
+      this.label_TopEdge.Visible = false;
       // 
       // label_RightEdge
       // 
-      this.label_RightEdge.BackColor = System.Drawing.Color.Gray;
+      this.label_RightEdge.BackColor = System.Drawing.Color.RoyalBlue;
       this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_RightEdge.Location = new System.Drawing.Point(1022, 2);
       this.label_RightEdge.Name = "label_RightEdge";
       this.label_RightEdge.Size = new System.Drawing.Size(1, 766);
       this.label_RightEdge.TabIndex = 30;
+      this.label_RightEdge.Visible = false;
       // 
       // label_BottomEdge
       // 
-      this.label_BottomEdge.BackColor = System.Drawing.Color.Gray;
+      this.label_BottomEdge.BackColor = System.Drawing.Color.RoyalBlue;
       this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.label_BottomEdge.Location = new System.Drawing.Point(1, 766);
       this.label_BottomEdge.Name = "label_BottomEdge";
       this.label_BottomEdge.Size = new System.Drawing.Size(1022, 1);
       this.label_BottomEdge.TabIndex = 31;
+      this.label_BottomEdge.Visible = false;
       // 
       // label_settings
       // 

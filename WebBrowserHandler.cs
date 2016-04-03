@@ -43,13 +43,13 @@ namespace RPlayer
       //{
       //  GlobalConstants.Common.strChinaDl1 = "http://www.chdw.org/";
       //  GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
-      //  GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
+      //  GlobalConstants.Common.strLocalPlay = "http://gaoqing.la/";
       //}
       //else
       //{
         GlobalConstants.Common.strChinaDl1 = "http://www.xiagaoqing.com/";
         GlobalConstants.Common.strChinaDl2 = "http://www.chdw.org/";
-        GlobalConstants.Common.strChinaDl3 = "http://gaoqing.la/";
+        GlobalConstants.Common.strLocalPlay = "http://gaoqing.la/";
       //}
 
       // set the actual key
@@ -61,6 +61,7 @@ namespace RPlayer
       Key.Close();
 
       webBrowser1 = new WebBrowser();
+      webBrowser1.Visible = false;
       webBrowser1.Location = startPoint;
       webBrowser1.Size = new Size(1010, 590);
       webBrowser1.ScriptErrorsSuppressed = true;
@@ -193,7 +194,7 @@ namespace RPlayer
       if (e.Url.ToString() == "about:blank")
         return;
 
-      m_formMain.ChangeWebButtonColor(e.Url.ToString());
+      m_formMain.ChangeNavButtonColor(e.Url.ToString());
 
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
 

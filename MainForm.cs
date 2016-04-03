@@ -1307,7 +1307,7 @@ namespace RPlayer
 
     private void label_share_Click(object sender, EventArgs e)
     {
-      m_webBrowserHandler.Navigate(false, "http://rabbitplayer.cn/");
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOfficalWebsite);
     }
 
     private void label_share_MouseEnter(object sender, EventArgs e)
@@ -2049,25 +2049,29 @@ namespace RPlayer
     }
 
     private void button_dlChina1_Click(object sender, EventArgs e)
-    {     
+    {
+      m_updaterApp.UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
       ChangeNavButtonColor(GlobalConstants.Common.strChinaDl1);
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
-    {      
+    {
+      m_updaterApp.UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaOnline);
       ChangeNavButtonColor(GlobalConstants.Common.strChinaOnline);
     }
 
     private void button_dlOversea_Click(object sender, EventArgs e)
     {
+      m_updaterApp.UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOverseaDl);
       ChangeNavButtonColor(GlobalConstants.Common.strOverseaDl);
     }
 
     private void button_subtitle_Click(object sender, EventArgs e)
     {
+      m_updaterApp.UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strSubtitle);
       ChangeNavButtonColor(GlobalConstants.Common.strSubtitle);
     }
@@ -2153,6 +2157,7 @@ namespace RPlayer
 
     private void button_dlChina2_Click(object sender, EventArgs e)
     {
+      m_updaterApp.UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl2);
       ChangeNavButtonColor(GlobalConstants.Common.strChinaDl2);
     }

@@ -29,13 +29,13 @@ namespace RPlayer
       static public readonly Color colorMainFormBG = Color.FromArgb(255,84, 175, 254);
       static public string strChinaDl1 = "http://gaoqing.la/";
       static public string strChinaDl2 = "http://www.chdw.org/";
-      static public string strLocalPlay = "http://www.xiagaoqing.com/";
-      static public readonly string strChinaOnline = "http://www.youku.com/";
-      static public readonly string strOverseaDl = "http://www.rarbg.to";
-      static public readonly string strSubtitle = "http://sub.makedie.me/";
-      static public readonly string strOfficalWebsite = "http://rabbitplayer.cn/";
+      static public readonly string strLocalPlay = "local";
+      static public string strChinaOnline = "http://www.youku.com/";
+      static public string strOverseaDl = "http://www.rarbg.to";
+      static public string strSubtitle = "http://sub.makedie.me/";
+      static public readonly string strOfficalWebsite = "http://prplayer.com/";
       static public readonly string strSetupSelfInfoXmlName = "setupSelfInfo.xml";
-      static public readonly string strSetupSelfInfoRemoteUrl = "http://rabbitplayer.cn/" + strSetupSelfInfoXmlName;
+      static public readonly string strSetupSelfInfoRemoteUrl = "http://prplayer.com/" + strSetupSelfInfoXmlName;
       static public readonly string strLaunchTimesXmlName = "LaunchTimes.xml";
       static public readonly string strLaunchTimesRemoteUrl 
         = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strLaunchTimesXmlName;

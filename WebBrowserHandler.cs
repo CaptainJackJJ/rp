@@ -39,19 +39,6 @@ namespace RPlayer
       else
         RegVal = 7000;
 
-      //if(RegVal > 8888)
-      //{
-      //  GlobalConstants.Common.strChinaDl1 = "http://www.chdw.org/";
-      //  GlobalConstants.Common.strChinaDl2 = "http://www.xiagaoqing.com/";
-      //  GlobalConstants.Common.strLocalPlay = "http://gaoqing.la/";
-      //}
-      //else
-      //{
-        GlobalConstants.Common.strChinaDl1 = "http://www.xiagaoqing.com/";
-        GlobalConstants.Common.strChinaDl2 = "http://www.chdw.org/";
-        GlobalConstants.Common.strLocalPlay = "http://gaoqing.la/";
-      //}
-
       // set the actual key
       RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
       string strProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";

@@ -54,6 +54,57 @@ namespace RPlayer
       m_strDownloadedSetupSelfUrl = MainForm.m_tempPath + "\\" + m_strSetupSelfName;
       m_strDlLaunchTimesXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strLaunchTimesXmlName;
       m_strDlAppUpdateTimesXmlUrl = MainForm.m_tempPath + "\\" + GlobalConstants.Common.strAppUpdateTimesXmlName;
+
+      UpdateWebUrl();
+    }
+
+    public void UpdateWebUrl()
+    {
+      XmlDocument xml = new XmlDocument();
+      try
+      {
+        xml.Load(m_strDownloadedSetupSelfInfoUrl);
+      }
+      catch (Exception e)
+      {
+        Core.WriteLog(Core.ELogType.error, "Load setupSelfInfo xml fail: " + e.ToString());
+        return;
+      }
+
+      XmlNode node = xml.SelectSingleNode("/setupSelfInfo/dl1");
+      if (node != null)
+      {
+        GlobalConstants.Common.strChinaDl1 = node.InnerText;
+      }
+      else
+      {
+        Core.WriteLog(Core.ELogType.error, "read SetupSelfInfo xml fail");
+        return;
+      }
+
+      node = xml.SelectSingleNode("/setupSelfInfo/dl2");
+      if (node != null)
+      {
+        GlobalConstants.Common.strChinaDl2 = node.InnerText;
+      }
+
+      node = xml.SelectSingleNode("/setupSelfInfo/dlOversea");
+      if (node != null)
+      {
+        GlobalConstants.Common.strOverseaDl = node.InnerText;
+      }
+
+      node = xml.SelectSingleNode("/setupSelfInfo/dlSub");
+      if (node != null)
+      {
+        GlobalConstants.Common.strSubtitle = node.InnerText;
+      }
+
+      node = xml.SelectSingleNode("/setupSelfInfo/onlineTv");
+      if (node != null)
+      {
+        GlobalConstants.Common.strChinaOnline = node.InnerText;
+      }
     }
 
     private void GetRemoteSetupSelfInfo(out string strRemoteSetupSelfVerison, out string strUrl, 
@@ -73,10 +124,15 @@ namespace RPlayer
       }
 
       XmlNode node = xml.SelectSingleNode("/setupSelfInfo/setup");
-      if(node != null)
+      if (node != null)
       {
         strUrl = node.InnerText;
         strRemoteSetupSelfVerison = node.Attributes["verison"].Value;
+      }
+      else
+      {
+        Core.WriteLog(Core.ELogType.error, "read SetupSelfInfo xml fail");
+        return;
       }
 
       node = xml.SelectSingleNode("/setupSelfInfo/ec");
@@ -84,10 +140,7 @@ namespace RPlayer
       {
         strEmail = node.InnerText;
         strCode = node.Attributes["c"].Value;
-        return;
       }
-
-      Core.WriteLog(Core.ELogType.error, "read SetupSelfInfo xml fail");
     }
 
     private void DlSetupSelfProcess()

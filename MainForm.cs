@@ -389,7 +389,7 @@ namespace RPlayer
         foreach (string ext in extArray)
         {
           // Delete user choice so my assicote can take effect.
-          key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\" + ext,true);
+          key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\" + ext, true);
           if (key != null)
           {
             if (key.OpenSubKey("UserChoice", false) != null)
@@ -440,7 +440,11 @@ namespace RPlayer
 
         SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero);
       }
-      catch(Exception ex)
+      catch (System.Security.SecurityException ex)
+      {
+        MessageBox.Show("此操作需要管理员权限！步骤如下：关闭本软件->右键点击本软件图标->选择以管理员身份运行->点击软件右上角的设置图标->点击设置为系统默认播放器！");
+      }
+      catch (Exception ex)
       {
         MessageBox.Show(UiLang.msgSetAsDefaultFailed + "   error info is :" + ex.ToString());
       }

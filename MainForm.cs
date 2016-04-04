@@ -222,6 +222,7 @@ namespace RPlayer
       this.OnResize(EventArgs.Empty);
 
       ConfigUiByArchive();
+      UpdateFormPlistTransform();
     }
 
     private void MainForm_Load(object sender, EventArgs e)

@@ -97,7 +97,7 @@ namespace RPlayer
     static private readonly enumSortBy sortByDefault = enumSortBy.nameUp;
     static private readonly enumSelectedPListBtn selectedPListBtnDefault = enumSelectedPListBtn.playlist;
     static private readonly int formPlistWidthDefault = 196;
-    static private readonly int formPlistHeightDefault = 607;
+    static private readonly int formPlistHeightDefault = 590;
 
     // generalSettings
     static public string lang;

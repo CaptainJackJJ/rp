@@ -21,6 +21,7 @@ namespace RPlayer
   {
 
     #region properties
+    private readonly int m_nWebBroY = 70;
     private bool m_bHasArgus = false;
     private Mutex m_mutexOneInstance;
     public bool m_bNeedShared = false;
@@ -233,7 +234,7 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, 70));
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, m_nWebBroY));
       button_localPlay.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
@@ -1429,16 +1430,7 @@ namespace RPlayer
         m_formVolumeDisplay.Location
           = new Point(this.Location.X + 20, m_formTopBar.Location.Y + m_formTopBar.Height);
 
-        int yFactor = 7;
-        if (m_bIsPlaying)
-          yFactor = 0;
-
-        m_formPlaylist.Location
-         = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
-           this.Location.Y + label_Close.Size.Height * 3 + 1 + yFactor);
-
-        m_formPlaylist.Size
-          = new Size(m_formPlaylist.Width, m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3);
+        UpdateFormPlistTransform();
       }
       catch
       {
@@ -1446,6 +1438,34 @@ namespace RPlayer
         MessageBox.Show(UiLang.msgWndClosedBySfApp);
       }
    }
+
+    private void UpdateFormPlistTransform()
+    {
+      int nMarginBarToEdge;
+      if (m_bDesktop)
+        nMarginBarToEdge = 0;
+      else
+        nMarginBarToEdge = 2;
+
+      int y,h;
+      if (m_bPlayingForm)
+      {
+        y = this.Location.Y + label_Close.Size.Height * 3 + 1;
+        h = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3 - 1;
+      }
+      else
+      {
+        y = this.Location.Y + m_nWebBroY;
+        h = 590;
+      }
+
+      m_formPlaylist.Location
+       = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
+         y);
+
+      m_formPlaylist.Size
+        = new Size(m_formPlaylist.Width, h);
+    }
 
     private void ShowBroswerUIs(bool bBrowsering)
     {
@@ -1456,6 +1476,8 @@ namespace RPlayer
 
     private void ShowPlayingUIs(bool bPlaying)
     {
+      UpdateFormPlistTransform();
+
       Color colorEdge = Color.RoyalBlue;
       if(bPlaying)
       {

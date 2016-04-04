@@ -35,7 +35,7 @@
       // 
       // button_ok
       // 
-      this.button_ok.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.button_ok.BackColor = System.Drawing.Color.Transparent;
       this.button_ok.FlatAppearance.BorderColor = System.Drawing.Color.White;
       this.button_ok.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -51,7 +51,7 @@
       // 
       // richTextBox_notice
       // 
-      this.richTextBox_notice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.richTextBox_notice.BackColor = System.Drawing.Color.DarkSalmon;
       this.richTextBox_notice.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.richTextBox_notice.Cursor = System.Windows.Forms.Cursors.Default;
       this.richTextBox_notice.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -67,7 +67,7 @@
       // FormUpdateNoticy
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.BackColor = System.Drawing.Color.DarkSalmon;
       this.ClientSize = new System.Drawing.Size(285, 107);
       this.Controls.Add(this.richTextBox_notice);
       this.Controls.Add(this.button_ok);

@@ -61,7 +61,7 @@
       // 
       // panel_topBar
       // 
-      this.panel_topBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.panel_topBar.BackColor = System.Drawing.Color.Transparent;
       this.panel_topBar.Controls.Add(this.label_changeLog);
       this.panel_topBar.Controls.Add(this.label_settingsClose);
       this.panel_topBar.Dock = System.Windows.Forms.DockStyle.Top;
@@ -91,7 +91,7 @@
       // FormChangeLog
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.BackColor = System.Drawing.Color.DarkSalmon;
       this.ClientSize = new System.Drawing.Size(503, 539);
       this.Controls.Add(this.richTextBox_changeLog);
       this.Controls.Add(this.panel_topBar);

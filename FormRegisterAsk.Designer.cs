@@ -36,7 +36,7 @@
       // 
       // button_notAllow
       // 
-      this.button_notAllow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.button_notAllow.BackColor = System.Drawing.Color.DarkSalmon;
       this.button_notAllow.FlatAppearance.BorderColor = System.Drawing.Color.White;
       this.button_notAllow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_notAllow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -51,7 +51,7 @@
       // 
       // button_allow
       // 
-      this.button_allow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.button_allow.BackColor = System.Drawing.Color.DarkSalmon;
       this.button_allow.FlatAppearance.BorderColor = System.Drawing.Color.White;
       this.button_allow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
       this.button_allow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -67,7 +67,7 @@
       // 
       // richTextBox_description
       // 
-      this.richTextBox_description.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.richTextBox_description.BackColor = System.Drawing.Color.DarkSalmon;
       this.richTextBox_description.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.richTextBox_description.Cursor = System.Windows.Forms.Cursors.Default;
       this.richTextBox_description.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -84,7 +84,7 @@
       // FormRegisterAsk
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.BackColor = System.Drawing.Color.DarkSalmon;
       this.ClientSize = new System.Drawing.Size(309, 222);
       this.Controls.Add(this.richTextBox_description);
       this.Controls.Add(this.button_notAllow);

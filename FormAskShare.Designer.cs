@@ -35,16 +35,16 @@
       // 
       // richTextBox_changeLog
       // 
-      this.richTextBox_changeLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.richTextBox_changeLog.BackColor = System.Drawing.Color.DarkSalmon;
       this.richTextBox_changeLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.richTextBox_changeLog.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.richTextBox_changeLog.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.richTextBox_changeLog.ForeColor = System.Drawing.Color.White;
-      this.richTextBox_changeLog.Location = new System.Drawing.Point(11, 12);
+      this.richTextBox_changeLog.Location = new System.Drawing.Point(11, 6);
       this.richTextBox_changeLog.Name = "richTextBox_changeLog";
       this.richTextBox_changeLog.ReadOnly = true;
       this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-      this.richTextBox_changeLog.Size = new System.Drawing.Size(345, 82);
+      this.richTextBox_changeLog.Size = new System.Drawing.Size(345, 97);
       this.richTextBox_changeLog.TabIndex = 48;
       this.richTextBox_changeLog.Text = "亲，试用期已过，需要30元购买使用权。\n但由于海盗兔影音还处于推广阶段，只要\n你分享给好友，就可以免费终身使用！";
       // 
@@ -58,7 +58,7 @@
       this.button_share.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_share.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_share.ForeColor = System.Drawing.Color.White;
-      this.button_share.Location = new System.Drawing.Point(118, 101);
+      this.button_share.Location = new System.Drawing.Point(118, 109);
       this.button_share.Name = "button_share";
       this.button_share.Size = new System.Drawing.Size(112, 38);
       this.button_share.TabIndex = 49;
@@ -69,7 +69,7 @@
       // FormAskShare
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
+      this.BackColor = System.Drawing.Color.DarkSalmon;
       this.ClientSize = new System.Drawing.Size(355, 155);
       this.Controls.Add(this.button_share);
       this.Controls.Add(this.richTextBox_changeLog);

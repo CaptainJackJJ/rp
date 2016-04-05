@@ -57,6 +57,7 @@
       this.button_localPlay = new System.Windows.Forms.Button();
       this.label_help = new System.Windows.Forms.Label();
       this.label_openFile = new System.Windows.Forms.Label();
+      this.listView_localLib = new System.Windows.Forms.ListView();
       this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -416,12 +417,23 @@
       this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
       this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
       // 
+      // listView_localLib
+      // 
+      this.listView_localLib.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.listView_localLib.Location = new System.Drawing.Point(7, 46);
+      this.listView_localLib.Name = "listView_localLib";
+      this.listView_localLib.Size = new System.Drawing.Size(1010, 614);
+      this.listView_localLib.TabIndex = 52;
+      this.listView_localLib.UseCompatibleStateImageBehavior = false;
+      this.listView_localLib.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.listView_localLib_ItemMouseHover);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
+      this.Controls.Add(this.listView_localLib);
       this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.button_subtitle);
       this.Controls.Add(this.panel_neck);
@@ -494,6 +506,7 @@
         private System.Windows.Forms.Button button_localPlay;
         private System.Windows.Forms.Label label_help;
         private System.Windows.Forms.Label label_openFile;
+        private System.Windows.Forms.ListView listView_localLib;
     }
 }
 

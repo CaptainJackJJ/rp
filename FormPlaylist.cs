@@ -280,7 +280,7 @@ namespace RPlayer
         file.timeWatched = 0;
         file.playState = PlaylistFile.enumPlayState.notPlayed;
         MediaInfo info = new MediaInfo();
-        info = Core.GetMediaInfo(fileUrl);
+        info = Core.GetMediaInfo(fileUrl,"",0,0);
         file.duration = info.nDuration;
         file.creationTime = File.GetCreationTime(fileUrl).ToString();
         curPlistFolder.playlistFiles.Add(file);

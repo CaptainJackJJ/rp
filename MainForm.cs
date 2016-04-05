@@ -244,6 +244,41 @@ namespace RPlayer
 
       if (m_bHasArgus)
         SwitchPlayingForm(true);
+
+      FillListview();
+    }
+
+    private void FillListview()
+    {
+      
+
+      ImageList imageListLarge = new ImageList();
+      imageListLarge.ImageSize = new Size(208, 117);
+      imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
+      imageListLarge.Images.Add("av1", Image.FromFile(Application.StartupPath + @"\pic\folder.png"));
+      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\dc95d9a44a012f4b36593b0af1a42780.png"));
+      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
+      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164419556244.jpg"));
+      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
+
+      //imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
+      //imageListLarge.Images[0] = imageListLarge.Images[imageListLarge.Images.Count - 1];
+      //imageListLarge.Images.RemoveAt(imageListLarge.Images.Count - 1);
+
+      //Assign the ImageList objects to the ListView.
+      listView_localLib.LargeImageList = imageListLarge;
+
+      //ListViewItem item1 = new ListViewItem("item1", 0);
+      //ListViewItem item2 = new ListViewItem("item1", 2);
+      listView_localLib.Items.Add("item1", "av1");
+      listView_localLib.Items.Add("item2", 1);
+      listView_localLib.Items.Add("item3", 2);
+      listView_localLib.Items.Add("item4",3);
+      listView_localLib.Items.Add("item5", "av1");
+
+      //listView_localLib.LargeImageList.Images.RemoveByKey("av1");
+      //listView_localLib.LargeImageList.Images.Add("av1", Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
+      
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -348,6 +383,8 @@ namespace RPlayer
         ConfigRpcoreByArchive();
 
         m_formPlaylist.ConfigByArchive();
+
+        Core.GetMediaInfo("D:\\test\\demo.mp4", "D:\\test\\demo1.jpg", 10,208);
 
         if (m_strPlayUrlAfterInit != "")
           StartPlay(m_strPlayUrlAfterInit);
@@ -2250,6 +2287,12 @@ namespace RPlayer
     private void label_openFile_MouseLeave(object sender, EventArgs e)
     {
       label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
+    }
+
+    private void listView_localLib_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+    {
+      ListViewItem viewItem = e.Item;
+      //MessageBox.Show(viewItem.Text);
     }
 
   }

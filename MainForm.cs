@@ -105,6 +105,7 @@ namespace RPlayer
     static public string m_tempPath;
     public string m_CoreTempPath;
     private Thread m_threadDoSomething;
+    private Thread m_threadScanPlistFolder;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
@@ -245,40 +246,119 @@ namespace RPlayer
       if (m_bHasArgus)
         SwitchPlayingForm(true);
 
-      FillListview();
+      ShowPlistFolder();
+      RefreshPlistFolder();
     }
 
-    private void FillListview()
+    delegate void ShowPlistFolderDel();
+    public void ShowPlistFolder()
     {
-      
+      if (this.InvokeRequired)
+      {
+        ShowPlistFolderDel del = new ShowPlistFolderDel(ShowPlistFolder);
+        this.Invoke(del);
+      }
+      else
+      {
+        listView_localLib.BeginUpdate();
+        listView_localLib.Items.Clear();
 
-      ImageList imageListLarge = new ImageList();
-      imageListLarge.ImageSize = new Size(208, 117);
-      imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
-      imageListLarge.Images.Add("av1", Image.FromFile(Application.StartupPath + @"\pic\folder.png"));
-      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\dc95d9a44a012f4b36593b0af1a42780.png"));
-      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
-      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164419556244.jpg"));
-      imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
+        ImageList imageListLarge = new ImageList();
+        imageListLarge.ImageSize = new Size(205, 115);
+        imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
+        const string strFolderImageKey = "folder.png";
+        imageListLarge.Images.Add(strFolderImageKey, Image.FromFile(Application.StartupPath + @"\pic\folder.png"));
 
-      //imageListLarge.Images.Add(Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
-      //imageListLarge.Images[0] = imageListLarge.Images[imageListLarge.Images.Count - 1];
-      //imageListLarge.Images.RemoveAt(imageListLarge.Images.Count - 1);
+        listView_localLib.LargeImageList = imageListLarge;
 
-      //Assign the ImageList objects to the ListView.
-      listView_localLib.LargeImageList = imageListLarge;
+        foreach (PlaylistFolder folder in Archive.playlist)
+        {
+          listView_localLib.Items.Add(folder.url, folder.folderName, strFolderImageKey);
+        }
+        listView_localLib.EndUpdate();
+      }
+    }
 
-      //ListViewItem item1 = new ListViewItem("item1", 0);
-      //ListViewItem item2 = new ListViewItem("item1", 2);
-      listView_localLib.Items.Add("item1", "av1");
-      listView_localLib.Items.Add("item2", 1);
-      listView_localLib.Items.Add("item3", 2);
-      listView_localLib.Items.Add("item4",3);
-      listView_localLib.Items.Add("item5", "av1");
+    private void RefreshPlistFolder()
+    {
+      m_threadScanPlistFolder = new Thread(ThreadRefreshPlistFolder);
+      m_threadScanPlistFolder.Start();
+    }
 
-      //listView_localLib.LargeImageList.Images.RemoveByKey("av1");
-      //listView_localLib.LargeImageList.Images.Add("av1", Image.FromFile(Application.StartupPath + @"\pic\20164420017519.jpg"));
-      
+    private void ThreadRefreshPlistFolder()
+    {
+      // delete no-exists folder
+      List<PlaylistFolder> deleteFolders = new List<PlaylistFolder>();
+      foreach (PlaylistFolder folder in Archive.playlist)
+      {
+        if (!Directory.Exists(folder.url))
+        {
+          deleteFolders.Add(folder);
+          continue;
+        }       
+      }
+
+      foreach (PlaylistFolder folder in deleteFolders)
+      {
+        Archive.playlist.Remove(folder);
+      }
+
+      // sort by pathLen
+      Archive.enumSortBy origSortBy = Archive.sortBy;
+      Archive.sortBy = Archive.enumSortBy.pathLen;
+      m_formPlaylist.SortPlistFolder();
+
+      string[] drives = System.Environment.GetLogicalDrives();
+
+      // scan sub folder
+      List<string> subFolderList = new List<string>();
+      foreach (PlaylistFolder folder in Archive.playlist)
+      {
+        if (subFolderList.Exists(e => e == folder.url) || drives.Contains(folder.url))
+          continue;
+        string[] subs;
+        try
+        {
+          subs = Directory.GetDirectories(folder.url, "*.*", System.IO.SearchOption.AllDirectories);
+        }
+        catch(Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, ex.ToString());
+          continue;
+        }
+        subFolderList.AddRange(subs);
+      }
+
+      // remove same
+      foreach (PlaylistFolder folder in Archive.playlist)
+      {
+        if (!subFolderList.Exists(e => e == folder.url))
+          continue;
+        subFolderList.Remove(folder.url);
+      }
+
+      // add new
+      foreach (string subFolder in subFolderList)
+      {
+        string[] strFilesInCurrentDirectory = m_formPlaylist.GetMoives(subFolder);
+        if (strFilesInCurrentDirectory.Length < 1)
+          continue;
+
+        PlaylistFolder plistFolder = new PlaylistFolder();
+        plistFolder.url = subFolder;
+        DirectoryInfo dir = new DirectoryInfo(subFolder);
+        plistFolder.folderName = dir.Name;
+        plistFolder.expand = true;
+        plistFolder.creationTime = dir.CreationTime.ToString();
+        plistFolder.playlistFiles = new List<PlaylistFile>();
+        Archive.playlist.Add(plistFolder);
+      }
+
+      // sort back
+      Archive.sortBy = origSortBy;
+      m_formPlaylist.SortPlistFolder();
+
+      ShowPlistFolder();
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

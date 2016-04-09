@@ -80,7 +80,7 @@ namespace RPlayer
     // formPList
     public enum enumRepeatPlayback { none,one,all}
     static public enumRepeatPlayback repeatPlayback;
-    public enum enumSortBy { creationTimeUp, creationTimeDown, nameUp, nameDown, durationUp, durationDown }
+    public enum enumSortBy { creationTimeUp, creationTimeDown, nameUp, nameDown, durationUp, durationDown,pathLen }
     static public enumSortBy sortBy;
     public enum enumSelectedPListBtn { playlist, histroy}
     static public enumSelectedPListBtn selectedPListBtn;

@@ -175,6 +175,21 @@ namespace RPlayer
         UpdatePlayListView(true, "");
     }
 
+    public string[] GetMoives(string folderUrl)
+    {
+      try
+      {
+        return GlobalConstants.Common.strExtFilters.Split('|').SelectMany(filter =>
+            Directory.GetFiles(folderUrl, filter, SearchOption.TopDirectoryOnly)
+            ).ToArray();
+      }
+      catch(Exception ex)
+      {
+        Core.WriteLog(Core.ELogType.error, ex.ToString());
+        return new string[0];
+      }
+    }
+
     // Url: file path or folder path
     public PlaylistFolder AddOrUpdatePlaylist(string Url,bool bAutoUpdateView)
     {
@@ -206,11 +221,7 @@ namespace RPlayer
         return null;
       }
 
-      string strFilters = "*.m4v|*.3g2|*.3gp|*.nsv|*.tp|*.ts|*.ty|*.strm|*.pls|*.rm|*.rmvb|*.m3u|*.m3u8|*.ifo|*.mov|*.qt|*.divx|*.xvid|*.bivx|*.vob|*.nrg|*.pva|*.wmv|*.asf|*.asx|*.ogm|*.m2v|*.avi|*.mpg|*.mpeg|*.mp4|*.mkv|*.mk3d|*.avc|*.vp3|*.svq3|*.nuv|*.viv|*.dv|*.fli|*.flv|*.wpl|*.vdr|*.dvr-ms|*.xsp|*.mts|*.m2t|*.m2ts|*.evo|*.ogv|*.sdp|*.avs|*.rec|*.pxml|*.vc1|*.h264|*.rcv|*.rss|*.mpls|*.webm|*.bdmv|*.wtv|*.td";
-      string[] strFilesInCurrentDirectory
-        = strFilters.Split('|').SelectMany(filter =>
-          Directory.GetFiles(Url, filter, SearchOption.TopDirectoryOnly)
-          ).ToArray();
+      string[] strFilesInCurrentDirectory = GetMoives(Url);
 
       List<string> addFiles = strFilesInCurrentDirectory.ToList();
 
@@ -294,7 +305,7 @@ namespace RPlayer
       return curPlistFolder;
     }
 
-    private void SortPlistFolder()
+    public void SortPlistFolder()
     {
       Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
       {
@@ -308,6 +319,8 @@ namespace RPlayer
             return folder1.folderName.CompareTo(folder2.folderName);
           case Archive.enumSortBy.nameDown:
             return folder1.folderName.CompareTo(folder2.folderName) > 0 ? -1 : 1;
+          case Archive.enumSortBy.pathLen:
+            return folder1.url.Length > folder2.url.Length ? 1 : -1;
           default:
             return 0;
         }
@@ -332,6 +345,8 @@ namespace RPlayer
             return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration));
           case Archive.enumSortBy.durationDown:
             return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration)) > 0 ? -1 : 1;
+          case Archive.enumSortBy.pathLen:
+            return file1.url.Length > file1.url.Length ? 1 : -1;
           default:
             return 0;
         }

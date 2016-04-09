@@ -43,6 +43,9 @@ namespace RPlayer
       static public readonly string strAppUpdateTimesRemoteUrl
         = "http://downloads.sourceforge.net/project/piraterabbitplayer/" + strAppUpdateTimesXmlName;
       static public readonly Color colorSelectedNavBtn = Color.DarkSalmon;
+
+      static public readonly string strExtFilters = "*.mp4|*.mkv|*.avi|*.wmv|*.rm|*.rmvb|*.m4v|*.3g2|*.3gp|*.mov|*.asf|*.m2v|*.mpg|*.mpeg|*.avc|*.flv|*.m2ts|*.h264|*.td";
+     
     }
 
     public class infoXml

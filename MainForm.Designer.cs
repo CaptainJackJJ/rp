@@ -420,6 +420,7 @@
       // listView_localLib
       // 
       this.listView_localLib.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.listView_localLib.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.listView_localLib.Location = new System.Drawing.Point(7, 46);
       this.listView_localLib.Name = "listView_localLib";
       this.listView_localLib.Size = new System.Drawing.Size(1010, 614);

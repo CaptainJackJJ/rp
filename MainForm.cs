@@ -105,7 +105,8 @@ namespace RPlayer
     static public string m_tempPath;
     public string m_CoreTempPath;
     private Thread m_threadDoSomething;
-    private Thread m_threadScanPlistFolder;
+    private Thread m_threadRefreshPlistFolder;
+    private Thread m_threadRefreshThumbs;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
@@ -122,6 +123,7 @@ namespace RPlayer
     private bool m_bShowFolder = true;
     private string m_strThumbDir;
     private readonly int m_nThumbWidth = 205;
+    PlaylistFolder m_curFolder;
 
     #endregion
 
@@ -291,8 +293,8 @@ namespace RPlayer
 
     private void RefreshPlistFolder()
     {
-      m_threadScanPlistFolder = new Thread(ThreadRefreshPlistFolder);
-      m_threadScanPlistFolder.Start();
+      m_threadRefreshPlistFolder = new Thread(ThreadRefreshPlistFolder);
+      m_threadRefreshPlistFolder.Start();
     }
 
     private void ThreadRefreshPlistFolder()
@@ -412,40 +414,100 @@ namespace RPlayer
 
         const string strBlackImageKey = "black.jpg";
         m_imageListLarge.Images.Add(strBlackImageKey, Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
-
         listView_localLib.Items.Add("返回", strBlackImageKey);
 
         foreach (PlaylistFile file in folder.playlistFiles)
         {
-          string strImageKey = strBlackImageKey;
-          string thumbUrl = m_strThumbDir + "\\" + file.fileName + ".jpg";
+          string strImageKey = file.fileName;
+          string thumbUrl = GetThumbUrl(strImageKey);
+          Image img;
           try
           {
-            Image img = Image.FromFile(thumbUrl);
-            strImageKey = file.url;
-            m_imageListLarge.Images.Add(strImageKey, img);
+            img = Image.FromFile(thumbUrl);
           }
           catch
           {
-            try
-            {
-              Core.GetMediaInfo(file.url, thumbUrl, 5, m_nThumbWidth);
-              Image img = Image.FromFile(thumbUrl);
-              strImageKey = file.url;
-              m_imageListLarge.Images.Add(strImageKey, img);
-            }
-            catch(Exception ex)
-            {
-              Core.WriteLog(Core.ELogType.error, "get thumb fail." + ex.ToString());
-            }
+            img = Image.FromFile(Application.StartupPath + @"\pic\black.jpg");
           }
+          m_imageListLarge.Images.Add(strImageKey, img);
 
           ListViewItem item = listView_localLib.Items.Add(file.url, file.fileName, strImageKey);
           item.Tag = file;
         }
         listView_localLib.EndUpdate();
+
+        RefreshThumbs(folder);
       }
     }
+
+    private void RefreshThumbs(PlaylistFolder folder)
+    {
+      m_curFolder = folder;
+      m_threadRefreshThumbs = new Thread(ThreadRefreshThumbs);
+      m_threadRefreshThumbs.Start();
+    }
+
+    private void ThreadRefreshThumbs()
+    {
+      foreach (PlaylistFile file in m_curFolder.playlistFiles)
+      {
+        string strImageKey = file.fileName;
+        string thumbUrl = GetThumbUrl(file.fileName);
+        if (!File.Exists(thumbUrl))
+        {
+          try
+          {
+            Core.GetMediaInfo(file.url, thumbUrl, 5, m_nThumbWidth);
+            ReplaceThumb(strImageKey);
+          }
+          catch (Exception ex)
+          {
+            Core.WriteLog(Core.ELogType.error, "get thumb fail." + ex.ToString());
+          }
+        }
+      }
+      //ReplaceThumbAll();
+    }
+
+    private void ReplaceThumbAll()
+    {
+      foreach (PlaylistFile file in m_curFolder.playlistFiles)
+      {
+        string strImageKey = file.fileName;
+        ReplaceThumb(strImageKey);
+      }
+    }
+
+    private string GetThumbUrl(string imageKey)
+    {
+      return m_strThumbDir + "\\" + imageKey + ".jpg";
+    }
+
+    delegate void ReplaceThumbDel(string imageKey);
+    private void ReplaceThumb(string imageKey)
+    {
+      if (this.InvokeRequired)
+      {
+        ReplaceThumbDel del = new ReplaceThumbDel(ReplaceThumb);
+        this.Invoke(del, imageKey);
+      }
+      else
+      {
+        Image img;
+        try
+        {
+          img = Image.FromFile(GetThumbUrl(imageKey));
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "ReplaceThumb fail." + ex.ToString());
+          return;
+        }
+        m_imageListLarge.Images.RemoveByKey(imageKey);
+        m_imageListLarge.Images.Add(imageKey, img);
+      }
+    }
+
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {

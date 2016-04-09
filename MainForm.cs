@@ -186,7 +186,6 @@ namespace RPlayer
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
       label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
       label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
-      label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
       if (!m_bHasArgus)
       {
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
@@ -268,6 +267,7 @@ namespace RPlayer
       m_listView_localLib.Size = new System.Drawing.Size(1010, 612);
       m_listView_localLib.Font = new System.Drawing.Font("simsun", 9f);
       m_listView_localLib.BorderStyle = BorderStyle.None;
+      m_listView_localLib.BackColor = Color.FromArgb(255, 252, 252, 252);
       m_listView_localLib.DoubleClick += listView_localLib_DoubleClick;
 
       m_listView_localLib.LargeImageList = m_imageListLarge;
@@ -1821,7 +1821,7 @@ namespace RPlayer
     {
       m_webBrowserHandler.Show(bBrowsering);
       panel_neck.Visible = bBrowsering;
-      label_openFile.Visible = !bBrowsering;
+      m_listView_localLib.Visible = !bBrowsering;
     }
 
     private void ShowPlayingUIs(bool bPlaying)
@@ -1847,12 +1847,12 @@ namespace RPlayer
       {
         m_webBrowserHandler.Show(!bPlaying);
         panel_neck.Visible = !bPlaying;
-        label_openFile.Visible = !bPlaying;  
+        m_listView_localLib.Visible = !bPlaying;
       }
       else
       {
         if (button_localPlay.BackColor == GlobalConstants.Common.colorSelectedNavBtn)
-          label_openFile.Visible = !bPlaying;
+          m_listView_localLib.Visible = !bPlaying;
         else
         {
           m_webBrowserHandler.Show(!bPlaying);
@@ -1874,7 +1874,7 @@ namespace RPlayer
       }
 
       button_openFile.Visible = !bPlaying;
-      //label_Play.Visible = !bPlaying;
+      label_Play.Visible = !bPlaying;      
     }
 
     public void SwitchPlayingForm(bool bPlaying)
@@ -2577,30 +2577,6 @@ namespace RPlayer
     {
       label_help.ForeColor = Color.DodgerBlue;
     }
-
-    private void label_openFile_Click(object sender, EventArgs e)
-    {
-      if (Archive.histroy.Count > 0)
-      {
-        HistroyItem item = Archive.histroy[Archive.histroy.Count - 1];
-        StartPlay(item.url);
-      }
-      else
-      {
-        OpenFileDlg();
-      }
-    }
-
-    private void label_openFile_MouseEnter(object sender, EventArgs e)
-    {
-      label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFileFocus.png");
-    }
-
-    private void label_openFile_MouseLeave(object sender, EventArgs e)
-    {
-      label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
-    }
-
 
   }
 

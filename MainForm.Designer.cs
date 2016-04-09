@@ -56,7 +56,6 @@
       this.button_dlChina2 = new System.Windows.Forms.Button();
       this.button_localPlay = new System.Windows.Forms.Button();
       this.label_help = new System.Windows.Forms.Label();
-      this.label_openFile = new System.Windows.Forms.Label();
       this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -147,7 +146,7 @@
       // label_playWnd
       // 
       this.label_playWnd.AllowDrop = true;
-      this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
+      this.label_playWnd.BackColor = System.Drawing.Color.Beige;
       this.label_playWnd.Location = new System.Drawing.Point(2, 46);
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(1020, 586);
@@ -404,25 +403,12 @@
       this.label_help.MouseEnter += new System.EventHandler(this.label_help_MouseEnter);
       this.label_help.MouseLeave += new System.EventHandler(this.label_help_MouseLeave);
       // 
-      // label_openFile
-      // 
-      this.label_openFile.BackColor = System.Drawing.Color.Transparent;
-      this.label_openFile.Location = new System.Drawing.Point(472, 668);
-      this.label_openFile.Name = "label_openFile";
-      this.label_openFile.Size = new System.Drawing.Size(40, 40);
-      this.label_openFile.TabIndex = 51;
-      this.label_openFile.Visible = false;
-      this.label_openFile.Click += new System.EventHandler(this.label_openFile_Click);
-      this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
-      this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
-      // 
       // MainForm
       // 
       this.AllowDrop = true;
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
-      this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.button_subtitle);
       this.Controls.Add(this.panel_neck);
       this.Controls.Add(this.button_dlOversea);
@@ -493,7 +479,6 @@
         private System.Windows.Forms.Button button_dlChina2;
         private System.Windows.Forms.Button button_localPlay;
         private System.Windows.Forms.Label label_help;
-        private System.Windows.Forms.Label label_openFile;
     }
 }
 

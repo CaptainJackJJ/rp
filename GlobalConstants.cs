@@ -21,7 +21,7 @@ namespace RPlayer
       static public readonly string strInfoMoreXmlLocalName = "infoMoreLocal.xml";
       static public readonly string strDownloadedFolderName = "download";
       static public readonly string strInfoItemFolderRemoteUrl = strInfoRemoteHost + "info";
-      static public readonly Color colorMainBG = Color.FromArgb(255, 66, 75, 92);
+      static public readonly Color colorMainBG = Color.FromArgb(255, 84, 175, 254);
       static public readonly Color colorNormalText = Color.Snow;
       static public readonly Color colorBtnSelected = Color.DodgerBlue;
       static public readonly string strMoreInfoText = "更多";

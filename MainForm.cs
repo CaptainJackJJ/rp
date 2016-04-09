@@ -268,8 +268,8 @@ namespace RPlayer
       m_listView_localLib.Font = new System.Drawing.Font("simsun", 9f);
       m_listView_localLib.BorderStyle = BorderStyle.None;
       m_listView_localLib.BackColor = Color.FromArgb(255, 252, 252, 252);
-      m_listView_localLib.DoubleClick += listView_localLib_DoubleClick;
 
+      m_listView_localLib.DoubleClick += listView_localLib_DoubleClick;
       m_listView_localLib.LargeImageList = m_imageListLarge;
 
       ShowPlistFolder();

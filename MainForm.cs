@@ -118,6 +118,11 @@ namespace RPlayer
     private AppUpdater m_updaterApp;
     //private InfoUpdater m_updaterInfo;
 
+    private ImageList m_imageListLarge;
+    private bool m_bShowFolder = true;
+    private string m_strThumbDir;
+    private readonly int m_nThumbWidth = 205;
+
     #endregion
 
     public MainForm(string[] args)
@@ -131,6 +136,8 @@ namespace RPlayer
       Directory.CreateDirectory(m_CoreTempPath);
       m_strDownloadedFolderUrl = m_tempPath + "\\" + GlobalConstants.Common.strDownloadedFolderName;
       Directory.CreateDirectory(m_strDownloadedFolderUrl);
+      m_strThumbDir = m_tempPath + "\\Thumb";
+      Directory.CreateDirectory(m_strThumbDir);
 
       //------------- only run one instance
       bool createdNew = true;
@@ -246,6 +253,11 @@ namespace RPlayer
       if (m_bHasArgus)
         SwitchPlayingForm(true);
 
+      m_imageListLarge = new ImageList();
+      m_imageListLarge.ImageSize = new Size(m_nThumbWidth, (int)(m_nThumbWidth / 1.77));
+      m_imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
+      listView_localLib.LargeImageList = m_imageListLarge;
+
       ShowPlistFolder();
       RefreshPlistFolder();
     }
@@ -253,6 +265,7 @@ namespace RPlayer
     delegate void ShowPlistFolderDel();
     public void ShowPlistFolder()
     {
+      m_bShowFolder = true;
       if (this.InvokeRequired)
       {
         ShowPlistFolderDel del = new ShowPlistFolderDel(ShowPlistFolder);
@@ -262,18 +275,15 @@ namespace RPlayer
       {
         listView_localLib.BeginUpdate();
         listView_localLib.Items.Clear();
+        m_imageListLarge.Images.Clear();
 
-        ImageList imageListLarge = new ImageList();
-        imageListLarge.ImageSize = new Size(205, 115);
-        imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
         const string strFolderImageKey = "folder.png";
-        imageListLarge.Images.Add(strFolderImageKey, Image.FromFile(Application.StartupPath + @"\pic\folder.png"));
-
-        listView_localLib.LargeImageList = imageListLarge;
+        m_imageListLarge.Images.Add(strFolderImageKey, Image.FromFile(Application.StartupPath + @"\pic\folder.png"));
 
         foreach (PlaylistFolder folder in Archive.playlist)
-        {
-          listView_localLib.Items.Add(folder.url, folder.folderName, strFolderImageKey);
+        {          
+          ListViewItem item = listView_localLib.Items.Add(folder.url, folder.folderName, strFolderImageKey);
+          item.Tag = folder;
         }
         listView_localLib.EndUpdate();
       }
@@ -359,6 +369,82 @@ namespace RPlayer
       m_formPlaylist.SortPlistFolder();
 
       ShowPlistFolder();
+    }
+
+    private void listView_localLib_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+    {
+      ListViewItem viewItem = e.Item;
+      //MessageBox.Show(viewItem.Text);
+    }
+
+    private void listView_localLib_DoubleClick(object sender, EventArgs e)
+    {
+      ListView view = sender as ListView;
+      ListView.SelectedListViewItemCollection viewItems = view.SelectedItems;
+      if (viewItems.Count != 0)
+      {
+        if (m_bShowFolder)
+          ShowPlistFiles(viewItems[0].Tag as PlaylistFolder);
+        else
+        {
+          if (viewItems[0].Index == 0)
+            RefreshPlistFolder();
+          else
+            StartPlay((viewItems[0].Tag as PlaylistFile).url);
+        }
+      }
+    }
+
+    delegate void ShowPlistFilesDel(PlaylistFolder folder);
+    private void ShowPlistFiles(PlaylistFolder folder)
+    {
+      m_bShowFolder = false;
+      if (this.InvokeRequired)
+      {
+        ShowPlistFilesDel del = new ShowPlistFilesDel(ShowPlistFiles);
+        this.Invoke(del, folder);
+      }
+      else
+      {
+        listView_localLib.BeginUpdate();
+        listView_localLib.Items.Clear();
+        m_imageListLarge.Images.Clear();
+
+        const string strBlackImageKey = "black.jpg";
+        m_imageListLarge.Images.Add(strBlackImageKey, Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
+
+        listView_localLib.Items.Add("返回", strBlackImageKey);
+
+        foreach (PlaylistFile file in folder.playlistFiles)
+        {
+          string strImageKey = strBlackImageKey;
+          string thumbUrl = m_strThumbDir + "\\" + file.fileName + ".jpg";
+          try
+          {
+            Image img = Image.FromFile(thumbUrl);
+            strImageKey = file.url;
+            m_imageListLarge.Images.Add(strImageKey, img);
+          }
+          catch
+          {
+            try
+            {
+              Core.GetMediaInfo(file.url, thumbUrl, 5, m_nThumbWidth);
+              Image img = Image.FromFile(thumbUrl);
+              strImageKey = file.url;
+              m_imageListLarge.Images.Add(strImageKey, img);
+            }
+            catch(Exception ex)
+            {
+              Core.WriteLog(Core.ELogType.error, "get thumb fail." + ex.ToString());
+            }
+          }
+
+          ListViewItem item = listView_localLib.Items.Add(file.url, file.fileName, strImageKey);
+          item.Tag = file;
+        }
+        listView_localLib.EndUpdate();
+      }
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -2369,11 +2455,6 @@ namespace RPlayer
       label_openFile.Image = Image.FromFile(Application.StartupPath + @"\pic\openFile.png");
     }
 
-    private void listView_localLib_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-    {
-      ListViewItem viewItem = e.Item;
-      //MessageBox.Show(viewItem.Text);
-    }
 
   }
 

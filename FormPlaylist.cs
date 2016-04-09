@@ -327,7 +327,7 @@ namespace RPlayer
       });
     }
 
-    private void SortPlistFile(PlaylistFolder folder)
+    public void SortPlistFile(PlaylistFolder folder)
     {
       folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
       {

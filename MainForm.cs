@@ -107,6 +107,7 @@ namespace RPlayer
     private Thread m_threadDoSomething;
     private Thread m_threadRefreshPlistFolder;
     private Thread m_threadRefreshThumbs;
+    private Thread m_threadRefreshPlistFiles;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
@@ -122,9 +123,11 @@ namespace RPlayer
     private ImageList m_imageListLarge;
     private bool m_bShowFolder = true;
     private string m_strThumbDir;
-    private readonly int m_nThumbWidth = 205;
+    private readonly int m_nThumbWidth = 204;
     PlaylistFolder m_curFolder;
 
+    ListViewNF m_listView_localLib;
+ 
     #endregion
 
     public MainForm(string[] args)
@@ -258,7 +261,16 @@ namespace RPlayer
       m_imageListLarge = new ImageList();
       m_imageListLarge.ImageSize = new Size(m_nThumbWidth, (int)(m_nThumbWidth / 1.77));
       m_imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
-      listView_localLib.LargeImageList = m_imageListLarge;
+
+      m_listView_localLib = new ListViewNF();
+      this.Controls.Add(m_listView_localLib);
+      m_listView_localLib.Location = new Point(7, 48);
+      m_listView_localLib.Size = new System.Drawing.Size(1010, 612);
+      m_listView_localLib.Font = new System.Drawing.Font("simsun", 9f);
+      m_listView_localLib.BorderStyle = BorderStyle.None;
+      m_listView_localLib.DoubleClick += listView_localLib_DoubleClick;
+
+      m_listView_localLib.LargeImageList = m_imageListLarge;
 
       ShowPlistFolder();
       RefreshPlistFolder();
@@ -275,8 +287,8 @@ namespace RPlayer
       }
       else
       {
-        listView_localLib.BeginUpdate();
-        listView_localLib.Items.Clear();
+        m_listView_localLib.BeginUpdate();
+        m_listView_localLib.Items.Clear();
         m_imageListLarge.Images.Clear();
 
         const string strFolderImageKey = "folder.png";
@@ -284,10 +296,10 @@ namespace RPlayer
 
         foreach (PlaylistFolder folder in Archive.playlist)
         {          
-          ListViewItem item = listView_localLib.Items.Add(folder.url, folder.folderName, strFolderImageKey);
+          ListViewItem item = m_listView_localLib.Items.Add(folder.url, folder.folderName, strFolderImageKey);
           item.Tag = folder;
         }
-        listView_localLib.EndUpdate();
+        m_listView_localLib.EndUpdate();
       }
     }
 
@@ -408,16 +420,19 @@ namespace RPlayer
       }
       else
       {
-        listView_localLib.BeginUpdate();
-        listView_localLib.Items.Clear();
+        m_listView_localLib.BeginUpdate();
+        m_listView_localLib.Items.Clear();
         m_imageListLarge.Images.Clear();
 
         const string strBlackImageKey = "black.jpg";
         m_imageListLarge.Images.Add(strBlackImageKey, Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
-        listView_localLib.Items.Add("返回", strBlackImageKey);
+        m_listView_localLib.Items.Add("返回", strBlackImageKey);
 
         foreach (PlaylistFile file in folder.playlistFiles)
         {
+          if (!File.Exists(file.url))
+            continue;
+
           string strImageKey = file.fileName;
           string thumbUrl = GetThumbUrl(strImageKey);
           Image img;
@@ -431,12 +446,91 @@ namespace RPlayer
           }
           m_imageListLarge.Images.Add(strImageKey, img);
 
-          ListViewItem item = listView_localLib.Items.Add(file.url, file.fileName, strImageKey);
+          ListViewItem item = m_listView_localLib.Items.Add(file.url, file.fileName, strImageKey);
           item.Tag = file;
         }
-        listView_localLib.EndUpdate();
+        m_listView_localLib.EndUpdate();
 
         RefreshThumbs(folder);
+        RefreshPlistFiles(folder);
+      }
+    }
+
+    private void RefreshPlistFiles(PlaylistFolder folder)
+    {
+      m_curFolder = folder;
+      m_threadRefreshPlistFiles = new Thread(ThreadRefreshPlistFiles);
+      m_threadRefreshPlistFiles.Start();
+    }
+
+    private void ThreadRefreshPlistFiles()
+    {
+      // delete no-exists file
+      List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
+      foreach (PlaylistFile file in m_curFolder.playlistFiles)
+      {
+        if (!File.Exists(file.url))
+        {
+          deleteFiles.Add(file);
+          continue;
+        }
+      }
+
+      foreach (PlaylistFile file in deleteFiles)
+      {
+        m_curFolder.playlistFiles.Remove(file);
+      }
+
+      // add new
+      string[] strFilesInCurrentDirectory = m_formPlaylist.GetMoives(m_curFolder.url);
+      foreach (string fileUrl in strFilesInCurrentDirectory)
+      {
+        if (m_curFolder.playlistFiles.Exists(e => e.url == fileUrl))
+          continue;
+
+         PlaylistFile file = new PlaylistFile();
+         file.url = fileUrl;
+         Uri uri = new Uri(fileUrl);
+         file.fileName = System.IO.Path.GetFileName(uri.LocalPath);
+         file.timeWatched = 0;
+         file.playState = PlaylistFile.enumPlayState.notPlayed;
+         string strImageKey = file.fileName;
+         string thumbUrl = GetThumbUrl(file.fileName);
+         MediaInfo info = new MediaInfo();
+         info = Core.GetMediaInfo(fileUrl, thumbUrl, 5, m_nThumbWidth);
+         file.duration = info.nDuration;
+         file.creationTime = File.GetCreationTime(fileUrl).ToString();
+         m_curFolder.playlistFiles.Add(file);
+         AddPlFile(file);
+      }
+      m_formPlaylist.SortPlistFile(m_curFolder);
+    }
+
+    delegate void AddPlFileDel(PlaylistFile file);
+    private void AddPlFile(PlaylistFile file)
+    {
+      if (this.InvokeRequired)
+      {
+        AddPlFileDel del = new AddPlFileDel(AddPlFile);
+        this.Invoke(del, file);
+      }
+      else
+      {
+        string strImageKey = file.fileName;
+        string thumbUrl = GetThumbUrl(strImageKey);
+        Image img;
+        try
+        {
+          img = Image.FromFile(thumbUrl);
+        }
+        catch
+        {
+          img = Image.FromFile(Application.StartupPath + @"\pic\black.jpg");
+        }
+        m_imageListLarge.Images.Add(strImageKey, img);
+
+        ListViewItem item = m_listView_localLib.Items.Add(file.url, file.fileName, strImageKey);
+        item.Tag = file;
       }
     }
 
@@ -465,16 +559,6 @@ namespace RPlayer
             Core.WriteLog(Core.ELogType.error, "get thumb fail." + ex.ToString());
           }
         }
-      }
-      //ReplaceThumbAll();
-    }
-
-    private void ReplaceThumbAll()
-    {
-      foreach (PlaylistFile file in m_curFolder.playlistFiles)
-      {
-        string strImageKey = file.fileName;
-        ReplaceThumb(strImageKey);
       }
     }
 
@@ -2518,6 +2602,28 @@ namespace RPlayer
     }
 
 
+  }
+
+  class ListViewNF : System.Windows.Forms.ListView
+  {
+    public ListViewNF()
+    {
+      //Activate double buffering
+      this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+      //Enable the OnNotifyMessage event so we get a chance to filter out 
+      // Windows messages before they get to the form's WndProc
+      this.SetStyle(ControlStyles.EnableNotifyMessage, true);
+    }
+
+    protected override void OnNotifyMessage(Message m)
+    {
+      //Filter out the WM_ERASEBKGND message
+      if (m.Msg != 0x14)
+      {
+        base.OnNotifyMessage(m);
+      }
+    }
   }
 
   public class RpCallback : ICoreCallback

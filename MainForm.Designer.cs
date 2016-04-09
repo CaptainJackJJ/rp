@@ -57,18 +57,16 @@
       this.button_localPlay = new System.Windows.Forms.Button();
       this.label_help = new System.Windows.Forms.Label();
       this.label_openFile = new System.Windows.Forms.Label();
-      this.listView_localLib = new System.Windows.Forms.ListView();
       this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
       // label_Play
       // 
       this.label_Play.BackColor = System.Drawing.Color.Transparent;
-      this.label_Play.Location = new System.Drawing.Point(437, 667);
+      this.label_Play.Location = new System.Drawing.Point(472, 667);
       this.label_Play.Name = "label_Play";
       this.label_Play.Size = new System.Drawing.Size(40, 40);
       this.label_Play.TabIndex = 19;
-      this.label_Play.Visible = false;
       this.label_Play.Click += new System.EventHandler(this.label_Play_Click);
       this.label_Play.MouseEnter += new System.EventHandler(this.label_Play_MouseEnter);
       this.label_Play.MouseLeave += new System.EventHandler(this.label_Play_MouseLeave);
@@ -409,25 +407,14 @@
       // label_openFile
       // 
       this.label_openFile.BackColor = System.Drawing.Color.Transparent;
-      this.label_openFile.Location = new System.Drawing.Point(462, 310);
+      this.label_openFile.Location = new System.Drawing.Point(472, 668);
       this.label_openFile.Name = "label_openFile";
-      this.label_openFile.Size = new System.Drawing.Size(100, 100);
+      this.label_openFile.Size = new System.Drawing.Size(40, 40);
       this.label_openFile.TabIndex = 51;
+      this.label_openFile.Visible = false;
       this.label_openFile.Click += new System.EventHandler(this.label_openFile_Click);
       this.label_openFile.MouseEnter += new System.EventHandler(this.label_openFile_MouseEnter);
       this.label_openFile.MouseLeave += new System.EventHandler(this.label_openFile_MouseLeave);
-      // 
-      // listView_localLib
-      // 
-      this.listView_localLib.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.listView_localLib.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.listView_localLib.Location = new System.Drawing.Point(7, 48);
-      this.listView_localLib.Name = "listView_localLib";
-      this.listView_localLib.Size = new System.Drawing.Size(1010, 612);
-      this.listView_localLib.TabIndex = 52;
-      this.listView_localLib.UseCompatibleStateImageBehavior = false;
-      this.listView_localLib.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.listView_localLib_ItemMouseHover);
-      this.listView_localLib.DoubleClick += new System.EventHandler(this.listView_localLib_DoubleClick);
       // 
       // MainForm
       // 
@@ -435,7 +422,6 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
-      this.Controls.Add(this.listView_localLib);
       this.Controls.Add(this.label_openFile);
       this.Controls.Add(this.button_subtitle);
       this.Controls.Add(this.panel_neck);
@@ -508,7 +494,6 @@
         private System.Windows.Forms.Button button_localPlay;
         private System.Windows.Forms.Label label_help;
         private System.Windows.Forms.Label label_openFile;
-        private System.Windows.Forms.ListView listView_localLib;
     }
 }
 

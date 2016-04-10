@@ -252,6 +252,8 @@ namespace RPlayer
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+      m_movieLibHandler.Dispose();
+
       if (m_threadDoSomething != null && m_threadDoSomething.IsAlive)
       {
         m_threadDoSomething.Abort(); // To avoid crash when user close app after lauch immediately

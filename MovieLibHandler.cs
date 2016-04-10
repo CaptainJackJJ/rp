@@ -78,6 +78,18 @@ namespace RPlayer
       m_formMain.ResumeLayout();
     }
 
+    public void Dispose()
+    {
+      if (m_threadRefreshPlistFolder != null)
+        m_threadRefreshPlistFolder.Abort();
+      if (m_threadRefreshThumbs != null)
+        m_threadRefreshThumbs.Abort();
+      if (m_threadRefreshPlistFiles != null)
+        m_threadRefreshPlistFiles.Abort();
+      if (m_threadRefreshPlistQuickLook != null)
+        m_threadRefreshPlistQuickLook.Abort();
+    }
+
     public void ShowLibUi(bool IsShow)
     {
       listViewNF.Visible = IsShow;

@@ -14,16 +14,6 @@ namespace RPlayer
     public FormPlistFileDeleteConfirm()
     {
       InitializeComponent();
-      textBox_deleteWarning.Text = UiLang.PlistFileDeleteWarning;
-      checkBox_deleteDirectly.Text = UiLang.checkBoxDeleteFileDirectly;
-    }
-
-
-    private void checkBox_deleteDirectly_CheckedChanged(object sender, EventArgs e)
-    {
-      Archive.deleteFileDirectly = true;
-      this.DialogResult = DialogResult.Yes;
-      this.Close();
     }
 
     private void button_yse_Click(object sender, EventArgs e)
@@ -35,6 +25,13 @@ namespace RPlayer
     private void button_no_Click(object sender, EventArgs e)
     {
       this.DialogResult = DialogResult.No;
+      this.Close();
+    }
+
+    private void button_deleteNoAsk_Click(object sender, EventArgs e)
+    {
+      Archive.deleteFileDirectly = true;
+      this.DialogResult = DialogResult.Yes;
       this.Close();
     }
   }

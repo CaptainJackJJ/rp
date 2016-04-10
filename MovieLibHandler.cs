@@ -21,8 +21,14 @@ namespace RPlayer
     ListViewNF listViewNF;
     FormBigThumb m_formBigThumb;
 
-    ContextMenuStrip m_contextMenuStrip_plist;
-    ToolStripMenuItem m_toolStripMenuItem_showPlistQuickLook;
+    ContextMenuStrip contextMenuStrip_plist;
+    ToolStripMenuItem toolStripMenuItem_showPlistQuickLook;
+    ToolStripMenuItem toolStripMenuItem_markPlistAsFinished;
+    ToolStripMenuItem toolStripMenuItem_deletePlistFile;
+    ToolStripMenuItem toolStripMenuItem_updatePlistFolders;
+    ToolStripMenuItem toolStripMenuItem_updatePlistFiles;
+    ToolStripMenuItem toolStripMenuItem_deletePlistFolder;
+    ToolStripMenuItem toolStripMenuItem_addPlistFolder;
 
     enum ePlistShowState {folder,file,quickLook}
     ePlistShowState m_ePlistShowState = ePlistShowState.folder;
@@ -35,6 +41,11 @@ namespace RPlayer
     Label labelAdd;
     Label labelDes;
     readonly Color m_ColorBg = Color.FromArgb(255, 252, 252, 252);
+    readonly Color m_colorFinished = Color.RosyBrown;
+    readonly Color m_colorPlayed = GlobalConstants.Common.colorMainBG;
+
+    private FormPlistFileDetails m_formPlistFileDetails;
+    private FormPlistFolderDetails m_formPlistFolderDetails;
     #endregion
 
     public MovieLibHandler(MainForm formOwner,Point posStart,Size size)
@@ -44,6 +55,8 @@ namespace RPlayer
       Directory.CreateDirectory(m_strThumbDir);
 
       m_formBigThumb = new FormBigThumb();
+      m_formPlistFileDetails = new FormPlistFileDetails();
+      m_formPlistFolderDetails = new FormPlistFolderDetails();
 
       InitializeComponent(posStart,size);
 
@@ -60,7 +73,7 @@ namespace RPlayer
       listViewNF.BorderStyle = BorderStyle.None;
       listViewNF.BackColor = m_ColorBg;
 
-      listViewNF.DoubleClick += listView_localLib_DoubleClick;
+      listViewNF.DoubleClick += listViewNF_DoubleClick;
       listViewNF.MouseDown += listViewNF_MouseDown;
       listViewNF.MouseMove += listViewNF_MouseMove;
       listViewNF.ItemMouseHover += listViewNF_ItemMouseHover;
@@ -71,11 +84,46 @@ namespace RPlayer
       imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
       listViewNF.LargeImageList = imageListLarge;
 
-      m_contextMenuStrip_plist = new ContextMenuStrip();
-      m_contextMenuStrip_plist.BackColor = m_ContextBackColor;
-      m_contextMenuStrip_plist.ForeColor = Color.White;
-      m_contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRendererPlist();
-      listViewNF.ContextMenuStrip = m_contextMenuStrip_plist;
+      contextMenuStrip_plist = new ContextMenuStrip();
+      contextMenuStrip_plist.BackColor = m_ContextBackColor;
+      contextMenuStrip_plist.ForeColor = Color.White;
+      contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRendererPlist();
+      listViewNF.ContextMenuStrip = contextMenuStrip_plist;
+
+      toolStripMenuItem_markPlistAsFinished = new ToolStripMenuItem();
+      toolStripMenuItem_markPlistAsFinished.Text = UiLang.markAsFinished;
+      toolStripMenuItem_markPlistAsFinished.ForeColor = Color.White;
+      toolStripMenuItem_markPlistAsFinished.Click += toolStripMenuItem_markPlistAsFinished_click;
+
+      toolStripMenuItem_deletePlistFile = new ToolStripMenuItem();
+      toolStripMenuItem_deletePlistFile.Text = UiLang.delete;
+      toolStripMenuItem_deletePlistFile.ForeColor = Color.White;
+      toolStripMenuItem_deletePlistFile.Click += toolStripMenuItem_deletePlistFile_click;
+
+      toolStripMenuItem_showPlistQuickLook = new ToolStripMenuItem();
+      toolStripMenuItem_showPlistQuickLook.Text = "快速预览";
+      toolStripMenuItem_showPlistQuickLook.ForeColor = Color.White;
+      toolStripMenuItem_showPlistQuickLook.Click += toolStripMenuItem_showPlistQuickLook_Click;
+
+      toolStripMenuItem_updatePlistFolders = new ToolStripMenuItem();
+      toolStripMenuItem_updatePlistFolders.Text = UiLang.update;
+      toolStripMenuItem_updatePlistFolders.ForeColor = Color.White;
+      toolStripMenuItem_updatePlistFolders.Click += toolStripMenuItem_updatePlistFolders_click;
+
+      toolStripMenuItem_updatePlistFiles = new ToolStripMenuItem();
+      toolStripMenuItem_updatePlistFiles.Text = UiLang.update;
+      toolStripMenuItem_updatePlistFiles.ForeColor = Color.White;
+      toolStripMenuItem_updatePlistFiles.Click += toolStripMenuItem_updatePlistFiles_click;
+
+      toolStripMenuItem_deletePlistFolder = new ToolStripMenuItem();
+      toolStripMenuItem_deletePlistFolder.Text = "移除";
+      toolStripMenuItem_deletePlistFolder.ForeColor = Color.White;
+      toolStripMenuItem_deletePlistFolder.Click += toolStripMenuItem_deletePlistFolder_click;
+
+      toolStripMenuItem_addPlistFolder = new ToolStripMenuItem();
+      toolStripMenuItem_addPlistFolder.Text = "添加影片目录";
+      toolStripMenuItem_addPlistFolder.ForeColor = Color.White;
+      toolStripMenuItem_addPlistFolder.Click += toolStripMenuItem_addPlistFolder_click;
 
       m_formMain.Controls.Add(listViewNF);
       m_formMain.ResumeLayout();
@@ -107,12 +155,67 @@ namespace RPlayer
         labelDes.Visible = IsShow;
     }
 
+    void HideDetailsForm()
+    {
+      m_formBigThumb.Hide();
+      m_formPlistFileDetails.Hide();
+      m_formPlistFolderDetails.Hide();
+    }
+
     void listViewNF_MouseLeave(object sender, EventArgs e)
     {
-      if (m_ePlistShowState == ePlistShowState.quickLook)
+      HideDetailsForm();
+    }
+
+    void DealQuickLookHover(string thumbName)
+    {
+      int thumbPercent = Convert.ToInt32(thumbName.Substring(thumbName.LastIndexOf("-") + 1));
+      string thumbUrl = GetThumbUrl(thumbName + "big");
+      if (!File.Exists(thumbUrl))
       {
-        m_formBigThumb.Hide();
+        try
+        {
+          Core.GetMediaInfo(m_curFile.url, thumbUrl, thumbPercent, m_formBigThumb.Width);
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "ThreadRefreshPlistQuickLook: " + ex.ToString());
+          return;
+        }
       }
+
+      int xOffset = 30;
+      int yOffset = 20;
+      if (Control.MousePosition.Y > Screen.PrimaryScreen.Bounds.Height / 2)
+        yOffset = -(m_formBigThumb.Height + yOffset);
+      if (Control.MousePosition.X > Screen.PrimaryScreen.Bounds.Width / 2)
+        xOffset = -(m_formBigThumb.Width + xOffset);
+
+      m_formBigThumb.Location = new Point(Control.MousePosition.X + xOffset, Control.MousePosition.Y + yOffset);
+      m_formBigThumb.ShowForm(thumbUrl);
+    }
+
+    void DealFileHover(PlaylistFile file)
+    {
+      m_formPlistFileDetails.Location = new Point(Control.MousePosition.X + 20, Control.MousePosition.Y + 20);
+      TimeSpan t = TimeSpan.FromSeconds(file.duration);
+      string strDuration = string.Format("{0:D2} : {1:D2} : {2:D2}",
+                    t.Hours, t.Minutes, t.Seconds);
+      string strTimeWatched = UiLang.labelDetailsFinished;
+      switch (file.playState)
+      {
+        case PlaylistFile.enumPlayState.notPlayed:
+          strTimeWatched = "00 : 00 : 00";
+          break;
+        case PlaylistFile.enumPlayState.played:
+          t = TimeSpan.FromSeconds(file.timeWatched);
+          strTimeWatched = string.Format("{0:D2} : {1:D2} : {2:D2}", t.Hours, t.Minutes, t.Seconds);
+          break;
+      }
+
+      string strCreationTime = file.creationTime;
+
+      m_formPlistFileDetails.ShowForm(strTimeWatched, strDuration, strCreationTime, file.url);
     }
 
     void listViewNF_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
@@ -122,31 +225,24 @@ namespace RPlayer
         if (e.Item.Index == 0)
           return;
 
-        string thumbName = e.Item.Tag as string;
-        int thumbPercent = Convert.ToInt32(thumbName.Substring(thumbName.LastIndexOf("-") + 1));
-        string thumbUrl = GetThumbUrl(thumbName + "big");
-        if (!File.Exists(thumbUrl))
-        {
-          try
-          {
-            Core.GetMediaInfo(m_curFile.url, thumbUrl, thumbPercent, m_formBigThumb.Width);
-          }
-          catch (Exception ex)
-          {
-            Core.WriteLog(Core.ELogType.error, "ThreadRefreshPlistQuickLook: " + ex.ToString());
-            return;
-          }
-        }
+        DealQuickLookHover(e.Item.Tag as string);
+      }
+      else if (m_ePlistShowState == ePlistShowState.file)
+      {
+        if (e.Item.Index == 0)
+          return;
+        PlaylistFile file = e.Item.Tag as PlaylistFile;
+        DealFileHover(file);        
+      }
+      else if (m_ePlistShowState == ePlistShowState.folder)
+      {
+        PlaylistFolder folder = e.Item.Tag as PlaylistFolder;
 
-        int xOffset = 30;
-        int yOffset = 20;
-        if (Control.MousePosition.Y > Screen.PrimaryScreen.Bounds.Height / 2)
-          yOffset = -(m_formBigThumb.Height + yOffset);
-        if (Control.MousePosition.X > Screen.PrimaryScreen.Bounds.Width / 2)
-          xOffset = -(m_formBigThumb.Width + xOffset);
+        m_formPlistFolderDetails.Location = new Point(Control.MousePosition.X + 20, Control.MousePosition.Y + 20);
 
-        m_formBigThumb.Location = new Point(Control.MousePosition.X + xOffset, Control.MousePosition.Y + yOffset);
-        m_formBigThumb.ShowForm(thumbUrl);
+        string strCreationTime = folder.creationTime;
+
+        m_formPlistFolderDetails.ShowForm(strCreationTime, folder.url);
       }
     }
 
@@ -155,10 +251,7 @@ namespace RPlayer
       ListViewItem item = listViewNF.GetItemAt(e.X, e.Y);
       if (item == null)
       {
-        if (m_ePlistShowState == ePlistShowState.quickLook)
-        {
-          m_formBigThumb.Hide();
-        }
+        HideDetailsForm();
       }
     }
 
@@ -166,7 +259,7 @@ namespace RPlayer
     {
       if (e.Button == MouseButtons.Right)
       {
-        m_contextMenuStrip_plist.Items.Clear();
+        contextMenuStrip_plist.Items.Clear();
         ListViewItem item = listViewNF.GetItemAt(e.X, e.Y);
 
         if (item != null)
@@ -174,15 +267,16 @@ namespace RPlayer
           switch (m_ePlistShowState)
           {
             case ePlistShowState.folder:
+              {
+                contextMenuStrip_plist.Items.Add(toolStripMenuItem_deletePlistFolder);
+              }
               break;
             case ePlistShowState.file:
               {
                 m_curFile = item.Tag as PlaylistFile;
-                m_toolStripMenuItem_showPlistQuickLook = new ToolStripMenuItem();
-                m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_showPlistQuickLook);
-                m_toolStripMenuItem_showPlistQuickLook.Text = "快速预览";
-                m_toolStripMenuItem_showPlistQuickLook.ForeColor = Color.White;
-                m_toolStripMenuItem_showPlistQuickLook.Click += m_toolStripMenuItem_showPlistQuickLook_Click;
+                contextMenuStrip_plist.Items.Add(toolStripMenuItem_showPlistQuickLook);
+                contextMenuStrip_plist.Items.Add(toolStripMenuItem_markPlistAsFinished);
+                contextMenuStrip_plist.Items.Add(toolStripMenuItem_deletePlistFile);
               }
               break;
             case ePlistShowState.quickLook:
@@ -194,8 +288,11 @@ namespace RPlayer
           switch (m_ePlistShowState)
           {
             case ePlistShowState.folder:
+              contextMenuStrip_plist.Items.Add(toolStripMenuItem_addPlistFolder);
+              contextMenuStrip_plist.Items.Add(toolStripMenuItem_updatePlistFolders);
               break;
             case ePlistShowState.file:
+              contextMenuStrip_plist.Items.Add(toolStripMenuItem_updatePlistFiles);
               break;
             case ePlistShowState.quickLook:
               break;
@@ -204,7 +301,72 @@ namespace RPlayer
       }
     }
 
-    void m_toolStripMenuItem_showPlistQuickLook_Click(object sender, EventArgs e)
+    private void toolStripMenuItem_markPlistAsFinished_click(object sender, EventArgs e)
+    {
+      foreach (ListViewItem item in listViewNF.SelectedItems)
+      {
+        item.ForeColor = m_colorFinished;
+        PlaylistFile file = item.Tag as PlaylistFile;
+        file.timeWatched = 0;
+        file.playState = PlaylistFile.enumPlayState.finished;
+      }
+    }
+
+    private void toolStripMenuItem_deletePlistFile_click(object sender, EventArgs e)
+    {
+      if (!Archive.deleteFileDirectly)
+      {
+        FormPlistFileDeleteConfirm confirm = new FormPlistFileDeleteConfirm();
+        if (confirm.ShowDialog() == DialogResult.No)
+          return;
+      }
+
+      foreach (ListViewItem item in listViewNF.SelectedItems)
+      {
+        PlaylistFile file = item.Tag as PlaylistFile;
+        string url = file.url;
+
+        try
+        {
+          File.Delete(url);
+        }
+        catch (System.IO.IOException)
+        {
+          MessageBox.Show(UiLang.msgAnotherProcessUsingTheFile);
+          return;
+        }
+
+        m_curFolder.playlistFiles.Remove(file);
+        listViewNF.Items.RemoveByKey(file.url);
+      }
+    }
+
+    private void toolStripMenuItem_updatePlistFiles_click(object sender, EventArgs e)
+    {
+      RefreshPlistFiles(m_curFolder);
+    }
+
+    private void toolStripMenuItem_updatePlistFolders_click(object sender, EventArgs e)
+    {
+      RefreshPlistFolder();
+    }
+
+    private void toolStripMenuItem_deletePlistFolder_click(object sender, EventArgs e)
+    {
+      foreach (ListViewItem item in listViewNF.SelectedItems)
+      {
+        PlaylistFolder folder = item.Tag as PlaylistFolder;
+        Archive.playlist.Remove(folder);
+        listViewNF.Items.RemoveByKey(folder.url);
+      }
+    }
+
+    private void toolStripMenuItem_addPlistFolder_click(object sender, EventArgs e)
+    {
+      addFolder();
+    }
+
+    void toolStripMenuItem_showPlistQuickLook_Click(object sender, EventArgs e)
     {
       ShowPlistQuickLook();
     }
@@ -413,7 +575,7 @@ namespace RPlayer
       return plistFolder;
     }
 
-    void labelAdd_Click(object sender, EventArgs e)
+    void addFolder()
     {
       FolderBrowserDialog f = new FolderBrowserDialog();
       DialogResult result = f.ShowDialog();
@@ -426,12 +588,19 @@ namespace RPlayer
           return;
         }
 
-        labelAdd.Visible = false;
-        labelDes.Visible = false;
+        if(labelAdd != null)
+          labelAdd.Visible = false;
+        if (labelDes != null)
+          labelDes.Visible = false;
         labelAdd = labelDes = null;
         AddFolderUrl(f.SelectedPath);
         ShowPlistFolder();
       }
+    }
+
+    void labelAdd_Click(object sender, EventArgs e)
+    {
+      addFolder();
     }
 
     private void RefreshPlistFolder()
@@ -537,13 +706,7 @@ namespace RPlayer
       }
     }
 
-    private void listView_localLib_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-    {
-      ListViewItem viewItem = e.Item;
-      //MessageBox.Show(viewItem.Text);
-    }
-
-    private void listView_localLib_DoubleClick(object sender, EventArgs e)
+    private void listViewNF_DoubleClick(object sender, EventArgs e)
     {
       ListView view = sender as ListView;
       ListView.SelectedListViewItemCollection viewItems = view.SelectedItems;
@@ -609,6 +772,10 @@ namespace RPlayer
 
         ListViewItem item = listViewNF.Items.Add(file.url, file.fileName, thumbUrl);
         item.Tag = file;
+        if (file.playState == PlaylistFile.enumPlayState.played)
+          item.ForeColor = m_colorPlayed;
+        else if(file.playState == PlaylistFile.enumPlayState.finished)
+          item.ForeColor = m_colorFinished;
       }
 
       if (m_curFile != null)
@@ -674,6 +841,9 @@ namespace RPlayer
     delegate void AddPlFileDel(PlaylistFile file);
     private void AddPlFile(PlaylistFile file)
     {
+      if(m_ePlistShowState != ePlistShowState.file)
+        return;
+
       if (listViewNF.InvokeRequired)
       {
         AddPlFileDel del = new AddPlFileDel(AddPlFile);

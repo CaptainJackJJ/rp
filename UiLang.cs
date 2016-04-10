@@ -273,7 +273,7 @@ Are you still want to delete it?";
 
       checkBoxUpdatePlistAfterLaunch = "播放器启动后自动更新播放列表";
       checkBoxAutoAddFolderToPlist = "自动将新播放的文件夹加入到播放列表中";
-      checkBoxDeleteFileDirectly = "直接删除播放列表中的文件，不用询问";
+      checkBoxDeleteFileDirectly = "直接删除，不用询问";
 
       btnPlaylist = "播放列表";
       btnHistory = "播放历史";

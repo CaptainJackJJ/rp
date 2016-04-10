@@ -13,6 +13,7 @@ namespace RPlayer
 {
   public partial class FormPlaylist : Form
   {
+    #region fields
     private MainForm m_mainForm;
     private bool m_bLeftEdgeMouseDown = false;
     private Point m_leftEdgeMouseDownLoc;
@@ -38,7 +39,9 @@ namespace RPlayer
     private Color m_colorPlayed = Color.SkyBlue;
 
     private bool m_bConstructed = false;
-    
+
+    #endregion
+
     public FormPlaylist(MainForm mainForm)
     {
       m_mainForm = mainForm;
@@ -307,50 +310,73 @@ namespace RPlayer
 
     static public void SortPlistFolder()
     {
+      if (Archive.playlist.Count < 2)
+        return;
+
       Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
       {
-        switch (Archive.sortBy)
+        try
         {
-          case Archive.enumSortBy.creationTimeUp:
-            return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime));
-          case Archive.enumSortBy.creationTimeDown:
-            return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime)) > 0 ? -1 : 1;
-          case Archive.enumSortBy.nameUp:
-            return folder1.folderName.CompareTo(folder2.folderName);
-          case Archive.enumSortBy.nameDown:
-            return folder1.folderName.CompareTo(folder2.folderName) > 0 ? -1 : 1;
-          case Archive.enumSortBy.pathLen:
-            return folder1.url.Length > folder2.url.Length ? 1 : -1;
-          default:
-            return 0;
+          switch (Archive.sortBy)
+          {
+            case Archive.enumSortBy.creationTimeUp:
+              return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime));
+            case Archive.enumSortBy.creationTimeDown:
+              return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.nameUp:
+              return folder1.folderName.CompareTo(folder2.folderName);
+            case Archive.enumSortBy.nameDown:
+              return folder1.folderName.CompareTo(folder2.folderName) > 0 ? -1 : 1;
+            case Archive.enumSortBy.pathLen:
+              return folder1.url.Length >= folder2.url.Length ? 1 : -1;
+            default:
+              return 0;
+          }
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "SortPlistFolder: " + ex.ToString());
+          return 0;
         }
       });
     }
 
     static public void SortPlistFile(PlaylistFolder folder)
     {
+      if (folder.playlistFiles.Count < 2)
+        return;
+
       folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
       {
-        switch (Archive.sortBy)
+        try
         {
-          case Archive.enumSortBy.creationTimeUp:
-            return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime));
-          case Archive.enumSortBy.creationTimeDown:
-            return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime)) > 0 ? -1 : 1;
-          case Archive.enumSortBy.nameUp:
-            return file1.fileName.CompareTo(file2.fileName);
-          case Archive.enumSortBy.nameDown:
-            return file1.fileName.CompareTo(file2.fileName) > 0 ? -1 : 1;;
-          case Archive.enumSortBy.durationUp:
-            return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration));
-          case Archive.enumSortBy.durationDown:
-            return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration)) > 0 ? -1 : 1;
-          case Archive.enumSortBy.pathLen:
-            return file1.url.Length > file1.url.Length ? 1 : -1;
-          default:
-            return 0;
+          switch (Archive.sortBy)
+          {
+            case Archive.enumSortBy.creationTimeUp:
+              return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime));
+            case Archive.enumSortBy.creationTimeDown:
+              return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.nameUp:
+              return file1.fileName.CompareTo(file2.fileName);
+            case Archive.enumSortBy.nameDown:
+              return file1.fileName.CompareTo(file2.fileName) > 0 ? -1 : 1; ;
+            case Archive.enumSortBy.durationUp:
+              return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration));
+            case Archive.enumSortBy.durationDown:
+              return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.pathLen:
+              return file1.url.Length >= file1.url.Length ? 1 : -1;
+            default:
+              return 0;
+          }
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "SortPlistFile: " + ex.ToString());
+          return 0;
         }
       });
+
     }
 
     private void SortPlist()

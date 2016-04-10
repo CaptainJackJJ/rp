@@ -78,6 +78,11 @@ namespace RPlayer
       m_formMain.ResumeLayout();
     }
 
+    public void Focus()
+    {
+      listViewNF.Focus();
+    }
+
     public void Dispose()
     {
       if (m_threadRefreshPlistFolder != null)
@@ -491,7 +496,7 @@ namespace RPlayer
 
     string GetBlackImageUrl()
     {
-      return Application.StartupPath + @"\pic\black.jpg";
+      return Application.StartupPath + @"\pic\back.png";
     }
 
     private void ShowPlistFiles(PlaylistFolder folder)

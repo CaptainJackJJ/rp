@@ -146,7 +146,7 @@
       // label_playWnd
       // 
       this.label_playWnd.AllowDrop = true;
-      this.label_playWnd.BackColor = System.Drawing.Color.Beige;
+      this.label_playWnd.BackColor = System.Drawing.Color.Transparent;
       this.label_playWnd.Location = new System.Drawing.Point(2, 46);
       this.label_playWnd.Name = "label_playWnd";
       this.label_playWnd.Size = new System.Drawing.Size(1020, 586);

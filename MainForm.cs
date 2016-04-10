@@ -108,6 +108,7 @@ namespace RPlayer
     private Thread m_threadRefreshPlistFolder;
     private Thread m_threadRefreshThumbs;
     private Thread m_threadRefreshPlistFiles;
+    private Thread m_threadRefreshPlistQuickLook;
 
     public Point m_lastMousePosInPlayWndAndDesktop = Point.Empty;
     public bool m_bCursorShowing = true;
@@ -124,9 +125,29 @@ namespace RPlayer
     private bool m_bShowFolder = true;
     private string m_strThumbDir;
     private readonly int m_nThumbWidth = 204;
+    private readonly int m_nThumbWidthBig = 500;
     PlaylistFolder m_curFolder;
+    PlaylistFile m_curFile;
 
     ListViewNF m_listView_localLib;
+
+    private ContextMenuStrip m_contextMenuStrip_plist;
+    private ToolStripMenuItem m_toolStripMenuItem_showPlistQuickLook;
+    private ToolStripMenuItem m_toolStripMenuItem_markPlistAsFinished;
+    private ToolStripMenuItem m_toolStripMenuItem_deletePlistFile;
+    private ToolStripMenuItem m_toolStripMenuItem_updatePlistFolder;
+    private ToolStripMenuItem m_toolStripMenuItem_deletePlistFolder;
+    private Color m_ContextBackColor = Color.SlateGray;
+
+    enum ePlistShowState
+    {
+      folder,
+      file,
+      quickLook
+    }
+    private ePlistShowState m_ePlistShowState = ePlistShowState.folder;
+
+    FormBigThumb m_formBigThumb;
  
     #endregion
 
@@ -257,6 +278,8 @@ namespace RPlayer
       if (m_bHasArgus)
         SwitchPlayingForm(true);
 
+      m_formBigThumb = new FormBigThumb();
+
       m_imageListLarge = new ImageList();
       m_imageListLarge.ImageSize = new Size(m_nThumbWidth, (int)(m_nThumbWidth / 1.77));
       m_imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
@@ -270,15 +293,258 @@ namespace RPlayer
       m_listView_localLib.BackColor = Color.FromArgb(255, 252, 252, 252);
 
       m_listView_localLib.DoubleClick += listView_localLib_DoubleClick;
+      m_listView_localLib.MouseDown += m_listView_localLib_MouseDown;
+      m_listView_localLib.MouseMove += m_listView_localLib_MouseMove;
+      m_listView_localLib.ItemMouseHover += m_listView_localLib_ItemMouseHover;
+      m_listView_localLib.MouseLeave += m_listView_localLib_MouseLeave;
+
       m_listView_localLib.LargeImageList = m_imageListLarge;
+
+      m_contextMenuStrip_plist = new ContextMenuStrip();
+      m_contextMenuStrip_plist.BackColor = m_ContextBackColor;
+      m_contextMenuStrip_plist.ForeColor = Color.White;
+      m_contextMenuStrip_plist.Renderer = new CustomToolStripProfessionalRendererPlist();
+      m_listView_localLib.ContextMenuStrip = m_contextMenuStrip_plist;
 
       ShowPlistFolder();
       RefreshPlistFolder();
     }
 
+    void m_listView_localLib_MouseLeave(object sender, EventArgs e)
+    {
+      if (m_ePlistShowState == ePlistShowState.quickLook)
+      {
+        m_formBigThumb.Hide();
+      }
+    }
+
+    void m_listView_localLib_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+    {
+      if (m_ePlistShowState == ePlistShowState.quickLook)
+      {
+        if (e.Item.Index == 0)
+          return;
+
+        string thumbName = e.Item.Tag as string;
+        int thumbPercent = Convert.ToInt32(thumbName.Substring(thumbName.LastIndexOf("-") + 1));
+        string thumbUrl = GetThumbUrl(thumbName + "big");
+        if (!File.Exists(thumbUrl))
+        {
+          try
+          {
+            Core.GetMediaInfo(m_curFile.url, thumbUrl, thumbPercent, m_formBigThumb.Width);
+          }
+          catch (Exception ex)
+          {
+            Core.WriteLog(Core.ELogType.error, "ThreadRefreshPlistQuickLook: " + ex.ToString());
+            return;
+          }
+        }
+
+        int xOffset = 30;
+        int yOffset = 20;
+        if (Control.MousePosition.Y > Screen.PrimaryScreen.Bounds.Height / 2)
+          yOffset = -(m_formBigThumb.Height + yOffset);
+        if (Control.MousePosition.X > Screen.PrimaryScreen.Bounds.Width / 2)
+          xOffset = -(m_formBigThumb.Width + xOffset);
+
+        m_formBigThumb.Location = new Point(Control.MousePosition.X + xOffset, Control.MousePosition.Y + yOffset);
+        m_formBigThumb.ShowForm(thumbUrl);
+      }
+      
+    }
+
+    void m_listView_localLib_MouseMove(object sender, MouseEventArgs e)
+    {
+      ListViewItem item = m_listView_localLib.GetItemAt(e.X, e.Y);
+      if (item == null)
+      {
+        if (m_ePlistShowState == ePlistShowState.quickLook)
+        {
+          m_formBigThumb.Hide();
+        }
+      }
+    }
+
+    void m_listView_localLib_MouseDown(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        m_contextMenuStrip_plist.Items.Clear();
+        ListViewItem item = m_listView_localLib.GetItemAt(e.X, e.Y);
+
+        if (item != null)
+        {
+          switch (m_ePlistShowState)
+          {
+            case ePlistShowState.folder:
+              break;
+            case ePlistShowState.file:
+              {
+                m_curFile = item.Tag as PlaylistFile;
+                m_toolStripMenuItem_showPlistQuickLook = new ToolStripMenuItem();
+                m_contextMenuStrip_plist.Items.Add(m_toolStripMenuItem_showPlistQuickLook);
+                m_toolStripMenuItem_showPlistQuickLook.Text = "快速预览";
+                m_toolStripMenuItem_showPlistQuickLook.ForeColor = Color.White;
+                m_toolStripMenuItem_showPlistQuickLook.Click += m_toolStripMenuItem_showPlistQuickLook_Click;
+              }
+              break;
+            case ePlistShowState.quickLook:
+              break;
+          }
+        }
+        else
+        {
+          switch (m_ePlistShowState)
+          {
+            case ePlistShowState.folder:
+              break;
+            case ePlistShowState.file:
+              break;
+            case ePlistShowState.quickLook:
+              break;
+          }
+        }
+      }
+    }
+
+    void m_toolStripMenuItem_showPlistQuickLook_Click(object sender, EventArgs e)
+    {
+      ShowPlistQuickLook();
+    }
+
+    delegate void ShowPlistQuickLookDel();
+    private void ShowPlistQuickLook()
+    {
+      m_ePlistShowState = ePlistShowState.quickLook;
+
+      if (this.InvokeRequired)
+      {
+        ShowPlistQuickLookDel del = new ShowPlistQuickLookDel(ShowPlistQuickLook);
+        this.Invoke(del);
+      }
+      else
+      {
+        m_listView_localLib.BeginUpdate();
+        m_listView_localLib.Items.Clear();
+        m_imageListLarge.Images.Clear();
+
+        const string strBlackImageKey = "black.jpg";
+        m_imageListLarge.Images.Add(strBlackImageKey, Image.FromFile(Application.StartupPath + @"\pic\black.jpg"));
+        m_listView_localLib.Items.Add("返回", strBlackImageKey);
+
+        string thumbUrl;
+        Image img;
+        for (int i = 1; i <= 100; i += 1)
+        {
+          string thumbName = m_curFile.fileName;
+          thumbName += "-" + i.ToString();
+          thumbUrl = GetThumbUrl(thumbName);
+          try
+          {
+            img = Image.FromFile(thumbUrl);
+          }
+          catch
+          {
+            img = Image.FromFile(Application.StartupPath + @"\pic\black.jpg");
+          }
+          m_imageListLarge.Images.Add(thumbUrl, img);
+
+          ListViewItem item = m_listView_localLib.Items.Add(thumbUrl, thumbName, thumbUrl);
+          item.Tag = thumbName;
+        }
+
+        m_listView_localLib.EndUpdate();
+
+        RefreshPlistQuickLook();
+      }
+    }
+
+    private void RefreshPlistQuickLook()
+    {
+      m_threadRefreshPlistQuickLook = new Thread(ThreadRefreshPlistQuickLook);
+      m_threadRefreshPlistQuickLook.Start();
+    }
+
+    delegate void ReplacePlQuickLookThumbDel(string imageKey);
+    private void ReplacePlQuickLookThumb(string imageKey)
+    {
+      if (this.InvokeRequired)
+      {
+        ReplacePlQuickLookThumbDel del = new ReplacePlQuickLookThumbDel(ReplacePlQuickLookThumb);
+        this.Invoke(del, imageKey);
+      }
+      else
+      {
+        Image img;
+        try
+        {
+          img = Image.FromFile(imageKey);
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "ReplaceThumb fail." + ex.ToString());
+          return;
+        }
+        m_imageListLarge.Images.RemoveByKey(imageKey);
+        m_imageListLarge.Images.Add(imageKey, img);
+      }
+    }
+
+    private void ThreadRefreshPlistQuickLook()
+    {      
+      string thumbUrl;
+      for(int i = 1; i <= 100; i += 1 )
+      {
+        string thumbName = m_curFile.fileName;
+        thumbName += "-" + i.ToString();
+        thumbUrl = GetThumbUrl(thumbName);
+        if(!File.Exists(thumbUrl))
+        {
+          try
+          {
+            Core.GetMediaInfo(m_curFile.url, thumbUrl, i, m_nThumbWidth);
+          }
+          catch(Exception ex)
+          {
+            Core.WriteLog(Core.ELogType.error, "ThreadRefreshPlistQuickLook: " + ex.ToString());
+            continue;
+          }
+          ReplacePlQuickLookThumb(thumbUrl);
+        }       
+      }
+    }
+
+    delegate void AddPlQuickLookDel(string thumbName,string thumbUrl);
+    private void AddPlQuickLookFile(string thumbName, string thumbUrl)
+    {
+      if (this.InvokeRequired)
+      {
+        AddPlQuickLookDel del = new AddPlQuickLookDel(AddPlQuickLookFile);
+        this.Invoke(del, thumbName,thumbUrl);
+      }
+      else
+      {
+        Image img;
+        try
+        {
+          img = Image.FromFile(thumbUrl);
+        }
+        catch
+        {
+          img = Image.FromFile(Application.StartupPath + @"\pic\black.jpg");
+        }
+        m_imageListLarge.Images.Add(thumbUrl, img);
+
+        ListViewItem item = m_listView_localLib.Items.Add(thumbUrl, thumbName, thumbUrl);
+        item.Tag = thumbName;
+      }
+    }
+
     delegate void ShowPlistFolderDel();
     public void ShowPlistFolder()
     {
+      m_ePlistShowState = ePlistShowState.folder;
       m_bShowFolder = true;
       if (this.InvokeRequired)
       {
@@ -412,6 +678,7 @@ namespace RPlayer
     delegate void ShowPlistFilesDel(PlaylistFolder folder);
     private void ShowPlistFiles(PlaylistFolder folder)
     {
+      m_ePlistShowState = ePlistShowState.file;
       m_bShowFolder = false;
       if (this.InvokeRequired)
       {
@@ -562,9 +829,9 @@ namespace RPlayer
       }
     }
 
-    private string GetThumbUrl(string imageKey)
+    private string GetThumbUrl(string thumbName)
     {
-      return m_strThumbDir + "\\" + imageKey + ".jpg";
+      return m_strThumbDir + "\\" + thumbName + ".jpg";
     }
 
     delegate void ReplaceThumbDel(string imageKey);
@@ -2578,28 +2845,6 @@ namespace RPlayer
       label_help.ForeColor = Color.DodgerBlue;
     }
 
-  }
-
-  class ListViewNF : System.Windows.Forms.ListView
-  {
-    public ListViewNF()
-    {
-      //Activate double buffering
-      this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-
-      //Enable the OnNotifyMessage event so we get a chance to filter out 
-      // Windows messages before they get to the form's WndProc
-      this.SetStyle(ControlStyles.EnableNotifyMessage, true);
-    }
-
-    protected override void OnNotifyMessage(Message m)
-    {
-      //Filter out the WM_ERASEBKGND message
-      if (m.Msg != 0x14)
-      {
-        base.OnNotifyMessage(m);
-      }
-    }
   }
 
   public class RpCallback : ICoreCallback

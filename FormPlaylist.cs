@@ -175,7 +175,7 @@ namespace RPlayer
         UpdatePlayListView(true, "");
     }
 
-    public string[] GetMoives(string folderUrl)
+    static public string[] GetMoives(string folderUrl)
     {
       try
       {
@@ -305,7 +305,7 @@ namespace RPlayer
       return curPlistFolder;
     }
 
-    public void SortPlistFolder()
+    static public void SortPlistFolder()
     {
       Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
       {
@@ -327,7 +327,7 @@ namespace RPlayer
       });
     }
 
-    public void SortPlistFile(PlaylistFolder folder)
+    static public void SortPlistFile(PlaylistFolder folder)
     {
       folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
       {

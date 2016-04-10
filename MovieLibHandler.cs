@@ -496,7 +496,7 @@ namespace RPlayer
 
     string GetBlackImageUrl()
     {
-      return Application.StartupPath + @"\pic\back.png";
+      return Application.StartupPath + @"\pic\backToFolder.png";
     }
 
     private void ShowPlistFiles(PlaylistFolder folder)

@@ -215,7 +215,7 @@ namespace RPlayer
       if (m_bHasArgus)
       {
         //m_infoSectionTorrentUI.ShowSection(false);
-        StartPlay(args[0]);
+        StartPlay(args[0],-1);
       }
 
       m_bConstructed = true;
@@ -358,7 +358,7 @@ namespace RPlayer
         Core.GetMediaInfo("D:\\test\\demo.mp4", "D:\\test\\demo1.jpg", 10,208);
 
         if (m_strPlayUrlAfterInit != "")
-          StartPlay(m_strPlayUrlAfterInit);
+          StartPlay(m_strPlayUrlAfterInit,-1);
       }
     }
 
@@ -1136,7 +1136,7 @@ namespace RPlayer
       if(Archive.histroy.Count > 0)
       {
         HistroyItem item = Archive.histroy[Archive.histroy.Count - 1];
-        StartPlay(item.url);
+        StartPlay(item.url,-1);
       }
       else
       {
@@ -1160,7 +1160,7 @@ namespace RPlayer
 
       if (openFileDialog1.ShowDialog() == DialogResult.OK)
       {
-        StartPlay(openFileDialog1.FileName);
+        StartPlay(openFileDialog1.FileName,-1);
       }
     }
 
@@ -1301,11 +1301,11 @@ namespace RPlayer
       if (Core.IsPlaying())
       {
         StopPlay();
-        StartPlay(FileList[0]);
+        StartPlay(FileList[0],-1);
       }
       else
       {
-        StartPlay(FileList[0]);
+        StartPlay(FileList[0],-1);
       }
     }
 
@@ -1606,7 +1606,7 @@ namespace RPlayer
             index++;
           if(index < m_curPlistFolder.playlistFiles.Count && index > -1)
           {
-            return StartPlay(m_curPlistFolder.playlistFiles[index].url);
+            return StartPlay(m_curPlistFolder.playlistFiles[index].url,-1);
           }
           // If no pre or next item and in repeat all mode
           if(Archive.repeatPlayback == Archive.enumRepeatPlayback.all) 
@@ -1616,7 +1616,7 @@ namespace RPlayer
               nPlayIndex = m_curPlistFolder.playlistFiles.Count - 1;
             else
               nPlayIndex = 0;
-            return StartPlay(m_curPlistFolder.playlistFiles[nPlayIndex].url);
+            return StartPlay(m_curPlistFolder.playlistFiles[nPlayIndex].url,-1);
           }
         }
       }
@@ -1812,7 +1812,7 @@ namespace RPlayer
       }
     }
 
-    public bool StartPlay(string url)
+    public bool StartPlay(string url, double nStartTime)
     {
       url = url.Replace("\\\\", "smb://");
       if(!m_bPlayerInited)
@@ -1836,7 +1836,6 @@ namespace RPlayer
         return false;
       }
       
-      double nStartTime = 0;
       int nPreSeletedAudioIndex = -1;
       int nPreSeletedSubtitleIndex = -1;
       bool bPreSeletedSubtitleVisible = true;
@@ -1844,8 +1843,9 @@ namespace RPlayer
       {
         HistroyItem item = Archive.histroy[i];
         if (item.url == url)
-        { 
-          nStartTime = item.timeWatched;
+        {
+          if (nStartTime == -1)
+            nStartTime = item.timeWatched;
           nPreSeletedAudioIndex = item.audioIndex;
           nPreSeletedSubtitleIndex = item.subtitleIndex;
           bPreSeletedSubtitleVisible = item.subtitleVisible;
@@ -2067,7 +2067,7 @@ namespace RPlayer
       {
         if (m_bIsPlaying)
           StopPlay();
-        StartPlay(url);
+        StartPlay(url,-1);
       }
     }
 
@@ -2097,7 +2097,7 @@ namespace RPlayer
             SwitchPlayingForm(false);
             break;
           case Archive.enumRepeatPlayback.one:
-            StartPlay(m_strCurPlayingUrl);
+            StartPlay(m_strCurPlayingUrl,-1);
             break;
           case Archive.enumRepeatPlayback.all:
              PlayPreNext(false);    

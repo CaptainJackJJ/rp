@@ -169,7 +169,7 @@ namespace RPlayer
 
     void DealQuickLookHover(string thumbName)
     {
-      int thumbPercent = Convert.ToInt32(thumbName.Substring(thumbName.LastIndexOf("-") + 1));
+      int thumbPercent = GetThumbNum(thumbName);
       string thumbUrl = GetThumbUrl(thumbName + "big");
       if (!File.Exists(thumbUrl))
       {
@@ -453,6 +453,11 @@ namespace RPlayer
       return GetThumbUrl(thumbName);
     }
 
+    int GetThumbNum(string thumbName)
+    {
+      return Convert.ToInt32(thumbName.Substring(thumbName.LastIndexOf("-") + 1));
+    }
+
     private void ThreadRefreshPlistQuickLook()
     {
       if (m_curFile == null)
@@ -729,7 +734,7 @@ namespace RPlayer
               }
               else
               {
-                m_formMain.StartPlay((viewItems[0].Tag as PlaylistFile).url);
+                m_formMain.StartPlay((viewItems[0].Tag as PlaylistFile).url,-1);
               }
             }
             break;
@@ -740,6 +745,13 @@ namespace RPlayer
                 if (m_threadRefreshPlistQuickLook != null)
                   m_threadRefreshPlistQuickLook.Abort();
                 ShowPlistFiles(m_curFolder);
+              }
+              else
+              {
+                string thumbName = viewItems[0].Tag as string;
+                int thumbPercent = GetThumbNum(thumbName);
+                double startTime = m_curFile.duration * thumbPercent / 100;
+                m_formMain.StartPlay(m_curFile.url, startTime);
               }
             }
             break;

@@ -682,7 +682,7 @@ namespace RPlayer
       if(viewItems.Count != 0)
       {
         HistroyItem item = viewItems[0].Tag as HistroyItem;
-        m_mainForm.StartPlay(item.url);
+        m_mainForm.StartPlay(item.url,-1);
       }
 
     }
@@ -703,7 +703,7 @@ namespace RPlayer
       if (node.Parent == null)
         return;
       PlaylistFile file = (PlaylistFile)node.Tag;
-      m_mainForm.StartPlay(file.url);
+      m_mainForm.StartPlay(file.url,-1);
     }
 
     private void treeView_playlist_MouseMove(object sender, MouseEventArgs e)

@@ -202,11 +202,15 @@ namespace RPlayer
 
       AddBackItem();
 
+      if (m_curFile == null)
+        return;
+      string fileName = m_curFile.fileName;
+
       Image img;
       for (int i = 1; i <= 100; ++i)
       {
         string thumbName;
-        string thumbUrl = GetThumbUrl(m_curFile.fileName, i, out thumbName);
+        string thumbUrl = GetThumbUrl(fileName, i, out thumbName);
         try
         {
           img = Image.FromFile(thumbUrl);
@@ -220,7 +224,7 @@ namespace RPlayer
         ListViewItem item = listViewNF.Items.Add(thumbUrl, thumbName, thumbUrl);
         item.Tag = thumbName;
       }
-
+      listViewNF.EnsureVisible(0);
       listViewNF.EndUpdate();
 
       RefreshPlistQuickLook();
@@ -264,16 +268,20 @@ namespace RPlayer
     }
 
     private void ThreadRefreshPlistQuickLook()
-    {      
+    {
+      if (m_curFile == null)
+        return;
+      string fileName = m_curFile.fileName;
+      string fileUrl = m_curFile.url;
       for (int i = 1; i <= 100; i += 1)
       {
         string thumbName;
-        string thumbUrl = GetThumbUrl(m_curFile.fileName, i, out thumbName);
+        string thumbUrl = GetThumbUrl(fileName, i, out thumbName);
         if (!File.Exists(thumbUrl))
         {
           try
           {
-            Core.GetMediaInfo(m_curFile.url, thumbUrl, i, m_nThumbWidth);
+            Core.GetMediaInfo(fileUrl, thumbUrl, i, m_nThumbWidth);
           }
           catch (Exception ex)
           {
@@ -292,6 +300,7 @@ namespace RPlayer
 
     public void ShowPlistFolder()
     {
+      m_curFile = null;
       m_ePlistShowState = ePlistShowState.folder;
 
       listViewNF.BeginUpdate();
@@ -309,6 +318,13 @@ namespace RPlayer
         item.Tag = folder;
       }
       listViewNF.EndUpdate();
+
+      if(m_curFolder != null)
+      {
+        ListViewItem curItem = listViewNF.Items[listViewNF.Items.IndexOfKey(m_curFolder.url)];
+        curItem.Selected = true;
+        listViewNF.EnsureVisible(curItem.Index);
+      }
 
       RefreshPlistFolder();
     }
@@ -497,6 +513,14 @@ namespace RPlayer
         ListViewItem item = listViewNF.Items.Add(file.url, file.fileName, thumbUrl);
         item.Tag = file;
       }
+
+      if (m_curFile != null)
+      {
+        ListViewItem curItem = listViewNF.Items[listViewNF.Items.IndexOfKey(m_curFile.url)];
+        curItem.Selected = true;
+        listViewNF.EnsureVisible(curItem.Index);
+      }
+
       listViewNF.EndUpdate();
 
       RefreshThumbs(folder);

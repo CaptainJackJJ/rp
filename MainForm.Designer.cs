@@ -383,7 +383,7 @@
       this.button_localPlay.Name = "button_localPlay";
       this.button_localPlay.Size = new System.Drawing.Size(115, 40);
       this.button_localPlay.TabIndex = 48;
-      this.button_localPlay.Text = "本地播放";
+      this.button_localPlay.Text = "本地影库";
       this.button_localPlay.UseVisualStyleBackColor = false;
       this.button_localPlay.Click += new System.EventHandler(this.button_localPlay_Click);
       // 

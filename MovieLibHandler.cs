@@ -720,7 +720,13 @@ namespace RPlayer
           case ePlistShowState.file:
             {
               if (viewItems[0].Index == 0)
+              {
+                if (m_threadRefreshThumbs != null)
+                  m_threadRefreshThumbs.Abort();
+                if (m_threadRefreshPlistFiles != null)
+                  m_threadRefreshPlistFiles.Abort();
                 ShowPlistFolder();
+              }
               else
               {
                 m_formMain.StartPlay((viewItems[0].Tag as PlaylistFile).url);
@@ -730,7 +736,11 @@ namespace RPlayer
           case ePlistShowState.quickLook:
             {
               if (viewItems[0].Index == 0)
+              {
+                if (m_threadRefreshPlistQuickLook != null)
+                  m_threadRefreshPlistQuickLook.Abort();
                 ShowPlistFiles(m_curFolder);
+              }
             }
             break;
         }
@@ -784,7 +794,7 @@ namespace RPlayer
         curItem.Selected = true;
         listViewNF.EnsureVisible(curItem.Index);
       }
-
+      listViewNF.EnsureVisible(0);
       listViewNF.EndUpdate();
 
       RefreshThumbs(folder);

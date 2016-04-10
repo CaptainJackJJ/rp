@@ -32,6 +32,9 @@ namespace RPlayer
     private Thread m_threadRefreshPlistFiles;
     private Thread m_threadRefreshPlistQuickLook;
     MainForm m_formMain;
+    Label labelAdd;
+    Label labelDes;
+    readonly Color m_ColorBg = Color.FromArgb(255, 252, 252, 252);
     #endregion
 
     public MovieLibHandler(MainForm formOwner,Point posStart,Size size)
@@ -55,7 +58,7 @@ namespace RPlayer
       listViewNF.Size = size;
       listViewNF.Font = new System.Drawing.Font("simsun", 9f);
       listViewNF.BorderStyle = BorderStyle.None;
-      listViewNF.BackColor = Color.FromArgb(255, 252, 252, 252);
+      listViewNF.BackColor = m_ColorBg;
 
       listViewNF.DoubleClick += listView_localLib_DoubleClick;
       listViewNF.MouseDown += listViewNF_MouseDown;
@@ -98,6 +101,10 @@ namespace RPlayer
     public void ShowLibUi(bool IsShow)
     {
       listViewNF.Visible = IsShow;
+      if (labelAdd != null)
+        labelAdd.Visible = IsShow;
+      if (labelDes != null)
+        labelDes.Visible = IsShow;
     }
 
     void listViewNF_MouseLeave(object sender, EventArgs e)
@@ -315,10 +322,47 @@ namespace RPlayer
       return Application.StartupPath + @"\pic\folder.png";
     }
 
+    void ShowAddBtn()
+    {
+      labelAdd = new Label();
+      labelAdd.AutoSize = false;
+      labelAdd.Size = new Size(90, 90);
+      labelAdd.BackColor = Color.Transparent;
+      labelAdd.Visible = true;
+      labelAdd.Image = Image.FromFile(Application.StartupPath + @"\pic\addFolder.png");
+      labelAdd.Location
+        = new Point(m_formMain.Width / 2 - labelAdd.Width / 2,
+          m_formMain.Height / 2 - labelAdd.Height);
+      labelAdd.Cursor = Cursors.Hand;
+      labelAdd.Click += labelAdd_Click;
+      labelAdd.MouseEnter += labelAdd_MouseEnter;
+      labelAdd.MouseLeave += labelAdd_MouseLeave;
+
+      labelDes = new Label();
+      labelDes.BackColor = m_ColorBg;
+      labelDes.ForeColor = GlobalConstants.Common.colorMainBG;
+      labelDes.AutoSize = true;
+      labelDes.Font = new Font("simsun", 10f, FontStyle.Bold);
+      labelDes.Text = "添加视频文件夹到影库中!";
+      labelDes.Location = new Point(labelAdd.Location.X - 40,
+        labelAdd.Location.Y + labelAdd.Height + 15);
+
+      m_formMain.Controls.Add(labelDes);
+      m_formMain.Controls.Add(labelAdd);
+      labelAdd.BringToFront();
+      labelDes.BringToFront();
+    }
+
     public void ShowPlistFolder()
     {
       m_curFile = null;
       m_ePlistShowState = ePlistShowState.folder;
+
+      if (Archive.playlist.Count == 0)
+      {
+        ShowAddBtn();
+        return;
+      }
 
       listViewNF.BeginUpdate();
       listViewNF.Items.Clear();
@@ -344,6 +388,50 @@ namespace RPlayer
       }
 
       RefreshPlistFolder();
+    }
+
+    void labelAdd_MouseLeave(object sender, EventArgs e)
+    {
+      labelAdd.Image = Image.FromFile(Application.StartupPath + @"\pic\addFolder.png");
+    }
+
+    void labelAdd_MouseEnter(object sender, EventArgs e)
+    {
+      labelAdd.Image = Image.FromFile(Application.StartupPath + @"\pic\addFolderFocus.png");
+    }
+
+    PlaylistFolder AddFolderUrl(string folderUrl)
+    {
+      PlaylistFolder plistFolder = new PlaylistFolder();
+      plistFolder.url = folderUrl;
+      DirectoryInfo dir = new DirectoryInfo(folderUrl);
+      plistFolder.folderName = dir.Name;
+      plistFolder.expand = true;
+      plistFolder.creationTime = dir.CreationTime.ToString();
+      plistFolder.playlistFiles = new List<PlaylistFile>();
+      Archive.playlist.Add(plistFolder);
+      return plistFolder;
+    }
+
+    void labelAdd_Click(object sender, EventArgs e)
+    {
+      FolderBrowserDialog f = new FolderBrowserDialog();
+      DialogResult result = f.ShowDialog();
+      if (result == DialogResult.OK)
+      {
+        string[] drives = System.Environment.GetLogicalDrives();
+        if (drives.Contains(f.SelectedPath))
+        {
+          MessageBox.Show("请不要直接添加系统根目录(例如C盘D盘)，请添加包含影片的文件夹！");
+          return;
+        }
+
+        labelAdd.Visible = false;
+        labelDes.Visible = false;
+        labelAdd = labelDes = null;
+        AddFolderUrl(f.SelectedPath);
+        ShowPlistFolder();
+      }
     }
 
     private void RefreshPlistFolder()
@@ -424,15 +512,7 @@ namespace RPlayer
         if (strFilesInCurrentDirectory.Length < 1)
           continue;
 
-        PlaylistFolder plistFolder = new PlaylistFolder();
-        plistFolder.url = subFolder;
-        DirectoryInfo dir = new DirectoryInfo(subFolder);
-        plistFolder.folderName = dir.Name;
-        plistFolder.expand = true;
-        plistFolder.creationTime = dir.CreationTime.ToString();
-        plistFolder.playlistFiles = new List<PlaylistFile>();
-        Archive.playlist.Add(plistFolder);
-        AddPlFolder(plistFolder);
+        AddPlFolder(AddFolderUrl(subFolder));
       }
 
       // sort new

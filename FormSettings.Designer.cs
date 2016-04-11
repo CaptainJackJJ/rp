@@ -190,7 +190,7 @@
       this.button_setAsDefaultPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_setAsDefaultPlayer.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_setAsDefaultPlayer.ForeColor = System.Drawing.Color.White;
-      this.button_setAsDefaultPlayer.Location = new System.Drawing.Point(25, 116);
+      this.button_setAsDefaultPlayer.Location = new System.Drawing.Point(25, 75);
       this.button_setAsDefaultPlayer.Name = "button_setAsDefaultPlayer";
       this.button_setAsDefaultPlayer.Size = new System.Drawing.Size(176, 24);
       this.button_setAsDefaultPlayer.TabIndex = 38;
@@ -222,7 +222,7 @@
       this.button_snapSavePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_snapSavePath.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_snapSavePath.ForeColor = System.Drawing.Color.White;
-      this.button_snapSavePath.Location = new System.Drawing.Point(326, 67);
+      this.button_snapSavePath.Location = new System.Drawing.Point(326, 26);
       this.button_snapSavePath.Name = "button_snapSavePath";
       this.button_snapSavePath.Size = new System.Drawing.Size(75, 24);
       this.button_snapSavePath.TabIndex = 38;
@@ -235,7 +235,7 @@
       this.textBox_snapSavePath.BackColor = System.Drawing.Color.DimGray;
       this.textBox_snapSavePath.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.textBox_snapSavePath.ForeColor = System.Drawing.Color.White;
-      this.textBox_snapSavePath.Location = new System.Drawing.Point(26, 68);
+      this.textBox_snapSavePath.Location = new System.Drawing.Point(26, 27);
       this.textBox_snapSavePath.Multiline = true;
       this.textBox_snapSavePath.Name = "textBox_snapSavePath";
       this.textBox_snapSavePath.ReadOnly = true;
@@ -251,17 +251,18 @@
       this.comboBox_uiLang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboBox_uiLang.ForeColor = System.Drawing.Color.White;
       this.comboBox_uiLang.FormattingEnabled = true;
-      this.comboBox_uiLang.Location = new System.Drawing.Point(107, 7);
+      this.comboBox_uiLang.Location = new System.Drawing.Point(107, 141);
       this.comboBox_uiLang.Name = "comboBox_uiLang";
       this.comboBox_uiLang.Size = new System.Drawing.Size(130, 22);
       this.comboBox_uiLang.TabIndex = 4;
+      this.comboBox_uiLang.Visible = false;
       // 
       // label_snapSavePath
       // 
       this.label_snapSavePath.AutoSize = true;
       this.label_snapSavePath.BackColor = System.Drawing.Color.Transparent;
       this.label_snapSavePath.ForeColor = System.Drawing.Color.White;
-      this.label_snapSavePath.Location = new System.Drawing.Point(22, 49);
+      this.label_snapSavePath.Location = new System.Drawing.Point(22, 8);
       this.label_snapSavePath.Name = "label_snapSavePath";
       this.label_snapSavePath.Size = new System.Drawing.Size(105, 14);
       this.label_snapSavePath.TabIndex = 3;
@@ -272,11 +273,12 @@
       this.label_uiLang.AutoSize = true;
       this.label_uiLang.BackColor = System.Drawing.Color.Transparent;
       this.label_uiLang.ForeColor = System.Drawing.Color.White;
-      this.label_uiLang.Location = new System.Drawing.Point(24, 10);
+      this.label_uiLang.Location = new System.Drawing.Point(24, 144);
       this.label_uiLang.Name = "label_uiLang";
       this.label_uiLang.Size = new System.Drawing.Size(84, 14);
       this.label_uiLang.TabIndex = 3;
       this.label_uiLang.Text = "UI Language";
+      this.label_uiLang.Visible = false;
       // 
       // panel_subtitle
       // 
@@ -546,8 +548,8 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
-      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_general);
+      this.Controls.Add(this.panel_subtitle);
       this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.label_plist);

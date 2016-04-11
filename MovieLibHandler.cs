@@ -549,9 +549,15 @@ namespace RPlayer
 
       if(m_curFolder != null)
       {
-        ListViewItem curItem = listViewNF.Items[listViewNF.Items.IndexOfKey(m_curFolder.url)];
-        curItem.Selected = true;
-        listViewNF.EnsureVisible(curItem.Index);
+        int index = listViewNF.Items.IndexOfKey(m_curFolder.url);
+        if(index != -1)
+        {
+          ListViewItem curItem = listViewNF.Items[index];
+          curItem.Selected = true;
+          listViewNF.EnsureVisible(index);
+        }
+        else
+          m_curFolder = null;
       }
 
       RefreshPlistFolder();
@@ -802,9 +808,15 @@ namespace RPlayer
 
       if (m_curFile != null)
       {
-        ListViewItem curItem = listViewNF.Items[listViewNF.Items.IndexOfKey(m_curFile.url)];
-        curItem.Selected = true;
-        listViewNF.EnsureVisible(curItem.Index);
+        int index = listViewNF.Items.IndexOfKey(m_curFile.url);
+        if (index != -1)
+        {
+          ListViewItem curItem = listViewNF.Items[index];
+          curItem.Selected = true;
+          listViewNF.EnsureVisible(index);
+        }
+        else
+          m_curFile = null;
       }
       listViewNF.EnsureVisible(0);
       listViewNF.EndUpdate();

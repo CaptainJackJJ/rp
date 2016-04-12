@@ -646,7 +646,7 @@ namespace RPlayer
 
     public void ShowHidePlaylistLabel(bool bShow)
     {
-      label_playlist.Visible = bShow;
+      //label_playlist.Visible = bShow;
     }
 
     private void label_Volume_MouseEnter(object sender, EventArgs e)

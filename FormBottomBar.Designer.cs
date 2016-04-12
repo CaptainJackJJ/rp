@@ -231,6 +231,7 @@
       this.label_playlist.Name = "label_playlist";
       this.label_playlist.Size = new System.Drawing.Size(25, 25);
       this.label_playlist.TabIndex = 50;
+      this.label_playlist.Visible = false;
       this.label_playlist.Click += new System.EventHandler(this.label_playlist_Click);
       this.label_playlist.MouseEnter += new System.EventHandler(this.label_playlist_MouseEnter);
       this.label_playlist.MouseLeave += new System.EventHandler(this.label_playlist_MouseLeave);

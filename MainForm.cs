@@ -485,7 +485,7 @@ namespace RPlayer
 
       if (Archive.plistShowingInNoneDesktop)
       {
-        m_formPlaylist.Show();
+        //m_formPlaylist.Show();
         ChangePlayWndSizeInNonDesktop();
       }
       else
@@ -1060,7 +1060,7 @@ namespace RPlayer
         }
         else
         {
-          m_formPlaylist.Show();
+          //m_formPlaylist.Show();
           Archive.plistShowingInNoneDesktop = true;
         }
         ChangePlayWndSizeInNonDesktop();
@@ -1214,7 +1214,7 @@ namespace RPlayer
         m_formTopBar.ShowCurrentTime(false);
         if (Archive.plistShowingInNoneDesktop)
         {
-          m_formPlaylist.Show();
+          //m_formPlaylist.Show();
         }
 
         m_lastMousePosInPlayWndAndDesktop = Point.Empty;
@@ -1270,7 +1270,7 @@ namespace RPlayer
         }
         else if (e.Location.X >= label_playWnd.Width - m_formPlaylist.Width)
         {
-          m_formPlaylist.Show();
+          //m_formPlaylist.Show();
         }
       }
     }

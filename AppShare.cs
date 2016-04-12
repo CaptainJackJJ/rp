@@ -27,9 +27,22 @@ namespace RPlayer
     static readonly private string m_strNodeUrlShared
       = m_strNodeNameRoot + "/" + m_strNodeNameShared;
 
-    static readonly private string m_strNodeNameIsFirstOpenFile = "IsFirstOpenFile";
+    static readonly public string m_strNodeNameIsFirstOpenFile = "IsFirstOpenFile";
     static readonly private string m_strNodeUrlIsFirstOpenFile
       = m_strNodeNameRoot + "/" + m_strNodeNameIsFirstOpenFile;
+
+    static readonly public string m_strNodeNameIsFirstInPlistFile = "IsFirstInPlistFile";
+    static readonly private string m_strNodeUrlIsFirstInPlistFile
+      = m_strNodeNameRoot + "/" + m_strNodeNameIsFirstInPlistFile;
+
+    static readonly public string m_strNodeNameIsFirstInQuickLook = "IsFirstInQuickLook";
+    static readonly private string m_strNodeUrlIsFirstInQuickLook
+      = m_strNodeNameRoot + "/" + m_strNodeNameIsFirstInQuickLook;
+
+    static readonly public string m_strNodeNameIsFirstPlay = "IsFirstPlay";
+    static readonly private string m_strNodeUrlIsFirstPlay
+      = m_strNodeNameRoot + "/" + m_strNodeNameIsFirstPlay;
+
     #endregion
 
     static private void GetNode(XmlDocument xml,string nodeUrl, out XmlNode node)
@@ -93,16 +106,34 @@ namespace RPlayer
           nodeAppShare.AppendChild(node);
           node.InnerText = "True";
         }
+        else if (nodeUrl == m_strNodeUrlIsFirstInPlistFile)
+        {
+          node = xml.CreateElement(m_strNodeNameIsFirstInPlistFile);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "True";
+        }
+        else if (nodeUrl == m_strNodeUrlIsFirstInQuickLook)
+        {
+          node = xml.CreateElement(m_strNodeNameIsFirstInQuickLook);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "True";
+        }
+        else if (nodeUrl == m_strNodeUrlIsFirstPlay)
+        {
+          node = xml.CreateElement(m_strNodeNameIsFirstPlay);
+          nodeAppShare.AppendChild(node);
+          node.InnerText = "True";
+        }
         #endregion
       }
     }
 
-    static public bool SetGetIsFirstOpenFile(string xmlPath, bool bSet)
+    static public bool SetGetIsFirst(string xmlPath, bool bSet,string nodeName)
     {
       m_strXmlFileUrl = xmlPath + "\\" + m_strXmlFileName;
       XmlDocument xml = new XmlDocument();
       XmlNode node;
-      GetNode(xml, m_strNodeUrlIsFirstOpenFile, out node);
+      GetNode(xml, m_strNodeNameRoot + "/" + nodeName, out node);
       if (bSet)
       {
         node.InnerText = "False";

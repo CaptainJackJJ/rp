@@ -1148,10 +1148,10 @@ namespace RPlayer
     {
       OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-      if(AppShare.SetGetIsFirstOpenFile(m_tempPath, false))
+      if(AppShare.SetGetIsFirst(m_tempPath, false,AppShare.m_strNodeNameIsFirstOpenFile))
       {
         openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        AppShare.SetGetIsFirstOpenFile(m_tempPath, true);
+        AppShare.SetGetIsFirst(m_tempPath, true,AppShare.m_strNodeNameIsFirstOpenFile);
       }
 
       openFileDialog1.Filter = "All files (*.*)|*.*";
@@ -1569,6 +1569,13 @@ namespace RPlayer
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);       
         label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
         ShowPlayingUIs(true);
+
+        if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstPlay))
+        {
+          FormNoticeUseQuickPlay f = new FormNoticeUseQuickPlay();
+          f.ShowDialog();
+          AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstPlay);
+        }
       }
       else
       {

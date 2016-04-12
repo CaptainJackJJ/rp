@@ -56,6 +56,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppShare.cs" />
+    <Compile Include="FormNoticeUseQuickPlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNoticeUseQuickPlay.Designer.cs">
+      <DependentUpon>FormNoticeUseQuickPlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNoticeUseQuickLook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNoticeUseQuickLook.Designer.cs">
+      <DependentUpon>FormNoticeUseQuickLook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNoticePlayQuickLook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNoticePlayQuickLook.Designer.cs">
+      <DependentUpon>FormNoticePlayQuickLook.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBigThumb.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +259,15 @@
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
     <Compile Include="WebBrowserHandler.cs" />
+    <EmbeddedResource Include="FormNoticeUseQuickPlay.resx">
+      <DependentUpon>FormNoticeUseQuickPlay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNoticeUseQuickLook.resx">
+      <DependentUpon>FormNoticeUseQuickLook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNoticePlayQuickLook.resx">
+      <DependentUpon>FormNoticePlayQuickLook.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBigThumb.resx">
       <DependentUpon>FormBigThumb.cs</DependentUpon>
     </EmbeddedResource>

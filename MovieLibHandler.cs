@@ -413,6 +413,13 @@ namespace RPlayer
       listViewNF.EnsureVisible(0);
       listViewNF.EndUpdate();
 
+      if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstInQuickLook))
+      {
+        FormNoticePlayQuickLook f = new FormNoticePlayQuickLook();
+        f.ShowDialog();
+        AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstInQuickLook);
+      }
+
       RefreshPlistQuickLook();
     }
 
@@ -820,6 +827,13 @@ namespace RPlayer
       }
       listViewNF.EnsureVisible(0);
       listViewNF.EndUpdate();
+
+      if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstInPlistFile))
+      {
+        FormNoticeUseQuickLook f = new FormNoticeUseQuickLook();
+        f.ShowDialog();
+        AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstInPlistFile);
+      }
 
       RefreshThumbs(folder);
       RefreshPlistFiles(folder);

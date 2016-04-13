@@ -41,7 +41,7 @@
       this.button_ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_ok.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_ok.ForeColor = System.Drawing.Color.White;
-      this.button_ok.Location = new System.Drawing.Point(95, 73);
+      this.button_ok.Location = new System.Drawing.Point(95, 107);
       this.button_ok.Name = "button_ok";
       this.button_ok.Size = new System.Drawing.Size(95, 23);
       this.button_ok.TabIndex = 40;
@@ -60,15 +60,15 @@
       this.richTextBox_notice.Name = "richTextBox_notice";
       this.richTextBox_notice.ReadOnly = true;
       this.richTextBox_notice.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-      this.richTextBox_notice.Size = new System.Drawing.Size(260, 58);
+      this.richTextBox_notice.Size = new System.Drawing.Size(260, 89);
       this.richTextBox_notice.TabIndex = 42;
-      this.richTextBox_notice.Text = "感谢您使用海盗兔影音。软件已更新至最新版V1.1.12，几秒钟后将会自动重启。";
+      this.richTextBox_notice.Text = "感谢您使用海盗兔影音。软件已更新至最新版V1.1.12，几秒钟后将会自动重启。重启后点击左上角的软件名即可查看升级的详细内容。";
       // 
       // FormUpdateNoticy
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.DarkSalmon;
-      this.ClientSize = new System.Drawing.Size(285, 107);
+      this.ClientSize = new System.Drawing.Size(285, 142);
       this.Controls.Add(this.richTextBox_notice);
       this.Controls.Add(this.button_ok);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

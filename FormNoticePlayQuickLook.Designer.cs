@@ -40,11 +40,11 @@
       this.richTextBox_changeLog.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.richTextBox_changeLog.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.richTextBox_changeLog.ForeColor = System.Drawing.Color.White;
-      this.richTextBox_changeLog.Location = new System.Drawing.Point(32, 13);
+      this.richTextBox_changeLog.Location = new System.Drawing.Point(9, 37);
       this.richTextBox_changeLog.Name = "richTextBox_changeLog";
       this.richTextBox_changeLog.ReadOnly = true;
       this.richTextBox_changeLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-      this.richTextBox_changeLog.Size = new System.Drawing.Size(301, 34);
+      this.richTextBox_changeLog.Size = new System.Drawing.Size(272, 57);
       this.richTextBox_changeLog.TabIndex = 48;
       this.richTextBox_changeLog.Text = "双击截图可以从该位置开始播放";
       // 
@@ -58,7 +58,7 @@
       this.button_share.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.button_share.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
       this.button_share.ForeColor = System.Drawing.Color.White;
-      this.button_share.Location = new System.Drawing.Point(110, 57);
+      this.button_share.Location = new System.Drawing.Point(86, 98);
       this.button_share.Name = "button_share";
       this.button_share.Size = new System.Drawing.Size(112, 38);
       this.button_share.TabIndex = 49;
@@ -70,7 +70,7 @@
       // 
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.DarkSalmon;
-      this.ClientSize = new System.Drawing.Size(335, 107);
+      this.ClientSize = new System.Drawing.Size(284, 154);
       this.Controls.Add(this.button_share);
       this.Controls.Add(this.richTextBox_changeLog);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

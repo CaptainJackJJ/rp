@@ -31,9 +31,9 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNoticeUseQuickPlay));
       this.richTextBox_changeLog = new System.Windows.Forms.RichTextBox();
       this.button_ok = new System.Windows.Forms.Button();
-      this.label_FF = new System.Windows.Forms.Label();
       this.richTextBox1 = new System.Windows.Forms.RichTextBox();
       this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+      this.label_FF = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // richTextBox_changeLog
@@ -69,15 +69,6 @@
       this.button_ok.UseVisualStyleBackColor = false;
       this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
       // 
-      // label_FF
-      // 
-      this.label_FF.BackColor = System.Drawing.Color.Transparent;
-      this.label_FF.Image = ((System.Drawing.Image)(resources.GetObject("label_FF.Image")));
-      this.label_FF.Location = new System.Drawing.Point(68, 12);
-      this.label_FF.Name = "label_FF";
-      this.label_FF.Size = new System.Drawing.Size(25, 25);
-      this.label_FF.TabIndex = 50;
-      // 
       // richTextBox1
       // 
       this.richTextBox1.BackColor = System.Drawing.Color.SlateGray;
@@ -104,9 +95,18 @@
       this.richTextBox2.Name = "richTextBox2";
       this.richTextBox2.ReadOnly = true;
       this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-      this.richTextBox2.Size = new System.Drawing.Size(251, 34);
+      this.richTextBox2.Size = new System.Drawing.Size(263, 34);
       this.richTextBox2.TabIndex = 51;
       this.richTextBox2.Text = "并且同时还可以保持语调不变";
+      // 
+      // label_FF
+      // 
+      this.label_FF.BackColor = System.Drawing.Color.Transparent;
+      this.label_FF.Image = ((System.Drawing.Image)(resources.GetObject("label_FF.Image")));
+      this.label_FF.Location = new System.Drawing.Point(68, 12);
+      this.label_FF.Name = "label_FF";
+      this.label_FF.Size = new System.Drawing.Size(25, 25);
+      this.label_FF.TabIndex = 50;
       // 
       // FormNoticeUseQuickPlay
       // 
@@ -121,7 +121,7 @@
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormNoticeUseQuickPlay";
-      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "提示";
       this.TopMost = true;
       this.ResumeLayout(false);

@@ -1573,7 +1573,7 @@ namespace RPlayer
         if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstPlay))
         {
           FormNoticeUseQuickPlay f = new FormNoticeUseQuickPlay();
-          f.ShowDialog();
+          f.ShowDialog(this);
           AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstPlay);
         }
       }

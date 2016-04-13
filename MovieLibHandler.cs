@@ -416,7 +416,7 @@ namespace RPlayer
       if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstInQuickLook))
       {
         FormNoticePlayQuickLook f = new FormNoticePlayQuickLook();
-        f.ShowDialog();
+        f.ShowDialog(m_formMain);
         AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstInQuickLook);
       }
 
@@ -831,7 +831,7 @@ namespace RPlayer
       if (AppShare.SetGetIsFirst(MainForm.m_tempPath, false, AppShare.m_strNodeNameIsFirstInPlistFile))
       {
         FormNoticeUseQuickLook f = new FormNoticeUseQuickLook();
-        f.ShowDialog();
+        f.ShowDialog(m_formMain);
         AppShare.SetGetIsFirst(MainForm.m_tempPath, true, AppShare.m_strNodeNameIsFirstInPlistFile);
       }
 

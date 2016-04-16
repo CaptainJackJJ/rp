@@ -267,6 +267,9 @@ namespace RPlayer
       if (Archive.mainFormLocY < 0)
         Archive.mainFormLocY = 0;
       this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+
+      if (Archive.maxed)
+        this.WindowState = FormWindowState.Maximized;
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -293,13 +296,9 @@ namespace RPlayer
         SwitchDesktopMode(false, false);
 
       if (this.WindowState == FormWindowState.Maximized)
-        this.WindowState = FormWindowState.Normal;
-
-      if (!m_bDesktop)
-      {
-        Archive.mainFormWidth = this.Width;
-        Archive.mainFormHeight = this.Height;
-      }
+        Archive.maxed = true;
+      else
+        Archive.maxed = false;
 
       Archive.Save();
     }
@@ -1044,7 +1043,7 @@ namespace RPlayer
       if (!m_bConstructed)
         return;
       ChangeSubFormsLocAndSize();
-      if (!m_bDesktop)
+      if (!m_bDesktop && this.WindowState != FormWindowState.Maximized)
       {
         Archive.mainFormLocX = this.Location.X;
         Archive.mainFormLocY = this.Location.Y;

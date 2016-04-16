@@ -56,11 +56,13 @@ namespace RPlayer
     static public int volume;
     static public bool mute;
     static public bool plistShowingInNoneDesktop;
+    static public bool maxed;
     static public int mainFormLocX, mainFormLocY, mainFormWidth, mainFormHeight;
     static public float speedFF,speedRW;
 
     static private readonly string SettingName_volume = "volume";
     static private readonly string SettingName_mute = "mute";
+    static private readonly string SettingName_maxed = "maxed";
     static private readonly string SettingName_plistShowingInNoneDesktop = "plistShowingInNoneDesktop";
     static private readonly string SettingName_mainFormLocX = "mainFormLocX";
     static private readonly string SettingName_mainFormLocY = "mainFormLocY";
@@ -71,6 +73,7 @@ namespace RPlayer
 
     static private readonly int volumeDefault = 100;
     static private readonly bool muteDefault = false;
+    static private readonly bool maxedDefault = false;
     static private readonly bool plistShowingInNoneDesktopDefault = false;
     static public readonly int mainFormLocXDefault = -1, mainFormLocYDefault = -1,
       mainFormWidthDefault = 1024, mainFormHeightDefault = 720;
@@ -239,6 +242,7 @@ namespace RPlayer
       // others
       LoadNode(nodeSectionOthers,SettingName_volume,out volume,volumeDefault);
       LoadNode(nodeSectionOthers,SettingName_mute,out mute,muteDefault);
+      LoadNode(nodeSectionOthers, SettingName_maxed, out maxed, maxedDefault);
       LoadNode(nodeSectionOthers,SettingName_plistShowingInNoneDesktop,out plistShowingInNoneDesktop,plistShowingInNoneDesktopDefault);
       LoadNode(nodeSectionOthers,SettingName_mainFormLocX,out mainFormLocX,mainFormLocXDefault);
       LoadNode(nodeSectionOthers,SettingName_mainFormLocY,out mainFormLocY,mainFormLocYDefault);
@@ -401,6 +405,8 @@ namespace RPlayer
       node.InnerText = volume.ToString();
       node = nodeSectionOthers.SelectSingleNode(SettingName_mute);
       node.InnerText = mute.ToString();
+      node = nodeSectionOthers.SelectSingleNode(SettingName_maxed);
+      node.InnerText = maxed.ToString();
       node = nodeSectionOthers.SelectSingleNode(SettingName_plistShowingInNoneDesktop);
       node.InnerText = plistShowingInNoneDesktop.ToString();
       node = nodeSectionOthers.SelectSingleNode(SettingName_mainFormLocX);
@@ -593,6 +599,7 @@ namespace RPlayer
       // other
       volume = volumeDefault;
       mute = muteDefault;
+      maxed = maxedDefault;
       plistShowingInNoneDesktop = plistShowingInNoneDesktopDefault;
       mainFormLocX = mainFormLocXDefault;
       mainFormLocY = mainFormLocYDefault;

@@ -240,11 +240,11 @@ namespace RPlayer
         HideElemById("search-3");
         HideElemById("head");
         HideElemById("footer");
-
+ 
         HtmlElement he1 = webBrowser1.Document.GetElementById("sidebar");
         if (he1 != null)
         {
-          if (e.Url.ToString() == "http://www.cangyunge.com/")
+          if (e.Url.ToString().Contains("http://www.cangyunge.com/"))
           {
             try
             {
@@ -257,12 +257,21 @@ namespace RPlayer
             }
             catch { }
           }
-          else
+          else if (e.Url.ToString().Contains("http://www.xiagaoqing.com/"))
           {
-            if (!e.Url.ToString().Contains("http://www.chdw.org/"))
-              he1.Style = "display: none;";
+            try
+            {
+              he1.Children[1].Style = "display: none;";
+              he1.Children[3].Style = "display: none;";
+              he1.Children[4].Style = "display: none;";
+            }
+            catch { }
           }
-        }
+          else if (e.Url.ToString().Contains("hdwan"))
+          {
+            he1.Style = "display: none;";
+          }
+        }       
 
         he1 = webBrowser1.Document.GetElementById("topbar"); 
         if (he1 != null)

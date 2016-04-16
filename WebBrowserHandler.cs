@@ -184,6 +184,14 @@ namespace RPlayer
       if (e.Url.ToString() == "about:blank")
         return;
 
+      if (System.IO.Path.GetExtension(e.Url.LocalPath) == ".torrent")
+      {
+        webBrowser1.GoBack();
+        FormDownload f = new FormDownload(e.Url);
+        f.Show();
+        return;
+      }
+
       m_formMain.ChangeNavButtonColor(e.Url.ToString());
 
       webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
@@ -198,7 +206,7 @@ namespace RPlayer
         }
         catch { }
       }
-
+      
       if (e.Url.ToString().Contains("http://www.chdw.org/"))
       {
         HideElemById("masthead");

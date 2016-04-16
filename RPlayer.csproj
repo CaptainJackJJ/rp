@@ -56,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppShare.cs" />
+    <Compile Include="FormDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDownload.Designer.cs">
+      <DependentUpon>FormDownload.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormNoticeUseQuickPlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +265,9 @@
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
     <Compile Include="WebBrowserHandler.cs" />
+    <EmbeddedResource Include="FormDownload.resx">
+      <DependentUpon>FormDownload.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNoticeUseQuickPlay.resx">
       <DependentUpon>FormNoticeUseQuickPlay.cs</DependentUpon>
     </EmbeddedResource>

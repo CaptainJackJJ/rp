@@ -10,6 +10,28 @@ using CoreWrapper;
 
 namespace RPlayer
 {
+  class ListViewNF : System.Windows.Forms.ListView
+  {
+    public ListViewNF()
+    {
+      //Activate double buffering
+      this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+      //Enable the OnNotifyMessage event so we get a chance to filter out 
+      // Windows messages before they get to the form's WndProc
+      this.SetStyle(ControlStyles.EnableNotifyMessage, true);
+    }
+
+    protected override void OnNotifyMessage(Message m)
+    {
+      //Filter out the WM_ERASEBKGND message
+      if (m.Msg != 0x14)
+      {
+        base.OnNotifyMessage(m);
+      }
+    }
+  }
+
   class MovieLibHandler
   {
     #region fields
@@ -73,6 +95,7 @@ namespace RPlayer
       listViewNF.BorderStyle = BorderStyle.None;
       listViewNF.BackColor = m_ColorBg;
 
+      listViewNF.Click += listViewNF_Click;
       listViewNF.DoubleClick += listViewNF_DoubleClick;
       listViewNF.MouseDown += listViewNF_MouseDown;
       listViewNF.MouseMove += listViewNF_MouseMove;
@@ -724,6 +747,40 @@ namespace RPlayer
       }
     }
 
+    void listViewNF_Click(object sender, EventArgs e)
+    {
+      ListView view = sender as ListView;
+      ListView.SelectedListViewItemCollection viewItems = view.SelectedItems;
+      if (viewItems.Count != 0)
+      {
+        switch (m_ePlistShowState)
+        {
+          case ePlistShowState.file:
+            {
+              if (viewItems[0].Index == 0)
+              {
+                if (m_threadRefreshThumbs != null)
+                  m_threadRefreshThumbs.Abort();
+                if (m_threadRefreshPlistFiles != null)
+                  m_threadRefreshPlistFiles.Abort();
+                ShowPlistFolder();
+              }
+            }
+            break;
+          case ePlistShowState.quickLook:
+            {
+              if (viewItems[0].Index == 0)
+              {
+                if (m_threadRefreshPlistQuickLook != null)
+                  m_threadRefreshPlistQuickLook.Abort();
+                ShowPlistFiles(m_curFolder);
+              }
+            }
+            break;
+        }
+      }
+    }
+
     private void listViewNF_DoubleClick(object sender, EventArgs e)
     {
       ListView view = sender as ListView;
@@ -739,11 +796,6 @@ namespace RPlayer
             {
               if (viewItems[0].Index == 0)
               {
-                if (m_threadRefreshThumbs != null)
-                  m_threadRefreshThumbs.Abort();
-                if (m_threadRefreshPlistFiles != null)
-                  m_threadRefreshPlistFiles.Abort();
-                ShowPlistFolder();
               }
               else
               {
@@ -755,9 +807,6 @@ namespace RPlayer
             {
               if (viewItems[0].Index == 0)
               {
-                if (m_threadRefreshPlistQuickLook != null)
-                  m_threadRefreshPlistQuickLook.Abort();
-                ShowPlistFiles(m_curFolder);
               }
               else
               {
@@ -971,28 +1020,6 @@ namespace RPlayer
         }
         listViewNF.LargeImageList.Images.RemoveByKey(thumbUrl);
         listViewNF.LargeImageList.Images.Add(thumbUrl, img);
-      }
-    }
-  }
-
-  class ListViewNF : System.Windows.Forms.ListView
-  {
-    public ListViewNF()
-    {
-      //Activate double buffering
-      this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-
-      //Enable the OnNotifyMessage event so we get a chance to filter out 
-      // Windows messages before they get to the form's WndProc
-      this.SetStyle(ControlStyles.EnableNotifyMessage, true);
-    }
-
-    protected override void OnNotifyMessage(Message m)
-    {
-      //Filter out the WM_ERASEBKGND message
-      if (m.Msg != 0x14)
-      {
-        base.OnNotifyMessage(m);
       }
     }
   }

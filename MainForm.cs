@@ -62,6 +62,7 @@ namespace RPlayer
     private const int m_nBottomBtnsToPlayBtnYMargin = (int)((m_nPlayButtonWidth - m_nBottomButtonsWidth) * 0.5);
 
     public bool m_bDesktop;
+    bool m_isMaxBeforeDesktop = false;
 
     public FormBottomBar m_formBottomBar;
     private FormTopBar m_formTopBar;
@@ -92,7 +93,6 @@ namespace RPlayer
 
     private bool m_bStopPlayCalled = true;
     private bool m_bPlayingForm = false;
-    private bool m_bPlayed = false;
     private bool m_bPlayerInited = false;
     private string m_strPlayUrlAfterInit = "";
 
@@ -125,6 +125,9 @@ namespace RPlayer
 
     public MainForm(string[] args)
     {
+      m_nMinMainFormWidth = Archive.mainFormWidthDefault;
+      m_nMinMainFormHeight = Archive.mainFormHeightDefault;
+
       if (args.Length > 0)
         m_bHasArgus = true;
 
@@ -171,6 +174,7 @@ namespace RPlayer
       label_playWnd.Visible = false;
       
       label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
+      label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
       label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
       label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
       label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
@@ -238,7 +242,12 @@ namespace RPlayer
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(7, m_nWebBroY));
+
+      int movieLibWidth = this.Width - m_nMovieLibPaddingX * 2;
+      int movieLibHeight = this.Height - m_nMovieLibPaddingY * 2 - 12;
+
+      m_webBrowserHandler = new WebBrowserHandler(this, new Point(m_nMovieLibPaddingX, m_nWebBroY), 
+        new Size(movieLibWidth, movieLibHeight-22));
       button_localPlay.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
@@ -253,8 +262,11 @@ namespace RPlayer
 
       m_movieLibHandler.ShowPlistFolder();
 
-      m_nMinMainFormWidth = Archive.mainFormWidthDefault;
-      m_nMinMainFormHeight = Archive.mainFormHeightDefault;
+      if(Archive.mainFormLocX < 0)
+        Archive.mainFormLocX = 0;
+      if (Archive.mainFormLocY < 0)
+        Archive.mainFormLocY = 0;
+      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -279,6 +291,15 @@ namespace RPlayer
 
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
+
+      if (this.WindowState == FormWindowState.Maximized)
+        this.WindowState = FormWindowState.Normal;
+
+      if (!m_bDesktop)
+      {
+        Archive.mainFormWidth = this.Width;
+        Archive.mainFormHeight = this.Height;
+      }
 
       Archive.Save();
     }
@@ -485,10 +506,8 @@ namespace RPlayer
     {
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
-      if (!m_bPlayingForm)
-        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
-      else
-        this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+
+      this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
       if (Archive.plistShowingInNoneDesktop)
       {
@@ -780,22 +799,19 @@ namespace RPlayer
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
-      if (m_bPlayingForm && !m_bDesktop)
-      {
-        Archive.mainFormWidth = this.Width;
-        Archive.mainFormHeight = this.Height;
-      }
-
       if (!m_bConstructed)
         return;
       label_Close.Location =
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
+      label_Max.Location =
+          new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonsWidth * 2,
+              label_Min.Location.Y);
       label_Min.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 2 - m_nTopBarButtonsWidth * 2,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
               label_Min.Location.Y);
       label_settings.Location =
-         new Point(this.Size.Width - m_nTopBarButtonsMargin * 3 - m_nTopBarButtonsWidth * 3,
+         new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4,
               label_settings.Location.Y);
       //label_help.Location =
       //  new Point(label_settings.Location.X - label_help.Width - m_nTopBarButtonsMargin / 2,
@@ -831,8 +847,15 @@ namespace RPlayer
         UpdateEdge();
       }
 
+      int movieLibWidth = this.Width - m_nMovieLibPaddingX * 2;
+      int movieLibHeight = this.Height - m_nMovieLibPaddingY * 2 -12;
       if (m_movieLibHandler != null)
-        m_movieLibHandler.Size = new Size(this.Width - m_nMovieLibPaddingX * 2, this.Height - m_nMovieLibPaddingY * 2 -12);
+        m_movieLibHandler.CtlSize = new Size(movieLibWidth, movieLibHeight);
+
+      if (m_webBrowserHandler != null)
+        m_webBrowserHandler.CtlSize = new Size(movieLibWidth, movieLibHeight - 22);
+
+      panel_neck.Size = new Size(this.Width - panel_neck.Location.X * 2, panel_neck.Height);
 
       ChangeNavBtnPos();
 
@@ -1021,7 +1044,7 @@ namespace RPlayer
       if (!m_bConstructed)
         return;
       ChangeSubFormsLocAndSize();
-      if (m_bPlayingForm && !m_bDesktop)
+      if (!m_bDesktop)
       {
         Archive.mainFormLocX = this.Location.X;
         Archive.mainFormLocY = this.Location.Y;
@@ -1041,6 +1064,32 @@ namespace RPlayer
     private void label_Min_Click(object sender, EventArgs e)
     {
       this.WindowState = FormWindowState.Minimized;
+    }
+
+    private void label_Max_Click(object sender, EventArgs e)
+    {
+      if (this.WindowState == FormWindowState.Maximized)
+        this.WindowState = FormWindowState.Normal;
+      else
+        this.WindowState = FormWindowState.Maximized;
+    }
+
+    private void label_Max_MouseEnter(object sender, EventArgs e)
+    {
+      try
+      {
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+      }
+      catch { }
+    }
+
+    private void label_Max_MouseLeave(object sender, EventArgs e)
+    {
+      try
+      {
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+      }
+      catch { }
     }
 
     private void label_Close_Click(object sender, EventArgs e)
@@ -1209,6 +1258,7 @@ namespace RPlayer
       if (m_bDesktop)
       {
         m_bDesktop = true;
+        m_isMaxBeforeDesktop = this.WindowState == FormWindowState.Maximized ? true : false;
         this.WindowState = FormWindowState.Maximized;
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
@@ -1227,8 +1277,10 @@ namespace RPlayer
       }
       else
       {
-        m_bDesktop = false;        
-        this.WindowState = FormWindowState.Normal;
+        m_bDesktop = false;
+        if (!m_isMaxBeforeDesktop)
+          this.WindowState = FormWindowState.Normal;
+        this.OnResize(EventArgs.Empty);
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
         ChangePlayWndSizeInNonDesktop();
         m_formBottomBar.Opacity = 1;
@@ -1510,8 +1562,8 @@ namespace RPlayer
 
     private void ShowBroswerUIs(bool bBrowsering)
     {
-      m_webBrowserHandler.Show(bBrowsering);
       panel_neck.Visible = bBrowsering;
+      m_webBrowserHandler.Show(bBrowsering);
       m_movieLibHandler.ShowLibUi(!bBrowsering);
     }
 
@@ -1578,20 +1630,9 @@ namespace RPlayer
         m_webBrowserHandler.Stop();
 
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
+        //if (this.WindowState == FormWindowState.Maximized)
+        //  this.WindowState = FormWindowState.Normal;
         //m_infoSectionTorrentUI.ShowSection(false);
-        this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-        if (Archive.mainFormLocX != -1 && Archive.mainFormLocY != -1)
-          this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-        if (!m_bPlayed)
-        {
-          m_bPlayed = true;
-          if ((this.Width == Archive.mainFormWidthDefault && this.Height == Archive.mainFormHeightDefault)
-            && (Archive.mainFormHeight != Archive.mainFormHeightDefault ||
-            Archive.mainFormWidth != Archive.mainFormWidthDefault))
-          {
-            this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
-          }
-        }
 
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);       
         label_playWnd.ContextMenuStrip = m_contextMenuStrip_playWnd;
@@ -1606,10 +1647,6 @@ namespace RPlayer
       }
       else
       {
-        if (this.WindowState == FormWindowState.Maximized)
-          this.WindowState = FormWindowState.Normal;
-        this.Size = new Size(Archive.mainFormWidthDefault, Archive.mainFormHeightDefault);
-        this.Location = new Point(this.Location.X, 3);
         //m_infoSectionTorrentUI.ShowSection(true);
        
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
@@ -1623,6 +1660,8 @@ namespace RPlayer
 
         ShowPlayingUIs(false);
       }
+
+      this.Activate(); // This will bring player to front.
     }
 
     public bool PlayPreNext(bool bPre)
@@ -2010,8 +2049,6 @@ namespace RPlayer
       ClearContextMenuDynamically();
 
       m_formPlaylist.UpdateListViewHistroy();
-
-      this.Activate(); // This will bring player to front.
     }
 
     public void deletePlayingPlistFolder(PlaylistFolder file)
@@ -2143,8 +2180,8 @@ namespace RPlayer
     private void button_dlChina1_Click(object sender, EventArgs e)
     {
       m_updaterApp.UpdateWebUrl();
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
       ChangeNavButtonColor(GlobalConstants.Common.strChinaDl1);
+      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
     }
 
     private void button_onlineVideo_Click(object sender, EventArgs e)
@@ -2274,6 +2311,15 @@ namespace RPlayer
     private void label_help_MouseEnter(object sender, EventArgs e)
     {
       label_help.ForeColor = Color.DodgerBlue;
+    }
+
+    private void panel_neck_Resize(object sender, EventArgs e)
+    {
+      int loadingX = panel_neck.Width / 2 - label_loading.Width / 2 + 8;
+      int loadingY = label_loading.Location.Y;
+      label_loading.Location = new Point(loadingX, loadingY);
+      label_back.Location = new Point(loadingX - 48, loadingY);
+      label_forward.Location = new Point(loadingX + 73, loadingY);
     }
 
   }

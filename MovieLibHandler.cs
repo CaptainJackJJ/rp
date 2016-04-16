@@ -71,7 +71,7 @@ namespace RPlayer
     #endregion
 
     #region Properties
-    public Size Size { set { listViewNF.Size = value; } get { return listViewNF.Size; } }
+    public Size CtlSize { set { listViewNF.Size = value; } get { return listViewNF.Size; } }
     #endregion
 
     public MovieLibHandler(MainForm formOwner,Point posStart,Size size)

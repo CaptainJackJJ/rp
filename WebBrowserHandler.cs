@@ -16,8 +16,9 @@ namespace RPlayer
     private WebBrowser webBrowser1;
     private Uri m_LastUri = null;
     private MainForm m_formMain;
+    public Size CtlSize { set { webBrowser1.Size = value; } get { return webBrowser1.Size; } }
 
-    public WebBrowserHandler(MainForm formMain, Point startPoint)
+    public WebBrowserHandler(MainForm formMain, Point startPoint,Size size)
     {
       m_formMain = formMain;
 
@@ -53,7 +54,7 @@ namespace RPlayer
       webBrowser1 = new WebBrowser();
       webBrowser1.Visible = false;
       webBrowser1.Location = startPoint;
-      webBrowser1.Size = new Size(1010, 590);
+      webBrowser1.Size = size;
       webBrowser1.ScriptErrorsSuppressed = true;
       formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);

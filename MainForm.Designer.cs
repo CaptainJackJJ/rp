@@ -56,6 +56,7 @@
       this.button_dlChina2 = new System.Windows.Forms.Button();
       this.button_localPlay = new System.Windows.Forms.Button();
       this.label_help = new System.Windows.Forms.Label();
+      this.label_Max = new System.Windows.Forms.Label();
       this.panel_neck.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -291,6 +292,7 @@
       this.panel_neck.Size = new System.Drawing.Size(1010, 23);
       this.panel_neck.TabIndex = 50;
       this.panel_neck.Visible = false;
+      this.panel_neck.Resize += new System.EventHandler(this.panel_neck_Resize);
       // 
       // button_onlineVideo
       // 
@@ -404,6 +406,17 @@
       this.label_help.MouseEnter += new System.EventHandler(this.label_help_MouseEnter);
       this.label_help.MouseLeave += new System.EventHandler(this.label_help_MouseLeave);
       // 
+      // label_Max
+      // 
+      this.label_Max.BackColor = System.Drawing.Color.Transparent;
+      this.label_Max.Location = new System.Drawing.Point(0, 0);
+      this.label_Max.Name = "label_Max";
+      this.label_Max.Size = new System.Drawing.Size(13, 13);
+      this.label_Max.TabIndex = 51;
+      this.label_Max.Click += new System.EventHandler(this.label_Max_Click);
+      this.label_Max.MouseEnter += new System.EventHandler(this.label_Max_MouseEnter);
+      this.label_Max.MouseLeave += new System.EventHandler(this.label_Max_MouseLeave);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -430,6 +443,7 @@
       this.Controls.Add(this.label_LeftEdge);
       this.Controls.Add(this.label_Close);
       this.Controls.Add(this.label_Min);
+      this.Controls.Add(this.label_Max);
       this.Controls.Add(this.label_Play);
       this.Controls.Add(this.label_settings);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -480,6 +494,7 @@
         private System.Windows.Forms.Button button_dlChina2;
         private System.Windows.Forms.Button button_localPlay;
         private System.Windows.Forms.Label label_help;
+        private System.Windows.Forms.Label label_Max;
     }
 }
 

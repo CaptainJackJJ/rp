@@ -139,7 +139,15 @@ namespace RPlayer
 
     private void label_Max_Click(object sender, EventArgs e)
     {
-      m_mainForm.SwitchDesktopMode(true, false);
+      if (m_mainForm.WindowState == FormWindowState.Normal)
+        m_mainForm.WindowState = FormWindowState.Maximized;
+      else
+      {
+        if (m_mainForm.m_bDesktop)
+          m_mainForm.SwitchDesktopMode(false, false);
+        else
+          m_mainForm.WindowState = FormWindowState.Normal;
+      }
     }
 
     private void label_Max_MouseEnter(object sender, EventArgs e)

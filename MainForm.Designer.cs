@@ -95,7 +95,7 @@
       // label_LeftEdge
       // 
       this.label_LeftEdge.BackColor = System.Drawing.Color.RoyalBlue;
-      this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_LeftEdge.Cursor = System.Windows.Forms.Cursors.SizeWE;
       this.label_LeftEdge.Location = new System.Drawing.Point(1, 2);
       this.label_LeftEdge.Name = "label_LeftEdge";
       this.label_LeftEdge.Size = new System.Drawing.Size(1, 765);
@@ -105,7 +105,7 @@
       // label_TopEdge
       // 
       this.label_TopEdge.BackColor = System.Drawing.Color.RoyalBlue;
-      this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_TopEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
       this.label_TopEdge.Location = new System.Drawing.Point(1, 1);
       this.label_TopEdge.Name = "label_TopEdge";
       this.label_TopEdge.Size = new System.Drawing.Size(1022, 1);
@@ -115,7 +115,7 @@
       // label_RightEdge
       // 
       this.label_RightEdge.BackColor = System.Drawing.Color.RoyalBlue;
-      this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_RightEdge.Cursor = System.Windows.Forms.Cursors.SizeWE;
       this.label_RightEdge.Location = new System.Drawing.Point(1022, 2);
       this.label_RightEdge.Name = "label_RightEdge";
       this.label_RightEdge.Size = new System.Drawing.Size(1, 766);
@@ -125,7 +125,7 @@
       // label_BottomEdge
       // 
       this.label_BottomEdge.BackColor = System.Drawing.Color.RoyalBlue;
-      this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.Arrow;
+      this.label_BottomEdge.Cursor = System.Windows.Forms.Cursors.SizeNS;
       this.label_BottomEdge.Location = new System.Drawing.Point(1, 766);
       this.label_BottomEdge.Name = "label_BottomEdge";
       this.label_BottomEdge.Size = new System.Drawing.Size(1022, 1);

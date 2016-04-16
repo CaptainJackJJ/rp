@@ -48,8 +48,8 @@ namespace RPlayer
     private bool m_bRightBottomCornerMouseDown = false;
     private bool m_bRightTopCornerMouseDown = false;
 
-    private const int m_nMinMainFormWidth = 500;
-    private const int m_nMinMainFormHeight = 275;
+    private int m_nMinMainFormWidth = 500;
+    private int m_nMinMainFormHeight = 275;
     private const int m_nEdgeMargin = 1;
     private const int m_nTopBarButtonsMargin = 20;
     private const int m_nTopBarButtonsWidth = 13;
@@ -117,6 +117,9 @@ namespace RPlayer
 
     private AppUpdater m_updaterApp;
     //private InfoUpdater m_updaterInfo;
+
+    readonly int m_nMovieLibPaddingX = 7;
+    readonly int m_nMovieLibPaddingY = 48;
  
     #endregion
 
@@ -245,9 +248,13 @@ namespace RPlayer
       if (m_bHasArgus)
         SwitchPlayingForm(true);
 
-      m_movieLibHandler = new MovieLibHandler(this, new Point(7, 48), new Size(1010, 612));
+      m_movieLibHandler = new MovieLibHandler(this, new Point(m_nMovieLibPaddingX, m_nMovieLibPaddingY),
+        new Size(this.Width - m_nMovieLibPaddingX * 2, this.Height - m_nMovieLibPaddingY * 2 -12));
 
       m_movieLibHandler.ShowPlistFolder();
+
+      m_nMinMainFormWidth = Archive.mainFormWidthDefault;
+      m_nMinMainFormHeight = Archive.mainFormHeightDefault;
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -808,6 +815,10 @@ namespace RPlayer
       const int nLeftBottomBtnsMargin = 10;
       int nPlaylistBtnX = this.Width - nLeftBottomBtnsMargin - m_nBottomButtonsWidth;
       label_playlist.Location = new Point(nPlaylistBtnX, nBottomButtonsY);
+      int nHelpBtnX = this.Width - nLeftBottomBtnsMargin * 2 - m_nBottomButtonsWidth * 2;
+      label_help.Location = new Point(nHelpBtnX, nBottomButtonsY + 7);
+      int nShareBtnX = this.Width - nLeftBottomBtnsMargin * 3 - m_nBottomButtonsWidth * 3;
+      label_share.Location = new Point(nShareBtnX, nBottomButtonsY + 7);
 
       if (m_bMainFormMouseDown || m_bTopEdge_MouseDown || m_bLeftEdge_MouseDown
           || m_bBottomEdge_MouseDown || m_bRightEdge_MouseDown)
@@ -820,9 +831,27 @@ namespace RPlayer
         UpdateEdge();
       }
 
+      if (m_movieLibHandler != null)
+        m_movieLibHandler.Size = new Size(this.Width - m_nMovieLibPaddingX * 2, this.Height - m_nMovieLibPaddingY * 2 -12);
+
+      ChangeNavBtnPos();
+
       ChangeSubFormsLocAndSize();
 
       ChangePlayWndSizeInNonDesktop();
+    }
+
+    void ChangeNavBtnPos()
+    {
+      int btnY = button_dlOversea.Location.Y;
+      int btnWidth = button_dlOversea.Width;
+      int posOverseaX = this.Width / 2;
+      button_dlOversea.Location = new Point(posOverseaX, btnY);
+      button_subtitle.Location = new Point(posOverseaX + btnWidth, btnY);
+      button_onlineVideo.Location = new Point(posOverseaX + btnWidth * 2, btnY);
+      button_dlChina2.Location = new Point(posOverseaX - btnWidth, btnY);
+      button_dlChina1.Location = new Point(posOverseaX - btnWidth * 2, btnY);
+      button_localPlay.Location = new Point(posOverseaX - btnWidth * 3, btnY);
     }
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -869,13 +898,11 @@ namespace RPlayer
         int yDiff = e.Y - m_TopBarAreaMouseDownPos.Y;
         this.Location = new Point(this.Location.X + xDiff, this.Location.Y + yDiff);
       }
-      else if (m_bPlayingForm)
+      else
       {
         ShowResizebaleCursor(e);
         ResizeFrom(sender, e);        
       }
-      else
-        Cursor = Cursors.Arrow;
     }
 
     private void ResizeFrom(object sender, MouseEventArgs e)

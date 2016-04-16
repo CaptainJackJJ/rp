@@ -70,6 +70,10 @@ namespace RPlayer
     private FormPlistFolderDetails m_formPlistFolderDetails;
     #endregion
 
+    #region Properties
+    public Size Size { set { listViewNF.Size = value; } get { return listViewNF.Size; } }
+    #endregion
+
     public MovieLibHandler(MainForm formOwner,Point posStart,Size size)
     {
       m_formMain = formOwner;

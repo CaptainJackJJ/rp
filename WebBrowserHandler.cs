@@ -282,12 +282,31 @@ namespace RPlayer
 
         HideElem("站点公告");
 
+        if (e.Url.ToString() == "http://www.hdwan.net/")
+        {
+          HideNotice();
+        }
+
+
         HtmlElementCollection hec = webBrowser1.Document.GetElementsByTagName("iframe");
         foreach (HtmlElement he in hec)
         {
           he.OuterHtml = "";
         }
       }   
+    }
+
+    void HideNotice()
+    {
+      try
+      {
+        if (webBrowser1.Document.Body.Children[4].Children[0].InnerHtml.Contains("海盗湾"))
+          webBrowser1.Document.Body.Children[4].Children[0].Style = "display: none;";
+        else if(webBrowser1.Document.Body.Children[6].Children[0].InnerHtml.Contains("海盗湾"))
+          webBrowser1.Document.Body.Children[6].Children[0].Style = "display: none;";
+
+      }
+      catch { }
     }
 
     void Document_Click(object sender, HtmlElementEventArgs e)

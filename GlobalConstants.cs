@@ -27,8 +27,8 @@ namespace RPlayer
       static public readonly string strMoreInfoText = "更多";
       static public readonly Color colorMainBtnBG = Color.MediumPurple;
       static public readonly Color colorMainFormBG = Color.FromArgb(255,84, 175, 254);
-      static public string strChinaDl1 = "http://www.cangyunge.com/";
-      static public string strChinaDl2 = "http://www.xiagaoqing.com/";
+      static public string strChinaDl1 = "http://www.xiagaoqing.com/";
+      static public string strChinaDl2 = "http://www.hdwan.net/";
       static public readonly string strLocalPlay = "local";
       static public string strChinaOnline = "http://www.youku.com/";
       static public string strOverseaDl = "http://www.rarbg.to";

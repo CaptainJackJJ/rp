@@ -105,6 +105,7 @@ namespace RPlayer
       listViewNF.MouseMove += listViewNF_MouseMove;
       listViewNF.ItemMouseHover += listViewNF_ItemMouseHover;
       listViewNF.MouseLeave += listViewNF_MouseLeave;
+      listViewNF.Resize += listViewNF_Resize;
 
       ImageList imageListLarge = new ImageList();
       imageListLarge.ImageSize = new Size(m_nThumbWidth, (int)(m_nThumbWidth / 1.77));
@@ -154,6 +155,17 @@ namespace RPlayer
 
       m_formMain.Controls.Add(listViewNF);
       m_formMain.ResumeLayout();
+    }
+
+    void listViewNF_Resize(object sender, EventArgs e)
+    {
+      if (labelAdd != null)
+      {
+        labelAdd.Location = new Point(m_formMain.Width / 2 - labelAdd.Width / 2,
+          m_formMain.Height / 2 - labelAdd.Height);
+
+        labelDes.Location = new Point(labelAdd.Location.X - 40, labelAdd.Location.Y + labelAdd.Height + 15);
+      }
     }
 
     public void Focus()

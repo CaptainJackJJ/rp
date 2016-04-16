@@ -254,9 +254,6 @@ namespace RPlayer
 
       timer1.Enabled = true;
 
-      if (m_bHasArgus)
-        SwitchPlayingForm(true);
-
       m_movieLibHandler = new MovieLibHandler(this, new Point(m_nMovieLibPaddingX, m_nMovieLibPaddingY),
         new Size(this.Width - m_nMovieLibPaddingX * 2, this.Height - m_nMovieLibPaddingY * 2 -12));
 
@@ -270,6 +267,9 @@ namespace RPlayer
 
       if (Archive.maxed)
         this.WindowState = FormWindowState.Maximized;
+
+      if (m_bHasArgus)
+        SwitchPlayingForm(true);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

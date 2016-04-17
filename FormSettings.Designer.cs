@@ -507,7 +507,7 @@
       this.checkBox_addPlayingFolderToPlist.Checked = true;
       this.checkBox_addPlayingFolderToPlist.CheckState = System.Windows.Forms.CheckState.Checked;
       this.checkBox_addPlayingFolderToPlist.ForeColor = System.Drawing.Color.White;
-      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(14, 95);
+      this.checkBox_addPlayingFolderToPlist.Location = new System.Drawing.Point(14, 61);
       this.checkBox_addPlayingFolderToPlist.Name = "checkBox_addPlayingFolderToPlist";
       this.checkBox_addPlayingFolderToPlist.Size = new System.Drawing.Size(234, 16);
       this.checkBox_addPlayingFolderToPlist.TabIndex = 8;
@@ -521,12 +521,13 @@
       this.checkBox_updatePlistAfterLaunch.Checked = true;
       this.checkBox_updatePlistAfterLaunch.CheckState = System.Windows.Forms.CheckState.Checked;
       this.checkBox_updatePlistAfterLaunch.ForeColor = System.Drawing.Color.White;
-      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(14, 61);
+      this.checkBox_updatePlistAfterLaunch.Location = new System.Drawing.Point(14, 96);
       this.checkBox_updatePlistAfterLaunch.Name = "checkBox_updatePlistAfterLaunch";
       this.checkBox_updatePlistAfterLaunch.Size = new System.Drawing.Size(264, 16);
       this.checkBox_updatePlistAfterLaunch.TabIndex = 9;
       this.checkBox_updatePlistAfterLaunch.Text = "Auto update playlist after player launch";
       this.checkBox_updatePlistAfterLaunch.UseVisualStyleBackColor = true;
+      this.checkBox_updatePlistAfterLaunch.Visible = false;
       this.checkBox_updatePlistAfterLaunch.CheckedChanged += new System.EventHandler(this.checkBox_updatePlistAfterLaunch_CheckedChanged);
       // 
       // checkBox_deleteFileDirectly
@@ -548,9 +549,9 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.SystemColors.WindowFrame;
       this.ClientSize = new System.Drawing.Size(525, 539);
+      this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_general);
       this.Controls.Add(this.panel_subtitle);
-      this.Controls.Add(this.panel_plist);
       this.Controls.Add(this.panel_av);
       this.Controls.Add(this.label_plist);
       this.Controls.Add(this.label_AV);

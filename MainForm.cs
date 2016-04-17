@@ -496,7 +496,7 @@ namespace RPlayer
       this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
       if (Archive.maxed)
-        this.WindowState = FormWindowState.Maximized;
+        SwitchToMax(true);
 
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
@@ -1044,19 +1044,36 @@ namespace RPlayer
       this.WindowState = FormWindowState.Minimized;
     }
 
+    void SwitchToMax(bool max)
+    {
+      if (max)
+      {
+        this.WindowState = FormWindowState.Maximized;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxed.png");
+      }
+      else
+      {
+        this.WindowState = FormWindowState.Normal;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+      }
+    }
+
     private void label_Max_Click(object sender, EventArgs e)
     {
       if (this.WindowState == FormWindowState.Maximized)
-        this.WindowState = FormWindowState.Normal;
+        SwitchToMax(false);
       else
-        this.WindowState = FormWindowState.Maximized;
+        SwitchToMax(true);
     }
 
     private void label_Max_MouseEnter(object sender, EventArgs e)
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+        string picName = "maxFocus";
+        if (this.WindowState == FormWindowState.Maximized)
+          picName = "maxedFocus";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }
@@ -1065,7 +1082,10 @@ namespace RPlayer
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+        string picName = "max";
+        if (this.WindowState == FormWindowState.Maximized)
+          picName = "maxed";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }
@@ -1237,7 +1257,7 @@ namespace RPlayer
       {
         m_bDesktop = true;
         m_isMaxBeforeDesktop = this.WindowState == FormWindowState.Maximized ? true : false;
-        this.WindowState = FormWindowState.Maximized;
+        SwitchToMax(true);
         label_playWnd.Location = this.Location;
         label_playWnd.Size = this.Size;
         Core.PlayWndResized(label_playWnd.Size.Width, label_playWnd.Size.Height);
@@ -1257,7 +1277,7 @@ namespace RPlayer
       {
         m_bDesktop = false;
         if (!m_isMaxBeforeDesktop)
-          this.WindowState = FormWindowState.Normal;
+          SwitchToMax(false);
         this.OnResize(EventArgs.Empty);
         label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
         ChangePlayWndSizeInNonDesktop();
@@ -1596,7 +1616,12 @@ namespace RPlayer
       else
       {
         //m_infoSectionTorrentUI.ShowSection(true);
-       
+
+        string picName = "max";
+        if (this.WindowState == FormWindowState.Maximized)
+          picName = "maxed";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
+
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
         
         SwitchDesktopMode(false,false);

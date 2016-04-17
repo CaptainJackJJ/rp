@@ -30,7 +30,10 @@ namespace RPlayer
       try
       {
         label_Close.Image = Image.FromFile(Application.StartupPath + @"\pic\close.png");
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+        string picName = "max";
+        if (m_mainForm.WindowState == FormWindowState.Maximized)
+          picName = "maxed";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
         label_Min.Image = Image.FromFile(Application.StartupPath + @"\pic\min.png");
         label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       }
@@ -137,16 +140,32 @@ namespace RPlayer
       catch { }
     }
 
+    void SwitchToMax(bool max)
+    {
+      if(max)
+      {
+        m_mainForm.WindowState = FormWindowState.Maximized;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxed.png");
+      }
+      else
+      {
+        m_mainForm.WindowState = FormWindowState.Normal;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+      }
+    }
+
     private void label_Max_Click(object sender, EventArgs e)
     {
       if (m_mainForm.WindowState == FormWindowState.Normal)
-        m_mainForm.WindowState = FormWindowState.Maximized;
+      {
+        SwitchToMax(true);
+      }
       else
       {
         if (m_mainForm.m_bDesktop)
           m_mainForm.SwitchDesktopMode(false, false);
         else
-          m_mainForm.WindowState = FormWindowState.Normal;
+          SwitchToMax(false);
       }
     }
 
@@ -154,7 +173,10 @@ namespace RPlayer
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+        string picName = "maxFocus";
+        if (m_mainForm.WindowState == FormWindowState.Maximized)
+          picName = "maxedFocus";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }
@@ -163,7 +185,10 @@ namespace RPlayer
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+        string picName = "max";
+        if (m_mainForm.WindowState == FormWindowState.Maximized)
+          picName = "maxed";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }

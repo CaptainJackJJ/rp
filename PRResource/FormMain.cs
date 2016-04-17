@@ -76,7 +76,7 @@ namespace PRResource
       this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
       if (Archive.maxed)
-        this.WindowState = FormWindowState.Maximized;
+        SwitchToMax(true);
 
       this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
@@ -123,16 +123,19 @@ namespace PRResource
     private void label_Max_Click(object sender, EventArgs e)
     {
       if (this.WindowState == FormWindowState.Maximized)
-        this.WindowState = FormWindowState.Normal;
+        SwitchToMax(false);
       else
-        this.WindowState = FormWindowState.Maximized;
+        SwitchToMax(true);
     }
 
     private void label_Max_MouseEnter(object sender, EventArgs e)
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxFocus.png");
+        string picName = "maxFocus";
+        if (this.WindowState == FormWindowState.Maximized)
+          picName = "maxedFocus";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }
@@ -141,7 +144,10 @@ namespace PRResource
     {
       try
       {
-        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+        string picName = "max";
+        if (this.WindowState == FormWindowState.Maximized)
+          picName = "maxed";
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\" + picName + ".png");
       }
       catch { }
     }
@@ -220,6 +226,20 @@ namespace PRResource
       UpdateWebUrl();
       m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl2);
       ChangeNavButtonColor(GlobalConstants.Common.strChinaDl2);
+    }
+
+    void SwitchToMax(bool max)
+    {
+      if (max)
+      {
+        this.WindowState = FormWindowState.Maximized;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\maxed.png");
+      }
+      else
+      {
+        this.WindowState = FormWindowState.Normal;
+        label_Max.Image = Image.FromFile(Application.StartupPath + @"\pic\max.png");
+      }
     }
 
     void ChangeNavBtnPos()

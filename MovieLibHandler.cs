@@ -688,7 +688,7 @@ namespace RPlayer
       // sort by pathLen
       Archive.enumSortBy origSortBy = Archive.sortBy;
       Archive.sortBy = Archive.enumSortBy.pathLen;
-      FormPlaylist.SortPlistFolder();
+      SortPlistFolder();
 
       // get folder url
       int folderCount = Archive.playlist.Count;
@@ -700,7 +700,7 @@ namespace RPlayer
 
       // sort back
       Archive.sortBy = origSortBy;
-      FormPlaylist.SortPlistFolder();
+      SortPlistFolder();
 
       // scan sub folder
       string[] drives = System.Environment.GetLogicalDrives(); 
@@ -735,7 +735,7 @@ namespace RPlayer
       // add new
       foreach (string subFolder in subFolderList)
       {
-        string[] strFilesInCurrentDirectory = FormPlaylist.GetMoives(subFolder);
+        string[] strFilesInCurrentDirectory = GetMoives(subFolder);
         if (strFilesInCurrentDirectory.Length < 1)
           continue;
 
@@ -744,7 +744,7 @@ namespace RPlayer
 
       // sort new
       Archive.sortBy = origSortBy;
-      FormPlaylist.SortPlistFolder();
+      SortPlistFolder();
     }
 
     delegate void AddPlFolderDel(PlaylistFolder folder);
@@ -905,6 +905,218 @@ namespace RPlayer
       RefreshPlistFiles(folder);
     }
 
+    public void GetPlistFolderAndFile(string fileUrl, out PlaylistFile Plistfile, out PlaylistFolder Plistfolder)
+    {
+      Plistfile = null;
+      Plistfolder = null;
+      foreach (PlaylistFolder folder in Archive.playlist)
+      {
+        foreach (PlaylistFile file in folder.playlistFiles)
+        {
+          if (file.url == fileUrl)
+          {
+            Plistfile = file;
+            Plistfolder = folder;
+            return;
+          }
+        }
+      }
+    }
+
+    public PlaylistFolder AddOrUpdatePlaylist(string Url, bool bAutoUpdateView)
+    {
+      if (File.Exists(Url))
+      {
+        Uri uri = new Uri(Url);
+        string strCurrentFolder = System.IO.Path.GetDirectoryName(uri.LocalPath);
+
+        foreach (PlaylistFolder folder in Archive.playlist)// Check if file is already in plist, if so, just return.
+        {
+          if (folder.url == strCurrentFolder)
+          {
+            foreach (PlaylistFile file in folder.playlistFiles)
+            {
+              if (file.url == Url)
+              {
+                return folder;
+              }
+            }
+          }
+        }
+
+        Url = strCurrentFolder;
+      }
+
+      if (!Directory.Exists(Url))
+      {
+        MessageBox.Show(UiLang.pathNotFound + Url);
+        return null;
+      }
+
+      string[] strFilesInCurrentDirectory = GetMoives(Url);
+
+      List<string> addFiles = strFilesInCurrentDirectory.ToList();
+
+      if (addFiles.Count == 0)
+      {
+        if (File.Exists(Url))//Handle some file exts that not in the ext list
+        {
+          addFiles.Add(Url);
+        }
+      }
+
+      PlaylistFolder curPlistFolder = null;
+
+      // Check if folder is already in plist. If so, check which files need be added or deleted
+      List<PlaylistFile> deleteFiles = new List<PlaylistFile>();
+      foreach (PlaylistFolder folder in Archive.playlist)
+      {
+        if (folder.url != Url)
+          continue;
+
+        curPlistFolder = folder;
+        foreach (PlaylistFile file in folder.playlistFiles)
+        {
+          int index = addFiles.IndexOf(file.url);
+          if (index != -1)
+          {
+            addFiles.RemoveAt(index);
+          }
+          else
+          {
+            deleteFiles.Add(file);
+          }
+        }
+
+        foreach (PlaylistFile file in deleteFiles)
+        {
+          folder.playlistFiles.Remove(file);
+        }
+      }
+
+      if (addFiles.Count == 0 && deleteFiles.Count == 0 && curPlistFolder != null) // Nothing changed
+        return curPlistFolder;
+
+      if (curPlistFolder == null)
+      {
+        curPlistFolder = new PlaylistFolder();
+        curPlistFolder.url = Url;
+        DirectoryInfo dir = new DirectoryInfo(Url);
+        curPlistFolder.folderName = dir.Name;
+        curPlistFolder.expand = true;
+        curPlistFolder.creationTime = dir.CreationTime.ToString();
+        curPlistFolder.playlistFiles = new List<PlaylistFile>();
+        Archive.playlist.Add(curPlistFolder);
+
+        SortPlistFolder();
+      }
+
+      foreach (string fileUrl in addFiles)
+      {
+        PlaylistFile file = new PlaylistFile();
+        file.url = fileUrl;
+        Uri uri = new Uri(fileUrl);
+        file.fileName = System.IO.Path.GetFileName(uri.LocalPath);
+        file.timeWatched = 0;
+        file.playState = PlaylistFile.enumPlayState.notPlayed;
+        MediaInfo info = new MediaInfo();
+        info = Core.GetMediaInfo(fileUrl, "", 0, 0);
+        file.duration = info.nDuration;
+        file.creationTime = File.GetCreationTime(fileUrl).ToString();
+        curPlistFolder.playlistFiles.Add(file);
+      }
+
+      SortPlistFile(curPlistFolder);
+
+      return curPlistFolder;
+    }
+
+    static public string[] GetMoives(string folderUrl)
+    {
+      try
+      {
+        return GlobalConstants.Common.strExtFilters.Split('|').SelectMany(filter =>
+            Directory.GetFiles(folderUrl, filter, SearchOption.TopDirectoryOnly)
+            ).ToArray();
+      }
+      catch (Exception ex)
+      {
+        Core.WriteLog(Core.ELogType.error, ex.ToString());
+        return new string[0];
+      }
+    }
+
+    static public void SortPlistFolder()
+    {
+      if (Archive.playlist.Count < 2)
+        return;
+
+      Archive.playlist.Sort(delegate(PlaylistFolder folder1, PlaylistFolder folder2)
+      {
+        try
+        {
+          switch (Archive.sortBy)
+          {
+            case Archive.enumSortBy.creationTimeUp:
+              return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime));
+            case Archive.enumSortBy.creationTimeDown:
+              return DateTime.Parse(folder1.creationTime).CompareTo(DateTime.Parse(folder2.creationTime)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.nameUp:
+              return folder1.folderName.CompareTo(folder2.folderName);
+            case Archive.enumSortBy.nameDown:
+              return folder1.folderName.CompareTo(folder2.folderName) > 0 ? -1 : 1;
+            case Archive.enumSortBy.pathLen:
+              return folder1.url.Length >= folder2.url.Length ? 1 : -1;
+            default:
+              return 0;
+          }
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "SortPlistFolder: " + ex.ToString());
+          return 0;
+        }
+      });
+    }
+
+    static public void SortPlistFile(PlaylistFolder folder)
+    {
+      if (folder.playlistFiles.Count < 2)
+        return;
+
+      folder.playlistFiles.Sort(delegate(PlaylistFile file1, PlaylistFile file2)
+      {
+        try
+        {
+          switch (Archive.sortBy)
+          {
+            case Archive.enumSortBy.creationTimeUp:
+              return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime));
+            case Archive.enumSortBy.creationTimeDown:
+              return DateTime.Parse(file1.creationTime).CompareTo(DateTime.Parse(file2.creationTime)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.nameUp:
+              return file1.fileName.CompareTo(file2.fileName);
+            case Archive.enumSortBy.nameDown:
+              return file1.fileName.CompareTo(file2.fileName) > 0 ? -1 : 1; ;
+            case Archive.enumSortBy.durationUp:
+              return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration));
+            case Archive.enumSortBy.durationDown:
+              return TimeSpan.FromSeconds(file1.duration).CompareTo(TimeSpan.FromSeconds(file2.duration)) > 0 ? -1 : 1;
+            case Archive.enumSortBy.pathLen:
+              return file1.url.Length >= file1.url.Length ? 1 : -1;
+            default:
+              return 0;
+          }
+        }
+        catch (Exception ex)
+        {
+          Core.WriteLog(Core.ELogType.error, "SortPlistFile: " + ex.ToString());
+          return 0;
+        }
+      });
+
+    }
+
     private void RefreshPlistFiles(PlaylistFolder folder)
     {
       m_threadRefreshPlistFiles = new Thread(ThreadRefreshPlistFiles);
@@ -930,7 +1142,7 @@ namespace RPlayer
       }
 
       // add new
-      string[] strFilesInCurrentDirectory = FormPlaylist.GetMoives(m_curFolder.url);
+      string[] strFilesInCurrentDirectory = GetMoives(m_curFolder.url);
       foreach (string fileUrl in strFilesInCurrentDirectory)
       {
         if (m_curFolder.playlistFiles.Exists(e => e.url == fileUrl))
@@ -949,7 +1161,7 @@ namespace RPlayer
         m_curFolder.playlistFiles.Add(file);
         AddPlFile(file);
       }
-      FormPlaylist.SortPlistFile(m_curFolder);
+      SortPlistFile(m_curFolder);
     }
 
     delegate void AddPlFileDel(PlaylistFile file);

@@ -66,7 +66,6 @@ namespace RPlayer
     private FormTopBar m_formTopBar;
     private FormSettings m_formSettings;
     private FormSpeedDisplay m_formSpeedDisplay;
-    private FormPlaylist m_formPlaylist;
     private FormVolumeDisplay m_formVolumeDisplay;
 
     private RpCallback m_rpCallback;
@@ -196,12 +195,10 @@ namespace RPlayer
       m_formSettings = new FormSettings(this);
       m_formSpeedDisplay = new FormSpeedDisplay(this);
       m_formVolumeDisplay = new FormVolumeDisplay(this);
-      m_formPlaylist = new FormPlaylist(this);
       this.AddOwnedForm(m_formBottomBar);
       this.AddOwnedForm(m_formTopBar);
       this.AddOwnedForm(m_formSettings);
       this.AddOwnedForm(m_formSpeedDisplay);
-      this.AddOwnedForm(m_formPlaylist);
       this.AddOwnedForm(m_formVolumeDisplay);
 
       InitContextMenuStrip();
@@ -231,7 +228,6 @@ namespace RPlayer
       m_updaterApp.ThreadStart();
 
       ConfigUiByArchive();
-      UpdateFormPlistTransform();
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
@@ -364,8 +360,6 @@ namespace RPlayer
 
         ConfigRpcoreByArchive();
 
-        m_formPlaylist.ConfigByArchive();
-
         Core.GetMediaInfo("D:\\test\\demo.mp4", "D:\\test\\demo1.jpg", 10,208);
 
         if (m_strPlayUrlAfterInit != "")
@@ -475,7 +469,6 @@ namespace RPlayer
     {
       ConfigByArchive();
       m_formBottomBar.ConfigByAchive();
-      m_formPlaylist.ConfigByArchive();
       m_formSettings.ConfigByArchive();
     }
 
@@ -504,14 +497,6 @@ namespace RPlayer
 
       if (m_bDesktop)
         SwitchDesktopMode(false, false);
-
-      if (Archive.plistShowingInNoneDesktop)
-      {
-        //m_formPlaylist.Show();
-        ChangePlayWndSizeInNonDesktop();
-      }
-      else
-        m_formPlaylist.Hide();
     }
 
     private void ConfigRpcoreByArchive()
@@ -532,7 +517,6 @@ namespace RPlayer
       m_formBottomBar.SetAllUiLange();
       m_formTopBar.SetAllUiLange();
       m_formSettings.SetAllUiLange();
-      m_formPlaylist.SetAllUiLange();
     }
 
     private void SetUiLange()
@@ -1133,7 +1117,6 @@ namespace RPlayer
       {
         if (Archive.plistShowingInNoneDesktop)
         {
-          m_formPlaylist.Hide();
           Archive.plistShowingInNoneDesktop = false;
         }
         else
@@ -1269,7 +1252,6 @@ namespace RPlayer
         m_formBottomBar.ShowHidePlaylistLabel(false);
         m_formTopBar.ShowCurrentTime(true);
         m_formTopBar.Hide();
-        m_formPlaylist.Hide();
         m_formTopBar.Location = new Point(0, 0);
         m_formTopBar.Size = new Size(this.Width, m_formTopBar.Height);
         m_formBottomBar.Location = new Point(0, m_formBottomBar.Location.Y);
@@ -1313,7 +1295,6 @@ namespace RPlayer
       {
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
-        m_formPlaylist.Hide();
         this.BringToFront();
       }
     }
@@ -1332,7 +1313,6 @@ namespace RPlayer
         this.BringToFront();
         m_formTopBar.Hide();
         m_formBottomBar.Hide();
-        m_formPlaylist.Hide();
         m_lastMousePosInPlayWndAndDesktop = Control.MousePosition;
       }
     }
@@ -1348,10 +1328,6 @@ namespace RPlayer
           m_formBottomBar.Show();
           m_formTopBar.Opacity = 0.4;
           m_formTopBar.Show();
-        }
-        else if (e.Location.X >= label_playWnd.Width - m_formPlaylist.Width)
-        {
-          //m_formPlaylist.Show();
         }
       }
     }
@@ -1432,8 +1408,6 @@ namespace RPlayer
       {
         int playWndWidth = this.Width - 4;
         int playWndHeight = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3;
-        if (Archive.plistShowingInNoneDesktop)
-          playWndWidth -= (m_formPlaylist.Width + 5);
         label_playWnd.Size = new Size(playWndWidth, playWndHeight);
         Core.PlayWndResized(playWndWidth, playWndHeight);
       }
@@ -1524,8 +1498,6 @@ namespace RPlayer
 
         m_formVolumeDisplay.Location
           = new Point(this.Location.X + 20, m_formTopBar.Location.Y + m_formTopBar.Height);
-
-        UpdateFormPlistTransform();
       }
       catch
       {
@@ -1534,38 +1506,8 @@ namespace RPlayer
       }
    }
 
-    private void UpdateFormPlistTransform()
-    {
-      int nMarginBarToEdge;
-      if (m_bDesktop)
-        nMarginBarToEdge = 0;
-      else
-        nMarginBarToEdge = 2;
-
-      int y,h;
-      if (m_bPlayingForm)
-      {
-        y = this.Location.Y + label_Close.Size.Height * 3 + 1;
-        h = m_formBottomBar.Location.Y - this.Location.Y - label_Close.Size.Height * 3 - 1;
-      }
-      else
-      {
-        y = this.Location.Y + m_nWebBroY;
-        h = 590;
-      }
-
-      m_formPlaylist.Location
-       = new Point(this.Location.X + this.Width - m_formPlaylist.Width - nMarginBarToEdge,
-         y);
-
-      m_formPlaylist.Size
-        = new Size(m_formPlaylist.Width, h);
-    }
-
     private void ShowPlayingUIs(bool bPlaying)
     {
-      UpdateFormPlistTransform();
-
       Color colorEdge = Color.RoyalBlue;
       if(bPlaying)
       {
@@ -1927,7 +1869,7 @@ namespace RPlayer
 
       if (Archive.autoAddFolderToPlist)
       {
-        m_curPlistFolder = m_formPlaylist.AddOrUpdatePlaylist(url, true);
+        m_curPlistFolder = m_movieLibHandler.AddOrUpdatePlaylist(url, true);
 
         foreach (PlaylistFile file in m_curPlistFolder.playlistFiles)
         {
@@ -1940,13 +1882,10 @@ namespace RPlayer
       }
       else
       {
-        m_formPlaylist.GetPlistFolderAndFile(url, out m_curPlistFile, out m_curPlistFolder);
+        m_movieLibHandler.GetPlistFolderAndFile(url, out m_curPlistFile, out m_curPlistFolder);
       }
 
       FillContextMenuDynamically();
-
-      if (m_curPlistFolder != null && m_curPlistFile != null)
-        m_formPlaylist.MarkPlayingPlist(m_curPlistFolder, m_curPlistFile);
 
       return true;
     }
@@ -2013,8 +1952,6 @@ namespace RPlayer
           m_curPlistFile.playState = PlaylistFile.enumPlayState.played;
           m_curPlistFile.timeWatched = curPlayingTime;
         }
-
-        m_formPlaylist.UpdatePlayListView(false, m_curPlistFolder.url);
       }
 
       m_bStopPlayCalled = true;
@@ -2022,8 +1959,6 @@ namespace RPlayer
       Core.Stop();
       m_bIsPlaying = false;
       ClearContextMenuDynamically();
-
-      m_formPlaylist.UpdateListViewHistroy();
     }
 
     public void deletePlayingPlistFolder(PlaylistFolder file)

@@ -33,5 +33,10 @@ namespace RPlayer
     {
       m_bInstanced = false;
     }
+
+    private void FormAskShare_Load(object sender, EventArgs e)
+    {
+
+    }
   }
 }

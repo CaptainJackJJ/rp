@@ -2005,7 +2005,10 @@ namespace RPlayer
         {
           bool bShared = AppShare.SetGetShared(m_tempPath, false);
           if (!bShared)
-            m_bNeedShared = true;
+          {
+            FormAskShare f = new FormAskShare(this);
+            f.ShowDialog();
+          }
         }
         UInt64 times = nLanuchTimes + 1;
         AppShare.SetGetLaunchTimes(m_tempPath, true, ref times);

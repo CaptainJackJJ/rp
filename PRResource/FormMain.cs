@@ -68,11 +68,15 @@ namespace PRResource
       label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
       label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
 
-      if (Archive.mainFormLocX < 0)
-        Archive.mainFormLocX = 0;
-      if (Archive.mainFormLocY < 0)
-        Archive.mainFormLocY = 0;
-      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      if (!(Archive.mainFormLocX == -1 && Archive.mainFormLocY == -1)) // not first time run
+      {
+        if (Archive.mainFormLocX < 0)
+          Archive.mainFormLocX = 0;
+        if (Archive.mainFormLocY < 0)
+          Archive.mainFormLocY = 0;
+
+        this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
+      }
       this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
 
       if (Archive.maxed)

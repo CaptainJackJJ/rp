@@ -99,7 +99,6 @@ namespace RPlayer
       listViewNF.BorderStyle = BorderStyle.None;
       listViewNF.BackColor = m_ColorBg;
 
-      listViewNF.Click += listViewNF_Click;
       listViewNF.DoubleClick += listViewNF_DoubleClick;
       listViewNF.MouseDown += listViewNF_MouseDown;
       listViewNF.MouseMove += listViewNF_MouseMove;
@@ -284,6 +283,7 @@ namespace RPlayer
 
         m_formPlistFolderDetails.ShowForm(strCreationTime, folder.url);
       }
+      listViewNF.Focus();
     }
 
     void listViewNF_MouseMove(object sender, MouseEventArgs e)
@@ -764,40 +764,6 @@ namespace RPlayer
       }
     }
 
-    void listViewNF_Click(object sender, EventArgs e)
-    {
-      ListView view = sender as ListView;
-      ListView.SelectedListViewItemCollection viewItems = view.SelectedItems;
-      if (viewItems.Count != 0)
-      {
-        switch (m_ePlistShowState)
-        {
-          case ePlistShowState.file:
-            {
-              if (viewItems[0].Index == 0)
-              {
-                if (m_threadRefreshThumbs != null)
-                  m_threadRefreshThumbs.Abort();
-                if (m_threadRefreshPlistFiles != null)
-                  m_threadRefreshPlistFiles.Abort();
-                ShowPlistFolder();
-              }
-            }
-            break;
-          case ePlistShowState.quickLook:
-            {
-              if (viewItems[0].Index == 0)
-              {
-                if (m_threadRefreshPlistQuickLook != null)
-                  m_threadRefreshPlistQuickLook.Abort();
-                ShowPlistFiles(m_curFolder);
-              }
-            }
-            break;
-        }
-      }
-    }
-
     private void listViewNF_DoubleClick(object sender, EventArgs e)
     {
       ListView view = sender as ListView;
@@ -813,6 +779,11 @@ namespace RPlayer
             {
               if (viewItems[0].Index == 0)
               {
+                if (m_threadRefreshThumbs != null)
+                  m_threadRefreshThumbs.Abort();
+                if (m_threadRefreshPlistFiles != null)
+                  m_threadRefreshPlistFiles.Abort();
+                ShowPlistFolder();
               }
               else
               {
@@ -824,6 +795,9 @@ namespace RPlayer
             {
               if (viewItems[0].Index == 0)
               {
+                if (m_threadRefreshPlistQuickLook != null)
+                  m_threadRefreshPlistQuickLook.Abort();
+                ShowPlistFiles(m_curFolder);
               }
               else
               {

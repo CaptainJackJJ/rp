@@ -41,6 +41,7 @@
       this.Name = "FormBigThumb";
       this.ShowInTaskbar = false;
       this.Text = "FormBigThumb";
+      this.TopMost = true;
       this.ResumeLayout(false);
 
     }

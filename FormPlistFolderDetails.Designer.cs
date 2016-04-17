@@ -97,6 +97,7 @@
       this.Opacity = 0.85D;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+      this.TopMost = true;
       this.MouseLeave += new System.EventHandler(this.FormPlistFileDetails_MouseLeave);
       this.ResumeLayout(false);
       this.PerformLayout();

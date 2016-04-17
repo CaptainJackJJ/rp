@@ -1976,6 +1976,8 @@ namespace RPlayer
 
       FillContextMenuDynamically();
       this.Activate(); // This will bring player to front.
+      this.TopMost = true;
+      this.TopMost = false;
 
       if (m_curPlistFolder != null && m_curPlistFile != null)
         m_formPlaylist.MarkPlayingPlist(m_curPlistFolder, m_curPlistFile);

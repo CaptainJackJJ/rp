@@ -45,19 +45,9 @@
       this.label_share = new System.Windows.Forms.Label();
       this.button_openFile = new System.Windows.Forms.Button();
       this.label_InfoUpdateNotice = new System.Windows.Forms.Label();
-      this.label_back = new System.Windows.Forms.Label();
-      this.label_forward = new System.Windows.Forms.Label();
-      this.label_loading = new System.Windows.Forms.Label();
-      this.panel_neck = new System.Windows.Forms.Panel();
-      this.button_onlineVideo = new System.Windows.Forms.Button();
-      this.button_dlChina1 = new System.Windows.Forms.Button();
-      this.button_dlOversea = new System.Windows.Forms.Button();
-      this.button_subtitle = new System.Windows.Forms.Button();
-      this.button_dlChina2 = new System.Windows.Forms.Button();
-      this.button_localPlay = new System.Windows.Forms.Button();
       this.label_help = new System.Windows.Forms.Label();
       this.label_Max = new System.Windows.Forms.Label();
-      this.panel_neck.SuspendLayout();
+      this.button_onlineRes = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // label_Play
@@ -239,157 +229,6 @@
       this.label_InfoUpdateNotice.Size = new System.Drawing.Size(0, 12);
       this.label_InfoUpdateNotice.TabIndex = 45;
       // 
-      // label_back
-      // 
-      this.label_back.BackColor = System.Drawing.Color.Transparent;
-      this.label_back.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_back.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_back.ForeColor = System.Drawing.Color.DimGray;
-      this.label_back.Location = new System.Drawing.Point(435, 0);
-      this.label_back.Name = "label_back";
-      this.label_back.Size = new System.Drawing.Size(23, 23);
-      this.label_back.TabIndex = 45;
-      this.label_back.Click += new System.EventHandler(this.label_back_Click);
-      this.label_back.MouseEnter += new System.EventHandler(this.label_back_MouseEnter);
-      this.label_back.MouseLeave += new System.EventHandler(this.label_back_MouseLeave);
-      // 
-      // label_forward
-      // 
-      this.label_forward.BackColor = System.Drawing.Color.Transparent;
-      this.label_forward.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_forward.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_forward.ForeColor = System.Drawing.Color.DimGray;
-      this.label_forward.Location = new System.Drawing.Point(556, 0);
-      this.label_forward.Name = "label_forward";
-      this.label_forward.Size = new System.Drawing.Size(23, 23);
-      this.label_forward.TabIndex = 45;
-      this.label_forward.Click += new System.EventHandler(this.label_forward_Click);
-      this.label_forward.MouseEnter += new System.EventHandler(this.label_forward_MouseEnter);
-      this.label_forward.MouseLeave += new System.EventHandler(this.label_forward_MouseLeave);
-      // 
-      // label_loading
-      // 
-      this.label_loading.BackColor = System.Drawing.Color.Transparent;
-      this.label_loading.Cursor = System.Windows.Forms.Cursors.Arrow;
-      this.label_loading.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.label_loading.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
-      this.label_loading.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.label_loading.Location = new System.Drawing.Point(483, 0);
-      this.label_loading.Name = "label_loading";
-      this.label_loading.Size = new System.Drawing.Size(62, 25);
-      this.label_loading.TabIndex = 45;
-      this.label_loading.Text = "加载中...";
-      this.label_loading.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      // 
-      // panel_neck
-      // 
-      this.panel_neck.BackColor = System.Drawing.Color.MintCream;
-      this.panel_neck.Controls.Add(this.label_loading);
-      this.panel_neck.Controls.Add(this.label_back);
-      this.panel_neck.Controls.Add(this.label_forward);
-      this.panel_neck.Location = new System.Drawing.Point(7, 48);
-      this.panel_neck.Name = "panel_neck";
-      this.panel_neck.Size = new System.Drawing.Size(1010, 23);
-      this.panel_neck.TabIndex = 50;
-      this.panel_neck.Visible = false;
-      this.panel_neck.Resize += new System.EventHandler(this.panel_neck_Resize);
-      // 
-      // button_onlineVideo
-      // 
-      this.button_onlineVideo.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_onlineVideo.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_onlineVideo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_onlineVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_onlineVideo.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold);
-      this.button_onlineVideo.ForeColor = System.Drawing.Color.White;
-      this.button_onlineVideo.Location = new System.Drawing.Point(743, 2);
-      this.button_onlineVideo.Name = "button_onlineVideo";
-      this.button_onlineVideo.Size = new System.Drawing.Size(115, 40);
-      this.button_onlineVideo.TabIndex = 47;
-      this.button_onlineVideo.Text = "在线观看";
-      this.button_onlineVideo.UseVisualStyleBackColor = false;
-      this.button_onlineVideo.Click += new System.EventHandler(this.button_onlineVideo_Click);
-      // 
-      // button_dlChina1
-      // 
-      this.button_dlChina1.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina1.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_dlChina1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_dlChina1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_dlChina1.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina1.Location = new System.Drawing.Point(283, 2);
-      this.button_dlChina1.Name = "button_dlChina1";
-      this.button_dlChina1.Size = new System.Drawing.Size(115, 40);
-      this.button_dlChina1.TabIndex = 48;
-      this.button_dlChina1.Text = "国内下载1";
-      this.button_dlChina1.UseVisualStyleBackColor = false;
-      this.button_dlChina1.Click += new System.EventHandler(this.button_dlChina1_Click);
-      // 
-      // button_dlOversea
-      // 
-      this.button_dlOversea.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_dlOversea.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_dlOversea.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_dlOversea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_dlOversea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_dlOversea.ForeColor = System.Drawing.Color.White;
-      this.button_dlOversea.Location = new System.Drawing.Point(513, 2);
-      this.button_dlOversea.Name = "button_dlOversea";
-      this.button_dlOversea.Size = new System.Drawing.Size(115, 40);
-      this.button_dlOversea.TabIndex = 48;
-      this.button_dlOversea.Text = "国外下载";
-      this.button_dlOversea.UseVisualStyleBackColor = false;
-      this.button_dlOversea.Click += new System.EventHandler(this.button_dlOversea_Click);
-      // 
-      // button_subtitle
-      // 
-      this.button_subtitle.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_subtitle.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_subtitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_subtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_subtitle.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_subtitle.ForeColor = System.Drawing.Color.White;
-      this.button_subtitle.Location = new System.Drawing.Point(628, 2);
-      this.button_subtitle.Name = "button_subtitle";
-      this.button_subtitle.Size = new System.Drawing.Size(115, 40);
-      this.button_subtitle.TabIndex = 48;
-      this.button_subtitle.Text = "字幕下载";
-      this.button_subtitle.UseVisualStyleBackColor = false;
-      this.button_subtitle.Click += new System.EventHandler(this.button_subtitle_Click);
-      // 
-      // button_dlChina2
-      // 
-      this.button_dlChina2.BackColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina2.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_dlChina2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_dlChina2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_dlChina2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_dlChina2.ForeColor = System.Drawing.Color.White;
-      this.button_dlChina2.Location = new System.Drawing.Point(398, 2);
-      this.button_dlChina2.Name = "button_dlChina2";
-      this.button_dlChina2.Size = new System.Drawing.Size(115, 40);
-      this.button_dlChina2.TabIndex = 48;
-      this.button_dlChina2.Text = "国内下载2";
-      this.button_dlChina2.UseVisualStyleBackColor = false;
-      this.button_dlChina2.Click += new System.EventHandler(this.button_dlChina2_Click);
-      // 
-      // button_localPlay
-      // 
-      this.button_localPlay.BackColor = System.Drawing.Color.IndianRed;
-      this.button_localPlay.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
-      this.button_localPlay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
-      this.button_localPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button_localPlay.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.button_localPlay.ForeColor = System.Drawing.Color.White;
-      this.button_localPlay.Location = new System.Drawing.Point(168, 2);
-      this.button_localPlay.Name = "button_localPlay";
-      this.button_localPlay.Size = new System.Drawing.Size(115, 40);
-      this.button_localPlay.TabIndex = 48;
-      this.button_localPlay.Text = "本地影库";
-      this.button_localPlay.UseVisualStyleBackColor = false;
-      this.button_localPlay.Click += new System.EventHandler(this.button_localPlay_Click);
-      // 
       // label_help
       // 
       this.label_help.AutoSize = true;
@@ -417,20 +256,30 @@
       this.label_Max.MouseEnter += new System.EventHandler(this.label_Max_MouseEnter);
       this.label_Max.MouseLeave += new System.EventHandler(this.label_Max_MouseLeave);
       // 
+      // button_onlineRes
+      // 
+      this.button_onlineRes.BackColor = System.Drawing.Color.DarkSalmon;
+      this.button_onlineRes.FlatAppearance.BorderColor = System.Drawing.Color.MediumPurple;
+      this.button_onlineRes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+      this.button_onlineRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.button_onlineRes.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.button_onlineRes.ForeColor = System.Drawing.Color.White;
+      this.button_onlineRes.Location = new System.Drawing.Point(785, 5);
+      this.button_onlineRes.Name = "button_onlineRes";
+      this.button_onlineRes.Size = new System.Drawing.Size(112, 38);
+      this.button_onlineRes.TabIndex = 52;
+      this.button_onlineRes.Text = "在线资源";
+      this.button_onlineRes.UseVisualStyleBackColor = false;
+      this.button_onlineRes.Click += new System.EventHandler(this.button_onlineRes_Click);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(175)))), ((int)(((byte)(254)))));
       this.ClientSize = new System.Drawing.Size(1024, 720);
-      this.Controls.Add(this.button_subtitle);
-      this.Controls.Add(this.panel_neck);
-      this.Controls.Add(this.button_dlOversea);
-      this.Controls.Add(this.button_localPlay);
-      this.Controls.Add(this.button_dlChina2);
-      this.Controls.Add(this.button_dlChina1);
+      this.Controls.Add(this.button_onlineRes);
       this.Controls.Add(this.button_openFile);
-      this.Controls.Add(this.button_onlineVideo);
       this.Controls.Add(this.label_playWnd);
       this.Controls.Add(this.label_help);
       this.Controls.Add(this.label_share);
@@ -460,7 +309,6 @@
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
       this.Move += new System.EventHandler(this.MainForm_Move);
       this.Resize += new System.EventHandler(this.MainForm_Resize);
-      this.panel_neck.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -483,18 +331,9 @@
         private System.Windows.Forms.Label label_share;
         private System.Windows.Forms.Button button_openFile;
         private System.Windows.Forms.Label label_InfoUpdateNotice;
-        private System.Windows.Forms.Label label_back;
-        private System.Windows.Forms.Label label_forward;
-        private System.Windows.Forms.Label label_loading;
-        private System.Windows.Forms.Panel panel_neck;
-        private System.Windows.Forms.Button button_onlineVideo;
-        private System.Windows.Forms.Button button_dlChina1;
-        private System.Windows.Forms.Button button_dlOversea;
-        private System.Windows.Forms.Button button_subtitle;
-        private System.Windows.Forms.Button button_dlChina2;
-        private System.Windows.Forms.Button button_localPlay;
         private System.Windows.Forms.Label label_help;
         private System.Windows.Forms.Label label_Max;
+        private System.Windows.Forms.Button button_onlineRes;
     }
 }
 

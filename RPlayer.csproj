@@ -264,7 +264,6 @@
     <Compile Include="UiLang.cs" />
     <Compile Include="AppUpdater.cs" />
     <Compile Include="UtilsCommon.cs" />
-    <Compile Include="WebBrowserHandler.cs" />
     <EmbeddedResource Include="FormDownload.resx">
       <DependentUpon>FormDownload.cs</DependentUpon>
     </EmbeddedResource>

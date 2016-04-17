@@ -6,19 +6,18 @@ using System.Drawing;
 using System.Security.Permissions;
 using Microsoft.Win32;
 using System.Windows.Forms;
-using MB.Controls;
 
-namespace RPlayer
+namespace PRResource
 {
   [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
   public class WebBrowserHandler
   {
     private WebBrowser webBrowser1;
     private Uri m_LastUri = null;
-    private MainForm m_formMain;
+    private FormMain m_formMain;
     public Size CtlSize { set { webBrowser1.Size = value; } get { return webBrowser1.Size; } }
 
-    public WebBrowserHandler(MainForm formMain, Point startPoint,Size size)
+    public WebBrowserHandler(FormMain formMain, Point startPoint)
     {
       m_formMain = formMain;
 
@@ -52,9 +51,7 @@ namespace RPlayer
       }
 
       webBrowser1 = new WebBrowser();
-      webBrowser1.Visible = false;
       webBrowser1.Location = startPoint;
-      webBrowser1.Size = size;
       webBrowser1.ScriptErrorsSuppressed = true;
       formMain.Controls.AddRange(new Control[] { webBrowser1 });      
       webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
@@ -102,13 +99,6 @@ namespace RPlayer
 
     public void Navigate(bool bLastUri,string url)
     {
-      if (m_formMain.m_bNeedShared && !(url.Contains("rabbitplayer") || url.Contains("prplayer")))
-      {
-        FormAskShare f = new FormAskShare(m_formMain);
-        f.ShowDialog();
-        return;
-      }
-
       if (bLastUri)
       {
         if (m_LastUri == null)
@@ -337,8 +327,7 @@ namespace RPlayer
           if ((strUrl.Contains("rabbitplayer") || strUrl.Contains("prplayer"))
             && !ele.OuterHtml.Contains("downBtn"))
           {
-            m_formMain.m_bNeedShared = false;
-            AppShare.SetGetShared(MainForm.m_tempPath, true);
+            AppShare.SetGetShared(FormMain.m_tempPath, true);
           }
         }
         ele = ele.Parent;

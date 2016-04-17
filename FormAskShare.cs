@@ -25,7 +25,7 @@ namespace RPlayer
 
     private void button_share_Click(object sender, EventArgs e)
     {
-      m_formMain.m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOfficalWebsite);
+      m_formMain.LaunchPRRes("share");
       this.Close();
     }
 

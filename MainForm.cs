@@ -12,7 +12,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
-
+using System.Diagnostics;
 
 
 namespace RPlayer
@@ -26,10 +26,8 @@ namespace RPlayer
     private bool m_bHasArgus = false;
     private Mutex m_mutexOneInstance;
     public bool m_bNeedShared = false;
-    private int m_nTimes = -1;
     public bool m_bShowLoading = false;
     private bool m_bFirstTimer = true;
-    public WebBrowserHandler m_webBrowserHandler;
     //public InfoLocalXmlHandler m_infoLocalXmlHandler;
     public InfoSectionUI m_infoSectionTorrentUI;
     static public string m_strDownloadedFolderUrl;
@@ -179,8 +177,6 @@ namespace RPlayer
       label_Play.Image = Image.FromFile(Application.StartupPath + @"\pic\play.png");
       label_settings.Image = Image.FromFile(Application.StartupPath + @"\pic\settings.png");
       label_playlist.Image = Image.FromFile(Application.StartupPath + @"\pic\playlist.png");
-      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
-      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
       if (!m_bHasArgus)
       {
         this.BackColor = GlobalConstants.Common.colorMainFormBG;
@@ -242,10 +238,6 @@ namespace RPlayer
 
       int movieLibWidth = this.Width - m_nMovieLibPaddingX * 2;
       int movieLibHeight = this.Height - m_nMovieLibPaddingY * 2 - 12;
-
-      m_webBrowserHandler = new WebBrowserHandler(this, new Point(m_nMovieLibPaddingX, m_nWebBroY), 
-        new Size(movieLibWidth, movieLibHeight-22));
-      button_localPlay.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
 
       label_playWnd.Location = new Point(2, label_Close.Size.Height * 3);
 
@@ -744,10 +736,7 @@ namespace RPlayer
         m_formBottomBar.TriggerVolumeOnMouseWheel(e);
       else
       {
-        if (button_localPlay.BackColor == GlobalConstants.Common.colorSelectedNavBtn)
-          m_movieLibHandler.Focus();
-        else
-          m_webBrowserHandler.Focus();
+         m_movieLibHandler.Focus();
       }
     }
 
@@ -820,6 +809,8 @@ namespace RPlayer
       label_settings.Location =
          new Point(this.Size.Width - m_nTopBarButtonsMargin * 4 - m_nTopBarButtonsWidth * 4,
               label_settings.Location.Y);
+      button_onlineRes.Location 
+        = new Point(this.Size.Width - m_nTopBarButtonsMargin * 5 - m_nTopBarButtonsWidth * 4 - button_onlineRes.Width, 5);
       //label_help.Location =
       //  new Point(label_settings.Location.X - label_help.Width - m_nTopBarButtonsMargin / 2,
       //      label_settings.Location.Y);
@@ -827,8 +818,8 @@ namespace RPlayer
       //   new Point(label_help.Location.X - label_share.Width - m_nTopBarButtonsMargin / 2,
       //         label_settings.Location.Y);
 
-      button_openFile.Location =
-        new Point(10, this.Size.Height - 50);
+      int nOpenFileBtnY = this.Size.Height - 50;
+      button_openFile.Location = new Point(10, nOpenFileBtnY);
 
       label_Play.Location =
          new Point(((int)(this.Size.Width * 0.5) - (int)(label_Play.Size.Width * 0.5)),
@@ -859,29 +850,9 @@ namespace RPlayer
       if (m_movieLibHandler != null)
         m_movieLibHandler.CtlSize = new Size(movieLibWidth, movieLibHeight);
 
-      if (m_webBrowserHandler != null)
-        m_webBrowserHandler.CtlSize = new Size(movieLibWidth, movieLibHeight - 22);
-
-      panel_neck.Size = new Size(this.Width - panel_neck.Location.X * 2, panel_neck.Height);
-
-      ChangeNavBtnPos();
-
       ChangeSubFormsLocAndSize();
 
       ChangePlayWndSizeInNonDesktop();
-    }
-
-    void ChangeNavBtnPos()
-    {
-      int btnY = button_dlOversea.Location.Y;
-      int btnWidth = button_dlOversea.Width;
-      int posOverseaX = this.Width / 2;
-      button_dlOversea.Location = new Point(posOverseaX, btnY);
-      button_subtitle.Location = new Point(posOverseaX + btnWidth, btnY);
-      button_onlineVideo.Location = new Point(posOverseaX + btnWidth * 2, btnY);
-      button_dlChina2.Location = new Point(posOverseaX - btnWidth, btnY);
-      button_dlChina1.Location = new Point(posOverseaX - btnWidth * 2, btnY);
-      button_localPlay.Location = new Point(posOverseaX - btnWidth * 3, btnY);
     }
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -1418,7 +1389,7 @@ namespace RPlayer
 
     private void label_share_Click(object sender, EventArgs e)
     {
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOfficalWebsite);
+      LaunchPRRes("share");
     }
 
     private void label_share_MouseEnter(object sender, EventArgs e)
@@ -1567,13 +1538,6 @@ namespace RPlayer
         = new Size(m_formPlaylist.Width, h);
     }
 
-    private void ShowBroswerUIs(bool bBrowsering)
-    {
-      panel_neck.Visible = bBrowsering;
-      m_webBrowserHandler.Show(bBrowsering);
-      m_movieLibHandler.ShowLibUi(!bBrowsering);
-    }
-
     private void ShowPlayingUIs(bool bPlaying)
     {
       UpdateFormPlistTransform();
@@ -1586,30 +1550,9 @@ namespace RPlayer
       label_TopEdge.BackColor = label_BottomEdge.BackColor = label_RightEdge.BackColor
           = label_LeftEdge.BackColor = colorEdge;
 
-      button_dlChina1.Visible = !bPlaying;
-      button_dlChina2.Visible = !bPlaying;
-      button_localPlay.Visible = !bPlaying;
-      button_onlineVideo.Visible = !bPlaying;
-      button_dlOversea.Visible = !bPlaying;
-      button_subtitle.Visible = !bPlaying;
+      m_movieLibHandler.ShowLibUi(!bPlaying);
 
-      if(bPlaying)
-      {
-        m_webBrowserHandler.Show(!bPlaying);
-        panel_neck.Visible = !bPlaying;
-        m_movieLibHandler.ShowLibUi(!bPlaying);
-      }
-      else
-      {
-        if (button_localPlay.BackColor == GlobalConstants.Common.colorSelectedNavBtn)
-          m_movieLibHandler.ShowLibUi(!bPlaying);
-        else
-        {
-          m_webBrowserHandler.Show(!bPlaying);
-          panel_neck.Visible = !bPlaying;
-        }
-      }
-
+      button_onlineRes.Visible = !bPlaying;
       label_playWnd.Visible = bPlaying;
       label_logo.Visible = !bPlaying;
       try
@@ -1634,8 +1577,6 @@ namespace RPlayer
       m_bPlayingForm = bPlaying;
       if (m_bPlayingForm)
       {        
-        m_webBrowserHandler.Stop();
-
         this.BackColor = Color.FromArgb(255, 0, 0, 0);
         //if (this.WindowState == FormWindowState.Maximized)
         //  this.WindowState = FormWindowState.Normal;
@@ -1662,13 +1603,12 @@ namespace RPlayer
 
         label_playWnd.ContextMenuStrip = null;
 
-        if(button_localPlay.BackColor != GlobalConstants.Common.colorSelectedNavBtn)
-          m_webBrowserHandler.Navigate(true, "");
-
         ShowPlayingUIs(false);
       }
 
       this.Activate(); // This will bring player to front.
+      this.TopMost = true;
+      this.TopMost = false;
     }
 
     public bool PlayPreNext(bool bPre)
@@ -1975,9 +1915,6 @@ namespace RPlayer
       }
 
       FillContextMenuDynamically();
-      this.Activate(); // This will bring player to front.
-      this.TopMost = true;
-      this.TopMost = false;
 
       if (m_curPlistFolder != null && m_curPlistFile != null)
         m_formPlaylist.MarkPlayingPlist(m_curPlistFolder, m_curPlistFile);
@@ -2110,32 +2047,6 @@ namespace RPlayer
         AppShare.SetGetLaunchTimes(m_tempPath, true, ref times);
       }
 
-      if (m_bShowLoading)
-      {
-        ++m_nTimes;
-        switch (m_nTimes)
-        {
-          case -1:
-            label_loading.Text = "加载中";
-            break;
-          case 0:
-            label_loading.Text = "加载中.";
-            break;
-          case 1:
-            label_loading.Text = "加载中..";
-            break;
-          case 2:
-            label_loading.Text = "加载中...";
-            m_nTimes = -2;
-            break;
-        }
-      }
-      else
-      {
-        label_loading.Text = "";
-        m_nTimes = -1;
-      }
-
       if (!m_bFormLoaded)
         return;
       string url = "";
@@ -2186,125 +2097,6 @@ namespace RPlayer
       }
     }
 
-    private void button_dlChina1_Click(object sender, EventArgs e)
-    {
-      m_updaterApp.UpdateWebUrl();
-      ChangeNavButtonColor(GlobalConstants.Common.strChinaDl1);
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl1);
-    }
-
-    private void button_onlineVideo_Click(object sender, EventArgs e)
-    {
-      m_updaterApp.UpdateWebUrl();
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaOnline);
-      ChangeNavButtonColor(GlobalConstants.Common.strChinaOnline);
-    }
-
-    private void button_dlOversea_Click(object sender, EventArgs e)
-    {
-      m_updaterApp.UpdateWebUrl();
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strOverseaDl);
-      ChangeNavButtonColor(GlobalConstants.Common.strOverseaDl);
-    }
-
-    private void button_subtitle_Click(object sender, EventArgs e)
-    {
-      m_updaterApp.UpdateWebUrl();
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strSubtitle);
-      ChangeNavButtonColor(GlobalConstants.Common.strSubtitle);
-    }
-
-    private void ResetNavButtonColor()
-    {
-      button_dlChina1.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlChina2.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_localPlay.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_onlineVideo.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_dlOversea.BackColor = GlobalConstants.Common.colorMainBtnBG;
-      button_subtitle.BackColor = GlobalConstants.Common.colorMainBtnBG;
-    }
-
-    public void ChangeNavButtonColor(string strWebsite)
-    {
-      bool bShowBrowserUIs = true;
-      if (strWebsite == GlobalConstants.Common.strChinaDl1)
-      {
-        ResetNavButtonColor();
-        button_dlChina1.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-      }
-      else if (strWebsite == GlobalConstants.Common.strChinaDl2)
-      {
-        ResetNavButtonColor();
-        button_dlChina2.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-      }
-      else if (strWebsite == GlobalConstants.Common.strLocalPlay)
-      {
-        ResetNavButtonColor();
-        button_localPlay.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-        bShowBrowserUIs = false;
-      }
-      else if (strWebsite == GlobalConstants.Common.strOverseaDl
-              || strWebsite == GlobalConstants.Common.strOverseaDl + "/index8.php")
-      {
-        ResetNavButtonColor();
-        button_dlOversea.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-      }
-      else if(strWebsite == GlobalConstants.Common.strSubtitle)
-      {
-        ResetNavButtonColor();
-        button_subtitle.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-      }      
-      else if (strWebsite == GlobalConstants.Common.strChinaOnline)
-      {
-        ResetNavButtonColor();
-        button_onlineVideo.BackColor = GlobalConstants.Common.colorSelectedNavBtn;
-      }
-      ShowBroswerUIs(bShowBrowserUIs);
-    }
-
-    private void label_back_Click(object sender, EventArgs e)
-    {
-      m_webBrowserHandler.Back();
-    }
-
-    private void label_forward_Click(object sender, EventArgs e)
-    {
-      m_webBrowserHandler.Forward();
-    }
-
-    private void label_back_MouseEnter(object sender, EventArgs e)
-    {
-      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\backFocus.png");
-      
-    }
-
-    private void label_back_MouseLeave(object sender, EventArgs e)
-    {
-      label_back.Image = Image.FromFile(Application.StartupPath + @"\pic\back.png");
-    }
-
-    private void label_forward_MouseEnter(object sender, EventArgs e)
-    {
-      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forwardFocus.png");
-    }
-
-    private void label_forward_MouseLeave(object sender, EventArgs e)
-    {
-      label_forward.Image = Image.FromFile(Application.StartupPath + @"\pic\forward.png");
-    }
-
-    private void button_dlChina2_Click(object sender, EventArgs e)
-    {
-      m_updaterApp.UpdateWebUrl();
-      m_webBrowserHandler.Navigate(false, GlobalConstants.Common.strChinaDl2);
-      ChangeNavButtonColor(GlobalConstants.Common.strChinaDl2);
-    }
-
-    private void button_localPlay_Click(object sender, EventArgs e)
-    {
-      m_webBrowserHandler.Stop();
-      ChangeNavButtonColor(GlobalConstants.Common.strLocalPlay);
-    }
 
     private void label_help_MouseLeave(object sender, EventArgs e)
     {
@@ -2322,13 +2114,23 @@ namespace RPlayer
       label_help.ForeColor = Color.DodgerBlue;
     }
 
-    private void panel_neck_Resize(object sender, EventArgs e)
+    private void button_onlineRes_Click(object sender, EventArgs e)
     {
-      int loadingX = panel_neck.Width / 2 - label_loading.Width / 2 + 8;
-      int loadingY = label_loading.Location.Y;
-      label_loading.Location = new Point(loadingX, loadingY);
-      label_back.Location = new Point(loadingX - 48, loadingY);
-      label_forward.Location = new Point(loadingX + 73, loadingY);
+      LaunchPRRes("");
+    }
+
+    public void LaunchPRRes(string argu)
+    {
+      ProcessStartInfo startInfo = new ProcessStartInfo();
+      startInfo.FileName = "PRResource.exe";
+      startInfo.Arguments = argu;
+      try
+      {
+        Process.Start(startInfo);
+      }
+      catch (Exception ex)
+      {
+      }
     }
 
   }

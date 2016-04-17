@@ -106,6 +106,7 @@ namespace RPlayer
       listViewNF.ItemMouseHover += listViewNF_ItemMouseHover;
       listViewNF.MouseLeave += listViewNF_MouseLeave;
       listViewNF.Resize += listViewNF_Resize;
+      listViewNF.Cursor = Cursors.Arrow;
 
       ImageList imageListLarge = new ImageList();
       imageListLarge.ImageSize = new Size(m_nThumbWidth, (int)(m_nThumbWidth / 1.77));

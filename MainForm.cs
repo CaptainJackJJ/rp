@@ -113,7 +113,7 @@ namespace RPlayer
     // Resize and move event are fired in InitializeComponent on some pc(my sister's pc)
     // , and crash caused because some component is not inited.
     // So add this flag to let Resize and Move method do nothing before constructed.
-    private bool m_bConstructed = false;
+    private bool m_bFormLoaded = false;
 
     private AppUpdater m_updaterApp;
     //private InfoUpdater m_updaterInfo;
@@ -224,12 +224,6 @@ namespace RPlayer
         //m_infoSectionTorrentUI.ShowSection(false);
         StartPlay(args[0],-1);
       }
-
-      m_bConstructed = true;
-      this.OnResize(EventArgs.Empty);
-
-      ConfigUiByArchive();
-      UpdateFormPlistTransform();
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -239,6 +233,9 @@ namespace RPlayer
 
       m_updaterApp = new AppUpdater(this);
       m_updaterApp.ThreadStart();
+
+      ConfigUiByArchive();
+      UpdateFormPlistTransform();
 
       //m_updaterInfo = new InfoUpdater(this,false,m_infoLocalXmlHandler);
       //m_updaterInfo.ThreadStart();
@@ -257,16 +254,11 @@ namespace RPlayer
       m_movieLibHandler = new MovieLibHandler(this, new Point(m_nMovieLibPaddingX, m_nMovieLibPaddingY),
         new Size(this.Width - m_nMovieLibPaddingX * 2, this.Height - m_nMovieLibPaddingY * 2 -12));
 
+      m_bFormLoaded = true; // OnMove will called before OnLoad when form borderStyle is none.
+      this.OnMove(EventArgs.Empty);
+      this.OnResize(EventArgs.Empty);
+
       m_movieLibHandler.ShowPlistFolder();
-
-      if(Archive.mainFormLocX < 0)
-        Archive.mainFormLocX = 0;
-      if (Archive.mainFormLocY < 0)
-        Archive.mainFormLocY = 0;
-      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
-
-      if (Archive.maxed)
-        this.WindowState = FormWindowState.Maximized;
 
       if (m_bHasArgus)
         SwitchPlayingForm(true);
@@ -503,10 +495,19 @@ namespace RPlayer
 
     private void ConfigUiByArchive()
     {
-      if (m_bDesktop)
-        SwitchDesktopMode(false, false);
+      if (Archive.mainFormLocX < 0)
+        Archive.mainFormLocX = 0;
+      if (Archive.mainFormLocY < 0)
+        Archive.mainFormLocY = 0;
+      this.Location = new Point(Archive.mainFormLocX, Archive.mainFormLocY);
 
       this.Size = new Size(Archive.mainFormWidth, Archive.mainFormHeight);
+
+      if (Archive.maxed)
+        this.WindowState = FormWindowState.Maximized;
+
+      if (m_bDesktop)
+        SwitchDesktopMode(false, false);
 
       if (Archive.plistShowingInNoneDesktop)
       {
@@ -798,8 +799,15 @@ namespace RPlayer
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
-      if (!m_bConstructed)
+      if (!m_bFormLoaded)
         return;
+
+      if (!m_bDesktop && this.WindowState != FormWindowState.Maximized)
+      {
+        Archive.mainFormWidth = this.Width;
+        Archive.mainFormHeight = this.Height;
+      }
+
       label_Close.Location =
           new Point(this.Size.Width - m_nTopBarButtonsMargin - m_nTopBarButtonsWidth,
               label_Close.Location.Y);
@@ -1040,7 +1048,7 @@ namespace RPlayer
 
     private void MainForm_Move(object sender, EventArgs e)
     {
-      if (!m_bConstructed)
+      if (!m_bFormLoaded)
         return;
       ChangeSubFormsLocAndSize();
       if (!m_bDesktop && this.WindowState != FormWindowState.Maximized)
@@ -2126,7 +2134,7 @@ namespace RPlayer
         m_nTimes = -1;
       }
 
-      if (!m_bConstructed)
+      if (!m_bFormLoaded)
         return;
       string url = "";
       if (!AppShare.SetGetNewUrl(m_tempPath, false, ref url))
